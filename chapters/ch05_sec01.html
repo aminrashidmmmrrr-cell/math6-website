@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فصل ۵ - بخش ۱: طول و سطح | درسنامه تعاملی</title>
+    
+    <!-- قلم زیبای وزیرمتن -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+
+    <!-- انیمیشن کاغذ رنگی -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* ========================================================================
+           ۱. متغیرها و تم رنگی
+           ======================================================================== */
+        :root {
+            --lilac-bg: #f7f1fc;
+            --lilac-soft: #f1e7fb;
+            --lilac-border: #d8b4fe;
+            --lilac-main: #9333ea;
+            --lilac-dark: #6b21a8;
+            --lilac-glow: rgba(147, 51, 234, 0.15);
+            
+            --blue-soft: #e0f2fe;
+            --blue-main: #0284c7;
+            --blue-dark: #0369a1;
+            
+            --success: #16a34a;
+            --success-bg: rgba(22, 163, 74, 0.1);
+            --danger: #dc2626;
+            --danger-bg: rgba(220, 38, 38, 0.1);
+            --warning: #ca8a04;
+            --highlight: #fef08a;
+            --green-soft: #dcfce7;
+            --green-main: #22c55e;
+            --green-dark: #15803d;
+
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
+            --card-hover-bg: rgba(255, 255, 255, 0.95);
+            
+            --text-title: #2e1065;
+            --text-body: #475569;
+            --text-muted: #64748b;
+            
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 8px;
+        }
+
+        /* ========================================================================
+           ۲. استایل‌های پایه
+           ======================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--lilac-bg);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-body);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* ========================================================================
+           ۳. نوار هدر
+           ======================================================================== */
+        .lesson-top-nav {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto 20px;
+            padding: 14px 28px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--glass-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            z-index: 100;
+        }
+
+        .go-back-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .go-back-link:hover {
+            color: var(--green-main);
+            transform: translateX(3px);
+        }
+
+        .header-lesson-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .chapter-label-badge {
+            background: var(--green-soft);
+            color: var(--green-dark);
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .lesson-title-text {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--text-title);
+        }
+
+        /* ========================================================================
+           ۴. کارت‌های آموزشی
+           ======================================================================== */
+        .main-lesson-wrapper {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-bottom: 80px;
+        }
+
+        .step-teaching-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-teaching-card:hover {
+            background-color: var(--card-hover-bg);
+            transform: translateY(-5px);
+        }
+
+        .step-number-badge {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--green-main), var(--green-dark));
+            color: white;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 10px rgba(34, 197, 94, 0.25);
+        }
+
+        .step-teaching-card h2 {
+            font-size: 1.4rem;
+            color: var(--text-title);
+            margin-bottom: 12px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-teaching-card p {
+            font-size: 1rem;
+            line-height: 1.9;
+            color: var(--text-body);
+            margin-bottom: 16px;
+        }
+
+        /* ========================================================================
+           ۵. المان‌های خاص
+           ======================================================================== */
+        .teacher-speech-bubble {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-md);
+            padding: 18px 22px;
+            border: 1px dashed var(--green-main);
+            color: var(--green-dark);
+            margin: 16px 0;
+            position: relative;
+            font-style: italic;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .teacher-speech-bubble::before {
+            content: "🧑‍🏫";
+            font-size: 1.4rem;
+            font-style: normal;
+        }
+
+        .solved-example-box {
+            background: var(--blue-soft);
+            border: 1px solid rgba(2, 132, 199, 0.2);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 16px 0;
+        }
+
+        .example-header {
+            font-weight: 800;
+            color: var(--blue-dark);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .key-tip-box {
+            background: var(--success-bg);
+            border: 1px solid var(--success);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--success);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* ========================================================================
+           ۶. بخش تعاملی ۱: تبدیل واحدهای طول
+           ======================================================================== */
+        .interactive-container {
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .sim-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--green-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .length-conversion-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .length-input-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .length-input-row input {
+            width: 110px;
+            padding: 10px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            text-align: center;
+            border: 2px solid var(--green-main);
+            border-radius: 10px;
+            color: var(--green-dark);
+            background: #fafafa;
+        }
+        .length-input-row input:focus { outline: none; border-color: var(--green-main); box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15); }
+
+        .length-input-row select {
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            border: 2px solid var(--green-main);
+            border-radius: 10px;
+            color: var(--green-dark);
+            background: #fafafa;
+            cursor: pointer;
+        }
+
+        .length-output-display {
+            background: var(--green-soft);
+            padding: 20px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--green-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            direction: ltr;
+            min-height: 80px;
+            width: 100%;
+        }
+
+        .length-steps {
+            background: #fafafa;
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            color: var(--text-body);
+            line-height: 2.2;
+            width: 100%;
+            min-height: 80px;
+        }
+
+        /* ========================================================================
+           ۷. بخش تعاملی ۲: تبدیل واحدهای سطح
+           ======================================================================== */
+        .area-conversion-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .area-output-display {
+            background: var(--blue-soft);
+            padding: 20px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--blue-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            direction: ltr;
+            min-height: 80px;
+            width: 100%;
+        }
+
+        .area-steps {
+            background: #fafafa;
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            color: var(--text-body);
+            line-height: 2.2;
+            width: 100%;
+            min-height: 80px;
+        }
+
+        /* ========================================================================
+           ۸. بخش تعاملی ۳: محاسبه محیط و مساحت
+           ======================================================================== */
+        .perimeter-area-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .shape-inputs-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            background: #fafafa;
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid #e2e8f0;
+        }
+
+        .shape-inputs-row input {
+            width: 90px;
+            padding: 10px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            text-align: center;
+            border: 2px solid var(--blue-main);
+            border-radius: 8px;
+            color: var(--blue-dark);
+            background: white;
+        }
+        .shape-inputs-row input:focus { outline: none; border-color: var(--blue-main); }
+
+        .perimeter-area-display {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .result-box {
+            background: var(--green-soft);
+            padding: 16px 24px;
+            border-radius: var(--radius-sm);
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--green-dark);
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .result-box .result-label {
+            font-size: 0.85rem;
+            display: block;
+            margin-bottom: 6px;
+            opacity: 0.8;
+        }
+
+        /* ========================================================================
+           ۹. بخش تعاملی ۴: تمرین طول و سطح
+           ======================================================================== */
+        .practice-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .practice-question {
+            background: var(--green-soft);
+            padding: 20px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--green-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .practice-answer-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .practice-answer-row input {
+            width: 130px;
+            padding: 10px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-align: center;
+            border: 2px solid var(--green-main);
+            border-radius: 8px;
+            color: var(--green-dark);
+            background: #fafafa;
+        }
+        .practice-answer-row input:focus { outline: none; border-color: var(--green-main); }
+
+        /* ========================================================================
+           ۱۰. دکمه‌ها
+           ======================================================================== */
+        .btn-ui {
+            background: linear-gradient(135deg, var(--green-main), var(--green-dark));
+            color: white;
+            border: 2px solid white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 6px 16px rgba(34, 197, 94, 0.25);
+        }
+        .btn-ui:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.35);
+        }
+        .btn-ui:active { transform: translateY(0); }
+        .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
+        .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
+
+        .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
+        .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
+
+        .btn-ui.lilac { background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark)); box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25); }
+        .btn-ui.lilac:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
+
+        .action-btns-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .feedback-display {
+            font-weight: 800;
+            text-align: center;
+            min-height: 28px;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: color 0.2s;
+        }
+
+        /* ========================================================================
+           ۱۱. دکمه‌های شناور
+           ======================================================================== */
+        .floating-btns {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            z-index: 200;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .float-nav-btn {
+            pointer-events: auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 800;
+            color: var(--text-title);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .float-nav-btn:hover {
+            background: var(--green-main);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(34, 197, 94, 0.25);
+        }
+
+        @media (max-width: 600px) {
+            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
+            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
+            .header-lesson-info { align-items: center; }
+        }
+
+        /* ========================================================================
+           ۱۲. انیمیشن
+           ======================================================================== */
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .pop-in { animation: popIn 0.3s ease-out forwards; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+        .shake-anim { animation: shake 0.4s ease-in-out; }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================================================
+         نوار ناوبری بالای درسنامه
+         ======================================================================== -->
+    <header class="lesson-top-nav">
+        <a href="../index.html" class="go-back-link">
+            <span>← برگشت به کتاب اصلی</span>
+        </a>
+        <div class="header-lesson-info">
+            <span class="chapter-label-badge">فصل پنجم: اندازه‌گیری</span>
+            <span class="lesson-title-text">بخش ۱: طول و سطح</span>
+        </div>
+    </header>
+
+    <main class="main-lesson-wrapper">
+
+        <!-- ========================================================================
+           قدم ۱: یادآوری واحدهای طول
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۱</span>
+            <h2>واحدهای طول: از میلی‌متر تا کیلومتر!</h2>
+            <p>
+                برای اندازه‌گیری طول از واحدهای مختلفی استفاده می‌کنیم. 
+                واحد اصلی طول <strong>متر</strong> است و بقیه واحدها بر اساس آن تعریف می‌شوند.
+            </p>
+
+            <div class="key-tip-box">
+                <strong>📌 واحدهای طول و تبدیل آن‌ها:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.4;">
+                    <li>۱ کیلومتر = ۱۰۰۰ متر</li>
+                    <li>۱ متر = ۱۰ دسی‌متر = ۱۰۰ سانتی‌متر = ۱۰۰۰ میلی‌متر</li>
+                    <li>۱ دسی‌متر = ۱۰ سانتی‌متر = ۱۰۰ میلی‌متر</li>
+                    <li>۱ سانتی‌متر = ۱۰ میلی‌متر</li>
+                </ul>
+            </div>
+
+            <div class="solved-example-box">
+                <div class="example-header">💡 مثال: تبدیل ۲/۵ متر به سانتی‌متر</div>
+                <p>چون هر متر ۱۰۰ سانتی‌متر است: ۲/۵ × ۱۰۰ = ۲۵۰ سانتی‌متر</p>
+            </div>
+
+            <div class="teacher-speech-bubble">
+                «واحدهای طول مثل پله‌های یک نردبان هستند! هر پله ۱۰ برابر پله‌ی پایین‌تریه. 
+                برای تبدیل از واحد بزرگ به کوچک، ضرب می‌کنیم و برای تبدیل از کوچک به بزرگ، تقسیم می‌کنیم.»
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۲: آزمایشگاه تبدیل واحدهای طول
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۲</span>
+            <h2>آزمایشگاه تبدیل واحدهای طول</h2>
+            <p>
+                یک مقدار و واحد آن را وارد کن، سپس واحد مقصد را انتخاب کن تا تبدیل را ببینی.
+            </p>
+
+            <!-- ابزار تعاملی ۱: تبدیل واحدهای طول -->
+            <div class="length-conversion-lab">
+                <div class="sim-title">📏 ماشین تبدیل واحدهای طول</div>
+                
+                <div class="length-input-row">
+                    <input type="number" id="length-input" value="2.5" step="0.01">
+                    <select id="length-from">
+                        <option value="km">کیلومتر</option>
+                        <option value="m" selected>متر</option>
+                        <option value="dm">دسی‌متر</option>
+                        <option value="cm">سانتی‌متر</option>
+                        <option value="mm">میلی‌متر</option>
+                    </select>
+                    <span style="font-size:1.5rem; font-weight:900; color:var(--green-main);">→</span>
+                    <select id="length-to">
+                        <option value="km">کیلومتر</option>
+                        <option value="m">متر</option>
+                        <option value="dm">دسی‌متر</option>
+                        <option value="cm" selected>سانتی‌متر</option>
+                        <option value="mm">میلی‌متر</option>
+                    </select>
+                    <button class="btn-ui green" id="btn-convert-length">تبدیل کن</button>
+                </div>
+
+                <div class="length-output-display" id="length-output">
+                    نتیجه: ؟
+                </div>
+
+                <div class="length-steps" id="length-steps">
+                    <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «تبدیل کن» را بزنید.</p>
+                </div>
+                <p id="length-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۳: واحدهای سطح
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۳</span>
+            <h2>واحدهای سطح: دنیای دو بعدی!</h2>
+            <p>
+                سطح یا مساحت، اندازه‌ی یک ناحیه‌ی دو بعدی است. واحد اصلی سطح 
+                <strong>متر مربع (m²)</strong> است.
+            </p>
+
+            <div class="key-tip-box">
+                <strong>📌 واحدهای سطح و تبدیل آن‌ها:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.4;">
+                    <li>۱ کیلومتر مربع = ۱,۰۰۰,۰۰۰ متر مربع</li>
+                    <li>۱ متر مربع = ۱۰۰ دسی‌متر مربع = ۱۰,۰۰۰ سانتی‌متر مربع</li>
+                    <li>۱ دسی‌متر مربع = ۱۰۰ سانتی‌متر مربع</li>
+                    <li>۱ سانتی‌متر مربع = ۱۰۰ میلی‌متر مربع</li>
+                    <li>۱ هکتار = ۱۰,۰۰۰ متر مربع</li>
+                </ul>
+            </div>
+
+            <div class="solved-example-box">
+                <div class="example-header">💡 نکته مهم</div>
+                <p>در تبدیل واحدهای سطح، ضریب تبدیل <strong>۱۰۰</strong> است (نه ۱۰). 
+                مثلاً ۱ متر مربع = ۱۰۰ دسی‌متر مربع.</p>
+            </div>
+
+            <!-- ابزار تعاملی ۲: تبدیل واحدهای سطح -->
+            <div class="area-conversion-lab">
+                <div class="sim-title">📐 ماشین تبدیل واحدهای سطح</div>
+                
+                <div class="length-input-row">
+                    <input type="number" id="area-input" value="2" step="0.01">
+                    <select id="area-from">
+                        <option value="m2" selected>متر مربع</option>
+                        <option value="dm2">دسی‌متر مربع</option>
+                        <option value="cm2">سانتی‌متر مربع</option>
+                        <option value="ha">هکتار</option>
+                    </select>
+                    <span style="font-size:1.5rem; font-weight:900; color:var(--blue-main);">→</span>
+                    <select id="area-to">
+                        <option value="m2">متر مربع</option>
+                        <option value="dm2" selected>دسی‌متر مربع</option>
+                        <option value="cm2">سانتی‌متر مربع</option>
+                        <option value="ha">هکتار</option>
+                    </select>
+                    <button class="btn-ui blue" id="btn-convert-area">تبدیل کن</button>
+                </div>
+
+                <div class="area-output-display" id="area-output">
+                    نتیجه: ؟
+                </div>
+
+                <div class="area-steps" id="area-steps">
+                    <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «تبدیل کن» را بزنید.</p>
+                </div>
+                <p id="area-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۴: محیط و مساحت اشکال
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۴</span>
+            <h2>محیط و مساحت: اندازه‌گیری اشکال!</h2>
+            <p>
+                <strong>محیط</strong> یعنی فاصله‌ی دور تا دور یک شکل، و <strong>مساحت</strong> 
+                یعنی اندازه‌ی سطح داخل شکل.
+            </p>
+
+            <div class="key-tip-box">
+                <strong>📌 فرمول‌های محیط و مساحت:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.4;">
+                    <li><strong>مستطیل:</strong> محیط = ۲ × (طول + عرض) | مساحت = طول × عرض</li>
+                    <li><strong>مربع:</strong> محیط = ۴ × ضلع | مساحت = ضلع × ضلع</li>
+                    <li><strong>مثلث:</strong> محیط = مجموع سه ضلع | مساحت = (قاعده × ارتفاع) ÷ ۲</li>
+                    <li><strong>متوازی‌الاضلاع:</strong> محیط = ۲ × (ضلع اول + ضلع دوم) | مساحت = قاعده × ارتفاع</li>
+                </ul>
+            </div>
+
+            <!-- ابزار تعاملی ۳: محاسبه محیط و مساحت -->
+            <div class="perimeter-area-lab">
+                <div class="sim-title">📐 ماشین محاسبه محیط و مساحت</div>
+
+                <div class="shape-inputs-row">
+                    <span style="font-weight:800;">نوع شکل:</span>
+                    <select id="shape-type" style="padding:10px; border-radius:8px; border:2px solid var(--blue-main); font-weight:700; color:var(--blue-dark); background:#fafafa; cursor:pointer;">
+                        <option value="rectangle">مستطیل</option>
+                        <option value="square">مربع</option>
+                        <option value="triangle">مثلث (قاعده و ارتفاع)</option>
+                        <option value="parallelogram">متوازی‌الاضلاع</option>
+                    </select>
+                </div>
+
+                <div class="shape-inputs-row" id="shape-dimensions">
+                    <!-- با JS ساخته می‌شود -->
+                </div>
+
+                <div class="action-btns-row">
+                    <button class="btn-ui green" id="btn-calc-perimeter-area">محاسبه</button>
+                </div>
+
+                <div class="perimeter-area-display" id="perimeter-area-display">
+                    <!-- نتایج -->
+                </div>
+                <p id="perimeter-area-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۵: تمرین طول و سطح
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۵</span>
+            <h2>تمرین طول و سطح</h2>
+            <p>
+                حالا نوبت تمرین است! به سوالات پاسخ بده.
+            </p>
+
+            <!-- ابزار تعاملی ۴: تمرین طول و سطح -->
+            <div class="practice-lab">
+                <div class="sim-title">📝 تمرین تعاملی</div>
+                
+                <div class="practice-question" id="practice-question">
+                    <!-- سوال با JS ساخته می‌شود -->
+                </div>
+
+                <div class="practice-answer-row">
+                    <input type="number" id="practice-answer" step="0.001" placeholder="پاسخ">
+                    <span id="practice-unit" style="font-weight:800; color:var(--green-dark);">واحد</span>
+                    <button class="btn-ui green" id="btn-check-practice">بررسی</button>
+                </div>
+
+                <p id="practice-feedback" class="feedback-display"></p>
+                <button class="btn-ui blue" id="btn-new-practice">سوال جدید</button>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۶: جمع‌بندی
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۶</span>
+            <h2>جمع‌بندی و تمرین</h2>
+            <p>در این بخش یاد گرفتیم:</p>
+            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
+                <li>✅ واحدهای طول: کیلومتر، متر، دسی‌متر، سانتی‌متر، میلی‌متر و تبدیل آن‌ها (ضریب ۱۰).</li>
+                <li>✅ واحدهای سطح: متر مربع، دسی‌متر مربع، سانتی‌متر مربع، هکتار و تبدیل آن‌ها (ضریب ۱۰۰).</li>
+                <li>✅ محیط: فاصله دور تا دور شکل.</li>
+                <li>✅ مساحت: اندازه‌ی سطح داخل شکل.</li>
+                <li>✅ فرمول‌های محیط و مساحت: مستطیل، مربع، مثلث، متوازی‌الاضلاع.</li>
+            </ul>
+
+            <div class="teacher-speech-bubble">
+                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی. 
+                یادت باشه که اندازه‌گیری، یکی از مفاهیم پایه‌ای در ریاضی، علوم و زندگی روزمره است.»
+            </div>
+
+            <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
+                <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
+                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
+                    <li>۳/۵ کیلومتر را به متر تبدیل کنید.</li>
+                    <li>۲۵۰۰ سانتی‌متر مربع را به دسی‌متر مربع تبدیل کنید.</li>
+                    <li>محیط و مساحت یک مستطیل به طول ۶ سانتی‌متر و عرض ۴ سانتی‌متر را حساب کنید.</li>
+                    <li>مساحت یک مثلث با قاعده‌ی ۸ متر و ارتفاع ۵ متر را پیدا کنید.</li>
+                </ol>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================================================
+         دکمه‌های شناور
+         ======================================================================== -->
+    <div class="floating-btns">
+        <a href="chapter4_part4.html" class="float-nav-btn">→ فصل قبلی</a>
+        <a href="chapter5_part2.html" class="float-nav-btn" id="next-lesson-btn">بخش بعدی ←</a>
+    </div>
+
+    <script>
+        /* ========================================================================
+           لاجیک صوتی
+           ======================================================================== */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTone(freq, duration) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
+        }
+
+        /* ========================================================================
+           تعامل ۱: تبدیل واحدهای طول
+           ======================================================================== */
+        const lengthUnitNames = {
+            km: 'کیلومتر',
+            m: 'متر',
+            dm: 'دسی‌متر',
+            cm: 'سانتی‌متر',
+            mm: 'میلی‌متر'
+        };
+
+        // تبدیل همه به متر (واحد پایه)
+        const lengthToMeter = {
+            km: 1000,
+            m: 1,
+            dm: 0.1,
+            cm: 0.01,
+            mm: 0.001
+        };
+
+        document.getElementById('btn-convert-length').addEventListener('click', function() {
+            const val = parseFloat(document.getElementById('length-input').value);
+            const fromUnit = document.getElementById('length-from').value;
+            const toUnit = document.getElementById('length-to').value;
+            const outputEl = document.getElementById('length-output');
+            const stepsEl = document.getElementById('length-steps');
+            const feedbackEl = document.getElementById('length-feedback');
+
+            if (isNaN(val)) {
+                feedbackEl.innerText = '❌ لطفاً یک مقدار معتبر وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            // تبدیل به متر و سپس به واحد مقصد
+            const valueInMeter = val * lengthToMeter[fromUnit];
+            const result = valueInMeter / lengthToMeter[toUnit];
+
+            outputEl.innerHTML = `${val.toLocaleString('fa-IR')} ${lengthUnitNames[fromUnit]} = <strong>${result.toLocaleString('fa-IR')} ${lengthUnitNames[toUnit]}</strong>`;
+
+            // محاسبه ضریب تبدیل
+            const factor = lengthToMeter[fromUnit] / lengthToMeter[toUnit];
+
+            stepsEl.innerHTML = `
+                <div style="padding: 6px 0;"><strong style="color: var(--green-dark);">مرحله ۱:</strong> تبدیل ${val.toLocaleString('fa-IR')} ${lengthUnitNames[fromUnit]} به متر: ${(val * lengthToMeter[fromUnit]).toLocaleString('fa-IR')} متر</div>
+                <div style="padding: 6px 0;"><strong style="color: var(--green-dark);">مرحله ۲:</strong> تبدیل متر به ${lengthUnitNames[toUnit]}: تقسیم بر ${lengthToMeter[toUnit].toLocaleString('fa-IR')}</div>
+                <div style="padding: 6px 0;"><strong style="color: var(--green-dark);">نتیجه:</strong> ضریب تبدیل = ${factor.toLocaleString('fa-IR')}</div>
+            `;
+
+            feedbackEl.innerText = `✅ تبدیل با موفقیت انجام شد.`;
+            feedbackEl.style.color = 'var(--success)';
+            playTone(600, 0.3);
+            confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
+        });
+
+        /* ========================================================================
+           تعامل ۲: تبدیل واحدهای سطح
+           ======================================================================== */
+        const areaUnitNames = {
+            m2: 'متر مربع',
+            dm2: 'دسی‌متر مربع',
+            cm2: 'سانتی‌متر مربع',
+            ha: 'هکتار'
+        };
+
+        // تبدیل همه به متر مربع (واحد پایه)
+        const areaToM2 = {
+            m2: 1,
+            dm2: 0.01,
+            cm2: 0.0001,
+            ha: 10000
+        };
+
+        document.getElementById('btn-convert-area').addEventListener('click', function() {
+            const val = parseFloat(document.getElementById('area-input').value);
+            const fromUnit = document.getElementById('area-from').value;
+            const toUnit = document.getElementById('area-to').value;
+            const outputEl = document.getElementById('area-output');
+            const stepsEl = document.getElementById('area-steps');
+            const feedbackEl = document.getElementById('area-feedback');
+
+            if (isNaN(val)) {
+                feedbackEl.innerText = '❌ لطفاً یک مقدار معتبر وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            const valueInM2 = val * areaToM2[fromUnit];
+            const result = valueInM2 / areaToM2[toUnit];
+
+            outputEl.innerHTML = `${val.toLocaleString('fa-IR')} ${areaUnitNames[fromUnit]} = <strong>${result.toLocaleString('fa-IR')} ${areaUnitNames[toUnit]}</strong>`;
+
+            const factor = areaToM2[fromUnit] / areaToM2[toUnit];
+
+            stepsEl.innerHTML = `
+                <div style="padding: 6px 0;"><strong style="color: var(--blue-dark);">مرحله ۱:</strong> تبدیل ${val.toLocaleString('fa-IR')} ${areaUnitNames[fromUnit]} به متر مربع: ${(val * areaToM2[fromUnit]).toLocaleString('fa-IR')} متر مربع</div>
+                <div style="padding: 6px 0;"><strong style="color: var(--blue-dark);">مرحله ۲:</strong> تبدیل متر مربع به ${areaUnitNames[toUnit]}: تقسیم بر ${areaToM2[toUnit].toLocaleString('fa-IR')}</div>
+                <div style="padding: 6px 0;"><strong style="color: var(--blue-dark);">نتیجه:</strong> ضریب تبدیل = ${factor.toLocaleString('fa-IR')}</div>
+            `;
+
+            feedbackEl.innerText = `✅ تبدیل با موفقیت انجام شد.`;
+            feedbackEl.style.color = 'var(--success)';
+            playTone(600, 0.3);
+            confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
+        });
+
+        /* ========================================================================
+           تعامل ۳: محاسبه محیط و مساحت
+           ======================================================================== */
+        const shapeDimensions = {
+            rectangle: [
+                { label: 'طول', id: 'length', value: 6 },
+                { label: 'عرض', id: 'width', value: 4 }
+            ],
+            square: [
+                { label: 'ضلع', id: 'side', value: 5 }
+            ],
+            triangle: [
+                { label: 'قاعده', id: 'base', value: 8 },
+                { label: 'ارتفاع', id: 'height', value: 5 }
+            ],
+            parallelogram: [
+                { label: 'قاعده', id: 'base', value: 7 },
+                { label: 'ارتفاع', id: 'height', value: 4 }
+            ]
+        };
+
+        function buildShapeInputs() {
+            const shapeType = document.getElementById('shape-type').value;
+            const dims = shapeDimensions[shapeType];
+            const container = document.getElementById('shape-dimensions');
+            container.innerHTML = '';
+
+            dims.forEach(dim => {
+                const label = document.createElement('span');
+                label.style.fontWeight = '800';
+                label.innerText = dim.label + ':';
+                container.appendChild(label);
+
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.id = 'dim-' + dim.id;
+                input.value = dim.value;
+                input.min = 0.1;
+                input.step = 0.1;
+                container.appendChild(input);
+            });
+        }
+
+        document.getElementById('shape-type').addEventListener('change', buildShapeInputs);
+
+        document.getElementById('btn-calc-perimeter-area').addEventListener('click', function() {
+            const shapeType = document.getElementById('shape-type').value;
+            const displayEl = document.getElementById('perimeter-area-display');
+            const feedbackEl = document.getElementById('perimeter-area-feedback');
+
+            let perimeter = 0, area = 0;
+
+            if (shapeType === 'rectangle') {
+                const len = parseFloat(document.getElementById('dim-length').value);
+                const wid = parseFloat(document.getElementById('dim-width').value);
+                if (isNaN(len) || isNaN(wid)) { feedbackEl.innerText = '❌ مقادیر را درست وارد کن!'; feedbackEl.style.color = 'var(--danger)'; return; }
+                perimeter = 2 * (len + wid);
+                area = len * wid;
+            } else if (shapeType === 'square') {
+                const side = parseFloat(document.getElementById('dim-side').value);
+                if (isNaN(side)) { feedbackEl.innerText = '❌ مقدار را درست وارد کن!'; feedbackEl.style.color = 'var(--danger)'; return; }
+                perimeter = 4 * side;
+                area = side * side;
+            } else if (shapeType === 'triangle') {
+                const base = parseFloat(document.getElementById('dim-base').value);
+                const height = parseFloat(document.getElementById('dim-height').value);
+                if (isNaN(base) || isNaN(height)) { feedbackEl.innerText = '❌ مقادیر را درست وارد کن!'; feedbackEl.style.color = 'var(--danger)'; return; }
+                // محیط مثلث با قاعده و ارتفاع به تنهایی قابل محاسبه نیست، پس فقط مساحت
+                area = (base * height) / 2;
+                perimeter = null;
+            } else if (shapeType === 'parallelogram') {
+                const base = parseFloat(document.getElementById('dim-base').value);
+                const height = parseFloat(document.getElementById('dim-height').value);
+                if (isNaN(base) || isNaN(height)) { feedbackEl.innerText = '❌ مقادیر را درست وارد کن!'; feedbackEl.style.color = 'var(--danger)'; return; }
+                area = base * height;
+                perimeter = null;
+            }
+
+            let displayHTML = '';
+            if (perimeter !== null) {
+                displayHTML += `<div class="result-box"><span class="result-label">محیط</span><strong>${perimeter.toLocaleString('fa-IR')} واحد</strong></div>`;
+            } else {
+                displayHTML += `<div class="result-box" style="background:#fef3c7; color:#92400e;"><span class="result-label">محیط</span><span style="font-size:0.8rem;">نیاز به اطلاعات بیشتر</span></div>`;
+            }
+            displayHTML += `<div class="result-box" style="background: var(--blue-soft); color: var(--blue-dark);"><span class="result-label">مساحت</span><strong>${area.toLocaleString('fa-IR')} واحد مربع</strong></div>`;
+
+            displayEl.innerHTML = displayHTML;
+            feedbackEl.innerText = `✅ محاسبه با موفقیت انجام شد.`;
+            feedbackEl.style.color = 'var(--success)';
+            playTone(600, 0.3);
+            confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
+        });
+
+        buildShapeInputs();
+
+        /* ========================================================================
+           تعامul ۴: تمرین طول و سطح
+           ======================================================================== */
+        let practiceAnswer, practiceUnit, practiceType;
+
+        function generatePracticeQuestion() {
+            const types = ['length', 'area', 'perimeter', 'area-shape'];
+            practiceType = types[Math.floor(Math.random() * types.length)];
+
+            const qEl = document.getElementById('practice-question');
+            const unitEl = document.getElementById('practice-unit');
+
+            if (practiceType === 'length') {
+                const val = Math.round((Math.random() * 10 + 0.5) * 10) / 10;
+                const fromUnits = ['km', 'm', 'dm', 'cm'];
+                const toUnits = ['m', 'dm', 'cm', 'mm'];
+                const fromIdx = Math.floor(Math.random() * fromUnits.length);
+                const fromUnit = fromUnits[fromIdx];
+                const toUnit = toUnits[fromIdx];
+
+                practiceAnswer = val * (lengthToMeter[fromUnit] / lengthToMeter[toUnit]);
+                practiceUnit = lengthUnitNames[toUnit];
+
+                qEl.innerHTML = `${val.toLocaleString('fa-IR')} ${lengthUnitNames[fromUnit]} را به ${lengthUnitNames[toUnit]} تبدیل کنید.`;
+                unitEl.innerText = lengthUnitNames[toUnit];
+            } else if (practiceType === 'area') {
+                const val = Math.floor(Math.random() * 20 + 1);
+                practiceAnswer = val * 100; // متر مربع به دسی‌متر مربع
+                practiceUnit = 'دسی‌متر مربع';
+                qEl.innerHTML = `${val.toLocaleString('fa-IR')} متر مربع را به دسی‌متر مربع تبدیل کنید.`;
+                unitEl.innerText = 'دسی‌متر مربع';
+            } else if (practiceType === 'perimeter') {
+                const len = Math.floor(Math.random() * 10 + 2);
+                const wid = Math.floor(Math.random() * 10 + 2);
+                practiceAnswer = 2 * (len + wid);
+                practiceUnit = 'سانتی‌متر';
+                qEl.innerHTML = `محیط مستطیلی به طول ${len.toLocaleString('fa-IR')} سانتی‌متر و عرض ${wid.toLocaleString('fa-IR')} سانتی‌متر چقدر است؟`;
+                unitEl.innerText = 'سانتی‌متر';
+            } else {
+                const len = Math.floor(Math.random() * 10 + 2);
+                const wid = Math.floor(Math.random() * 10 + 2);
+                practiceAnswer = len * wid;
+                practiceUnit = 'سانتی‌متر مربع';
+                qEl.innerHTML = `مساحت مستطیلی به طول ${len.toLocaleString('fa-IR')} سانتی‌متر و عرض ${wid.toLocaleString('fa-IR')} سانتی‌متر چقدر است؟`;
+                unitEl.innerText = 'سانتی‌متر مربع';
+            }
+
+            document.getElementById('practice-answer').value = '';
+            document.getElementById('practice-feedback').innerText = '';
+        }
+
+        document.getElementById('btn-check-practice').addEventListener('click', function() {
+            const userAnswer = parseFloat(document.getElementById('practice-answer').value);
+            const feedbackEl = document.getElementById('practice-feedback');
+
+            if (isNaN(userAnswer)) {
+                feedbackEl.innerText = '❌ لطفاً یک عدد وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            if (Math.abs(userAnswer - practiceAnswer) < 0.001) {
+                feedbackEl.innerText = `✅ آفرین! پاسخ درست ${practiceAnswer.toLocaleString('fa-IR')} ${practiceUnit} است.`;
+                feedbackEl.style.color = 'var(--success)';
+                playTone(600, 0.3);
+                confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
+            } else {
+                feedbackEl.innerText = `❌ اشتباه! پاسخ درست ${practiceAnswer.toLocaleString('fa-IR')} ${practiceUnit} است.`;
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(300, 0.3);
+                document.getElementById('practice-question').classList.add('shake-anim');
+                setTimeout(() => document.getElementById('practice-question').classList.remove('shake-anim'), 500);
+            }
+        });
+
+        document.getElementById('btn-new-practice').addEventListener('click', () => {
+            playTone(440, 0.05);
+            generatePracticeQuestion();
+        });
+
+        generatePracticeQuestion();
+
+        /* ========================================================================
+           مدیریت دکمه‌های شناور
+           ======================================================================== */
+        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('به بخش بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
+        });
+
+    </script>
+</body>
+</html>

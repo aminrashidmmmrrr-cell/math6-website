@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فصل ۲ - بخش ۴: محاسبات با کسرها و حل مسئله | درسنامه تعاملی</title>
+    
+    <!-- قلم زیبای وزیرمتن -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+
+    <!-- انیمیشن کاغذ رنگی -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* ========================================================================
+           ۱. متغیرها و تم رنگی
+           ======================================================================== */
+        :root {
+            --lilac-bg: #f7f1fc;
+            --lilac-soft: #f1e7fb;
+            --lilac-border: #d8b4fe;
+            --lilac-main: #9333ea;
+            --lilac-dark: #6b21a8;
+            --lilac-glow: rgba(147, 51, 234, 0.15);
+            
+            --blue-soft: #e0f2fe;
+            --blue-main: #0284c7;
+            --blue-dark: #0369a1;
+            
+            --success: #16a34a;
+            --success-bg: rgba(22, 163, 74, 0.1);
+            --danger: #dc2626;
+            --danger-bg: rgba(220, 38, 38, 0.1);
+            --warning: #ca8a04;
+            --highlight: #fef08a;
+            --pink-soft: #fce7f3;
+            --pink-main: #ec4899;
+
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
+            --card-hover-bg: rgba(255, 255, 255, 0.95);
+            
+            --text-title: #2e1065;
+            --text-body: #475569;
+            --text-muted: #64748b;
+            
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 8px;
+        }
+
+        /* ========================================================================
+           ۲. استایل‌های پایه
+           ======================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--lilac-bg);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-body);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* ========================================================================
+           ۳. نوار هدر
+           ======================================================================== */
+        .lesson-top-nav {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto 20px;
+            padding: 14px 28px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--glass-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            z-index: 100;
+        }
+
+        .go-back-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .go-back-link:hover {
+            color: var(--pink-main);
+            transform: translateX(3px);
+        }
+
+        .header-lesson-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .chapter-label-badge {
+            background: var(--pink-soft);
+            color: var(--pink-main);
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .lesson-title-text {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--text-title);
+        }
+
+        /* ========================================================================
+           ۴. کارت‌های آموزشی
+           ======================================================================== */
+        .main-lesson-wrapper {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-bottom: 80px;
+        }
+
+        .step-teaching-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-teaching-card:hover {
+            background-color: var(--card-hover-bg);
+            transform: translateY(-5px);
+        }
+
+        .step-number-badge {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--pink-main), #be185d);
+            color: white;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 10px rgba(236, 72, 153, 0.25);
+        }
+
+        .step-teaching-card h2 {
+            font-size: 1.4rem;
+            color: var(--text-title);
+            margin-bottom: 12px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-teaching-card p {
+            font-size: 1rem;
+            line-height: 1.9;
+            color: var(--text-body);
+            margin-bottom: 16px;
+        }
+
+        /* ========================================================================
+           ۵. المان‌های خاص
+           ======================================================================== */
+        .teacher-speech-bubble {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-md);
+            padding: 18px 22px;
+            border: 1px dashed var(--pink-main);
+            color: var(--lilac-dark);
+            margin: 16px 0;
+            position: relative;
+            font-style: italic;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .teacher-speech-bubble::before {
+            content: "🧑‍🏫";
+            font-size: 1.4rem;
+            font-style: normal;
+        }
+
+        .solved-example-box {
+            background: var(--blue-soft);
+            border: 1px solid rgba(2, 132, 199, 0.2);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 16px 0;
+        }
+
+        .example-header {
+            font-weight: 800;
+            color: var(--blue-dark);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .key-tip-box {
+            background: var(--success-bg);
+            border: 1px solid var(--success);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--success);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* کسرنویسی */
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 4px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            line-height: 1.1;
+        }
+        .fraction .numerator { border-bottom: 2px solid currentColor; padding: 0 6px; }
+        .fraction .denominator { padding: 0 6px; }
+
+        /* ========================================================================
+           ۶. بخش تعاملی ۱: محاسبه‌گر عبارات ترکیبی
+           ======================================================================== */
+        .interactive-container {
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .sim-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--pink-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .expression-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .expression-display {
+            background: var(--pink-soft);
+            padding: 20px 28px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--pink-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            direction: ltr;
+            flex-wrap: wrap;
+            min-height: 80px;
+        }
+
+        .expression-steps {
+            background: #fafafa;
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            color: var(--text-body);
+            line-height: 2.2;
+            min-height: 100px;
+        }
+
+        .expression-step-item {
+            padding: 8px 0;
+            border-bottom: 1px dashed #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .expression-step-item:last-child { border-bottom: none; }
+
+        .expression-step-item .step-label {
+            color: var(--pink-main);
+            font-weight: 800;
+            min-width: 80px;
+        }
+
+        .expression-input-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .expression-input-row input {
+            width: 80px;
+            padding: 10px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-align: center;
+            border: 2px solid var(--pink-main);
+            border-radius: 8px;
+            color: var(--lilac-dark);
+            background: #fafafa;
+        }
+        .expression-input-row input:focus { outline: none; border-color: var(--pink-main); box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.15); }
+
+        /* ========================================================================
+           ۷. بخش تعاملی ۲: حل مسئله کلامی
+           ======================================================================== */
+        .word-problem-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .problem-card {
+            background: var(--blue-soft);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border-right: 4px solid var(--blue-main);
+        }
+
+        .problem-card .problem-text {
+            font-weight: 700;
+            color: var(--blue-dark);
+            font-size: 1.05rem;
+            line-height: 2;
+            margin-bottom: 16px;
+        }
+
+        .problem-card .problem-steps {
+            background: #fafafa;
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            color: var(--text-body);
+            line-height: 2.2;
+            margin-bottom: 16px;
+        }
+
+        .problem-card .problem-answer-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .problem-card .problem-answer-row input {
+            width: 80px;
+            padding: 10px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-align: center;
+            border: 2px solid var(--blue-main);
+            border-radius: 8px;
+            color: var(--blue-dark);
+            background: #fafafa;
+        }
+        .problem-card .problem-answer-row input:focus { outline: none; border-color: var(--blue-main); }
+
+        /* ========================================================================
+           ۸. بخش تعاملی ۳: ترتیب عملیات
+           ======================================================================== */
+        .order-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .order-display {
+            background: var(--lilac-soft);
+            padding: 20px 28px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--lilac-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            direction: ltr;
+            flex-wrap: wrap;
+            min-height: 80px;
+        }
+
+        .order-steps {
+            background: #fafafa;
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            color: var(--text-body);
+            line-height: 2.2;
+            min-height: 80px;
+        }
+
+        .order-step-item {
+            padding: 8px 0;
+            border-bottom: 1px dashed #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .order-step-item:last-child { border-bottom: none; }
+
+        .order-step-item .step-label {
+            color: var(--lilac-main);
+            font-weight: 800;
+            min-width: 80px;
+        }
+
+        /* ========================================================================
+           ۹. بخش تعاملی ۴: تمرین ترکیبی
+           ======================================================================== */
+        .practice-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .practice-question {
+            background: var(--pink-soft);
+            padding: 20px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--pink-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            direction: ltr;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .practice-answer-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .practice-answer-row .fraction-input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .practice-answer-row .fraction-input-group input {
+            width: 70px;
+            padding: 4px;
+            font-size: 1.1rem;
+            border-radius: 4px;
+            border: 2px solid var(--pink-main);
+            text-align: center;
+            font-weight: 900;
+            color: var(--lilac-dark);
+            background: #fafafa;
+        }
+        .practice-answer-row .fraction-input-group input:focus { outline: none; border-color: var(--pink-main); }
+
+        .practice-answer-row .fraction-input-group .numerator-input {
+            border-bottom: 3px solid var(--pink-main);
+        }
+
+        /* ========================================================================
+           ۱۰. دکمه‌ها
+           ======================================================================== */
+        .btn-ui {
+            background: linear-gradient(135deg, var(--pink-main), #be185d);
+            color: white;
+            border: 2px solid white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 6px 16px rgba(236, 72, 153, 0.25);
+        }
+        .btn-ui:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.35);
+        }
+        .btn-ui:active { transform: translateY(0); }
+        .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
+        .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
+
+        .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
+        .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
+
+        .btn-ui.lilac { background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark)); box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25); }
+        .btn-ui.lilac:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
+
+        .action-btns-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .feedback-display {
+            font-weight: 800;
+            text-align: center;
+            min-height: 28px;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: color 0.2s;
+        }
+
+        /* ========================================================================
+           ۱۱. دکمه‌های شناور
+           ======================================================================== */
+        .floating-btns {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            z-index: 200;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .float-nav-btn {
+            pointer-events: auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 800;
+            color: var(--text-title);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .float-nav-btn:hover {
+            background: var(--pink-main);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(236, 72, 153, 0.25);
+        }
+
+        @media (max-width: 600px) {
+            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
+            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
+            .header-lesson-info { align-items: center; }
+        }
+
+        /* ========================================================================
+           ۱۲. انیمیشن
+           ======================================================================== */
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .pop-in { animation: popIn 0.3s ease-out forwards; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+        .shake-anim { animation: shake 0.4s ease-in-out; }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================================================
+         نوار ناوبری بالای درسنامه
+         ======================================================================== -->
+    <header class="lesson-top-nav">
+        <a href="../index.html" class="go-back-link">
+            <span>← برگشت به کتاب اصلی</span>
+        </a>
+        <div class="header-lesson-info">
+            <span class="chapter-label-badge">فصل دوم: کسر</span>
+            <span class="lesson-title-text">بخش ۴: محاسبات با کسرها و حل مسئله</span>
+        </div>
+    </header>
+
+    <main class="main-lesson-wrapper">
+
+        <!-- ========================================================================
+           قدم ۱: ترتیب انجام عملیات
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۱</span>
+            <h2>ترتیب انجام عملیات: اول کدام؟</h2>
+            <p>
+                وقتی در یک عبارت ریاضی چند عمل مختلف داریم، باید ترتیب خاصی را رعایت کنیم:
+            </p>
+            <ol style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.4;">
+                <li><strong>اولویت اول:</strong> پرانتزها (از داخلی‌ترین پرانتز شروع می‌کنیم)</li>
+                <li><strong>اولویت دوم:</strong> ضرب و تقسیم (از چپ به راست)</li>
+                <li><strong>اولویت سوم:</strong> جمع و تفریق (از چپ به راست)</li>
+            </ol>
+
+            <div class="key-tip-box">
+                <strong>📌 نکته:</strong>
+                <p style="margin-top: 6px;">اگر عبارتی شامل کسر و عدد صحیح باشد، ابتدا همه را به کسر تبدیل می‌کنیم، سپس طبق ترتیب عملیات پیش می‌رویم.</p>
+            </div>
+
+            <div class="solved-example-box">
+                <div class="example-header">💡 مثال: محاسبه ۱/۲ + ۱/۳ × ۳/۴</div>
+                <p>مرحله ۱ (ضرب): <span class="fraction"><span class="numerator">۱</span><span class="denominator">۳</span></span> × <span class="fraction"><span class="numerator">۳</span><span class="denominator">۴</span></span> = <span class="fraction"><span class="numerator">۳</span><span class="denominator">۱۲</span></span> = <span class="fraction"><span class="numerator">۱</span><span class="denominator">۴</span></span></p>
+                <p>مرحله ۲ (جمع): <span class="fraction"><span class="numerator">۱</span><span class="denominator">۲</span></span> + <span class="fraction"><span class="numerator">۱</span><span class="denominator">۴</span></span> = <span class="fraction"><span class="numerator">۲</span><span class="denominator">۴</span></span> + <span class="fraction"><span class="numerator">۱</span><span class="denominator">۴</span></span> = <span class="fraction"><span class="numerator">۳</span><span class="denominator">۴</span></span></p>
+            </div>
+
+            <div class="teacher-speech-bubble">
+                «ترتیب عملیات مثل ترتیب چراغ‌های راهنمایی و رانندگی است! اول باید چراغ سبز (پرانتز) را رد کنی، بعد زرد (ضرب و تقسیم) و در آخر قرمز (جمع و تفریق).»
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۲: محاسبه‌گر عبارات ترکیبی
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۲</span>
+            <h2>محاسبه‌گر عبارات ترکیبی: گام‌به‌گام حل کن!</h2>
+            <p>
+                در این آزمایشگاه، یک عبارت ترکیبی با کسرها به تو نشان داده می‌شود. 
+                با کلیک روی دکمه، مراحل حل را به ترتیب می‌بینی.
+            </p>
+
+            <!-- ابزار تعاملی ۱: محاسبه‌گر عبارات ترکیبی -->
+            <div class="expression-lab">
+                <div class="sim-title">🧮 محاسبه‌گر عبارات ترکیبی</div>
+                
+                <div class="expression-display" id="expression-display">
+                    <!-- عبارت با JS ساخته می‌شود -->
+                </div>
+
+                <div class="expression-steps" id="expression-steps-output">
+                    <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «حل کن» را بزنید.</p>
+                </div>
+
+                <div class="action-btns-row">
+                    <button class="btn-ui green" id="btn-solve-expression">حل کن</button>
+                    <button class="btn-ui blue" id="btn-new-expression">عبارت جدید</button>
+                </div>
+                <p id="expression-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۳: حل مسئله کلامی
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۳</span>
+            <h2>حل مسئله کلامی: داستان‌های ریاضی!</h2>
+            <p>
+                در ریاضی، بسیاری از مسائل به صورت داستان یا کلامی بیان می‌شوند. 
+                برای حل این مسائل، باید ابتدا اطلاعات را استخراج کنیم، سپس عملیات مناسب را انجام دهیم.
+            </p>
+
+            <!-- ابزار تعاملی ۲: حل مسئله کلامی -->
+            <div class="word-problem-lab">
+                <div class="sim-title">📖 حل مسئله کلامی</div>
+                
+                <div class="problem-card" id="problem-card">
+                    <!-- مسئله با JS ساخته می‌شود -->
+                </div>
+
+                <div class="action-btns-row">
+                    <button class="btn-ui green" id="btn-check-problem">بررسی پاسخ</button>
+                    <button class="btn-ui blue" id="btn-new-problem">مسئله جدید</button>
+                </div>
+                <p id="problem-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۴: ترتیب عملیات با پرانتز
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۴</span>
+            <h2>ترتیب عملیات با پرانتز: پیچیده‌ترش کن!</h2>
+            <p>
+                وقتی پرانتز در عبارت باشد، اولویت اول با پرانتز است. 
+                در این بخش، یک عبارت با پرانتز را گام‌به‌گام حل می‌کنیم.
+            </p>
+
+            <!-- ابزار تعاملی ۳: ترتیب عملیات با پرانتز -->
+            <div class="order-lab">
+                <div class="sim-title">📐 ترتیب عملیات با پرانتز</div>
+                
+                <div class="order-display" id="order-display">
+                    <!-- عبارت با JS ساخته می‌شود -->
+                </div>
+
+                <div class="order-steps" id="order-steps-output">
+                    <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «حل کن» را بزنید.</p>
+                </div>
+
+                <div class="action-btns-row">
+                    <button class="btn-ui lilac" id="btn-solve-order">حل کن</button>
+                    <button class="btn-ui blue" id="btn-new-order">عبارت جدید</button>
+                </div>
+                <p id="order-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۵: تمرین ترکیبی
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۵</span>
+            <h2>تمرین ترکیبی: همه چیز با هم!</h2>
+            <p>
+                حالا نوبت تمرین است! حاصل عبارت را به صورت کسر ساده‌شده وارد کن.
+            </p>
+
+            <!-- ابزار تعاملی ۴: تمرین ترکیبی -->
+            <div class="practice-lab">
+                <div class="sim-title">📝 تمرین ترکیبی</div>
+                
+                <div class="practice-question" id="practice-question">
+                    <!-- سوال با JS ساخته می‌شود -->
+                </div>
+
+                <div class="practice-answer-row">
+                    <div class="fraction-input-group">
+                        <input type="number" class="numerator-input" id="practice-num" placeholder="صورت">
+                    </div>
+                    <span style="font-size:1.5rem; font-weight:900;">/</span>
+                    <div class="fraction-input-group">
+                        <input type="number" id="practice-den" placeholder="مخرج">
+                    </div>
+                    <button class="btn-ui green" id="btn-check-practice">بررسی</button>
+                </div>
+
+                <p id="practice-feedback" class="feedback-display"></p>
+                <button class="btn-ui blue" id="btn-new-practice">سوال جدید</button>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۶: جمع‌بندی
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۶</span>
+            <h2>جمع‌بندی و تمرین</h2>
+            <p>در این بخش یاد گرفتیم:</p>
+            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
+                <li>✅ ترتیب انجام عملیات: پرانتز → ضرب و تقسیم → جمع و تفریق</li>
+                <li>✅ حل عبارات ترکیبی با کسرها به صورت گام‌به‌گام</li>
+                <li>✅ حل مسائل کلامی با کسرها: استخراج اطلاعات، انتخاب عملیات، حل</li>
+                <li>✅ استفاده از پرانتز برای تغییر ترتیب عملیات</li>
+                <li>✅ کاربرد کسرها در مسائل زندگی روزمره</li>
+            </ul>
+
+            <div class="teacher-speech-bubble">
+                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی. یادت باشه که محاسبات با کسرها و حل مسئله، پایه‌ی خیلی از مفاهیم ریاضی در سال‌های بعدی هستند.»
+            </div>
+
+            <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
+                <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
+                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
+                    <li><span class="fraction"><span class="numerator">۱</span><span class="denominator">۲</span></span> + <span class="fraction"><span class="numerator">۱</span><span class="denominator">۳</span></span> × <span class="fraction"><span class="numerator">۳</span><span class="denominator">۴</span></span> = ؟</li>
+                    <li>(<span class="fraction"><span class="numerator">۱</span><span class="denominator">۲</span></span> + <span class="fraction"><span class="numerator">۱</span><span class="denominator">۳</span></span>) × <span class="fraction"><span class="numerator">۳</span><span class="denominator">۴</span></span> = ؟</li>
+                    <li>مادر ۳ کیلو آرد داشت. او ۱/۴ آن را برای کیک و ۱/۳ آن را برای نان استفاده کرد. چقدر آرد باقی مانده است؟</li>
+                    <li>یک باغچه مستطیل شکل به طول ۲/۳ متر و عرض ۱/۲ متر است. مساحت باغچه چقدر است؟</li>
+                </ol>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================================================
+         دکمه‌های شناور
+         ======================================================================== -->
+    <div class="floating-btns">
+        <a href="chapter2_part3.html" class="float-nav-btn">→ بخش قبلی</a>
+        <a href="chapter2_part5.html" class="float-nav-btn" id="next-lesson-btn">آزمون فصل ←</a>
+    </div>
+
+    <script>
+        /* ========================================================================
+           لاجیک صوتی
+           ======================================================================== */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTone(freq, duration) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
+        }
+
+        /* ========================================================================
+           تعامل ۱: محاسبه‌گر عبارات ترکیبی
+           ======================================================================== */
+        const expressions = [
+            { display: ['۱/۲', '+', '۱/۳', '×', '۳/۴'], result: '۳/۴', steps: [
+                { label: 'مرحله ۱ (ضرب):', text: '۱/۳ × ۳/۴ = ۳/۱۲ = ۱/۴' },
+                { label: 'مرحله ۲ (جمع):', text: '۱/۲ + ۱/۴ = ۲/۴ + ۱/۴ = ۳/۴' }
+            ]},
+            { display: ['۲/۳', '-', '۱/۴', '×', '۲/۳'], result: '۱/۳', steps: [
+                { label: 'مرحله ۱ (ضرب):', text: '۱/۴ × ۲/۳ = ۲/۱۲ = ۱/۶' },
+                { label: 'مرحله ۲ (تفریق):', text: '۲/۳ - ۱/۶ = ۴/۶ - ۱/۶ = ۳/۶ = ۱/۲' }
+            ]},
+            { display: ['۵/۶', '+', '۱/۲', '×', '۲/۳'], result: '۷/۶', steps: [
+                { label: 'مرحله ۱ (ضرب):', text: '۱/۲ × ۲/۳ = ۲/۶ = ۱/۳' },
+                { label: 'مرحله ۲ (جمع):', text: '۵/۶ + ۱/۳ = ۵/۶ + ۲/۶ = ۷/۶' }
+            ]}
+        ];
+        let currentExpressionIndex = 0;
+
+        function loadNewExpression() {
+            currentExpressionIndex = Math.floor(Math.random() * expressions.length);
+            const expr = expressions[currentExpressionIndex];
+            const displayEl = document.getElementById('expression-display');
+            
+            displayEl.innerHTML = '';
+            expr.display.forEach((item, idx) => {
+                const span = document.createElement('span');
+                if (item.includes('/')) {
+                    const [n, d] = item.split('/');
+                    span.innerHTML = `<span class="fraction"><span class="numerator">${n}</span><span class="denominator">${d}</span></span>`;
+                } else {
+                    span.innerText = item;
+                    span.style.color = 'var(--pink-main)';
+                }
+                displayEl.appendChild(span);
+            });
+
+            document.getElementById('expression-steps-output').innerHTML = '<p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «حل کن» را بزنید.</p>';
+            document.getElementById('expression-feedback').innerText = '';
+        }
+
+        document.getElementById('btn-solve-expression').addEventListener('click', function() {
+            playTone(550, 0.1);
+            const expr = expressions[currentExpressionIndex];
+            const stepsEl = document.getElementById('expression-steps-output');
+            
+            let stepsHTML = '';
+            expr.steps.forEach(step => {
+                stepsHTML += `<div class="expression-step-item"><span class="step-label">${step.label}</span> ${step.text}</div>`;
+            });
+            stepsHTML += `<div class="expression-step-item"><span class="step-label">پاسخ نهایی:</span> <strong style="color: var(--pink-main); font-size: 1.2rem;">${expr.result}</strong></div>`;
+            
+            stepsEl.innerHTML = stepsHTML;
+            document.getElementById('expression-feedback').innerText = '✅ عبارت با موفقیت حل شد.';
+            document.getElementById('expression-feedback').style.color = 'var(--success)';
+            playTone(600, 0.3);
+            confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
+        });
+
+        document.getElementById('btn-new-expression').addEventListener('click', () => {
+            playTone(440, 0.05);
+            loadNewExpression();
+        });
+
+        loadNewExpression();
+
+        /* ========================================================================
+           تعامل ۲: حل مسئله کلامی
+           ======================================================================== */
+        const wordProblems = [
+            {
+                text: 'مادر ۳ کیلو آرد داشت. او ۱/۴ آن را برای کیک و ۱/۳ آن را برای نان استفاده کرد. چقدر آرد باقی مانده است؟',
+                answerNum: 5, answerDen: 12,
+                steps: 'مقدار استفاده‌شده: ۱/۴ + ۱/۳ = ۳/۱۲ + ۴/۱۲ = ۷/۱۲<br>مقدار باقی‌مانده: ۳ - ۷/۱۲ = ۳۶/۱۲ - ۷/۱۲ = ۲۹/۱۲ کیلوگرم'
+            },
+            {
+                text: 'یک باغچه مستطیل شکل به طول ۲/۳ متر و عرض ۱/۲ متر است. مساحت باغچه چقدر است؟',
+                answerNum: 1, answerDen: 3,
+                steps: 'مساحت = طول × عرض = ۲/۳ × ۱/۲ = ۲/۶ = ۱/۳ متر مربع'
+            },
+            {
+                text: 'یک کارگر در هر ساعت ۱/۵ دیوار را رنگ می‌کند. او در ۳ ساعت چند دیوار را رنگ می‌کند؟',
+                answerNum: 3, answerDen: 5,
+                steps: 'مقدار رنگ‌آمیزی در ۳ ساعت: ۱/۵ × ۳ = ۳/۵ دیوار'
+            }
+        ];
+        let currentProblemIndex = 0;
+
+        function loadNewProblem() {
+            currentProblemIndex = Math.floor(Math.random() * wordProblems.length);
+            const problem = wordProblems[currentProblemIndex];
+            
+            const cardEl = document.getElementById('problem-card');
+            cardEl.innerHTML = `
+                <div class="problem-text">${problem.text}</div>
+                <div class="problem-steps">${problem.steps}</div>
+                <div class="problem-answer-row">
+                    <span style="font-weight:800;">پاسخ:</span>
+                    <input type="number" id="problem-answer-num" placeholder="صورت">
+                    <span style="font-size:1.5rem;">/</span>
+                    <input type="number" id="problem-answer-den" placeholder="مخرج">
+                </div>
+            `;
+
+            document.getElementById('problem-feedback').innerText = '';
+        }
+
+        document.getElementById('btn-check-problem').addEventListener('click', function() {
+            const problem = wordProblems[currentProblemIndex];
+            const userNum = parseInt(document.getElementById('problem-answer-num').value);
+            const userDen = parseInt(document.getElementById('problem-answer-den').value);
+            const feedbackEl = document.getElementById('problem-feedback');
+
+            if (isNaN(userNum) || isNaN(userDen)) {
+                feedbackEl.innerText = '❌ لطفاً صورت و مخرج را وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+            const g = gcd(problem.answerNum, problem.answerDen) || 1;
+            const correctNum = problem.answerNum / g;
+            const correctDen = problem.answerDen / g;
+
+            const userG = gcd(Math.abs(userNum), userDen) || 1;
+            const userSimpleNum = userNum / userG;
+            const userSimpleDen = userDen / userG;
+
+            if (userSimpleNum === correctNum && userSimpleDen === correctDen) {
+                feedbackEl.innerText = `✅ آفرین! پاسخ درست ${correctNum}/${correctDen} است.`;
+                feedbackEl.style.color = 'var(--success)';
+                playTone(600, 0.3);
+                confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
+            } else {
+                feedbackEl.innerText = `❌ اشتباه! پاسخ درست ${correctNum}/${correctDen} است.`;
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(300, 0.3);
+                document.getElementById('problem-card').classList.add('shake-anim');
+                setTimeout(() => document.getElementById('problem-card').classList.remove('shake-anim'), 500);
+            }
+        });
+
+        document.getElementById('btn-new-problem').addEventListener('click', () => {
+            playTone(440, 0.05);
+            loadNewProblem();
+        });
+
+        loadNewProblem();
+
+        /* ========================================================================
+           تعامل ۳: ترتیب عملیات با پرانتز
+           ======================================================================== */
+        const orderExamples = [
+            { display: ['(۱/۲', '+', '۱/۳)', '×', '۳/۴'], result: '۵/۸', steps: [
+                { label: 'مرحله ۱ (پرانتز):', text: '۱/۲ + ۱/۳ = ۳/۶ + ۲/۶ = ۵/۶' },
+                { label: 'مرحله ۲ (ضرب):', text: '۵/۶ × ۳/۴ = ۱۵/۲۴ = ۵/۸' }
+            ]},
+            { display: ['۲/۳', '×', '(۱/۴', '+', '۱/۲)'], result: '۱/۲', steps: [
+                { label: 'مرحله ۱ (پرانتز):', text: '۱/۴ + ۱/۲ = ۱/۴ + ۲/۴ = ۳/۴' },
+                { label: 'مرحله ۲ (ضرب):', text: '۲/۳ × ۳/۴ = ۶/۱۲ = ۱/۲' }
+            ]},
+            { display: ['(۳/۴', '-', '۱/۲)', '÷', '۱/۴'], result: '۱', steps: [
+                { label: 'مرحله ۱ (پرانتز):', text: '۳/۴ - ۱/۲ = ۳/۴ - ۲/۴ = ۱/۴' },
+                { label: 'مرحله ۲ (تقسیم):', text: '۱/۴ ÷ ۱/۴ = ۱/۴ × ۴/۱ = ۱' }
+            ]}
+        ];
+        let currentOrderIndex = 0;
+
+        function loadNewOrder() {
+            currentOrderIndex = Math.floor(Math.random() * orderExamples.length);
+            const expr = orderExamples[currentOrderIndex];
+            const displayEl = document.getElementById('order-display');
+            
+            displayEl.innerHTML = '';
+            expr.display.forEach((item, idx) => {
+                const span = document.createElement('span');
+                if (item.includes('/')) {
+                    const cleaned = item.replace(/[()]/g, '');
+                    const [n, d] = cleaned.split('/');
+                    const prefix = item.startsWith('(') ? '(' : '';
+                    const suffix = item.endsWith(')') ? ')' : '';
+                    span.innerHTML = `${prefix}<span class="fraction"><span class="numerator">${n}</span><span class="denominator">${d}</span></span>${suffix}`;
+                } else {
+                    span.innerText = item;
+                    span.style.color = 'var(--lilac-main)';
+                }
+                displayEl.appendChild(span);
+            });
+
+            document.getElementById('order-steps-output').innerHTML = '<p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «حل کن» را بزنید.</p>';
+            document.getElementById('order-feedback').innerText = '';
+        }
+
+        document.getElementById('btn-solve-order').addEventListener('click', function() {
+            playTone(550, 0.1);
+            const expr = orderExamples[currentOrderIndex];
+            const stepsEl = document.getElementById('order-steps-output');
+            
+            let stepsHTML = '';
+            expr.steps.forEach(step => {
+                stepsHTML += `<div class="order-step-item"><span class="step-label">${step.label}</span> ${step.text}</div>`;
+            });
+            stepsHTML += `<div class="order-step-item"><span class="step-label">پاسخ نهایی:</span> <strong style="color: var(--lilac-main); font-size: 1.2rem;">${expr.result}</strong></div>`;
+            
+            stepsEl.innerHTML = stepsHTML;
+            document.getElementById('order-feedback').innerText = '✅ عبارت با موفقیت حل شد.';
+            document.getElementById('order-feedback').style.color = 'var(--success)';
+            playTone(600, 0.3);
+            confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
+        });
+
+        document.getElementById('btn-new-order').addEventListener('click', () => {
+            playTone(440, 0.05);
+            loadNewOrder();
+        });
+
+        loadNewOrder();
+
+        /* ========================================================================
+           تعامل ۴: تمرین ترکیبی
+           ======================================================================== */
+        let practiceF1n, practiceF1d, practiceF2n, practiceF2d, practiceOp, practiceResultNum, practiceResultDen;
+
+        function generatePracticeQuestion() {
+            const operations = ['+', '-', '×', '÷'];
+            practiceOp = operations[Math.floor(Math.random() * operations.length)];
+
+            practiceF1d = Math.floor(2 + Math.random() * 5);
+            practiceF2d = Math.floor(2 + Math.random() * 5);
+            practiceF1n = Math.floor(1 + Math.random() * (practiceF1d - 1));
+            practiceF2n = Math.floor(1 + Math.random() * (practiceF2d - 1));
+
+            if (practiceOp === '+') {
+                practiceResultNum = (practiceF1n * practiceF2d) + (practiceF2n * practiceF1d);
+                practiceResultDen = practiceF1d * practiceF2d;
+            } else if (practiceOp === '-') {
+                if (practiceF1n / practiceF1d < practiceF2n / practiceF2d) {
+                    [practiceF1n, practiceF2n] = [practiceF2n, practiceF1n];
+                    [practiceF1d, practiceF2d] = [practiceF2d, practiceF1d];
+                }
+                practiceResultNum = (practiceF1n * practiceF2d) - (practiceF2n * practiceF1d);
+                practiceResultDen = practiceF1d * practiceF2d;
+            } else if (practiceOp === '×') {
+                practiceResultNum = practiceF1n * practiceF2n;
+                practiceResultDen = practiceF1d * practiceF2d;
+            } else if (practiceOp === '÷') {
+                practiceResultNum = practiceF1n * practiceF2d;
+                practiceResultDen = practiceF1d * practiceF2n;
+            }
+
+            const qEl = document.getElementById('practice-question');
+            qEl.innerHTML = `
+                <span class="fraction"><span class="numerator">${practiceF1n.toLocaleString('fa-IR')}</span><span class="denominator">${practiceF1d.toLocaleString('fa-IR')}</span></span>
+                <span style="color: var(--pink-main);">${practiceOp}</span>
+                <span class="fraction"><span class="numerator">${practiceF2n.toLocaleString('fa-IR')}</span><span class="denominator">${practiceF2d.toLocaleString('fa-IR')}</span></span>
+                <span style="color: var(--pink-main);">=</span>
+                <span style="color: var(--text-muted);">؟</span>
+            `;
+
+            document.getElementById('practice-num').value = '';
+            document.getElementById('practice-den').value = '';
+            document.getElementById('practice-feedback').innerText = '';
+        }
+
+        document.getElementById('btn-check-practice').addEventListener('click', function() {
+            const userNum = parseInt(document.getElementById('practice-num').value);
+            const userDen = parseInt(document.getElementById('practice-den').value);
+            const feedbackEl = document.getElementById('practice-feedback');
+
+            if (isNaN(userNum) || isNaN(userDen)) {
+                feedbackEl.innerText = '❌ لطفاً صورت و مخرج را وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+            const g = gcd(Math.abs(practiceResultNum), practiceResultDen) || 1;
+            const correctNum = practiceResultNum / g;
+            const correctDen = practiceResultDen / g;
+
+            const userG = gcd(Math.abs(userNum), userDen) || 1;
+            const userSimpleNum = userNum / userG;
+            const userSimpleDen = userDen / userG;
+
+            if (userSimpleNum === correctNum && userSimpleDen === correctDen) {
+                feedbackEl.innerText = `✅ آفرین! پاسخ درست ${correctNum}/${correctDen} است.`;
+                feedbackEl.style.color = 'var(--success)';
+                playTone(600, 0.3);
+                confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
+            } else {
+                feedbackEl.innerText = `❌ اشتباه! پاسخ درست ${correctNum}/${correctDen} است.`;
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(300, 0.3);
+                document.getElementById('practice-question').classList.add('shake-anim');
+                setTimeout(() => document.getElementById('practice-question').classList.remove('shake-anim'), 500);
+            }
+        });
+
+        document.getElementById('btn-new-practice').addEventListener('click', () => {
+            playTone(440, 0.05);
+            generatePracticeQuestion();
+        });
+
+        generatePracticeQuestion();
+
+        /* ========================================================================
+           مدیریت دکمه‌های شناور
+           ======================================================================== */
+        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('به بخش بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
+        });
+
+    </script>
+</body>
+</html>

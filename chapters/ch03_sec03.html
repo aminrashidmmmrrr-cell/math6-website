@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فصل ۳ - بخش ۳: تقسیم عدد اعشاری بر عدد طبیعی | درسنامه تعاملی</title>
+    
+    <!-- قلم زیبای وزیرمتن -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+
+    <!-- انیمیشن کاغذ رنگی -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* ========================================================================
+           ۱. متغیرها و تم رنگی
+           ======================================================================== */
+        :root {
+            --lilac-bg: #f7f1fc;
+            --lilac-soft: #f1e7fb;
+            --lilac-border: #d8b4fe;
+            --lilac-main: #9333ea;
+            --lilac-dark: #6b21a8;
+            --lilac-glow: rgba(147, 51, 234, 0.15);
+            
+            --blue-soft: #e0f2fe;
+            --blue-main: #0284c7;
+            --blue-dark: #0369a1;
+            
+            --success: #16a34a;
+            --success-bg: rgba(22, 163, 74, 0.1);
+            --danger: #dc2626;
+            --danger-bg: rgba(220, 38, 38, 0.1);
+            --warning: #ca8a04;
+            --highlight: #fef08a;
+            --teal-soft: #ccfbf1;
+            --teal-main: #14b8a6;
+
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
+            --card-hover-bg: rgba(255, 255, 255, 0.95);
+            
+            --text-title: #2e1065;
+            --text-body: #475569;
+            --text-muted: #64748b;
+            
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 8px;
+        }
+
+        /* ========================================================================
+           ۲. استایل‌های پایه
+           ======================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--lilac-bg);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-body);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* ========================================================================
+           ۳. نوار هدر
+           ======================================================================== */
+        .lesson-top-nav {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto 20px;
+            padding: 14px 28px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--glass-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            z-index: 100;
+        }
+
+        .go-back-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .go-back-link:hover {
+            color: var(--teal-main);
+            transform: translateX(3px);
+        }
+
+        .header-lesson-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .chapter-label-badge {
+            background: var(--teal-soft);
+            color: #0f766e;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .lesson-title-text {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--text-title);
+        }
+
+        /* ========================================================================
+           ۴. کارت‌های آموزشی
+           ======================================================================== */
+        .main-lesson-wrapper {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-bottom: 80px;
+        }
+
+        .step-teaching-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-teaching-card:hover {
+            background-color: var(--card-hover-bg);
+            transform: translateY(-5px);
+        }
+
+        .step-number-badge {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--teal-main), #0f766e);
+            color: white;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 10px rgba(20, 184, 166, 0.25);
+        }
+
+        .step-teaching-card h2 {
+            font-size: 1.4rem;
+            color: var(--text-title);
+            margin-bottom: 12px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-teaching-card p {
+            font-size: 1rem;
+            line-height: 1.9;
+            color: var(--text-body);
+            margin-bottom: 16px;
+        }
+
+        /* ========================================================================
+           ۵. المان‌های خاص
+           ======================================================================== */
+        .teacher-speech-bubble {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-md);
+            padding: 18px 22px;
+            border: 1px dashed var(--teal-main);
+            color: #0f766e;
+            margin: 16px 0;
+            position: relative;
+            font-style: italic;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .teacher-speech-bubble::before {
+            content: "🧑‍🏫";
+            font-size: 1.4rem;
+            font-style: normal;
+        }
+
+        .solved-example-box {
+            background: var(--blue-soft);
+            border: 1px solid rgba(2, 132, 199, 0.2);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 16px 0;
+        }
+
+        .example-header {
+            font-weight: 800;
+            color: var(--blue-dark);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .key-tip-box {
+            background: var(--success-bg);
+            border: 1px solid var(--success);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--success);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* ========================================================================
+           ۶. بخش تعاملی ۱: تقسیم اعشاری بر عدد طبیعی
+           ======================================================================== */
+        .interactive-container {
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .sim-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #0f766e;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .division-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .division-input-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .division-input-row input {
+            width: 110px;
+            padding: 10px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            text-align: center;
+            border: 2px solid var(--teal-main);
+            border-radius: 10px;
+            color: #0f766e;
+            background: #fafafa;
+        }
+        .division-input-row input:focus { outline: none; border-color: var(--teal-main); box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.15); }
+
+        .division-display {
+            background: var(--teal-soft);
+            padding: 20px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #0f766e;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            direction: ltr;
+            min-height: 80px;
+        }
+
+        .division-steps {
+            background: #fafafa;
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            color: var(--text-body);
+            line-height: 2.2;
+            min-height: 80px;
+            width: 100%;
+        }
+
+        .division-step-item {
+            padding: 8px 0;
+            border-bottom: 1px dashed #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .division-step-item:last-child { border-bottom: none; }
+
+        .division-step-item .step-label {
+            color: #0f766e;
+            font-weight: 800;
+            min-width: 100px;
+        }
+
+        /* ========================================================================
+           ۷. بخش تعاملی ۲: تقسیم طولانی (Long Division)
+           ======================================================================== */
+        .long-division-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .long-division-display {
+            background: #fafafa;
+            padding: 24px;
+            border-radius: var(--radius-sm);
+            border: 1px solid #e2e8f0;
+            font-family: monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0f766e;
+            direction: ltr;
+            text-align: left;
+            min-height: 120px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .long-division-layout {
+            display: flex;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        .long-division-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .long-division-line {
+            border-top: 2px solid #0f766e;
+            width: 100%;
+            margin: 2px 0;
+        }
+
+        /* ========================================================================
+           ۸. بخش تعاملی ۳: ماشین تقسیم با باقیمانده
+           ======================================================================== */
+        .remainder-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .remainder-display {
+            background: var(--lilac-soft);
+            padding: 20px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--lilac-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            direction: ltr;
+            min-height: 80px;
+        }
+
+        .remainder-steps {
+            background: #fafafa;
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            color: var(--text-body);
+            line-height: 2.2;
+            min-height: 80px;
+            width: 100%;
+        }
+
+        /* ========================================================================
+           ۹. بخش تعاملی ۴: تمرین تقسیم اعشاری
+           ======================================================================== */
+        .practice-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .practice-question {
+            background: var(--teal-soft);
+            padding: 20px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #0f766e;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            direction: ltr;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .practice-answer-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .practice-answer-row input {
+            width: 130px;
+            padding: 10px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            text-align: center;
+            border: 2px solid var(--teal-main);
+            border-radius: 10px;
+            color: #0f766e;
+            background: #fafafa;
+        }
+        .practice-answer-row input:focus { outline: none; border-color: var(--teal-main); }
+
+        /* ========================================================================
+           ۱۰. دکمه‌ها
+           ======================================================================== */
+        .btn-ui {
+            background: linear-gradient(135deg, var(--teal-main), #0f766e);
+            color: white;
+            border: 2px solid white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 6px 16px rgba(20, 184, 166, 0.25);
+        }
+        .btn-ui:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(20, 184, 166, 0.35);
+        }
+        .btn-ui:active { transform: translateY(0); }
+        .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
+        .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
+
+        .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
+        .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
+
+        .btn-ui.lilac { background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark)); box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25); }
+        .btn-ui.lilac:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
+
+        .action-btns-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .feedback-display {
+            font-weight: 800;
+            text-align: center;
+            min-height: 28px;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: color 0.2s;
+        }
+
+        /* ========================================================================
+           ۱۱. دکمه‌های شناور
+           ======================================================================== */
+        .floating-btns {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            z-index: 200;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .float-nav-btn {
+            pointer-events: auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 800;
+            color: var(--text-title);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .float-nav-btn:hover {
+            background: var(--teal-main);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(20, 184, 166, 0.25);
+        }
+
+        @media (max-width: 600px) {
+            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
+            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
+            .header-lesson-info { align-items: center; }
+        }
+
+        /* ========================================================================
+           ۱۲. انیمیشن
+           ======================================================================== */
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .pop-in { animation: popIn 0.3s ease-out forwards; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+        .shake-anim { animation: shake 0.4s ease-in-out; }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================================================
+         نوار ناوبری بالای درسنامه
+         ======================================================================== -->
+    <header class="lesson-top-nav">
+        <a href="../index.html" class="go-back-link">
+            <span>← برگشت به کتاب اصلی</span>
+        </a>
+        <div class="header-lesson-info">
+            <span class="chapter-label-badge">فصل سوم: اعداد اعشاری</span>
+            <span class="lesson-title-text">بخش ۳: تقسیم عدد اعشاری بر عدد طبیعی</span>
+        </div>
+    </header>
+
+    <main class="main-lesson-wrapper">
+
+        <!-- ========================================================================
+           قدم ۱: مفهوم تقسیم اعشاری بر عدد طبیعی
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۱</span>
+            <h2>تقسیم اعشاری بر عدد طبیعی: تقسیم منصفانه!</h2>
+            <p>
+                وقتی یک عدد اعشاری را بر یک عدد طبیعی تقسیم می‌کنیم، در واقع می‌خواهیم آن عدد اعشاری را 
+                به تعداد مساوی بین عدد طبیعی تقسیم کنیم. 
+                مثلاً ۴/۸ ÷ ۳ یعنی ۴/۸ را به ۳ قسمت مساوی تقسیم کن.
+            </p>
+
+            <div class="key-tip-box">
+                <strong>📌 قانون تقسیم اعشاری بر عدد طبیعی:</strong>
+                <p style="margin-top: 6px;">تقسیم را مثل تقسیم اعداد صحیح انجام می‌دهیم. وقتی به ممیز رسیدیم، 
+                در خارج‌قسمت هم ممیز می‌گذاریم و اگر باز هم باقی‌مانده داشتیم، 
+                به باقی‌مانده صفر اضافه می‌کنیم و ادامه می‌دهیم.</p>
+            </div>
+
+            <div class="solved-example-box">
+                <div class="example-header">💡 مثال: تقسیم ۴/۸ ÷ ۳</div>
+                <p>مرحله ۱: ۴ ÷ ۳ = ۱ (باقی‌مانده ۱)</p>
+                <p>مرحله ۲: به ممیز رسیدیم، در خارج‌قسمت ممیز می‌گذاریم.</p>
+                <p>مرحله ۳: باقی‌مانده ۱ را با ۸ ترکیب می‌کنیم: ۱۸</p>
+                <p>مرحله ۴: ۱۸ ÷ ۳ = ۶</p>
+                <p style="font-weight:800; color: var(--teal-main);">۴/۸ ÷ ۳ = ۱/۶</p>
+            </div>
+
+            <div class="teacher-speech-bubble">
+                «تقسیم اعشاری بر عدد طبیعی مثل تقسیم معمولی است، فقط وقتی به ممیز رسیدی، 
+                یادت باشه در خارج‌قسمت هم ممیز بذاری!»
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۲: آزمایشگاه تقسیم اعشاری
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۲</span>
+            <h2>آزمایشگاه تقسیم اعشاری: گام‌به‌گام!</h2>
+            <p>
+                در این آزمایشگاه، یک عدد اعشاری و یک عدد طبیعی را وارد کن و مراحل تقسیم را ببین.
+            </p>
+
+            <!-- ابزار تعاملی ۱: تقسیم اعشاری بر عدد طبیعی -->
+            <div class="division-lab">
+                <div class="sim-title">➗ آزمایشگاه تقسیم اعشاری</div>
+                
+                <div class="division-input-row">
+                    <input type="number" id="div-lab-input1" value="4.8" step="0.01">
+                    <span style="font-size:1.5rem; font-weight:900; color:var(--teal-main);">÷</span>
+                    <input type="number" id="div-lab-input2" value="3" min="1" step="1">
+                    <button class="btn-ui green" id="btn-calc-div-lab">محاسبه</button>
+                </div>
+
+                <div class="division-display" id="div-lab-display">
+                    نتیجه: ؟
+                </div>
+
+                <div class="division-steps" id="div-lab-steps">
+                    <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «محاسبه» را بزنید.</p>
+                </div>
+                <p id="div-lab-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۳: تقسیم طولانی (Long Division)
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۳</span>
+            <h2>تقسیم طولانی: مرحله‌به‌مرحله!</h2>
+            <p>
+                در این بخش، تقسیم طولانی یک عدد اعشاری بر عدد طبیعی را به صورت بصری می‌بینیم.
+                این روش به ما کمک می‌کند تا مراحل را دقیق‌تر دنبال کنیم.
+            </p>
+
+            <!-- ابزار تعاملی ۲: تقسیم طولانی -->
+            <div class="long-division-lab">
+                <div class="sim-title">📐 تقسیم طولانی</div>
+                
+                <div class="division-input-row">
+                    <input type="number" id="long-div-input1" value="4.8" step="0.01">
+                    <span style="font-size:1.5rem; font-weight:900; color:var(--teal-main);">÷</span>
+                    <input type="number" id="long-div-input2" value="3" min="1" step="1">
+                    <button class="btn-ui green" id="btn-show-long-div">نمایش تقسیم</button>
+                </div>
+
+                <div class="long-division-display" id="long-div-display">
+                    <p style="color: var(--text-muted);">برای دیدن تقسیم طولانی، دکمه‌ی «نمایش تقسیم» را بزنید.</p>
+                </div>
+                <p id="long-div-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۴: ماشین تقسیم با باقیمانده
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۴</span>
+            <h2>تقسیم با باقیمانده: ادامه بده تا تموم بشه!</h2>
+            <p>
+                وقتی در تقسیم اعشاری به باقیمانده می‌رسیم، می‌توانیم به باقیمانده صفر اضافه کنیم 
+                و تقسیم را ادامه دهیم تا به جواب دقیق برسیم یا به تعداد رقم‌های اعشار مورد نظر برسیم.
+            </p>
+
+            <!-- ابزار تعاملی ۳: ماشین تقسیم با باقیمانده -->
+            <div class="remainder-lab">
+                <div class="sim-title">🔄 ماشین تقسیم با باقیمانده</div>
+                
+                <div class="division-input-row">
+                    <input type="number" id="rem-input1" value="7" min="1" step="1">
+                    <span style="font-size:1.5rem; font-weight:900; color:var(--teal-main);">÷</span>
+                    <input type="number" id="rem-input2" value="3" min="1" step="1">
+                    <button class="btn-ui green" id="btn-calc-remainder">محاسبه</button>
+                </div>
+
+                <div class="remainder-display" id="rem-display">
+                    نتیجه: ؟
+                </div>
+
+                <div class="remainder-steps" id="rem-steps">
+                    <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «محاسبه» را بزنید.</p>
+                </div>
+                <p id="rem-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۵: تمرین تقسیم اعشاری
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۵</span>
+            <h2>تمرین تقسیم اعشاری بر عدد طبیعی</h2>
+            <p>
+                حالا نوبت تمرین است! حاصل تقسیم را وارد کن.
+            </p>
+
+            <!-- ابزار تعاملی ۴: تمرین تقسیم اعشاری -->
+            <div class="practice-lab">
+                <div class="sim-title">📝 تمرین تعاملی</div>
+                
+                <div class="practice-question" id="practice-question">
+                    <!-- سوال با JS ساخته می‌شود -->
+                </div>
+
+                <div class="practice-answer-row">
+                    <input type="number" id="practice-answer" step="0.001" placeholder="پاسخ">
+                    <button class="btn-ui green" id="btn-check-practice">بررسی</button>
+                </div>
+
+                <p id="practice-feedback" class="feedback-display"></p>
+                <button class="btn-ui blue" id="btn-new-practice">سوال جدید</button>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۶: جمع‌بندی
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۶</span>
+            <h2>جمع‌بندی و تمرین</h2>
+            <p>در این بخش یاد گرفتیم:</p>
+            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
+                <li>✅ تقسیم عدد اعشاری بر عدد طبیعی: مثل تقسیم اعداد صحیح، با گذاشتن ممیز در خارج‌قسمت.</li>
+                <li>✅ وقتی به ممیز رسیدیم، در خارج‌قسمت ممیز می‌گذاریم.</li>
+                <li>✅ اگر باقی‌مانده داشتیم، به آن صفر اضافه می‌کنیم و تقسیم را ادامه می‌دهیم.</li>
+                <li>✅ تقسیم طولانی: روشی گام‌به‌گام برای تقسیم دقیق.</li>
+                <li>✅ کاربرد این تقسیم در مسائل روزمره مثل تقسیم هزینه‌ها، اندازه‌ها و... .</li>
+            </ul>
+
+            <div class="teacher-speech-bubble">
+                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی. 
+                یادت باشه که تقسیم اعشاری، پایه‌ی خیلی از مفاهیم ریاضی در سال‌های بعدی مثل نسبت‌ها و درصدهاست.»
+            </div>
+
+            <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
+                <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
+                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
+                    <li>۶/۴ ÷ ۴ = ؟</li>
+                    <li>۹/۵ ÷ ۵ = ؟</li>
+                    <li>۱۲/۶ ÷ ۳ = ؟</li>
+                    <li>۷/۲ ÷ ۸ = ؟ (تا ۲ رقم اعشار)</li>
+                    <li>مادر ۵/۴ متر پارچه را بین ۳ نفر تقسیم کرد. سهم هر نفر چقدر است؟</li>
+                </ol>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================================================
+         دکمه‌های شناور
+         ======================================================================== -->
+    <div class="floating-btns">
+        <a href="chapter3_part2.html" class="float-nav-btn">→ بخش قبلی</a>
+        <a href="chapter3_part4.html" class="float-nav-btn" id="next-lesson-btn">بخش بعدی ←</a>
+    </div>
+
+    <script>
+        /* ========================================================================
+           لاجیک صوتی
+           ======================================================================== */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTone(freq, duration) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
+        }
+
+        /* ========================================================================
+           تعامل ۱: تقسیم اعشاری بر عدد طبیعی
+           ======================================================================== */
+        document.getElementById('btn-calc-div-lab').addEventListener('click', function() {
+            const input1 = document.getElementById('div-lab-input1');
+            const input2 = document.getElementById('div-lab-input2');
+            const val1 = parseFloat(input1.value);
+            const val2 = parseInt(input2.value);
+            const displayEl = document.getElementById('div-lab-display');
+            const stepsEl = document.getElementById('div-lab-steps');
+            const feedbackEl = document.getElementById('div-lab-feedback');
+
+            if (isNaN(val1) || isNaN(val2) || val2 <= 0) {
+                feedbackEl.innerText = '❌ لطفاً یک عدد اعشاری و یک عدد طبیعی مثبت وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            const result = val1 / val2;
+
+            let stepsHTML = `
+                <div class="division-step-item"><span class="step-label">مرحله ۱:</span> تقسیم ${val1.toLocaleString('fa-IR')} بر ${val2.toLocaleString('fa-IR')}</div>
+                <div class="division-step-item"><span class="step-label">مرحله ۲:</span> ابتدا قسمت صحیح را تقسیم می‌کنیم.</div>
+                <div class="division-step-item"><span class="step-label">مرحله ۳:</span> وقتی به ممیز رسیدیم، در خارج‌قسمت ممیز می‌گذاریم.</div>
+                <div class="division-step-item"><span class="step-label">نتیجه:</span> <strong style="color: var(--teal-main); font-size: 1.2rem;">${val1.toLocaleString('fa-IR')} ÷ ${val2.toLocaleString('fa-IR')} = ${result.toLocaleString('fa-IR')}</strong></div>
+            `;
+
+            displayEl.innerHTML = `${val1.toLocaleString('fa-IR')} ÷ ${val2.toLocaleString('fa-IR')} = <strong>${result.toLocaleString('fa-IR')}</strong>`;
+            stepsEl.innerHTML = stepsHTML;
+            feedbackEl.innerText = '✅ تقسیم با موفقیت انجام شد.';
+            feedbackEl.style.color = 'var(--success)';
+
+            playTone(600, 0.3);
+            confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
+        });
+
+        /* ========================================================================
+           تعامل ۲: تقسیم طولانی (Long Division)
+           ======================================================================== */
+        document.getElementById('btn-show-long-div').addEventListener('click', function() {
+            const input1 = document.getElementById('long-div-input1');
+            const input2 = document.getElementById('long-div-input2');
+            const val1 = parseFloat(input1.value);
+            const val2 = parseInt(input2.value);
+            const displayEl = document.getElementById('long-div-display');
+            const feedbackEl = document.getElementById('long-div-feedback');
+
+            if (isNaN(val1) || isNaN(val2) || val2 <= 0) {
+                feedbackEl.innerText = '❌ لطفاً یک عدد اعشاری و یک عدد طبیعی مثبت وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            // تبدیل به رشته
+            const strVal1 = val1.toString();
+            const parts = strVal1.split('.');
+            const integerPart = parts[0];
+            const decimalPart = parts[1] || '';
+
+            // ساخت نمایش تقسیم طولانی به صورت ساده
+            let longDivHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <div style="font-size: 1.4rem; font-weight: 900;">${val1.toLocaleString('fa-IR')} ÷ ${val2.toLocaleString('fa-IR')}</div>
+                    <div style="font-size: 1rem; color: #64748b;">تقسیم را مرحله‌به‌مرحله انجام می‌دهیم:</div>
+            `;
+
+            // شبیه‌سازی تقسیم طولانی (نمایش ساده)
+            const result = val1 / val2;
+            longDivHTML += `
+                    <div style="margin-top: 10px; font-size: 1.1rem;">
+                        <span style="color: #0f766e;">خارج‌قسمت:</span> <strong>${result.toLocaleString('fa-IR')}</strong>
+                    </div>
+                    <div style="font-size: 1rem; color: #475569; margin-top: 10px;">
+                        مراحل: ابتدا ${integerPart} را بر ${val2} تقسیم می‌کنیم، سپس ممیز را در خارج‌قسمت قرار می‌دهیم و ادامه می‌دهیم.
+                    </div>
+                </div>
+            `;
+
+            displayEl.innerHTML = longDivHTML;
+            feedbackEl.innerText = '✅ تقسیم طولانی نمایش داده شد.';
+            feedbackEl.style.color = 'var(--success)';
+
+            playTone(600, 0.3);
+            confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
+        });
+
+        /* ========================================================================
+           تعامل ۳: ماشین تقسیم با باقیمانده
+           ======================================================================== */
+        document.getElementById('btn-calc-remainder').addEventListener('click', function() {
+            const input1 = document.getElementById('rem-input1');
+            const input2 = document.getElementById('rem-input2');
+            const val1 = parseInt(input1.value);
+            const val2 = parseInt(input2.value);
+            const displayEl = document.getElementById('rem-display');
+            const stepsEl = document.getElementById('rem-steps');
+            const feedbackEl = document.getElementById('rem-feedback');
+
+            if (isNaN(val1) || isNaN(val2) || val2 <= 0) {
+                feedbackEl.innerText = '❌ لطفاً دو عدد طبیعی مثبت وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            const quotient = Math.floor(val1 / val2);
+            const remainder = val1 % val2;
+
+            let stepsHTML = `
+                <div class="division-step-item"><span class="step-label">مرحله ۱:</span> ${val1.toLocaleString('fa-IR')} ÷ ${val2.toLocaleString('fa-IR')} = ${quotient.toLocaleString('fa-IR')} (باقی‌مانده ${remainder.toLocaleString('fa-IR')})</div>
+                <div class="division-step-item"><span class="step-label">مرحله ۲:</span> به باقی‌مانده صفر اضافه می‌کنیم: ${remainder.toLocaleString('fa-IR')}0</div>
+                <div class="division-step-item"><span class="step-label">مرحله ۳:</span> تقسیم را ادامه می‌دهیم...</div>
+            `;
+
+            if (remainder === 0) {
+                stepsHTML = `
+                    <div class="division-step-item"><span class="step-label">نتیجه:</span> ${val1.toLocaleString('fa-IR')} ÷ ${val2.toLocaleString('fa-IR')} = ${quotient.toLocaleString('fa-IR')} (بدون باقی‌مانده)</div>
+                `;
+                displayEl.innerHTML = `${val1.toLocaleString('fa-IR')} ÷ ${val2.toLocaleString('fa-IR')} = <strong>${quotient.toLocaleString('fa-IR')}</strong>`;
+            } else {
+                const decimalResult = val1 / val2;
+                stepsHTML += `
+                    <div class="division-step-item"><span class="step-label">نتیجه (اعشاری):</span> <strong style="color: var(--teal-main); font-size: 1.2rem;">${decimalResult.toLocaleString('fa-IR')}</strong></div>
+                `;
+                displayEl.innerHTML = `${val1.toLocaleString('fa-IR')} ÷ ${val2.toLocaleString('fa-IR')} = <strong>${decimalResult.toLocaleString('fa-IR')}</strong>`;
+            }
+
+            stepsEl.innerHTML = stepsHTML;
+            feedbackEl.innerText = '✅ تقسیم با باقی‌مانده انجام شد.';
+            feedbackEl.style.color = 'var(--success)';
+
+            playTone(600, 0.3);
+            confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
+        });
+
+        /* ========================================================================
+           تعامل ۴: تمرین تقسیم اعشاری
+           ======================================================================== */
+        let practiceVal1, practiceVal2, practiceResult;
+
+        function generatePracticeQuestion() {
+            // تولید عدد اعشاری تصادفی
+            practiceVal1 = Math.round((Math.random() * 20 + 1) * 10) / 10;
+            // تولید عدد طبیعی تصادفی
+            practiceVal2 = Math.floor(Math.random() * 8) + 2;
+
+            practiceResult = practiceVal1 / practiceVal2;
+            // گرد کردن به ۳ رقم اعشار
+            practiceResult = Math.round(practiceResult * 1000) / 1000;
+
+            const qEl = document.getElementById('practice-question');
+            qEl.innerHTML = `${practiceVal1.toLocaleString('fa-IR')} ÷ ${practiceVal2.toLocaleString('fa-IR')} = ؟`;
+
+            document.getElementById('practice-answer').value = '';
+            document.getElementById('practice-feedback').innerText = '';
+        }
+
+        document.getElementById('btn-check-practice').addEventListener('click', function() {
+            const userAnswer = parseFloat(document.getElementById('practice-answer').value);
+            const feedbackEl = document.getElementById('practice-feedback');
+
+            if (isNaN(userAnswer)) {
+                feedbackEl.innerText = '❌ لطفاً یک عدد وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            if (Math.abs(userAnswer - practiceResult) < 0.001) {
+                feedbackEl.innerText = `✅ آفرین! پاسخ درست ${practiceResult.toLocaleString('fa-IR')} است.`;
+                feedbackEl.style.color = 'var(--success)';
+                playTone(600, 0.3);
+                confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
+            } else {
+                feedbackEl.innerText = `❌ اشتباه! پاسخ درست ${practiceResult.toLocaleString('fa-IR')} است.`;
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(300, 0.3);
+                document.getElementById('practice-question').classList.add('shake-anim');
+                setTimeout(() => document.getElementById('practice-question').classList.remove('shake-anim'), 500);
+            }
+        });
+
+        document.getElementById('btn-new-practice').addEventListener('click', () => {
+            playTone(440, 0.05);
+            generatePracticeQuestion();
+        });
+
+        generatePracticeQuestion();
+
+        /* ========================================================================
+           مدیریت دکمه‌های شناور
+           ======================================================================== */
+        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('به بخش بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
+        });
+
+    </script>
+</body>
+</html>

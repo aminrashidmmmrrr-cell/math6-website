@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فصل ۳ - بخش ۱: یادآوری عدد اعشاری | درسنامه تعاملی</title>
+    
+    <!-- قلم زیبای وزیرمتن -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+
+    <!-- انیمیشن کاغذ رنگی -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* ========================================================================
+           ۱. متغیرها و تم رنگی
+           ======================================================================== */
+        :root {
+            --lilac-bg: #f7f1fc;
+            --lilac-soft: #f1e7fb;
+            --lilac-border: #d8b4fe;
+            --lilac-main: #9333ea;
+            --lilac-dark: #6b21a8;
+            --lilac-glow: rgba(147, 51, 234, 0.15);
+            
+            --blue-soft: #e0f2fe;
+            --blue-main: #0284c7;
+            --blue-dark: #0369a1;
+            
+            --success: #16a34a;
+            --success-bg: rgba(22, 163, 74, 0.1);
+            --danger: #dc2626;
+            --danger-bg: rgba(220, 38, 38, 0.1);
+            --warning: #ca8a04;
+            --highlight: #fef08a;
+            --teal-soft: #ccfbf1;
+            --teal-main: #14b8a6;
+
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
+            --card-hover-bg: rgba(255, 255, 255, 0.95);
+            
+            --text-title: #2e1065;
+            --text-body: #475569;
+            --text-muted: #64748b;
+            
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 8px;
+        }
+
+        /* ========================================================================
+           ۲. استایل‌های پایه
+           ======================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--lilac-bg);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-body);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* ========================================================================
+           ۳. نوار هدر
+           ======================================================================== */
+        .lesson-top-nav {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto 20px;
+            padding: 14px 28px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--glass-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            z-index: 100;
+        }
+
+        .go-back-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .go-back-link:hover {
+            color: var(--teal-main);
+            transform: translateX(3px);
+        }
+
+        .header-lesson-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .chapter-label-badge {
+            background: var(--teal-soft);
+            color: #0f766e;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .lesson-title-text {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--text-title);
+        }
+
+        /* ========================================================================
+           ۴. کارت‌های آموزشی
+           ======================================================================== */
+        .main-lesson-wrapper {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-bottom: 80px;
+        }
+
+        .step-teaching-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-teaching-card:hover {
+            background-color: var(--card-hover-bg);
+            transform: translateY(-5px);
+        }
+
+        .step-number-badge {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--teal-main), #0f766e);
+            color: white;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 10px rgba(20, 184, 166, 0.25);
+        }
+
+        .step-teaching-card h2 {
+            font-size: 1.4rem;
+            color: var(--text-title);
+            margin-bottom: 12px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-teaching-card p {
+            font-size: 1rem;
+            line-height: 1.9;
+            color: var(--text-body);
+            margin-bottom: 16px;
+        }
+
+        /* ========================================================================
+           ۵. المان‌های خاص
+           ======================================================================== */
+        .teacher-speech-bubble {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-md);
+            padding: 18px 22px;
+            border: 1px dashed var(--teal-main);
+            color: #0f766e;
+            margin: 16px 0;
+            position: relative;
+            font-style: italic;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .teacher-speech-bubble::before {
+            content: "🧑‍🏫";
+            font-size: 1.4rem;
+            font-style: normal;
+        }
+
+        .solved-example-box {
+            background: var(--blue-soft);
+            border: 1px solid rgba(2, 132, 199, 0.2);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 16px 0;
+        }
+
+        .example-header {
+            font-weight: 800;
+            color: var(--blue-dark);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .key-tip-box {
+            background: var(--success-bg);
+            border: 1px solid var(--success);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--success);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* ========================================================================
+           ۶. بخش تعاملی ۱: ماشین اعشار (ارزش مکانی)
+           ======================================================================== */
+        .interactive-container {
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .sim-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #0f766e;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .decimal-machine {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .decimal-input-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .decimal-input-row input {
+            width: 70px;
+            padding: 8px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-align: center;
+            border: 2px solid var(--teal-main);
+            border-radius: 8px;
+            color: #0f766e;
+            background: #fafafa;
+        }
+        .decimal-input-row input:focus { outline: none; border-color: var(--teal-main); box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.15); }
+
+        .place-value-display {
+            background: var(--teal-soft);
+            padding: 20px 28px;
+            border-radius: var(--radius-sm);
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #0f766e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            direction: ltr;
+            min-height: 80px;
+            width: 100%;
+        }
+
+        .place-value-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .place-value-table th {
+            background: var(--teal-soft);
+            color: #0f766e;
+            padding: 10px;
+            font-weight: 800;
+            border: 1px solid #99f6e4;
+            font-size: 0.85rem;
+        }
+
+        .place-value-table td {
+            padding: 10px;
+            text-align: center;
+            font-weight: 700;
+            border: 1px solid #e2e8f0;
+            color: var(--text-body);
+        }
+
+        .place-value-table td.highlight {
+            background: var(--highlight);
+            color: #713f12;
+            font-weight: 900;
+            border-radius: 4px;
+        }
+
+        /* ========================================================================
+           ۷. بخش تعاملی ۲: محور اعداد اعشاری
+           ======================================================================== */
+        .number-line-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        #decimal-number-line-canvas {
+            width: 100%;
+            max-width: 700px;
+            height: 100px;
+            background: #fafafa;
+            border-radius: var(--radius-sm);
+            border: 1px solid #e2e8f0;
+        }
+
+        .number-line-controls {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .number-line-controls input {
+            width: 100px;
+            padding: 8px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-align: center;
+            border: 2px solid var(--teal-main);
+            border-radius: 8px;
+            color: #0f766e;
+            background: #fafafa;
+        }
+        .number-line-controls input:focus { outline: none; border-color: var(--teal-main); }
+
+        /* ========================================================================
+           ۸. بخش تعاملی ۳: مقایسه اعشاری
+           ======================================================================== */
+        .compare-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .compare-numbers-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .compare-num-box {
+            background: var(--teal-soft);
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #0f766e;
+            min-width: 120px;
+            text-align: center;
+            direction: ltr;
+        }
+
+        .compare-symbol-input {
+            width: 70px;
+            height: 70px;
+            border: 2px solid var(--teal-main);
+            border-radius: 50%;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #0f766e;
+            background: #fafafa;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .compare-symbol-input:focus { outline: none; border-color: var(--teal-main); box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.15); }
+
+        .compare-buttons-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* ========================================================================
+           ۹. بخش تعاملی ۴: تبدیل کسر به اعشار
+           ======================================================================== */
+        .conversion-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .conversion-display {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 900;
+            direction: ltr;
+        }
+
+        .conversion-input-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .conversion-input-row .frac-input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            background: #fafafa;
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--teal-main);
+        }
+
+        .conversion-input-row .frac-input-group input {
+            width: 60px;
+            padding: 4px;
+            font-size: 1.1rem;
+            border-radius: 4px;
+            border: none;
+            text-align: center;
+            font-weight: 900;
+            color: #0f766e;
+            background: transparent;
+        }
+        .conversion-input-row .frac-input-group input:focus { outline: none; }
+
+        .conversion-input-row .frac-input-group .numerator-input {
+            border-bottom: 2px solid #0f766e;
+        }
+
+        .conversion-output {
+            background: var(--teal-soft);
+            padding: 16px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #0f766e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            direction: ltr;
+            min-width: 150px;
+            justify-content: center;
+        }
+
+        /* ========================================================================
+           ۱۰. دکمه‌ها
+           ======================================================================== */
+        .btn-ui {
+            background: linear-gradient(135deg, var(--teal-main), #0f766e);
+            color: white;
+            border: 2px solid white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 6px 16px rgba(20, 184, 166, 0.25);
+        }
+        .btn-ui:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(20, 184, 166, 0.35);
+        }
+        .btn-ui:active { transform: translateY(0); }
+        .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
+        .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
+
+        .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
+        .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
+
+        .btn-ui.lilac { background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark)); box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25); }
+        .btn-ui.lilac:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
+
+        .action-btns-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .feedback-display {
+            font-weight: 800;
+            text-align: center;
+            min-height: 28px;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: color 0.2s;
+        }
+
+        /* ========================================================================
+           ۱۱. دکمه‌های شناور
+           ======================================================================== */
+        .floating-btns {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            z-index: 200;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .float-nav-btn {
+            pointer-events: auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 800;
+            color: var(--text-title);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .float-nav-btn:hover {
+            background: var(--teal-main);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(20, 184, 166, 0.25);
+        }
+
+        @media (max-width: 600px) {
+            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
+            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
+            .header-lesson-info { align-items: center; }
+        }
+
+        /* ========================================================================
+           ۱۲. انیمیشن
+           ======================================================================== */
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .pop-in { animation: popIn 0.3s ease-out forwards; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+        .shake-anim { animation: shake 0.4s ease-in-out; }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================================================
+         نوار ناوبری بالای درسنامه
+         ======================================================================== -->
+    <header class="lesson-top-nav">
+        <a href="../index.html" class="go-back-link">
+            <span>← برگشت به کتاب اصلی</span>
+        </a>
+        <div class="header-lesson-info">
+            <span class="chapter-label-badge">فصل سوم: اعداد اعشاری</span>
+            <span class="lesson-title-text">بخش ۱: یادآوری عدد اعشاری</span>
+        </div>
+    </header>
+
+    <main class="main-lesson-wrapper">
+
+        <!-- ========================================================================
+           قدم ۱: آشنایی با اعداد اعشاری
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۱</span>
+            <h2>اعداد اعشاری: دنیای دهم‌ها و صدم‌ها</h2>
+            <p>
+                اعداد اعشاری برای نمایش مقادیری استفاده می‌شوند که بین اعداد صحیح قرار دارند. 
+                مثلاً وقتی می‌گوییم ۲/۵ کیلوگرم، یعنی ۲ کیلو و ۵ دهم کیلوگرم.
+            </p>
+            <p>
+                در اعداد اعشاری، بعد از ممیز، هر رقم ارزش مکانی خاصی دارد:
+            </p>
+
+            <div class="key-tip-box">
+                <strong>📌 ارزش مکانی ارقام بعد از ممیز:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.2;">
+                    <li><strong>دهم:</strong> اولین رقم بعد از ممیز (۱/۱۰)</li>
+                    <li><strong>صدم:</strong> دومین رقم بعد از ممیز (۱/۱۰۰)</li>
+                    <li><strong>هزارم:</strong> سومین رقم بعد از ممیز (۱/۱۰۰۰)</li>
+                </ul>
+            </div>
+
+            <div class="solved-example-box">
+                <div class="example-header">💡 مثال: عدد ۳/۴۵۶</div>
+                <p>۳ در جایگاه یکان</p>
+                <p>۴ در جایگاه دهم (۴/۱۰)</p>
+                <p>۵ در جایگاه صدم (۵/۱۰۰)</p>
+                <p>۶ در جایگاه هزارم (۶/۱۰۰۰)</p>
+            </div>
+
+            <div class="teacher-speech-bubble">
+                «اعداد اعشاری مثل این هستند که یک کیک را به ۱۰ قسمت، ۱۰۰ قسمت یا ۱۰۰۰ قسمت تقسیم کنیم و بگوییم چند قسمت از آن را برداشتیم.»
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۲: ماشین اعشار (ارزش مکانی)
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۲</span>
+            <h2>ماشین اعشار: ارزش مکانی را ببین!</h2>
+            <p>
+                یک عدد اعشاری وارد کن و ببین هر رقم آن چه ارزش مکانی دارد.
+            </p>
+
+            <!-- ابزار تعاملی ۱: ماشین اعشار -->
+            <div class="decimal-machine">
+                <div class="sim-title">🔢 ماشین اعشار: ارزش مکانی</div>
+                
+                <div class="decimal-input-row">
+                    <span style="font-weight:800;">عدد اعشاری:</span>
+                    <input type="number" id="decimal-input" value="3456" min="0" max="9999999" step="0.001">
+                    <button class="btn-ui green" id="btn-analyze-decimal">تحلیل کن</button>
+                </div>
+
+                <div class="place-value-display" id="decimal-place-display">
+                    <!-- خروجی -->
+                </div>
+
+                <table class="place-value-table" id="decimal-place-table">
+                    <thead>
+                        <tr>
+                            <th>هزارگان</th>
+                            <th>صدگان</th>
+                            <th>دهگان</th>
+                            <th>یکان</th>
+                            <th style="background: #fef08a;">دهم</th>
+                            <th style="background: #fef08a;">صدم</th>
+                            <th style="background: #fef08a;">هزارم</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="pv-hazargan">-</td>
+                            <td id="pv-sadgan">-</td>
+                            <td id="pv-dahgan">-</td>
+                            <td id="pv-yekan">-</td>
+                            <td id="pv-dahom">-</td>
+                            <td id="pv-sadom">-</td>
+                            <td id="pv-hazarom">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۳: محور اعداد اعشاری
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۳</span>
+            <h2>محور اعداد اعشاری: جایگاه هر عدد</h2>
+            <p>
+                اعداد اعشاری را می‌توان روی محور اعداد نمایش داد. 
+                هر عدد بین دو عدد صحیح قرار می‌گیرد. مثلاً ۲/۵ دقیقاً وسط ۲ و ۳ قرار دارد.
+            </p>
+
+            <!-- ابزار تعاملی ۲: محور اعداد اعشاری -->
+            <div class="number-line-lab">
+                <div class="sim-title">📏 محور اعداد اعشاری</div>
+                
+                <canvas id="decimal-number-line-canvas" width="700" height="100"></canvas>
+                
+                <div class="number-line-controls">
+                    <span style="font-weight:800;">عددی بین ۰ تا ۵ وارد کن:</span>
+                    <input type="number" id="decimal-line-input" value="2.5" min="0" max="5" step="0.1">
+                    <button class="btn-ui green" id="btn-locate-decimal">پیدا کن روی محور</button>
+                </div>
+                <p id="decimal-line-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۴: مقایسه اعداد اعشاری
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۴</span>
+            <h2>مقایسه اعداد اعشاری: کدام بزرگ‌تر است؟</h2>
+            <p>
+                برای مقایسه دو عدد اعشاری، ابتدا قسمت صحیح را مقایسه می‌کنیم. 
+                اگر مساوی بودند، رقم‌های بعد از ممیز را از چپ به راست مقایسه می‌کنیم.
+            </p>
+
+            <div class="solved-example-box">
+                <div class="example-header">💡 مثال: مقایسه ۲/۳۵ و ۲/۴</div>
+                <p>قسمت صحیح هر دو ۲ است.</p>
+                <p>رقم دهم: ۳ < ۴ ← پس ۲/۴ بزرگ‌تر است.</p>
+                <p style="font-weight:800; color: var(--teal-main);">۲/۳۵ < ۲/۴</p>
+            </div>
+
+            <!-- ابزار تعاملی ۳: مقایسه اعشاری -->
+            <div class="compare-lab">
+                <div class="sim-title">⚖️ مقایسه اعداد اعشاری</div>
+                
+                <div class="compare-numbers-row">
+                    <div class="compare-num-box" id="compare-num1">۲/۳۵</div>
+                    <input type="text" class="compare-symbol-input" id="compare-symbol" placeholder="؟" maxlength="2" readonly>
+                    <div class="compare-num-box" id="compare-num2">۲/۴</div>
+                </div>
+
+                <div class="compare-buttons-row">
+                    <button class="btn-ui blue" id="btn-compare-less">&lt; کوچک‌تر</button>
+                    <button class="btn-ui green" id="btn-compare-equal">= مساوی</button>
+                    <button class="btn-ui blue" id="btn-compare-greater">&gt; بزرگ‌تر</button>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn-ui" id="btn-new-compare">اعداد جدید</button>
+                </div>
+                <p id="compare-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۵: تبدیل کسر به اعشار
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۵</span>
+            <h2>تبدیل کسر به اعشار: راهی به دنیای اعشار!</h2>
+            <p>
+                برای تبدیل یک کسر به عدد اعشاری، صورت را بر مخرج تقسیم می‌کنیم.
+                اگر مخرج کسر ۱۰، ۱۰۰ یا ۱۰۰۰ باشد، کار ساده‌تر است.
+            </p>
+
+            <div class="key-tip-box">
+                <strong>📌 نکته:</strong>
+                <p style="margin-top: 6px;">کسرهایی با مخرج ۱۰، ۱۰۰، ۱۰۰۰ و... را می‌توان به راحتی به اعشار تبدیل کرد. مثلاً ۳/۱۰ = ۰/۳ و ۴۵/۱۰۰ = ۰/۴۵</p>
+            </div>
+
+            <!-- ابزار تعاملی ۴: تبدیل کسر به اعشار -->
+            <div class="conversion-lab">
+                <div class="sim-title">🔄 ماشین تبدیل کسر به اعشار</div>
+                
+                <div class="conversion-display">
+                    <div class="frac-input-group">
+                        <input type="number" class="numerator-input" id="conv-num" value="3" min="0" max="100">
+                        <input type="number" id="conv-den" value="10" min="1" max="1000">
+                    </div>
+                    <span style="color: var(--teal-main);">→</span>
+                    <div class="conversion-output" id="conv-output">؟</div>
+                </div>
+
+                <div class="conversion-input-row">
+                    <button class="btn-ui green" id="btn-convert">تبدیل کن</button>
+                </div>
+                <p id="conversion-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۶: جمع‌بندی
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۶</span>
+            <h2>جمع‌بندی و تمرین</h2>
+            <p>در این بخش یاد گرفتیم:</p>
+            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
+                <li>✅ ارزش مکانی ارقام در اعداد اعشاری (دهم، صدم، هزارم)</li>
+                <li>✅ نمایش اعداد اعشاری روی محور اعداد</li>
+                <li>✅ مقایسه اعداد اعشاری: ابتدا قسمت صحیح، سپس رقم‌های اعشاری از چپ به راست</li>
+                <li>✅ تبدیل کسر به عدد اعشاری: تقسیم صورت بر مخرج</li>
+                <li>✅ گسترده‌نویسی اعداد اعشاری</li>
+            </ul>
+
+            <div class="teacher-speech-bubble">
+                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی. یادت باشه که اعداد اعشاری، پایه‌ی خیلی از مفاهیم ریاضی در سال‌های بعدی مثل اندازه‌گیری و آمار هستند.»
+            </div>
+
+            <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
+                <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
+                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
+                    <li>عدد ۵/۷۸۹ را به گسترده بنویسید.</li>
+                    <li>کسر ۷/۱۰۰ را به عدد اعشاری تبدیل کنید.</li>
+                    <li>اعداد ۳/۲، ۳/۱۵ و ۳/۰۹ را از کوچک به بزرگ مرتب کنید.</li>
+                    <li>عدد ۲/۵ را روی محور اعداد نمایش دهید.</li>
+                </ol>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================================================
+         دکمه‌های شناور
+         ======================================================================== -->
+    <div class="floating-btns">
+        <a href="chapter2_part4.html" class="float-nav-btn">→ فصل قبلی</a>
+        <a href="chapter3_part2.html" class="float-nav-btn" id="next-lesson-btn">بخش بعدی ←</a>
+    </div>
+
+    <script>
+        /* ========================================================================
+           لاجیک صوتی
+           ======================================================================== */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTone(freq, duration) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
+        }
+
+        /* ========================================================================
+           تعامل ۱: ماشین اعشار (ارزش مکانی)
+           ======================================================================== */
+        function analyzeDecimal() {
+            let val = document.getElementById('decimal-input').value;
+            val = parseFloat(val);
+            
+            if (isNaN(val) || val < 0) {
+                document.getElementById('decimal-place-display').innerText = 'لطفاً یک عدد اعشاری مثبت وارد کنید!';
+                return;
+            }
+
+            // تبدیل به رشته
+            const strVal = val.toString();
+            const parts = strVal.split('.');
+            const integerPart = parts[0];
+            const decimalPart = parts[1] || '';
+
+            // پر کردن جدول
+            const intDigits = integerPart.padStart(4, '0').split('').reverse();
+            document.getElementById('pv-yekan').innerText = intDigits[0] ? intDigits[0].toLocaleString('fa-IR') : '-';
+            document.getElementById('pv-dahgan').innerText = intDigits[1] ? intDigits[1].toLocaleString('fa-IR') : '-';
+            document.getElementById('pv-sadgan').innerText = intDigits[2] ? intDigits[2].toLocaleString('fa-IR') : '-';
+            document.getElementById('pv-hazargan').innerText = intDigits[3] ? intDigits[3].toLocaleString('fa-IR') : '-';
+
+            const decDigits = decimalPart.padEnd(3, '0').split('');
+            document.getElementById('pv-dahom').innerText = decDigits[0] ? decDigits[0].toLocaleString('fa-IR') : '-';
+            document.getElementById('pv-sadom').innerText = decDigits[1] ? decDigits[1].toLocaleString('fa-IR') : '-';
+            document.getElementById('pv-hazarom').innerText = decDigits[2] ? decDigits[2].toLocaleString('fa-IR') : '-';
+
+            // نمایش بزرگ
+            let displayHTML = `<span style="direction: ltr; font-size: 1.5rem;">${val.toLocaleString('fa-IR')}</span><br>`;
+            displayHTML += `<span style="font-size: 0.9rem; color: #64748b;">ارزش مکانی هر رقم:</span><br>`;
+            displayHTML += `<span style="font-size: 0.85rem;">`;
+            if (intDigits[3] && intDigits[3] !== '0') displayHTML += `هزارگان: ${intDigits[3]} × ۱۰۰۰ + `;
+            if (intDigits[2] && intDigits[2] !== '0') displayHTML += `صدگان: ${intDigits[2]} × ۱۰۰ + `;
+            if (intDigits[1] && intDigits[1] !== '0') displayHTML += `دهگان: ${intDigits[1]} × ۱۰ + `;
+            if (intDigits[0] && intDigits[0] !== '0') displayHTML += `یکان: ${intDigits[0]} + `;
+            if (decDigits[0] && decDigits[0] !== '0') displayHTML += `دهم: ${decDigits[0]} × ۰/۱ + `;
+            if (decDigits[1] && decDigits[1] !== '0') displayHTML += `صدم: ${decDigits[1]} × ۰/۰۱ + `;
+            if (decDigits[2] && decDigits[2] !== '0') displayHTML += `هزارم: ${decDigits[2]} × ۰/۰۰۱`;
+            displayHTML = displayHTML.replace(/ \+ $/, '');
+            displayHTML += `</span>`;
+
+            document.getElementById('decimal-place-display').innerHTML = displayHTML;
+
+            // هایلایت
+            document.querySelectorAll('.place-value-table td').forEach(td => td.classList.remove('highlight'));
+            playTone(550, 0.1);
+            confetti({ particleCount: 20, spread: 40, origin: { y: 0.7 } });
+        }
+
+        document.getElementById('btn-analyze-decimal').addEventListener('click', analyzeDecimal);
+        document.getElementById('decimal-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') analyzeDecimal();
+        });
+        analyzeDecimal();
+
+        /* ========================================================================
+           تعامل ۲: محور اعداد اعشاری
+           ======================================================================== */
+        const decimalLineCanvas = document.getElementById('decimal-number-line-canvas');
+        const decimalLineCtx = decimalLineCanvas.getContext('2d');
+
+        function drawDecimalLine(highlightValue) {
+            const w = decimalLineCanvas.width;
+            const h = decimalLineCanvas.height;
+            const padding = 40;
+            const startX = padding;
+            const endX = w - padding;
+            const centerY = h / 2;
+            const startNum = 0;
+            const endNum = 5;
+            const step = (endX - startX) / (endNum - startNum);
+
+            decimalLineCtx.clearRect(0, 0, w, h);
+
+            // خط محور
+            decimalLineCtx.beginPath();
+            decimalLineCtx.strokeStyle = '#475569';
+            decimalLineCtx.lineWidth = 2;
+            decimalLineCtx.moveTo(startX - 10, centerY);
+            decimalLineCtx.lineTo(endX + 20, centerY);
+            decimalLineCtx.stroke();
+
+            // فلش
+            decimalLineCtx.beginPath();
+            decimalLineCtx.fillStyle = '#475569';
+            decimalLineCtx.moveTo(endX + 20, centerY);
+            decimalLineCtx.lineTo(endX + 10, centerY - 6);
+            decimalLineCtx.lineTo(endX + 10, centerY + 6);
+            decimalLineCtx.fill();
+
+            // درجه‌بندی
+            for (let i = startNum; i <= endNum; i += 0.5) {
+                const x = startX + (i - startNum) * step;
+                const isInteger = Number.isInteger(i);
+                decimalLineCtx.beginPath();
+                decimalLineCtx.strokeStyle = isInteger ? '#475569' : '#94a3b8';
+                decimalLineCtx.lineWidth = isInteger ? 2 : 1;
+                decimalLineCtx.moveTo(x, centerY - (isInteger ? 10 : 5));
+                decimalLineCtx.lineTo(x, centerY + (isInteger ? 10 : 5));
+                decimalLineCtx.stroke();
+
+                if (isInteger) {
+                    decimalLineCtx.fillStyle = '#64748b';
+                    decimalLineCtx.font = 'bold 12px Vazirmatn';
+                    decimalLineCtx.textAlign = 'center';
+                    decimalLineCtx.textBaseline = 'top';
+                    decimalLineCtx.fillText(i.toLocaleString('fa-IR'), x, centerY + 12);
+                }
+            }
+
+            // هایلایت
+            if (highlightValue !== null && highlightValue >= startNum && highlightValue <= endNum) {
+                const x = startX + (highlightValue - startNum) * step;
+                
+                decimalLineCtx.beginPath();
+                decimalLineCtx.fillStyle = '#14b8a6';
+                decimalLineCtx.arc(x, centerY, 12, 0, Math.PI * 2);
+                decimalLineCtx.fill();
+                decimalLineCtx.strokeStyle = '#0f766e';
+                decimalLineCtx.lineWidth = 2;
+                decimalLineCtx.stroke();
+
+                decimalLineCtx.fillStyle = 'white';
+                decimalLineCtx.font = 'bold 11px Vazirmatn';
+                decimalLineCtx.textAlign = 'center';
+                decimalLineCtx.textBaseline = 'middle';
+                decimalLineCtx.fillText(highlightValue.toLocaleString('fa-IR'), x, centerY);
+            }
+        }
+
+        function locateDecimal() {
+            const input = document.getElementById('decimal-line-input');
+            const val = parseFloat(input.value);
+            const feedbackEl = document.getElementById('decimal-line-feedback');
+
+            if (isNaN(val) || val < 0 || val > 5) {
+                feedbackEl.innerText = 'لطفاً عددی بین ۰ تا ۵ وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            drawDecimalLine(val);
+            feedbackEl.innerText = `عدد ${val.toLocaleString('fa-IR')} روی محور اعداد نمایش داده شد.`;
+            feedbackEl.style.color = 'var(--success)';
+            playTone(550, 0.1);
+        }
+
+        document.getElementById('btn-locate-decimal').addEventListener('click', locateDecimal);
+        document.getElementById('decimal-line-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') locateDecimal();
+        });
+        drawDecimalLine(2.5);
+
+        /* ========================================================================
+           تعامل ۳: مقایسه اعشاری
+           ======================================================================== */
+        let compareVal1 = 2.35;
+        let compareVal2 = 2.4;
+
+        function generateCompareDecimals() {
+            compareVal1 = Math.round((Math.random() * 5 + 1) * 100) / 100;
+            compareVal2 = Math.round((Math.random() * 5 + 1) * 100) / 100;
+            
+            if (compareVal1 === compareVal2) compareVal2 += 0.01;
+
+            document.getElementById('compare-num1').innerText = compareVal1.toLocaleString('fa-IR');
+            document.getElementById('compare-num2').innerText = compareVal2.toLocaleString('fa-IR');
+            document.getElementById('compare-symbol').value = '';
+            document.getElementById('compare-feedback').innerText = '';
+        }
+
+        function checkCompare(selectedSymbol) {
+            let correctSymbol;
+            if (compareVal1 < compareVal2) correctSymbol = '<';
+            else if (compareVal1 > compareVal2) correctSymbol = '>';
+            else correctSymbol = '=';
+
+            document.getElementById('compare-symbol').value = selectedSymbol;
+            const feedbackEl = document.getElementById('compare-feedback');
+
+            if (selectedSymbol === correctSymbol) {
+                feedbackEl.innerText = `✅ آفرین! ${compareVal1.toLocaleString('fa-IR')} ${correctSymbol} ${compareVal2.toLocaleString('fa-IR')} درست است.`;
+                feedbackEl.style.color = 'var(--success)';
+                playTone(600, 0.3);
+                confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
+            } else {
+                feedbackEl.innerText = `❌ اشتباه! علامت درست «${correctSymbol}» است.`;
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(300, 0.3);
+            }
+        }
+
+        document.getElementById('btn-compare-less').addEventListener('click', () => checkCompare('<'));
+        document.getElementById('btn-compare-equal').addEventListener('click', () => checkCompare('='));
+        document.getElementById('btn-compare-greater').addEventListener('click', () => checkCompare('>'));
+        document.getElementById('btn-new-compare').addEventListener('click', () => {
+            playTone(440, 0.05);
+            generateCompareDecimals();
+        });
+        generateCompareDecimals();
+
+        /* ========================================================================
+           تعامل ۴: تبدیل کسر به اعشار
+           ======================================================================== */
+        document.getElementById('btn-convert').addEventListener('click', function() {
+            const num = parseInt(document.getElementById('conv-num').value);
+            const den = parseInt(document.getElementById('conv-den').value);
+            const outputEl = document.getElementById('conv-output');
+            const feedbackEl = document.getElementById('conversion-feedback');
+
+            if (isNaN(num) || isNaN(den) || den === 0) {
+                feedbackEl.innerText = '❌ لطفاً صورت و مخرج را درست وارد کن (مخرج نباید صفر باشد).';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            const result = num / den;
+            const strResult = result.toString();
+            const decimalPlaces = (strResult.split('.')[1] || '').length;
+
+            let resultText = `${num.toLocaleString('fa-IR')} ÷ ${den.toLocaleString('fa-IR')} = ${result.toLocaleString('fa-IR')}`;
+            
+            if (decimalPlaces > 3) {
+                // گرد کردن به ۳ رقم اعشار
+                const rounded = Math.round(result * 1000) / 1000;
+                resultText += ` (تقریباً ${rounded.toLocaleString('fa-IR')})`;
+            }
+
+            outputEl.innerText = result.toLocaleString('fa-IR');
+            feedbackEl.innerText = resultText;
+            feedbackEl.style.color = 'var(--success)';
+
+            playTone(600, 0.3);
+            confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
+        });
+
+        /* ========================================================================
+           مدیریت دکمه‌های شناور
+           ======================================================================== */
+        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('به بخش بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
+        });
+
+    </script>
+</body>
+</html>

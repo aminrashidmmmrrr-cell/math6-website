@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فصل ۵ - بخش ۲: حجم و جرم | درسنامه تعاملی</title>
+    
+    <!-- قلم زیبای وزیرمتن -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+
+    <!-- انیمیشن کاغذ رنگی -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* ========================================================================
+           ۱. متغیرها و تم رنگی
+           ======================================================================== */
+        :root {
+            --lilac-bg: #f7f1fc;
+            --lilac-soft: #f1e7fb;
+            --lilac-border: #d8b4fe;
+            --lilac-main: #9333ea;
+            --lilac-dark: #6b21a8;
+            --lilac-glow: rgba(147, 51, 234, 0.15);
+            
+            --blue-soft: #e0f2fe;
+            --blue-main: #0284c7;
+            --blue-dark: #0369a1;
+            
+            --success: #16a34a;
+            --success-bg: rgba(22, 163, 74, 0.1);
+            --danger: #dc2626;
+            --danger-bg: rgba(220, 38, 38, 0.1);
+            --warning: #ca8a04;
+            --highlight: #fef08a;
+            --orange-soft: #ffedd5;
+            --orange-main: #f97316;
+            --orange-dark: #c2410c;
+
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
+            --card-hover-bg: rgba(255, 255, 255, 0.95);
+            
+            --text-title: #2e1065;
+            --text-body: #475569;
+            --text-muted: #64748b;
+            
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 8px;
+        }
+
+        /* ========================================================================
+           ۲. استایل‌های پایه
+           ======================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--lilac-bg);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-body);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* ========================================================================
+           ۳. نوار هدر
+           ======================================================================== */
+        .lesson-top-nav {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto 20px;
+            padding: 14px 28px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--glass-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            z-index: 100;
+        }
+
+        .go-back-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .go-back-link:hover {
+            color: var(--orange-main);
+            transform: translateX(3px);
+        }
+
+        .header-lesson-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .chapter-label-badge {
+            background: var(--orange-soft);
+            color: var(--orange-dark);
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .lesson-title-text {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--text-title);
+        }
+
+        /* ========================================================================
+           ۴. کارت‌های آموزشی
+           ======================================================================== */
+        .main-lesson-wrapper {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-bottom: 80px;
+        }
+
+        .step-teaching-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-teaching-card:hover {
+            background-color: var(--card-hover-bg);
+            transform: translateY(-5px);
+        }
+
+        .step-number-badge {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--orange-main), var(--orange-dark));
+            color: white;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 10px rgba(249, 115, 22, 0.25);
+        }
+
+        .step-teaching-card h2 {
+            font-size: 1.4rem;
+            color: var(--text-title);
+            margin-bottom: 12px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-teaching-card p {
+            font-size: 1rem;
+            line-height: 1.9;
+            color: var(--text-body);
+            margin-bottom: 16px;
+        }
+
+        /* ========================================================================
+           ۵. المان‌های خاص
+           ======================================================================== */
+        .teacher-speech-bubble {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-md);
+            padding: 18px 22px;
+            border: 1px dashed var(--orange-main);
+            color: var(--orange-dark);
+            margin: 16px 0;
+            position: relative;
+            font-style: italic;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .teacher-speech-bubble::before {
+            content: "🧑‍🏫";
+            font-size: 1.4rem;
+            font-style: normal;
+        }
+
+        .solved-example-box {
+            background: var(--blue-soft);
+            border: 1px solid rgba(2, 132, 199, 0.2);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 16px 0;
+        }
+
+        .example-header {
+            font-weight: 800;
+            color: var(--blue-dark);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .key-tip-box {
+            background: var(--success-bg);
+            border: 1px solid var(--success);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--success);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* ========================================================================
+           ۶. بخش تعاملی ۱: محاسبه حجم مکعب مستطیل
+           ======================================================================== */
+        .interactive-container {
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .sim-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--orange-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .volume-calc-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        #volume-canvas {
+            border-radius: var(--radius-sm);
+            border: 2px solid #e2e8f0;
+            background: #fafafa;
+        }
+
+        .volume-input-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .volume-input-row input {
+            width: 90px;
+            padding: 10px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            text-align: center;
+            border: 2px solid var(--orange-main);
+            border-radius: 8px;
+            color: var(--orange-dark);
+            background: #fafafa;
+        }
+        .volume-input-row input:focus { outline: none; border-color: var(--orange-main); }
+
+        .volume-output {
+            background: var(--orange-soft);
+            padding: 20px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--orange-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+            min-height: 80px;
+            width: 100%;
+        }
+
+        .volume-steps {
+            background: #fafafa;
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            color: var(--text-body);
+            line-height: 2.2;
+            width: 100%;
+        }
+
+        /* ========================================================================
+           ۷. بخش تعاملی ۲: تبدیل واحدهای حجم و گنجایش
+           ======================================================================== */
+        .capacity-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .capacity-output {
+            background: var(--blue-soft);
+            padding: 20px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--blue-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+            min-height: 80px;
+            width: 100%;
+        }
+
+        .capacity-steps {
+            background: #fafafa;
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            color: var(--text-body);
+            line-height: 2.2;
+            width: 100%;
+        }
+
+        /* ========================================================================
+           ۸. بخش تعاملی ۳: تبدیل واحدهای جرم
+           ======================================================================== */
+        .mass-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .mass-output {
+            background: var(--orange-soft);
+            padding: 20px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--orange-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+            min-height: 80px;
+            width: 100%;
+        }
+
+        .mass-steps {
+            background: #fafafa;
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            color: var(--text-body);
+            line-height: 2.2;
+            width: 100%;
+        }
+
+        /* ========================================================================
+           ۹. بخش تعاملی ۴: تمرین حجم و جرم
+           ======================================================================== */
+        .practice-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .practice-question {
+            background: var(--orange-soft);
+            padding: 20px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--orange-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .practice-answer-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .practice-answer-row input {
+            width: 130px;
+            padding: 10px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-align: center;
+            border: 2px solid var(--orange-main);
+            border-radius: 8px;
+            color: var(--orange-dark);
+            background: #fafafa;
+        }
+        .practice-answer-row input:focus { outline: none; border-color: var(--orange-main); }
+
+        /* ========================================================================
+           ۱۰. دکمه‌ها
+           ======================================================================== */
+        .btn-ui {
+            background: linear-gradient(135deg, var(--orange-main), var(--orange-dark));
+            color: white;
+            border: 2px solid white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 6px 16px rgba(249, 115, 22, 0.25);
+        }
+        .btn-ui:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.35);
+        }
+        .btn-ui:active { transform: translateY(0); }
+        .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
+        .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
+
+        .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
+        .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
+
+        .btn-ui.lilac { background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark)); box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25); }
+        .btn-ui.lilac:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
+
+        .action-btns-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .feedback-display {
+            font-weight: 800;
+            text-align: center;
+            min-height: 28px;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: color 0.2s;
+        }
+
+        /* ========================================================================
+           ۱۱. دکمه‌های شناور
+           ======================================================================== */
+        .floating-btns {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            z-index: 200;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .float-nav-btn {
+            pointer-events: auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 800;
+            color: var(--text-title);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .float-nav-btn:hover {
+            background: var(--orange-main);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(249, 115, 22, 0.25);
+        }
+
+        @media (max-width: 600px) {
+            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
+            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
+            .header-lesson-info { align-items: center; }
+        }
+
+        /* ========================================================================
+           ۱۲. انیمیشن
+           ======================================================================== */
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .pop-in { animation: popIn 0.3s ease-out forwards; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+        .shake-anim { animation: shake 0.4s ease-in-out; }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================================================
+         نوار ناوبری بالای درسنامه
+         ======================================================================== -->
+    <header class="lesson-top-nav">
+        <a href="../index.html" class="go-back-link">
+            <span>← برگشت به کتاب اصلی</span>
+        </a>
+        <div class="header-lesson-info">
+            <span class="chapter-label-badge">فصل پنجم: اندازه‌گیری</span>
+            <span class="lesson-title-text">بخش ۲: حجم و جرم</span>
+        </div>
+    </header>
+
+    <main class="main-lesson-wrapper">
+
+        <!-- ========================================================================
+           قدم ۱: آشنایی با حجم
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۱</span>
+            <h2>حجم: فضایی که اشغال می‌شود!</h2>
+            <p>
+                <strong>حجم</strong> مقدار فضایی است که یک جسم سه‌بعدی اشغال می‌کند. 
+                واحد اصلی حجم <strong>متر مکعب (m³)</strong> است.
+            </p>
+
+            <div class="key-tip-box">
+                <strong>📌 واحدهای حجم و گنجایش:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.4;">
+                    <li>۱ متر مکعب = ۱۰۰۰ دسی‌متر مکعب</li>
+                    <li>۱ دسی‌متر مکعب = ۱۰۰۰ سانتی‌متر مکعب</li>
+                    <li>۱ دسی‌متر مکعب = ۱ لیتر</li>
+                    <li>۱ سانتی‌متر مکعب = ۱ سی‌سی = ۱ میلی‌لیتر</li>
+                    <li>۱ متر مکعب = ۱۰۰۰ لیتر</li>
+                </ul>
+            </div>
+
+            <div class="solved-example-box">
+                <div class="example-header">💡 نکته مهم</div>
+                <p>حجم و گنجایش با هم مرتبط هستند. یک ظرف با حجم ۱ دسی‌متر مکعب، 
+                گنجایش ۱ لیتر دارد.</p>
+            </div>
+
+            <div class="teacher-speech-bubble">
+                «حجم مثل این است که بپرسی یک جعبه چقدر جا دارد! 
+                برای محاسبه‌ی آن، طول و عرض و ارتفاع را در هم ضرب می‌کنیم.»
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۲: محاسبه حجم مکعب مستطیل
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۲</span>
+            <h2>محاسبه حجم: طول × عرض × ارتفاع!</h2>
+            <p>
+                حجم یک مکعب مستطیل از ضرب طول، عرض و ارتفاع به دست می‌آید. 
+                در این آزمایشگاه، ابعاد را وارد کن و حجم را ببین.
+            </p>
+
+            <!-- ابزار تعاملی ۱: محاسبه حجم مکعب مستطیل -->
+            <div class="volume-calc-lab">
+                <div class="sim-title">📦 آزمایشگاه محاسبه حجم</div>
+
+                <canvas id="volume-canvas" width="400" height="300"></canvas>
+
+                <div class="volume-input-row">
+                    <span style="font-weight:800;">طول:</span>
+                    <input type="number" id="vol-length" value="5" min="1" max="10" step="0.5">
+                    <span style="font-weight:800;">عرض:</span>
+                    <input type="number" id="vol-width" value="3" min="1" max="10" step="0.5">
+                    <span style="font-weight:800;">ارتفاع:</span>
+                    <input type="number" id="vol-height" value="4" min="1" max="10" step="0.5">
+                    <button class="btn-ui green" id="btn-calc-volume">محاسبه حجم</button>
+                </div>
+
+                <div class="volume-output" id="volume-output">
+                    نتیجه: ؟
+                </div>
+
+                <div class="volume-steps" id="volume-steps">
+                    <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «محاسبه حجم» را بزنید.</p>
+                </div>
+                <p id="volume-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۳: تبدیل واحدهای حجم و گنجایش
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۳</span>
+            <h2>تبدیل واحدهای حجم و گنجایش</h2>
+            <p>
+                واحدهای حجم و گنجایش را می‌توان به هم تبدیل کرد. 
+                در این بخش، یک مقدار و واحد آن را وارد کن تا تبدیل را ببینی.
+            </p>
+
+            <!-- ابزار تعاملی ۲: تبدیل واحدهای حجم و گنجایش -->
+            <div class="capacity-lab">
+                <div class="sim-title">🧪 ماشین تبدیل حجم و گنجایش</div>
+
+                <div class="volume-input-row">
+                    <input type="number" id="capacity-input" value="2" step="0.01">
+                    <select id="capacity-from" style="padding:10px; border-radius:8px; border:2px solid var(--blue-main); font-weight:700; color:var(--blue-dark); background:#fafafa; cursor:pointer;">
+                        <option value="m3">متر مکعب</option>
+                        <option value="dm3">دسی‌متر مکعب</option>
+                        <option value="cm3">سانتی‌متر مکعب</option>
+                        <option value="L" selected>لیتر</option>
+                        <option value="mL">میلی‌لیتر</option>
+                    </select>
+                    <span style="font-size:1.5rem; font-weight:900; color:var(--blue-main);">→</span>
+                    <select id="capacity-to" style="padding:10px; border-radius:8px; border:2px solid var(--blue-main); font-weight:700; color:var(--blue-dark); background:#fafafa; cursor:pointer;">
+                        <option value="m3">متر مکعب</option>
+                        <option value="dm3">دسی‌متر مکعب</option>
+                        <option value="cm3" selected>سانتی‌متر مکعب</option>
+                        <option value="L">لیتر</option>
+                        <option value="mL">میلی‌لیتر</option>
+                    </select>
+                    <button class="btn-ui blue" id="btn-convert-capacity">تبدیل کن</button>
+                </div>
+
+                <div class="capacity-output" id="capacity-output">
+                    نتیجه: ؟
+                </div>
+
+                <div class="capacity-steps" id="capacity-steps">
+                    <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «تبدیل کن» را بزنید.</p>
+                </div>
+                <p id="capacity-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۴: تبدیل واحدهای جرم
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۴</span>
+            <h2>واحدهای جرم: از میلی‌گرم تا تن!</h2>
+            <p>
+                <strong>جرم</strong> مقدار ماده‌ی تشکیل‌دهنده‌ی یک جسم است. 
+                واحد اصلی جرم <strong>کیلوگرم (kg)</strong> است.
+            </p>
+
+            <div class="key-tip-box">
+                <strong>📌 واحدهای جرم و تبدیل آن‌ها:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.4;">
+                    <li>۱ تن = ۱۰۰۰ کیلوگرم</li>
+                    <li>۱ کیلوگرم = ۱۰۰۰ گرم</li>
+                    <li>۱ گرم = ۱۰۰۰ میلی‌گرم</li>
+                </ul>
+            </div>
+
+            <!-- ابزار تعاملی ۳: تبدیل واحدهای جرم -->
+            <div class="mass-lab">
+                <div class="sim-title">⚖️ ماشین تبدیل واحدهای جرم</div>
+
+                <div class="volume-input-row">
+                    <input type="number" id="mass-input" value="2" step="0.01">
+                    <select id="mass-from" style="padding:10px; border-radius:8px; border:2px solid var(--orange-main); font-weight:700; color:var(--orange-dark); background:#fafafa; cursor:pointer;">
+                        <option value="ton">تن</option>
+                        <option value="kg" selected>کیلوگرم</option>
+                        <option value="g">گرم</option>
+                        <option value="mg">میلی‌گرم</option>
+                    </select>
+                    <span style="font-size:1.5rem; font-weight:900; color:var(--orange-main);">→</span>
+                    <select id="mass-to" style="padding:10px; border-radius:8px; border:2px solid var(--orange-main); font-weight:700; color:var(--orange-dark); background:#fafafa; cursor:pointer;">
+                        <option value="ton">تن</option>
+                        <option value="kg">کیلوگرم</option>
+                        <option value="g" selected>گرم</option>
+                        <option value="mg">میلی‌گرم</option>
+                    </select>
+                    <button class="btn-ui green" id="btn-convert-mass">تبدیل کن</button>
+                </div>
+
+                <div class="mass-output" id="mass-output">
+                    نتیجه: ؟
+                </div>
+
+                <div class="mass-steps" id="mass-steps">
+                    <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «تبدیل کن» را بزنید.</p>
+                </div>
+                <p id="mass-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۵: تمرین حجم و جرم
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۵</span>
+            <h2>تمرین حجم و جرم</h2>
+            <p>
+                حالا نوبت تمرین است! به سوالات پاسخ بده.
+            </p>
+
+            <!-- ابزار تعاملی ۴: تمرین حجم و جرم -->
+            <div class="practice-lab">
+                <div class="sim-title">📝 تمرین تعاملی</div>
+                
+                <div class="practice-question" id="practice-question">
+                    <!-- سوال با JS ساخته می‌شود -->
+                </div>
+
+                <div class="practice-answer-row">
+                    <input type="number" id="practice-answer" step="0.001" placeholder="پاسخ">
+                    <span id="practice-unit" style="font-weight:800; color:var(--orange-dark);">واحد</span>
+                    <button class="btn-ui green" id="btn-check-practice">بررسی</button>
+                </div>
+
+                <p id="practice-feedback" class="feedback-display"></p>
+                <button class="btn-ui blue" id="btn-new-practice">سوال جدید</button>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۶: جمع‌بندی
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۶</span>
+            <h2>جمع‌بندی و تمرین</h2>
+            <p>در این بخش یاد گرفتیم:</p>
+            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
+                <li>✅ حجم: مقدار فضایی که یک جسم اشغال می‌کند. واحد: متر مکعب، دسی‌متر مکعب، سانتی‌متر مکعب.</li>
+                <li>✅ گنجایش: مقدار مایعی که یک ظرف می‌تواند در خود جای دهد. واحد: لیتر، میلی‌لیتر.</li>
+                <li>✅ رابطه‌ی حجم و گنجایش: ۱ دسی‌متر مکعب = ۱ لیتر و ۱ سانتی‌متر مکعب = ۱ میلی‌لیتر.</li>
+                <li>✅ محاسبه حجم مکعب مستطیل: طول × عرض × ارتفاع.</li>
+                <li>✅ جرم: مقدار ماده‌ی تشکیل‌دهنده. واحد: تن، کیلوگرم، گرم، میلی‌گرم.</li>
+                <li>✅ تبدیل واحدهای جرم: هر واحد ۱۰۰۰ برابر واحد کوچک‌تر است.</li>
+            </ul>
+
+            <div class="teacher-speech-bubble">
+                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی. 
+                یادت باشه که حجم و جرم، پایه‌ی خیلی از مفاهیم در علوم و زندگی روزمره هستند.»
+            </div>
+
+            <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
+                <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
+                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
+                    <li>حجم مکعب مستطیلی به طول ۵، عرض ۳ و ارتفاع ۴ سانتی‌متر چقدر است؟</li>
+                    <li>۲/۵ لیتر چند سانتی‌متر مکعب است؟</li>
+                    <li>۳ کیلوگرم چند گرم است؟</li>
+                    <li>یک ظرف با گنجایش ۲ لیتر، چند دسی‌متر مکعب حجم دارد؟</li>
+                </ol>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================================================
+         دکمه‌های شناور
+         ======================================================================== -->
+    <div class="floating-btns">
+        <a href="chapter5_part1.html" class="float-nav-btn">→ بخش قبلی</a>
+        <a href="chapter5_part3.html" class="float-nav-btn" id="next-lesson-btn">بخش بعدی ←</a>
+    </div>
+
+    <script>
+        /* ========================================================================
+           لاجیک صوتی
+           ======================================================================== */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTone(freq, duration) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
+        }
+
+        /* ========================================================================
+           تعامل ۱: محاسبه حجم مکعب مستطیل
+           ======================================================================== */
+        const volumeCanvas = document.getElementById('volume-canvas');
+        const volCtx = volumeCanvas.getContext('2d');
+
+        function drawBoxOnCanvas(len, wid, hei) {
+            const w = volumeCanvas.width;
+            const h = volumeCanvas.height;
+            volCtx.clearRect(0, 0, w, h);
+
+            // مقیاس‌بندی برای نمایش
+            const maxDim = Math.max(len, wid, hei);
+            const scale = 180 / maxDim;
+
+            const boxLen = len * scale;
+            const boxWid = wid * scale;
+            const boxHei = hei * scale;
+
+            // موقعیت مرکز
+            const cx = w / 2;
+            const cy = h / 2 + 20;
+
+            // رسم مکعب مستطیل به صورت ایزومتریک
+            const offsetX = 0.5;
+            const offsetY = 0.3;
+
+            // نقاط پایین
+            const p1 = { x: cx - boxLen/2, y: cy };
+            const p2 = { x: cx + boxLen/2, y: cy };
+            const p3 = { x: cx + boxLen/2, y: cy - boxWid };
+            const p4 = { x: cx - boxLen/2, y: cy - boxWid };
+
+            // نقاط بالا (با ارتفاع)
+            const p5 = { x: p1.x + boxHei * offsetX, y: p1.y - boxHei * offsetY - boxHei * 0.5 };
+            const p6 = { x: p2.x + boxHei * offsetX, y: p2.y - boxHei * offsetY - boxHei * 0.5 };
+            const p7 = { x: p3.x + boxHei * offsetX, y: p3.y - boxHei * offsetY - boxHei * 0.5 };
+            const p8 = { x: p4.x + boxHei * offsetX, y: p4.y - boxHei * offsetY - boxHei * 0.5 };
+
+            // وجه پایین (کف)
+            volCtx.beginPath();
+            volCtx.moveTo(p1.x, p1.y);
+            volCtx.lineTo(p2.x, p2.y);
+            volCtx.lineTo(p3.x, p3.y);
+            volCtx.lineTo(p4.x, p4.y);
+            volCtx.closePath();
+            volCtx.fillStyle = 'rgba(249, 115, 22, 0.15)';
+            volCtx.fill();
+            volCtx.strokeStyle = '#c2410c';
+            volCtx.lineWidth = 2;
+            volCtx.stroke();
+
+            // وجه جلو
+            volCtx.beginPath();
+            volCtx.moveTo(p1.x, p1.y);
+            volCtx.lineTo(p2.x, p2.y);
+            volCtx.lineTo(p6.x, p6.y);
+            volCtx.lineTo(p5.x, p5.y);
+            volCtx.closePath();
+            volCtx.fillStyle = 'rgba(249, 115, 22, 0.5)';
+            volCtx.fill();
+            volCtx.strokeStyle = '#c2410c';
+            volCtx.stroke();
+
+            // وجه راست
+            volCtx.beginPath();
+            volCtx.moveTo(p2.x, p2.y);
+            volCtx.lineTo(p3.x, p3.y);
+            volCtx.lineTo(p7.x, p7.y);
+            volCtx.lineTo(p6.x, p6.y);
+            volCtx.closePath();
+            volCtx.fillStyle = 'rgba(249, 115, 22, 0.7)';
+            volCtx.fill();
+            volCtx.strokeStyle = '#c2410c';
+            volCtx.stroke();
+
+            // وجه بالا
+            volCtx.beginPath();
+            volCtx.moveTo(p5.x, p5.y);
+            volCtx.lineTo(p6.x, p6.y);
+            volCtx.lineTo(p7.x, p7.y);
+            volCtx.lineTo(p8.x, p8.y);
+            volCtx.closePath();
+            volCtx.fillStyle = 'rgba(249, 115, 22, 0.9)';
+            volCtx.fill();
+            volCtx.strokeStyle = '#c2410c';
+            volCtx.stroke();
+
+            // برچسب ابعاد
+            volCtx.fillStyle = '#c2410c';
+            volCtx.font = 'bold 12px Vazirmatn';
+            volCtx.textAlign = 'center';
+            volCtx.fillText(`طول: ${len}`, (p1.x + p2.x) / 2, p1.y + 18);
+            volCtx.fillText(`عرض: ${wid}`, p3.x + 30, (p3.y + p2.y) / 2);
+            volCtx.save();
+            volCtx.translate(p5.x - 25, (p5.y + p1.y) / 2);
+            volCtx.rotate(-Math.PI / 2);
+            volCtx.fillText(`ارتفاع: ${hei}`, 0, 0);
+            volCtx.restore();
+        }
+
+        document.getElementById('btn-calc-volume').addEventListener('click', function() {
+            const len = parseFloat(document.getElementById('vol-length').value);
+            const wid = parseFloat(document.getElementById('vol-width').value);
+            const hei = parseFloat(document.getElementById('vol-height').value);
+            const outputEl = document.getElementById('volume-output');
+            const stepsEl = document.getElementById('volume-steps');
+            const feedbackEl = document.getElementById('volume-feedback');
+
+            if (isNaN(len) || isNaN(wid) || isNaN(hei) || len <= 0 || wid <= 0 || hei <= 0) {
+                feedbackEl.innerText = '❌ لطفاً ابعاد را درست وارد کن (باید مثبت باشند)!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            const volume = len * wid * hei;
+
+            drawBoxOnCanvas(len, wid, hei);
+
+            outputEl.innerHTML = `حجم = ${len.toLocaleString('fa-IR')} × ${wid.toLocaleString('fa-IR')} × ${hei.toLocaleString('fa-IR')} = <strong>${volume.toLocaleString('fa-IR')} سانتی‌متر مکعب</strong>`;
+
+            stepsEl.innerHTML = `
+                <div style="padding: 6px 0;"><strong style="color: var(--orange-dark);">فرمول:</strong> حجم = طول × عرض × ارتفاع</div>
+                <div style="padding: 6px 0;"><strong style="color: var(--orange-dark);">محاسبه:</strong> ${len.toLocaleString('fa-IR')} × ${wid.toLocaleString('fa-IR')} × ${hei.toLocaleString('fa-IR')} = ${volume.toLocaleString('fa-IR')}</div>
+                <div style="padding: 6px 0;"><strong style="color: var(--orange-dark);">نتیجه:</strong> حجم = ${volume.toLocaleString('fa-IR')} سانتی‌متر مکعب (یا ${(volume/1000).toLocaleString('fa-IR')} دسی‌متر مکعب)</div>
+            `;
+
+            feedbackEl.innerText = '✅ حجم با موفقیت محاسبه شد.';
+            feedbackEl.style.color = 'var(--success)';
+            playTone(600, 0.3);
+            confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
+        });
+
+        drawBoxOnCanvas(5, 3, 4);
+
+        /* ========================================================================
+           تعامل ۲: تبدیل واحدهای حجم و گنجایش
+           ======================================================================== */
+        const capacityUnitNames = {
+            m3: 'متر مکعب',
+            dm3: 'دسی‌متر مکعب',
+            cm3: 'سانتی‌متر مکعب',
+            L: 'لیتر',
+            mL: 'میلی‌لیتر'
+        };
+
+        // تبدیل همه به لیتر (واحد پایه)
+        const capacityToLiter = {
+            m3: 1000,
+            dm3: 1,
+            cm3: 0.001,
+            L: 1,
+            mL: 0.001
+        };
+
+        document.getElementById('btn-convert-capacity').addEventListener('click', function() {
+            const val = parseFloat(document.getElementById('capacity-input').value);
+            const fromUnit = document.getElementById('capacity-from').value;
+            const toUnit = document.getElementById('capacity-to').value;
+            const outputEl = document.getElementById('capacity-output');
+            const stepsEl = document.getElementById('capacity-steps');
+            const feedbackEl = document.getElementById('capacity-feedback');
+
+            if (isNaN(val)) {
+                feedbackEl.innerText = '❌ لطفاً یک مقدار معتبر وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            const valueInLiter = val * capacityToLiter[fromUnit];
+            const result = valueInLiter / capacityToLiter[toUnit];
+
+            outputEl.innerHTML = `${val.toLocaleString('fa-IR')} ${capacityUnitNames[fromUnit]} = <strong>${result.toLocaleString('fa-IR')} ${capacityUnitNames[toUnit]}</strong>`;
+
+            const factor = capacityToLiter[fromUnit] / capacityToLiter[toUnit];
+
+            stepsEl.innerHTML = `
+                <div style="padding: 6px 0;"><strong style="color: var(--blue-dark);">مرحله ۱:</strong> تبدیل ${val.toLocaleString('fa-IR')} ${capacityUnitNames[fromUnit]} به لیتر: ${(val * capacityToLiter[fromUnit]).toLocaleString('fa-IR')} لیتر</div>
+                <div style="padding: 6px 0;"><strong style="color: var(--blue-dark);">مرحله ۲:</strong> تبدیل لیتر به ${capacityUnitNames[toUnit]}: تقسیم بر ${capacityToLiter[toUnit].toLocaleString('fa-IR')}</div>
+                <div style="padding: 6px 0;"><strong style="color: var(--blue-dark);">نتیجه:</strong> ضریب تبدیل = ${factor.toLocaleString('fa-IR')}</div>
+            `;
+
+            feedbackEl.innerText = '✅ تبدیل با موفقیت انجام شد.';
+            feedbackEl.style.color = 'var(--success)';
+            playTone(600, 0.3);
+            confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
+        });
+
+        /* ========================================================================
+           تعامل ۳: تبدیل واحدهای جرم
+           ======================================================================== */
+        const massUnitNames = {
+            ton: 'تن',
+            kg: 'کیلوگرم',
+            g: 'گرم',
+            mg: 'میلی‌گرم'
+        };
+
+        // تبدیل همه به گرم (واحد پایه)
+        const massToGram = {
+            ton: 1000000,
+            kg: 1000,
+            g: 1,
+            mg: 0.001
+        };
+
+        document.getElementById('btn-convert-mass').addEventListener('click', function() {
+            const val = parseFloat(document.getElementById('mass-input').value);
+            const fromUnit = document.getElementById('mass-from').value;
+            const toUnit = document.getElementById('mass-to').value;
+            const outputEl = document.getElementById('mass-output');
+            const stepsEl = document.getElementById('mass-steps');
+            const feedbackEl = document.getElementById('mass-feedback');
+
+            if (isNaN(val)) {
+                feedbackEl.innerText = '❌ لطفاً یک مقدار معتبر وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            const valueInGram = val * massToGram[fromUnit];
+            const result = valueInGram / massToGram[toUnit];
+
+            outputEl.innerHTML = `${val.toLocaleString('fa-IR')} ${massUnitNames[fromUnit]} = <strong>${result.toLocaleString('fa-IR')} ${massUnitNames[toUnit]}</strong>`;
+
+            const factor = massToGram[fromUnit] / massToGram[toUnit];
+
+            stepsEl.innerHTML = `
+                <div style="padding: 6px 0;"><strong style="color: var(--orange-dark);">مرحله ۱:</strong> تبدیل ${val.toLocaleString('fa-IR')} ${massUnitNames[fromUnit]} به گرم: ${(val * massToGram[fromUnit]).toLocaleString('fa-IR')} گرم</div>
+                <div style="padding: 6px 0;"><strong style="color: var(--orange-dark);">مرحله ۲:</strong> تبدیل گرم به ${massUnitNames[toUnit]}: تقسیم بر ${massToGram[toUnit].toLocaleString('fa-IR')}</div>
+                <div style="padding: 6px 0;"><strong style="color: var(--orange-dark);">نتیجه:</strong> ضریب تبدیل = ${factor.toLocaleString('fa-IR')}</div>
+            `;
+
+            feedbackEl.innerText = '✅ تبدیل با موفقیت انجام شد.';
+            feedbackEl.style.color = 'var(--success)';
+            playTone(600, 0.3);
+            confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
+        });
+
+        /* ========================================================================
+           تعامل ۴: تمرین حجم و جرم
+           ======================================================================== */
+        let practiceAnswer, practiceUnit, practiceType;
+
+        function generatePracticeQuestion() {
+            const types = ['volume', 'capacity', 'mass', 'volume-box'];
+            practiceType = types[Math.floor(Math.random() * types.length)];
+
+            const qEl = document.getElementById('practice-question');
+            const unitEl = document.getElementById('practice-unit');
+
+            if (practiceType === 'volume') {
+                const val = Math.floor(Math.random() * 10 + 1);
+                practiceAnswer = val * 1000;
+                practiceUnit = 'سانتی‌متر مکعب';
+                qEl.innerHTML = `${val.toLocaleString('fa-IR')} دسی‌متر مکعب چند سانتی‌متر مکعب است؟`;
+            } else if (practiceType === 'capacity') {
+                const val = Math.round((Math.random() * 5 + 0.5) * 10) / 10;
+                practiceAnswer = val * 1000;
+                practiceUnit = 'میلی‌لیتر';
+                qEl.innerHTML = `${val.toLocaleString('fa-IR')} لیتر چند میلی‌لیتر است؟`;
+            } else if (practiceType === 'mass') {
+                const val = Math.floor(Math.random() * 10 + 1);
+                practiceAnswer = val * 1000;
+                practiceUnit = 'گرم';
+                qEl.innerHTML = `${val.toLocaleString('fa-IR')} کیلوگرم چند گرم است؟`;
+            } else {
+                const len = Math.floor(Math.random() * 5 + 2);
+                const wid = Math.floor(Math.random() * 5 + 2);
+                const hei = Math.floor(Math.random() * 5 + 2);
+                practiceAnswer = len * wid * hei;
+                practiceUnit = 'سانتی‌متر مکعب';
+                qEl.innerHTML = `حجم مکعب مستطیلی به طول ${len.toLocaleString('fa-IR')}، عرض ${wid.toLocaleString('fa-IR')} و ارتفاع ${hei.toLocaleString('fa-IR')} سانتی‌متر چقدر است؟`;
+            }
+
+            unitEl.innerText = practiceUnit;
+            document.getElementById('practice-answer').value = '';
+            document.getElementById('practice-feedback').innerText = '';
+        }
+
+        document.getElementById('btn-check-practice').addEventListener('click', function() {
+            const userAnswer = parseFloat(document.getElementById('practice-answer').value);
+            const feedbackEl = document.getElementById('practice-feedback');
+
+            if (isNaN(userAnswer)) {
+                feedbackEl.innerText = '❌ لطفاً یک عدد وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            if (Math.abs(userAnswer - practiceAnswer) < 0.001) {
+                feedbackEl.innerText = `✅ آفرین! پاسخ درست ${practiceAnswer.toLocaleString('fa-IR')} ${practiceUnit} است.`;
+                feedbackEl.style.color = 'var(--success)';
+                playTone(600, 0.3);
+                confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
+            } else {
+                feedbackEl.innerText = `❌ اشتباه! پاسخ درست ${practiceAnswer.toLocaleString('fa-IR')} ${practiceUnit} است.`;
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(300, 0.3);
+                document.getElementById('practice-question').classList.add('shake-anim');
+                setTimeout(() => document.getElementById('practice-question').classList.remove('shake-anim'), 500);
+            }
+        });
+
+        document.getElementById('btn-new-practice').addEventListener('click', () => {
+            playTone(440, 0.05);
+            generatePracticeQuestion();
+        });
+
+        generatePracticeQuestion();
+
+        /* ========================================================================
+           مدیریت دکمه‌های شناور
+           ======================================================================== */
+        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('به بخش بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
+        });
+
+    </script>
+</body>
+</html>

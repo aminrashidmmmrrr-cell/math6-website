@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فصل ۴ - بخش ۳: محورهای مختصات | درسنامه تعاملی</title>
+    
+    <!-- قلم زیبای وزیرمتن -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+
+    <!-- انیمیشن کاغذ رنگی -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* ========================================================================
+           ۱. متغیرها و تم رنگی
+           ======================================================================== */
+        :root {
+            --lilac-bg: #f7f1fc;
+            --lilac-soft: #f1e7fb;
+            --lilac-border: #d8b4fe;
+            --lilac-main: #9333ea;
+            --lilac-dark: #6b21a8;
+            --lilac-glow: rgba(147, 51, 234, 0.15);
+            
+            --blue-soft: #e0f2fe;
+            --blue-main: #0284c7;
+            --blue-dark: #0369a1;
+            
+            --success: #16a34a;
+            --success-bg: rgba(22, 163, 74, 0.1);
+            --danger: #dc2626;
+            --danger-bg: rgba(220, 38, 38, 0.1);
+            --warning: #ca8a04;
+            --highlight: #fef08a;
+            --purple-soft: #ede9fe;
+            --purple-main: #8b5cf6;
+            --purple-dark: #6d28d9;
+
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
+            --card-hover-bg: rgba(255, 255, 255, 0.95);
+            
+            --text-title: #2e1065;
+            --text-body: #475569;
+            --text-muted: #64748b;
+            
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 8px;
+        }
+
+        /* ========================================================================
+           ۲. استایل‌های پایه
+           ======================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--lilac-bg);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-body);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* ========================================================================
+           ۳. نوار هدر
+           ======================================================================== */
+        .lesson-top-nav {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto 20px;
+            padding: 14px 28px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--glass-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            z-index: 100;
+        }
+
+        .go-back-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .go-back-link:hover {
+            color: var(--purple-main);
+            transform: translateX(3px);
+        }
+
+        .header-lesson-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .chapter-label-badge {
+            background: var(--purple-soft);
+            color: var(--purple-dark);
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .lesson-title-text {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--text-title);
+        }
+
+        /* ========================================================================
+           ۴. کارت‌های آموزشی
+           ======================================================================== */
+        .main-lesson-wrapper {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-bottom: 80px;
+        }
+
+        .step-teaching-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-teaching-card:hover {
+            background-color: var(--card-hover-bg);
+            transform: translateY(-5px);
+        }
+
+        .step-number-badge {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--purple-main), var(--purple-dark));
+            color: white;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 10px rgba(139, 92, 246, 0.25);
+        }
+
+        .step-teaching-card h2 {
+            font-size: 1.4rem;
+            color: var(--text-title);
+            margin-bottom: 12px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-teaching-card p {
+            font-size: 1rem;
+            line-height: 1.9;
+            color: var(--text-body);
+            margin-bottom: 16px;
+        }
+
+        /* ========================================================================
+           ۵. المان‌های خاص
+           ======================================================================== */
+        .teacher-speech-bubble {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-md);
+            padding: 18px 22px;
+            border: 1px dashed var(--purple-main);
+            color: var(--purple-dark);
+            margin: 16px 0;
+            position: relative;
+            font-style: italic;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .teacher-speech-bubble::before {
+            content: "🧑‍🏫";
+            font-size: 1.4rem;
+            font-style: normal;
+        }
+
+        .solved-example-box {
+            background: var(--blue-soft);
+            border: 1px solid rgba(2, 132, 199, 0.2);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 16px 0;
+        }
+
+        .example-header {
+            font-weight: 800;
+            color: var(--blue-dark);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .key-tip-box {
+            background: var(--success-bg);
+            border: 1px solid var(--success);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--success);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* ========================================================================
+           ۶. بخش تعاملی ۱: آزمایشگاه مختصات
+           ======================================================================== */
+        .interactive-container {
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .sim-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--purple-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .coordinate-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        #coord-lab-canvas {
+            border-radius: var(--radius-sm);
+            border: 2px solid #e2e8f0;
+            background: #fafafa;
+            cursor: crosshair;
+        }
+
+        .coord-info-display {
+            background: var(--purple-soft);
+            padding: 16px 24px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            color: var(--purple-dark);
+            text-align: center;
+            font-size: 1.1rem;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        /* ========================================================================
+           ۷. بخش تعاملی ۲: رسم نقطه با مختصات
+           ======================================================================== */
+        .plot-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .plot-input-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .plot-input-row input {
+            width: 80px;
+            padding: 10px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-align: center;
+            border: 2px solid var(--purple-main);
+            border-radius: 8px;
+            color: var(--purple-dark);
+            background: #fafafa;
+        }
+        .plot-input-row input:focus { outline: none; border-color: var(--purple-main); }
+
+        /* ========================================================================
+           ۸. بخش تعاملی ۳: شکل‌ها روی مختصات
+           ======================================================================== */
+        .shapes-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .shape-coord-inputs {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            background: #fafafa;
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid #e2e8f0;
+        }
+
+        .shape-coord-inputs .coord-pair {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .shape-coord-inputs input {
+            width: 60px;
+            padding: 8px;
+            font-size: 1rem;
+            font-weight: 900;
+            text-align: center;
+            border: 2px solid var(--purple-main);
+            border-radius: 8px;
+            color: var(--purple-dark);
+            background: white;
+        }
+        .shape-coord-inputs input:focus { outline: none; border-color: var(--purple-main); }
+
+        /* ========================================================================
+           ۹. بخش تعاملی ۴: تمرین مختصات
+           ======================================================================== */
+        .practice-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .practice-question {
+            background: var(--purple-soft);
+            padding: 20px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--purple-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .practice-answer-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .practice-answer-row input {
+            width: 80px;
+            padding: 10px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-align: center;
+            border: 2px solid var(--purple-main);
+            border-radius: 8px;
+            color: var(--purple-dark);
+            background: #fafafa;
+        }
+        .practice-answer-row input:focus { outline: none; border-color: var(--purple-main); }
+
+        /* ========================================================================
+           ۱۰. دکمه‌ها
+           ======================================================================== */
+        .btn-ui {
+            background: linear-gradient(135deg, var(--purple-main), var(--purple-dark));
+            color: white;
+            border: 2px solid white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 6px 16px rgba(139, 92, 246, 0.25);
+        }
+        .btn-ui:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.35);
+        }
+        .btn-ui:active { transform: translateY(0); }
+        .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
+        .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
+
+        .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
+        .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
+
+        .btn-ui.lilac { background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark)); box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25); }
+        .btn-ui.lilac:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
+
+        .action-btns-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .feedback-display {
+            font-weight: 800;
+            text-align: center;
+            min-height: 28px;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: color 0.2s;
+        }
+
+        /* ========================================================================
+           ۱۱. دکمه‌های شناور
+           ======================================================================== */
+        .floating-btns {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            z-index: 200;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .float-nav-btn {
+            pointer-events: auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 800;
+            color: var(--text-title);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .float-nav-btn:hover {
+            background: var(--purple-main);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(139, 92, 246, 0.25);
+        }
+
+        @media (max-width: 600px) {
+            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
+            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
+            .header-lesson-info { align-items: center; }
+        }
+
+        /* ========================================================================
+           ۱۲. انیمیشن
+           ======================================================================== */
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .pop-in { animation: popIn 0.3s ease-out forwards; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+        .shake-anim { animation: shake 0.4s ease-in-out; }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================================================
+         نوار ناوبری بالای درسنامه
+         ======================================================================== -->
+    <header class="lesson-top-nav">
+        <a href="../index.html" class="go-back-link">
+            <span>← برگشت به کتاب اصلی</span>
+        </a>
+        <div class="header-lesson-info">
+            <span class="chapter-label-badge">فصل چهارم: تقارن و مختصات</span>
+            <span class="lesson-title-text">بخش ۳: محورهای مختصات</span>
+        </div>
+    </header>
+
+    <main class="main-lesson-wrapper">
+
+        <!-- ========================================================================
+           قدم ۱: آشنایی با محورهای مختصات
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۱</span>
+            <h2>محورهای مختصات: نقشه‌ی گنج ریاضی!</h2>
+            <p>
+                صفحه‌ی مختصات از دو محور عمود بر هم تشکیل شده است:
+            </p>
+            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.4;">
+                <li><strong>محور طول‌ها (محور x):</strong> محور افقی که از چپ به راست می‌رود.</li>
+                <li><strong>محور عرض‌ها (محور y):</strong> محور عمودی که از پایین به بالا می‌رود.</li>
+                <li><strong>مبدأ مختصات:</strong> نقطه‌ی تقاطع دو محور، با مختصات (۰، ۰).</li>
+            </ul>
+            <p>
+                هر نقطه روی این صفحه با یک زوج مرتب (x، y) نشان داده می‌شود:
+                اول طول (حرکت افقی) و بعد عرض (حرکت عمودی).
+            </p>
+
+            <div class="key-tip-box">
+                <strong>📌 ربع‌های صفحه مختصات:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.2;">
+                    <li><strong>ربع اول:</strong> x > 0 و y > 0 (بالا سمت راست)</li>
+                    <li><strong>ربع دوم:</strong> x < 0 و y > 0 (بالا سمت چپ)</li>
+                    <li><strong>ربع سوم:</strong> x < 0 و y < 0 (پایین سمت چپ)</li>
+                    <li><strong>ربع چهارم:</strong> x > 0 و y < 0 (پایین سمت راست)</li>
+                </ul>
+            </div>
+
+            <div class="solved-example-box">
+                <div class="example-header">💡 مثال: نقطه (۳، ۲)</div>
+                <p>برای رسیدن به این نقطه، از مبدأ ۳ واحد به راست (محور x) و ۲ واحد به بالا (محور y) می‌رویم.</p>
+            </div>
+
+            <div class="teacher-speech-bubble">
+                «صفحه مختصات مثل یک نقشه گنج است! با دونستن مختصات، می‌تونی هر نقطه‌ای رو پیدا کنی. 
+                اول افقی (x) و بعد عمودی (y).»
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۲: آزمایشگاه مختصات
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۲</span>
+            <h2>آزمایشگاه مختصات: نقطه‌ها را پیدا کن!</h2>
+            <p>
+                در این آزمایشگاه، با کلیک روی صفحه، مختصات نقطه‌ی کلیک شده را می‌بینی. 
+                همچنین می‌توانی نقطه‌ای را با مختصات دلخواه رسم کنی.
+            </p>
+
+            <!-- ابزار تعاملی ۱: آزمایشگاه مختصات -->
+            <div class="coordinate-lab">
+                <div class="sim-title">🗺️ آزمایشگاه مختصات</div>
+                
+                <canvas id="coord-lab-canvas" width="500" height="500"></canvas>
+
+                <div class="coord-info-display" id="coord-info-display">
+                    روی صفحه کلیک کن تا مختصات نقطه را ببینی.
+                </div>
+
+                <div class="plot-input-row">
+                    <span style="font-weight:800;">x:</span>
+                    <input type="number" id="plot-x" value="3" min="-10" max="10">
+                    <span style="font-weight:800;">y:</span>
+                    <input type="number" id="plot-y" value="2" min="-10" max="10">
+                    <button class="btn-ui green" id="btn-plot-point">رسم نقطه</button>
+                    <button class="btn-ui blue" id="btn-clear-points">پاک کردن</button>
+                </div>
+                <p id="coord-lab-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۳: رسم شکل‌ها روی مختصات
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۳</span>
+            <h2>رسم شکل‌ها روی مختصات: چهارضلعی بساز!</h2>
+            <p>
+                مختصات چهار رأس یک چهارضلعی را وارد کن و شکل آن را روی صفحه‌ی مختصات ببین.
+                سپس نوع شکل (مربع، مستطیل، لوزی، متوازی‌الاضلاع) را تشخیص بده.
+            </p>
+
+            <!-- ابزار تعاملی ۲: رسم شکل‌ها روی مختصات -->
+            <div class="shapes-lab">
+                <div class="sim-title">📐 رسم چهارضلعی</div>
+
+                <div class="shape-coord-inputs" id="shape-coord-inputs">
+                    <div class="coord-pair">
+                        <span style="font-weight:800; color: var(--purple-dark);">A</span>
+                        <input type="number" id="ax" value="-3" min="-10" max="10">
+                        <input type="number" id="ay" value="2" min="-10" max="10">
+                    </div>
+                    <div class="coord-pair">
+                        <span style="font-weight:800; color: var(--purple-dark);">B</span>
+                        <input type="number" id="bx" value="3" min="-10" max="10">
+                        <input type="number" id="by" value="2" min="-10" max="10">
+                    </div>
+                    <div class="coord-pair">
+                        <span style="font-weight:800; color: var(--purple-dark);">C</span>
+                        <input type="number" id="cx" value="3" min="-10" max="10">
+                        <input type="number" id="cy" value="-2" min="-10" max="10">
+                    </div>
+                    <div class="coord-pair">
+                        <span style="font-weight:800; color: var(--purple-dark);">D</span>
+                        <input type="number" id="dx" value="-3" min="-10" max="10">
+                        <input type="number" id="dy" value="-2" min="-10" max="10">
+                    </div>
+                </div>
+
+                <div class="action-btns-row">
+                    <button class="btn-ui green" id="btn-draw-shape">رسم شکل</button>
+                    <button class="btn-ui blue" id="btn-reset-shape">بازنشانی</button>
+                </div>
+                <p id="shape-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۴: تشخیص ربع
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۴</span>
+            <h2>تشخیص ربع: نقطه کجاست؟</h2>
+            <p>
+                با توجه به علامت x و y، ربع نقطه را تشخیص بده.
+            </p>
+
+            <!-- ابزار تعاملی ۳: تشخیص ربع -->
+            <div class="practice-lab">
+                <div class="sim-title">🧭 تشخیص ربع نقطه</div>
+                
+                <div class="practice-question" id="quadrant-question">
+                    نقطه (۳ ، ۴) در کدام ربع قرار دارد؟
+                </div>
+
+                <div class="detection-options" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                    <button class="btn-ui blue" data-quad="1">ربع اول</button>
+                    <button class="btn-ui blue" data-quad="2">ربع دوم</button>
+                    <button class="btn-ui blue" data-quad="3">ربع سوم</button>
+                    <button class="btn-ui blue" data-quad="4">ربع چهارم</button>
+                </div>
+
+                <p id="quadrant-feedback" class="feedback-display"></p>
+                <button class="btn-ui green" id="btn-new-quadrant">سوال جدید</button>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۵: تمرین مختصات
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۵</span>
+            <h2>تمرین مختصات: مختصات را پیدا کن!</h2>
+            <p>
+                مختصات نقطه‌ی مشخص شده روی صفحه را وارد کن.
+            </p>
+
+            <!-- ابزار تعاملی ۴: تمرین مختصات -->
+            <div class="practice-lab">
+                <div class="sim-title">📝 تمرین مختصات</div>
+                
+                <canvas id="practice-coord-canvas" width="400" height="400"></canvas>
+
+                <div class="practice-question" id="practice-coord-question">
+                    مختصات نقطه‌ی قرمز را پیدا کن.
+                </div>
+
+                <div class="practice-answer-row">
+                    <span style="font-weight:800;">x:</span>
+                    <input type="number" id="practice-answer-x" placeholder="x">
+                    <span style="font-weight:800;">y:</span>
+                    <input type="number" id="practice-answer-y" placeholder="y">
+                    <button class="btn-ui green" id="btn-check-practice">بررسی</button>
+                </div>
+
+                <p id="practice-feedback" class="feedback-display"></p>
+                <button class="btn-ui blue" id="btn-new-practice">نقطه جدید</button>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۶: جمع‌بندی
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۶</span>
+            <h2>جمع‌بندی و تمرین</h2>
+            <p>در این بخش یاد گرفتیم:</p>
+            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
+                <li>✅ محورهای مختصات: محور افقی (x) و محور عمودی (y).</li>
+                <li>✅ مبدأ مختصات: نقطه‌ی (۰، ۰) که دو محور در آن تلاقی می‌کنند.</li>
+                <li>✅ ربع‌های صفحه مختصات: چهار ناحیه با علامت‌های مختلف x و y.</li>
+                <li>✅ تعیین مختصات نقاط: (x، y) - اول افقی، بعد عمودی.</li>
+                <li>✅ رسم اشکال هندسی روی صفحه مختصات و تشخیص نوع آن‌ها.</li>
+                <li>✅ کاربرد مختصات در نقشه‌خوانی، بازی‌های کامپیوتری و گرافیک.</li>
+            </ul>
+
+            <div class="teacher-speech-bubble">
+                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی. 
+                یادت باشه که مختصات، یکی از مفاهیم پایه‌ای در ریاضی، جغرافیا و برنامه‌نویسی است.»
+            </div>
+
+            <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
+                <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
+                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
+                    <li>مختصات نقطه‌ی (۳-، ۵) در کدام ربع است؟</li>
+                    <li>نقاط (۲، ۳) و (۲، ۵) و (۴، ۳) را روی صفحه مختصات رسم کنید و مساحت مثلث حاصل را پیدا کنید.</li>
+                    <li>مختصات مبدأ مختصات چیست؟</li>
+                    <li>یک مستطیل با مختصات دلخواه روی صفحه مختصات رسم کنید.</li>
+                </ol>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================================================
+         دکمه‌های شناور
+         ======================================================================== -->
+    <div class="floating-btns">
+        <a href="chapter4_part2.html" class="float-nav-btn">→ بخش قبلی</a>
+        <a href="chapter4_part4.html" class="float-nav-btn" id="next-lesson-btn">بخش بعدی ←</a>
+    </div>
+
+    <script>
+        /* ========================================================================
+           لاجیک صوتی
+           ======================================================================== */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTone(freq, duration) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
+        }
+
+        /* ========================================================================
+           تعامل ۱: آزمایشگاه مختصات
+           ======================================================================== */
+        const coordLabCanvas = document.getElementById('coord-lab-canvas');
+        const coordLabCtx = coordLabCanvas.getContext('2d');
+        let plottedPoints = [];
+
+        const COORD_LAB_CENTER = { x: 250, y: 250 };
+        const COORD_LAB_SCALE = 20; // هر واحد = 20 پیکسل
+
+        function drawCoordLabAxes() {
+            const w = coordLabCanvas.width;
+            const h = coordLabCanvas.height;
+            
+            coordLabCtx.clearRect(0, 0, w, h);
+
+            // شبکه
+            coordLabCtx.strokeStyle = '#f1f5f9';
+            coordLabCtx.lineWidth = 1;
+            for (let i = 0; i <= w; i += COORD_LAB_SCALE) {
+                coordLabCtx.beginPath(); coordLabCtx.moveTo(i, 0); coordLabCtx.lineTo(i, h); coordLabCtx.stroke();
+            }
+            for (let i = 0; i <= h; i += COORD_LAB_SCALE) {
+                coordLabCtx.beginPath(); coordLabCtx.moveTo(0, i); coordLabCtx.lineTo(w, i); coordLabCtx.stroke();
+            }
+
+            // محورها
+            coordLabCtx.strokeStyle = '#475569';
+            coordLabCtx.lineWidth = 2;
+            // محور x
+            coordLabCtx.beginPath();
+            coordLabCtx.moveTo(0, COORD_LAB_CENTER.y);
+            coordLabCtx.lineTo(w, COORD_LAB_CENTER.y);
+            coordLabCtx.stroke();
+            // محور y
+            coordLabCtx.beginPath();
+            coordLabCtx.moveTo(COORD_LAB_CENTER.x, 0);
+            coordLabCtx.lineTo(COORD_LAB_CENTER.x, h);
+            coordLabCtx.stroke();
+
+            // فلش‌ها
+            coordLabCtx.fillStyle = '#475569';
+            coordLabCtx.beginPath();
+            coordLabCtx.moveTo(w - 5, COORD_LAB_CENTER.y);
+            coordLabCtx.lineTo(w - 15, COORD_LAB_CENTER.y - 5);
+            coordLabCtx.lineTo(w - 15, COORD_LAB_CENTER.y + 5);
+            coordLabCtx.fill();
+            coordLabCtx.beginPath();
+            coordLabCtx.moveTo(COORD_LAB_CENTER.x, 5);
+            coordLabCtx.lineTo(COORD_LAB_CENTER.x - 5, 15);
+            coordLabCtx.lineTo(COORD_LAB_CENTER.x + 5, 15);
+            coordLabCtx.fill();
+
+            // اعداد
+            coordLabCtx.fillStyle = '#64748b';
+            coordLabCtx.font = '11px Vazirmatn';
+            coordLabCtx.textAlign = 'center';
+            coordLabCtx.textBaseline = 'top';
+            for (let i = -12; i <= 12; i++) {
+                if (i === 0) continue;
+                const x = COORD_LAB_CENTER.x + i * COORD_LAB_SCALE;
+                const y = COORD_LAB_CENTER.y + i * COORD_LAB_SCALE;
+                
+                if (x >= 0 && x <= w) {
+                    coordLabCtx.fillText(i.toString(), x, COORD_LAB_CENTER.y + 5);
+                }
+                if (y >= 0 && y <= h) {
+                    coordLabCtx.textAlign = 'right';
+                    coordLabCtx.textBaseline = 'middle';
+                    coordLabCtx.fillText(i.toString(), COORD_LAB_CENTER.x - 5, y);
+                    coordLabCtx.textAlign = 'center';
+                    coordLabCtx.textBaseline = 'top';
+                }
+            }
+
+            // مبدأ
+            coordLabCtx.fillStyle = '#dc2626';
+            coordLabCtx.font = 'bold 12px Vazirmatn';
+            coordLabCtx.fillText('O', COORD_LAB_CENTER.x - 10, COORD_LAB_CENTER.y + 5);
+
+            // برچسب محورها
+            coordLabCtx.fillStyle = '#475569';
+            coordLabCtx.font = 'bold 13px Vazirmatn';
+            coordLabCtx.textAlign = 'left';
+            coordLabCtx.fillText('x', w - 20, COORD_LAB_CENTER.y - 20);
+            coordLabCtx.fillText('y', COORD_LAB_CENTER.x + 10, 20);
+
+            // رسم نقاط
+            plottedPoints.forEach((pt, idx) => {
+                const x = COORD_LAB_CENTER.x + pt.x * COORD_LAB_SCALE;
+                const y = COORD_LAB_CENTER.y - pt.y * COORD_LAB_SCALE;
+                
+                coordLabCtx.beginPath();
+                coordLabCtx.arc(x, y, 6, 0, Math.PI * 2);
+                coordLabCtx.fillStyle = '#8b5cf6';
+                coordLabCtx.fill();
+                coordLabCtx.strokeStyle = '#6d28d9';
+                coordLabCtx.lineWidth = 2;
+                coordLabCtx.stroke();
+
+                // برچسب مختصات
+                coordLabCtx.fillStyle = '#6d28d9';
+                coordLabCtx.font = 'bold 11px Vazirmatn';
+                coordLabCtx.textAlign = 'left';
+                coordLabCtx.fillText(`(${pt.x}،${pt.y})`, x + 8, y - 8);
+            });
+        }
+
+        coordLabCanvas.addEventListener('click', function(e) {
+            const rect = coordLabCanvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+            
+            // تبدیل به مختصات ریاضی
+            const mathX = Math.round((clickX - COORD_LAB_CENTER.x) / COORD_LAB_SCALE);
+            const mathY = Math.round((COORD_LAB_CENTER.y - clickY) / COORD_LAB_SCALE);
+
+            plottedPoints.push({ x: mathX, y: mathY });
+            drawCoordLabAxes();
+
+            document.getElementById('coord-info-display').innerHTML = 
+                `مختصات نقطه: <strong style="color: var(--purple-main); font-size: 1.3rem;">(${mathX.toLocaleString('fa-IR')} ، ${mathY.toLocaleString('fa-IR')})</strong>`;
+            
+            playTone(550, 0.1);
+        });
+
+        document.getElementById('btn-plot-point').addEventListener('click', function() {
+            const x = parseInt(document.getElementById('plot-x').value);
+            const y = parseInt(document.getElementById('plot-y').value);
+            const feedbackEl = document.getElementById('coord-lab-feedback');
+
+            if (isNaN(x) || isNaN(y) || x < -12 || x > 12 || y < -12 || y > 12) {
+                feedbackEl.innerText = '❌ لطفاً مختصات را بین ۱۲- تا ۱۲ وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            plottedPoints.push({ x, y });
+            drawCoordLabAxes();
+            feedbackEl.innerText = `✅ نقطه (${x.toLocaleString('fa-IR')} ، ${y.toLocaleString('fa-IR')}) رسم شد.`;
+            feedbackEl.style.color = 'var(--success)';
+            playTone(600, 0.3);
+            confetti({ particleCount: 20, spread: 40, origin: { y: 0.7 } });
+        });
+
+        document.getElementById('btn-clear-points').addEventListener('click', function() {
+            plottedPoints = [];
+            drawCoordLabAxes();
+            document.getElementById('coord-info-display').innerText = 'روی صفحه کلیک کن تا مختصات نقطه را ببینی.';
+            document.getElementById('coord-lab-feedback').innerText = '';
+            playTone(440, 0.05);
+        });
+
+        drawCoordLabAxes();
+
+        /* ========================================================================
+           تعامل ۲: رسم شکل‌ها روی مختصات
+           ======================================================================== */
+        const shapeCanvas = document.createElement('canvas');
+        shapeCanvas.width = 500;
+        shapeCanvas.height = 500;
+        shapeCanvas.id = 'shape-canvas';
+        shapeCanvas.style.borderRadius = '8px';
+        shapeCanvas.style.border = '2px solid #e2e8f0';
+        shapeCanvas.style.background = '#fafafa';
+
+        // اضافه کردن canvas به shapes-lab قبل از دکمه‌ها
+        const shapesLab = document.querySelector('.shapes-lab');
+        const shapeTitle = shapesLab.querySelector('.sim-title');
+        shapeTitle.insertAdjacentElement('afterend', shapeCanvas);
+
+        const shapeCtx = shapeCanvas.getContext('2d');
+        const SHAPE_CENTER = { x: 250, y: 250 };
+        const SHAPE_SCALE = 20;
+
+        function drawShapeAxes() {
+            const w = shapeCanvas.width;
+            const h = shapeCanvas.height;
+            
+            shapeCtx.clearRect(0, 0, w, h);
+
+            // شبکه
+            shapeCtx.strokeStyle = '#f1f5f9';
+            shapeCtx.lineWidth = 1;
+            for (let i = 0; i <= w; i += SHAPE_SCALE) {
+                shapeCtx.beginPath(); shapeCtx.moveTo(i, 0); shapeCtx.lineTo(i, h); shapeCtx.stroke();
+            }
+            for (let i = 0; i <= h; i += SHAPE_SCALE) {
+                shapeCtx.beginPath(); shapeCtx.moveTo(0, i); shapeCtx.lineTo(w, i); shapeCtx.stroke();
+            }
+
+            // محورها
+            shapeCtx.strokeStyle = '#475569';
+            shapeCtx.lineWidth = 2;
+            shapeCtx.beginPath();
+            shapeCtx.moveTo(0, SHAPE_CENTER.y);
+            shapeCtx.lineTo(w, SHAPE_CENTER.y);
+            shapeCtx.stroke();
+            shapeCtx.beginPath();
+            shapeCtx.moveTo(SHAPE_CENTER.x, 0);
+            shapeCtx.lineTo(SHAPE_CENTER.x, h);
+            shapeCtx.stroke();
+
+            // اعداد
+            shapeCtx.fillStyle = '#64748b';
+            shapeCtx.font = '11px Vazirmatn';
+            shapeCtx.textAlign = 'center';
+            shapeCtx.textBaseline = 'top';
+            for (let i = -12; i <= 12; i++) {
+                if (i === 0) continue;
+                const x = SHAPE_CENTER.x + i * SHAPE_SCALE;
+                const y = SHAPE_CENTER.y + i * SHAPE_SCALE;
+                
+                if (x >= 0 && x <= w) {
+                    shapeCtx.fillText(i.toString(), x, SHAPE_CENTER.y + 5);
+                }
+                if (y >= 0 && y <= h) {
+                    shapeCtx.textAlign = 'right';
+                    shapeCtx.textBaseline = 'middle';
+                    shapeCtx.fillText(i.toString(), SHAPE_CENTER.x - 5, y);
+                    shapeCtx.textAlign = 'center';
+                    shapeCtx.textBaseline = 'top';
+                }
+            }
+        }
+
+        document.getElementById('btn-draw-shape').addEventListener('click', function() {
+            const ax = parseInt(document.getElementById('ax').value);
+            const ay = parseInt(document.getElementById('ay').value);
+            const bx = parseInt(document.getElementById('bx').value);
+            const by = parseInt(document.getElementById('by').value);
+            const cx = parseInt(document.getElementById('cx').value);
+            const cy = parseInt(document.getElementById('cy').value);
+            const dx = parseInt(document.getElementById('dx').value);
+            const dy = parseInt(document.getElementById('dy').value);
+            const feedbackEl = document.getElementById('shape-feedback');
+
+            if ([ax, ay, bx, by, cx, cy, dx, dy].some(v => isNaN(v))) {
+                feedbackEl.innerText = '❌ لطفاً همه‌ی مختصات را وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            drawShapeAxes();
+
+            const points = [
+                { x: ax, y: ay, label: 'A' },
+                { x: bx, y: by, label: 'B' },
+                { x: cx, y: cy, label: 'C' },
+                { x: dx, y: dy, label: 'D' }
+            ];
+
+            // رسم چهارضلعی
+            shapeCtx.beginPath();
+            points.forEach((pt, idx) => {
+                const px = SHAPE_CENTER.x + pt.x * SHAPE_SCALE;
+                const py = SHAPE_CENTER.y - pt.y * SHAPE_SCALE;
+                if (idx === 0) shapeCtx.moveTo(px, py);
+                else shapeCtx.lineTo(px, py);
+            });
+            shapeCtx.closePath();
+            shapeCtx.fillStyle = 'rgba(139, 92, 246, 0.25)';
+            shapeCtx.fill();
+            shapeCtx.strokeStyle = '#6d28d9';
+            shapeCtx.lineWidth = 3;
+            shapeCtx.stroke();
+
+            // رسم نقاط
+            points.forEach(pt => {
+                const px = SHAPE_CENTER.x + pt.x * SHAPE_SCALE;
+                const py = SHAPE_CENTER.y - pt.y * SHAPE_SCALE;
+                
+                shapeCtx.beginPath();
+                shapeCtx.arc(px, py, 6, 0, Math.PI * 2);
+                shapeCtx.fillStyle = '#dc2626';
+                shapeCtx.fill();
+                shapeCtx.strokeStyle = '#991b1b';
+                shapeCtx.lineWidth = 2;
+                shapeCtx.stroke();
+
+                shapeCtx.fillStyle = '#6d28d9';
+                shapeCtx.font = 'bold 14px Vazirmatn';
+                shapeCtx.textAlign = 'left';
+                shapeCtx.fillText(pt.label, px + 8, py - 10);
+            });
+
+            // تشخیص نوع شکل
+            const sides = [
+                Math.sqrt((bx-ax)**2 + (by-ay)**2),
+                Math.sqrt((cx-bx)**2 + (cy-by)**2),
+                Math.sqrt((dx-cx)**2 + (dy-cy)**2),
+                Math.sqrt((ax-dx)**2 + (ay-dy)**2)
+            ];
+
+            let shapeType = 'چهارضلعی';
+            const allEqual = sides.every(s => Math.abs(s - sides[0]) < 0.1);
+            
+            if (allEqual) {
+                shapeType = 'مربع یا لوزی';
+            } else if (Math.abs(sides[0] - sides[2]) < 0.1 && Math.abs(sides[1] - sides[3]) < 0.1) {
+                shapeType = 'مستطیل یا متوازی‌الاضلاع';
+            }
+
+            feedbackEl.innerText = `✅ شکل رسم شد. به نظر می‌رسد یک ${shapeType} باشد.`;
+            feedbackEl.style.color = 'var(--success)';
+            playTone(600, 0.3);
+            confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
+        });
+
+        document.getElementById('btn-reset-shape').addEventListener('click', function() {
+            document.getElementById('ax').value = -3;
+            document.getElementById('ay').value = 2;
+            document.getElementById('bx').value = 3;
+            document.getElementById('by').value = 2;
+            document.getElementById('cx').value = 3;
+            document.getElementById('cy').value = -2;
+            document.getElementById('dx').value = -3;
+            document.getElementById('dy').value = -2;
+            drawShapeAxes();
+            document.getElementById('shape-feedback').innerText = '';
+            playTone(440, 0.05);
+        });
+
+        drawShapeAxes();
+
+        /* ========================================================================
+           تعامل ۳: تشخیص ربع
+           ======================================================================== */
+        let quadrantCorrect = 1;
+        let quadrantX = 3, quadrantY = 4;
+
+        function generateQuadrantQuestion() {
+            quadrantX = Math.floor(Math.random() * 9) + 1;
+            quadrantY = Math.floor(Math.random() * 9) + 1;
+
+            // تصادفی علامت‌ها
+            if (Math.random() > 0.5) quadrantX = -quadrantX;
+            if (Math.random() > 0.5) quadrantY = -quadrantY;
+
+            if (quadrantX > 0 && quadrantY > 0) quadrantCorrect = 1;
+            else if (quadrantX < 0 && quadrantY > 0) quadrantCorrect = 2;
+            else if (quadrantX < 0 && quadrantY < 0) quadrantCorrect = 3;
+            else quadrantCorrect = 4;
+
+            document.getElementById('quadrant-question').innerHTML = 
+                `نقطه (<strong style="color: var(--purple-main);">${quadrantX.toLocaleString('fa-IR')} ، ${quadrantY.toLocaleString('fa-IR')}</strong>) در کدام ربع قرار دارد؟`;
+
+            document.querySelectorAll('[data-quad]').forEach(btn => {
+                btn.disabled = false;
+                btn.classList.remove('correct', 'wrong');
+                btn.style.background = '';
+            });
+            document.getElementById('quadrant-feedback').innerText = '';
+        }
+
+        document.querySelectorAll('[data-quad]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.disabled) return;
+                
+                const selectedQuad = parseInt(this.dataset.quad);
+                const feedbackEl = document.getElementById('quadrant-feedback');
+
+                document.querySelectorAll('[data-quad]').forEach(b => b.disabled = true);
+
+                if (selectedQuad === quadrantCorrect) {
+                    this.classList.add('correct');
+                    this.style.background = 'linear-gradient(135deg, var(--success), #15803d)';
+                    feedbackEl.innerText = `✅ آفرین! نقطه (${quadrantX.toLocaleString('fa-IR')} ، ${quadrantY.toLocaleString('fa-IR')}) در ربع ${quadrantCorrect.toLocaleString('fa-IR')} است.`;
+                    feedbackEl.style.color = 'var(--success)';
+                    playTone(600, 0.3);
+                    confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
+                } else {
+                    this.classList.add('wrong');
+                    this.style.background = 'linear-gradient(135deg, var(--danger), #991b1b)';
+                    feedbackEl.innerText = `❌ اشتباه! پاسخ درست ربع ${quadrantCorrect.toLocaleString('fa-IR')} است.`;
+                    feedbackEl.style.color = 'var(--danger)';
+                    playTone(300, 0.3);
+                    document.querySelectorAll('[data-quad]').forEach(b => {
+                        if (parseInt(b.dataset.quad) === quadrantCorrect) {
+                            b.style.background = 'linear-gradient(135deg, var(--success), #15803d)';
+                        }
+                    });
+                }
+            });
+        });
+
+        document.getElementById('btn-new-quadrant').addEventListener('click', function() {
+            playTone(440, 0.05);
+            generateQuadrantQuestion();
+        });
+
+        generateQuadrantQuestion();
+
+        /* ========================================================================
+           تعامل ۴: تمرین مختصات
+           ======================================================================== */
+        const practiceCoordCanvas = document.getElementById('practice-coord-canvas');
+        const practiceCoordCtx = practiceCoordCanvas.getContext('2d');
+        const PRACTICE_CENTER = { x: 200, y: 200 };
+        const PRACTICE_SCALE = 20;
+        let practiceCorrectX, practiceCorrectY;
+
+        function drawPracticeAxes() {
+            const w = practiceCoordCanvas.width;
+            const h = practiceCoordCanvas.height;
+            
+            practiceCoordCtx.clearRect(0, 0, w, h);
+
+            // شبکه
+            practiceCoordCtx.strokeStyle = '#f1f5f9';
+            practiceCoordCtx.lineWidth = 1;
+            for (let i = 0; i <= w; i += PRACTICE_SCALE) {
+                practiceCoordCtx.beginPath(); practiceCoordCtx.moveTo(i, 0); practiceCoordCtx.lineTo(i, h); practiceCoordCtx.stroke();
+            }
+            for (let i = 0; i <= h; i += PRACTICE_SCALE) {
+                practiceCoordCtx.beginPath(); practiceCoordCtx.moveTo(0, i); practiceCoordCtx.lineTo(w, i); practiceCoordCtx.stroke();
+            }
+
+            // محورها
+            practiceCoordCtx.strokeStyle = '#475569';
+            practiceCoordCtx.lineWidth = 2;
+            practiceCoordCtx.beginPath();
+            practiceCoordCtx.moveTo(0, PRACTICE_CENTER.y);
+            practiceCoordCtx.lineTo(w, PRACTICE_CENTER.y);
+            practiceCoordCtx.stroke();
+            practiceCoordCtx.beginPath();
+            practiceCoordCtx.moveTo(PRACTICE_CENTER.x, 0);
+            practiceCoordCtx.lineTo(PRACTICE_CENTER.x, h);
+            practiceCoordCtx.stroke();
+
+            // اعداد
+            practiceCoordCtx.fillStyle = '#64748b';
+            practiceCoordCtx.font = '10px Vazirmatn';
+            practiceCoordCtx.textAlign = 'center';
+            practiceCoordCtx.textBaseline = 'top';
+            for (let i = -8; i <= 8; i++) {
+                if (i === 0) continue;
+                const x = PRACTICE_CENTER.x + i * PRACTICE_SCALE;
+                const y = PRACTICE_CENTER.y + i * PRACTICE_SCALE;
+                
+                if (x >= 0 && x <= w) {
+                    practiceCoordCtx.fillText(i.toString(), x, PRACTICE_CENTER.y + 5);
+                }
+                if (y >= 0 && y <= h) {
+                    practiceCoordCtx.textAlign = 'right';
+                    practiceCoordCtx.textBaseline = 'middle';
+                    practiceCoordCtx.fillText(i.toString(), PRACTICE_CENTER.x - 5, y);
+                    practiceCoordCtx.textAlign = 'center';
+                    practiceCoordCtx.textBaseline = 'top';
+                }
+            }
+        }
+
+        function generatePracticePoint() {
+            practiceCorrectX = Math.floor(Math.random() * 13) - 6;
+            practiceCorrectY = Math.floor(Math.random() * 13) - 6;
+            if (practiceCorrectX === 0) practiceCorrectX = 1;
+            if (practiceCorrectY === 0) practiceCorrectY = 1;
+
+            drawPracticeAxes();
+
+            // رسم نقطه
+            const px = PRACTICE_CENTER.x + practiceCorrectX * PRACTICE_SCALE;
+            const py = PRACTICE_CENTER.y - practiceCorrectY * PRACTICE_SCALE;
+
+            practiceCoordCtx.beginPath();
+            practiceCoordCtx.arc(px, py, 8, 0, Math.PI * 2);
+            practiceCoordCtx.fillStyle = '#dc2626';
+            practiceCoordCtx.fill();
+            practiceCoordCtx.strokeStyle = '#991b1b';
+            practiceCoordCtx.lineWidth = 3;
+            practiceCoordCtx.stroke();
+
+            document.getElementById('practice-coord-question').innerHTML = 
+                `مختصات نقطه‌ی <strong style="color: #dc2626;">قرمز</strong> را پیدا کن.`;
+
+            document.getElementById('practice-answer-x').value = '';
+            document.getElementById('practice-answer-y').value = '';
+            document.getElementById('practice-feedback').innerText = '';
+        }
+
+        document.getElementById('btn-check-practice').addEventListener('click', function() {
+            const userX = parseInt(document.getElementById('practice-answer-x').value);
+            const userY = parseInt(document.getElementById('practice-answer-y').value);
+            const feedbackEl = document.getElementById('practice-feedback');
+
+            if (isNaN(userX) || isNaN(userY)) {
+                feedbackEl.innerText = '❌ لطفاً هر دو مختصات x و y را وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            if (userX === practiceCorrectX && userY === practiceCorrectY) {
+                feedbackEl.innerText = `✅ آفرین! مختصات درست (${practiceCorrectX.toLocaleString('fa-IR')} ، ${practiceCorrectY.toLocaleString('fa-IR')}) است.`;
+                feedbackEl.style.color = 'var(--success)';
+                playTone(600, 0.3);
+                confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
+            } else {
+                feedbackEl.innerText = `❌ اشتباه! مختصات درست (${practiceCorrectX.toLocaleString('fa-IR')} ، ${practiceCorrectY.toLocaleString('fa-IR')}) است.`;
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(300, 0.3);
+                document.getElementById('practice-coord-question').classList.add('shake-anim');
+                setTimeout(() => document.getElementById('practice-coord-question').classList.remove('shake-anim'), 500);
+            }
+        });
+
+        document.getElementById('btn-new-practice').addEventListener('click', () => {
+            playTone(440, 0.05);
+            generatePracticePoint();
+        });
+
+        generatePracticePoint();
+
+        /* ========================================================================
+           مدیریت دکمه‌های شناور
+           ======================================================================== */
+        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('به بخش بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
+        });
+
+    </script>
+</body>
+</html>

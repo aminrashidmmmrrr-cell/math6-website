@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فصل ۱ - بخش ۱: الگوهای عددی و مضارب | درسنامه تعاملی</title>
+    
+    <!-- قلم زیبای وزیرمتن -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+
+    <!-- انیمیشن کاغذ رنگی -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* ========================================================================
+           ۱. متغیرها و تم رنگی (هماهنگ با فایل ارسالی شما)
+           ======================================================================== */
+        :root {
+            /* طیف یاسی */
+            --lilac-bg: #f7f1fc;
+            --lilac-soft: #f1e7fb;
+            --lilac-border: #d8b4fe;
+            --lilac-main: #9333ea;
+            --lilac-dark: #6b21a8;
+            --lilac-glow: rgba(147, 51, 234, 0.15);
+            
+            /* طیف آبی */
+            --blue-soft: #e0f2fe;
+            --blue-main: #0284c7;
+            --blue-dark: #0369a1;
+            
+            /* عملکردی */
+            --success: #16a34a;
+            --success-bg: rgba(22, 163, 74, 0.1);
+            --danger: #dc2626;
+            --danger-bg: rgba(220, 38, 38, 0.1);
+            --warning: #ca8a04;
+            --highlight: #fef08a; /* زرد هایلایت */
+
+            /* شیشه‌ای */
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
+            --card-hover-bg: rgba(255, 255, 255, 0.95);
+            
+            /* تیپوگرافی */
+            --text-title: #2e1065;
+            --text-body: #475569;
+            --text-muted: #64748b;
+            
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 8px;
+        }
+
+        /* ========================================================================
+           ۲. استایل‌های پایه
+           ======================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--lilac-bg);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-body);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* ========================================================================
+           ۳. نوار هدر
+           ======================================================================== */
+        .lesson-top-nav {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto 20px;
+            padding: 14px 28px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--glass-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            z-index: 100;
+        }
+
+        .go-back-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .go-back-link:hover {
+            color: var(--lilac-dark);
+            transform: translateX(3px);
+        }
+
+        .header-lesson-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .chapter-label-badge {
+            background: var(--lilac-soft);
+            color: var(--lilac-dark);
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+            letter-spacing: -0.2px;
+        }
+
+        .lesson-title-text {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--text-title);
+            letter-spacing: -0.5px;
+        }
+
+        /* ========================================================================
+           ۴. کارت‌های آموزشی
+           ======================================================================== */
+        .main-lesson-wrapper {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-bottom: 80px;
+        }
+
+        .step-teaching-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-teaching-card:hover {
+            background-color: var(--card-hover-bg);
+            transform: translateY(-5px);
+        }
+
+        .step-number-badge {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark));
+            color: white;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 10px var(--lilac-glow);
+        }
+
+        .step-teaching-card h2 {
+            font-size: 1.4rem;
+            color: var(--text-title);
+            margin-bottom: 12px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.8px;
+        }
+
+        .step-teaching-card p {
+            font-size: 1rem;
+            line-height: 1.9;
+            color: var(--text-body);
+            margin-bottom: 16px;
+        }
+
+        .step-teaching-card h3 {
+            font-size: 1.1rem;
+            color: var(--lilac-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        /* ========================================================================
+           ۵. المان‌های خاص
+           ======================================================================== */
+        .teacher-speech-bubble {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-md);
+            padding: 18px 22px;
+            border: 1px dashed var(--lilac-border);
+            color: var(--lilac-dark);
+            margin: 16px 0;
+            position: relative;
+            font-style: italic;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .teacher-speech-bubble::before {
+            content: "🧑‍🏫";
+            font-size: 1.4rem;
+            font-style: normal;
+        }
+
+        .solved-example-box {
+            background: var(--blue-soft);
+            border: 1px solid rgba(2, 132, 199, 0.2);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 16px 0;
+        }
+
+        .example-header {
+            font-weight: 800;
+            color: var(--blue-dark);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .key-tip-box {
+            background: var(--success-bg);
+            border: 1px solid var(--success);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--success);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* ========================================================================
+           ۶. بخش تعاملی ۱: کشف الگوی عددی
+           ======================================================================== */
+        .interactive-container {
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .sim-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--lilac-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .pattern-display-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--text-title);
+            background: #fff;
+            padding: 20px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--lilac-border);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
+            flex-wrap: wrap;
+        }
+
+        .pattern-num-cell {
+            background: var(--lilac-soft);
+            padding: 6px 18px;
+            border-radius: 8px;
+            min-width: 60px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .guess-input-field {
+            width: 80px;
+            padding: 10px;
+            font-size: 1.4rem;
+            font-weight: 900;
+            text-align: center;
+            border: 2px solid var(--lilac-border);
+            border-radius: 10px;
+            color: var(--lilac-dark);
+            background: #fafafa;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .guess-input-field:focus {
+            outline: none;
+            border-color: var(--lilac-main);
+            box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.15);
+        }
+
+        .action-btns-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-ui {
+            background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark));
+            color: white;
+            border: 2px solid white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25);
+        }
+        .btn-ui:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35);
+        }
+        .btn-ui:active { transform: translateY(0); }
+        .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
+        .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
+
+        .feedback-display {
+            font-weight: 800;
+            text-align: center;
+            min-height: 28px;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: color 0.2s;
+        }
+
+        /* ========================================================================
+           ۷. بخش تعاملی ۲: ماشین الگو ساز پیشرفته
+           ======================================================================== */
+        .machine-stage {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 2px dashed var(--lilac-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .formula-builder-panel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: var(--bg-color);
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            color: var(--text-title);
+        }
+
+        .machine-part {
+            background: #fff;
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .formula-input {
+            width: 55px;
+            padding: 6px;
+            border-radius: 6px;
+            border: 2px solid var(--lilac-soft);
+            text-align: center;
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: var(--lilac-dark);
+        }
+        .formula-input:focus { outline: none; border-color: var(--lilac-main); }
+
+        .operator-select {
+            background: #fff;
+            border: 2px solid var(--lilac-soft);
+            border-radius: 6px;
+            padding: 5px;
+            font-weight: 700;
+            color: var(--lilac-dark);
+            cursor: pointer;
+        }
+        .operator-select:focus { outline: none; border-color: var(--lilac-main); }
+
+        .viz-output-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .shapes-visualizer {
+            background: #fafafa;
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 220px;
+        }
+
+        #pattern-shapes-canvas {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(0,0,0,0.04);
+            max-width: 100%;
+        }
+
+        .pattern-data-table {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .table-row.head {
+            background: var(--lilac-soft);
+            color: var(--lilac-dark);
+            font-weight: 800;
+            font-size: 0.85rem;
+            border-bottom: 1px solid var(--lilac-border);
+        }
+        .table-row:last-child { border-bottom: none; }
+        
+        .table-cell {
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-left: 1px solid #f1f5f9;
+        }
+        .table-cell:last-child { border-left: none; }
+        .table-row:not(.head) .table-cell.data { font-weight: 700; color: var(--blue-dark); }
+
+        @media (max-width: 768px) {
+            .viz-output-grid { grid-template-columns: 1fr; }
+            .formula-builder-panel { gap: 6px; }
+            .machine-part { font-size: 0.85rem; padding: 4px 10px; }
+        }
+
+        /* ========================================================================
+           ۸. بخش تعاملی ۳: اعداد هندسی پویا
+           ======================================================================== */
+        .geo-numbers-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-geo-tab {
+            background: #fff;
+            border: 1px solid var(--lilac-border);
+            color: var(--lilac-dark);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-geo-tab:hover { background: var(--lilac-soft); }
+        .btn-geo-tab.active {
+            background: var(--lilac-main);
+            color: white;
+            border-color: var(--lilac-main);
+            box-shadow: 0 6px 15px var(--lilac-glow);
+        }
+
+        .geo-numbers-stage {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--glass-border);
+        }
+
+        #geo-dots-canvas {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            border: 1px solid #e2e8f0;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .geo-info-panel {
+            background: var(--bg-color);
+            padding: 20px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-width: 200px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .geo-formula {
+            background: #fff;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            color: var(--blue-main);
+            direction: ltr;
+        }
+
+        @media (max-width: 768px) {
+            .geo-numbers-stage { grid-template-columns: 1fr; }
+        }
+
+        /* ========================================================================
+           ۹. بخش تعاملی ۴: جدول مضارب ۱۰۰۰ تایی
+           ======================================================================== */
+        .multiples-app {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .multiples-control-panel {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            border: 1px solid var(--lilac-border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .base-multi-input {
+            width: 80px;
+            padding: 8px;
+            border-radius: 8px;
+            border: 2px solid var(--lilac-soft);
+            text-align: center;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: var(--lilac-dark);
+        }
+        .base-multi-input:focus { outline: none; border-color: var(--lilac-main); }
+
+        .mega-grid-viewport {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--lilac-border);
+            height: 380px;
+            overflow-y: scroll;
+            padding: 12px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--lilac-soft) #fafafa;
+        }
+        .mega-grid-viewport::-webkit-scrollbar { width: 8px; }
+        .mega-grid-viewport::-webkit-scrollbar-track { background: #fafafa; }
+        .mega-grid-viewport::-webkit-scrollbar-thumb { background-color: var(--lilac-soft); border-radius: 4px; }
+
+        .mega-grid {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            gap: 4px;
+        }
+
+        .mega-cell {
+            aspect-ratio: 1.1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--lilac-bg);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: all 0.1s ease;
+        }
+
+        .mega-cell.active-highlight {
+            background-color: var(--highlight);
+            color: #713f12;
+            font-weight: 900;
+            transform: scale(1.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid rgba(133, 77, 14, 0.1);
+        }
+
+        @media (max-width: 900px) {
+            .mega-grid { grid-template-columns: repeat(10, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .mega-grid { grid-template-columns: repeat(8, 1fr); }
+            .mega-cell { font-size: 0.65rem; }
+        }
+
+        /* ========================================================================
+           ۱۰. دکمه‌های شناور
+           ======================================================================== */
+        .floating-btns {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            z-index: 200;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .float-nav-btn {
+            pointer-events: auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 800;
+            color: var(--text-title);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .float-nav-btn:hover {
+            background: var(--lilac-main);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px var(--lilac-glow);
+        }
+
+        @media (max-width: 600px) {
+            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
+            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
+            .header-lesson-info { align-items: center; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ========================================================================
+         نوار ناوبری بالای درسنامه
+         ======================================================================== -->
+    <header class="lesson-top-nav">
+        <a href="../index.html" class="go-back-link">
+            <span>← برگشت به کتاب اصلی</span>
+        </a>
+        <div class="header-lesson-info">
+            <span class="chapter-label-badge">فصل اول: عدد و الگوهای عددی</span>
+            <span class="lesson-title-text">بخش ۱: الگوهای عددی و مضارب</span>
+        </div>
+    </header>
+
+    <main class="main-lesson-wrapper">
+
+        <!-- ========================================================================
+           قدم ۱: مقدمه
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۱</span>
+            <h2>سلام دانش‌آموز خوب! بیا با الگوها آشنا شویم</h2>
+            <p>
+                به اطراف خود خوب نگاه کن. خیلی چیزها نظم خاصی دارند. مثلاً کاشی‌های کف اتاق، گلبرگ‌های یک گل، یا حتی شماره خانه‌ها در یک کوچه.
+                در ریاضی، وقتی تعدادی عدد پشت سر هم قرار می‌گیرند و بین آنها یک نظم یا قانون مشخص وجود دارد، می‌گوییم یک **الگوی عددی** داریم.
+            </p>
+            <div class="teacher-speech-bubble">
+                «پیدا کردن الگو یعنی کشف کردن اون قانونی که باعث شده عددها اینطوری مرتب بشوند. وقتی قانون رو پیدا کنی، می‌تونی بگی عددهای بعدی الگو چی هستند!»
+            </div>
+            <p>
+                در این درس قرار است کارآگاه عددها شویم و قانون الگوها را کشف کنیم. بعد هم یاد می‌گیریم چطور خودمان الگو بسازیم.
+            </p>
+        </section>
+
+        <!-- ========================================================================
+           قدم ۲: الگوهای حسابی و کشف قانون
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۲</span>
+            <h2>قانون الگو چیست؟ (الگوهای حسابی)</h2>
+            <p>
+                ساده‌ترین نوع الگوها آنهایی هستند که هر عدد با اضافه شدن (یا کم شدن) یک مقدار ثابت به عدد قبلی ساخته می‌شود.
+                به این مقدار ثابت، «فاصله» یا «اختلاف» الگو می‌گوییم.
+            </p>
+            
+            <div class="solved-example-box">
+                <div class="example-header">💡 مثال حل‌شده: الگوی زوج</div>
+                <p>به این اعداد نگاه کن: ۲، ۴، ۶، ۸، ۱۰، ...</p>
+                <p>قانون الگو چیست؟ هر عدد با عدد قبلی چقدر فاصله دارد؟ بله، ۲ واحد. پس قانون الگو «+۲» است.</p>
+            </div>
+
+            <p>حالا بیا هوش خود را امتحان کنی! به الگوهای زیر نگاه کن، قانون را کشف کن و عدد بعدی را حدس بزن:</p>
+
+            <!-- ابزار تعاملی ۱: کشف الگوی عددی -->
+            <div class="interactive-container">
+                <div class="sim-title">❓ کارآگاه الگو: عدد بعدی را حدس بزن</div>
+                
+                <div class="pattern-display-row" id="pattern-display-row">
+                    <!-- عددها با JS تولید می‌شوند -->
+                </div>
+
+                <div class="action-btns-row">
+                    <button class="btn-ui blue" id="get-pattern-btn">ساخت الگوی جدید</button>
+                    <button class="btn-ui" id="check-guess-btn">بررسی حدس من</button>
+                </div>
+                
+                <p id="guess-feedback" class="feedback-display"></p>
+            </div>
+
+        </section>
+
+        <!-- ========================================================================
+           قدم ۳: ماشین الگو ساز
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۳</span>
+            <h2>بیا خودمان یک الگوی پیچیده بسازیم (ماشین الگو)</h2>
+            <p>
+                تا اینجا الگوهای ساده‌ای دیدیم که با جمع کردن ساخته می‌شدند (مثل الگوهای مضارب).
+                اما الگوها می‌توانند سخت‌تر باشند! مثلاً قانون الگو این باشد: «شماره شکل را در ۲ ضرب کن و بعد ۱ واحد به آن اضافه کن».
+                در این حالت، الگو مضارب مستقیم یک عدد نیست.
+            </p>
+            
+            <p>این ماشین را ببین. تو فرمول الگو را به او می‌دهی، و او برایت شکل‌ها و جدول اعداد را بلادرنگ می‌سازد:</p>
+            
+            <!-- ابزار تعاملی ۲: ماشین الگو ساز -->
+            <div class="machine-stage">
+                <div class="formula-builder-panel">
+                    <span>قانون الگو: (شماره شکل</span>
+                    <div class="machine-part">
+                        <span>×</span>
+                        <input type="number" id="formula-mult" class="formula-input" value="2" min="1" max="5">
+                    </div>
+                    <div class="machine-part">
+                        <select id="formula-op" class="operator-select">
+                            <option value="+">+</option>
+                            <option value="-">-</option>
+                        </select>
+                        <input type="number" id="formula-add" class="formula-input" value="1" min="0" max="9">
+                    </div>
+                    <span>)</span>
+                </div>
+
+                <div class="viz-output-grid">
+                    <div class="shapes-visualizer">
+                        <canvas id="pattern-shapes-canvas" width="400" height="200"></canvas>
+                        <span style="font-size:0.8rem; color:var(--text-muted); margin-top:10px;">نمایش بصری شکل‌های ۱ تا ۳</span>
+                    </div>
+                    <div class="pattern-data-table">
+                        <div class="table-row head">
+                            <div class="table-cell">شماره شکل (n)</div>
+                            <div class="table-cell">تعداد عدد (الگو)</div>
+                        </div>
+                        <div id="pattern-table-body">
+                            <!-- ردیف‌ها با JS ساخته می‌شوند -->
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <button class="btn-ui" id="btn-build-pattern">✓ ساخت الگو و رسم شکل‌ها</button>
+                </div>
+            </div>
+
+            <div class="key-tip-box">
+                نکته: در ریاضی به جای عبارت طولانی «قانون الگو»، از «رابطه‌ی الگو» استفاده می‌کنیم و شماره شکل را با حرف $n$ نشان می‌دهیم.
+            </div>
+
+        </section>
+
+        <!-- ========================================================================
+           قدم ۴: الگوهای هندسی
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۴</span>
+            <h2>الگوهای هندسی: وقتی عددها شکل می‌سازند!</h2>
+            <p>
+                بعضی الگوها خیلی جالب هستند چون وقتی با نقطه‌ها یا شکل‌ها رسم می‌شوند، شکل‌های هندسی منظمی می‌سازند.
+                دو نمونه خیلی معروف، **اعداد مثلثی** و **اعداد مربعی** هستند.
+            </p>
+            
+            <p>در ابزار زیر، شماره شکل را تغییر بده و ببین نقطه‌ها چطور چیده می‌شوند:</p>
+
+            <!-- ابزار تعاملی ۳: اعداد هندسی پویا -->
+            <div class="geo-numbers-container interactive-container">
+                <div class="geo-numbers-controls">
+                    <button class="btn-geo-tab active" data-type="triangular">اعداد مثلثی</button>
+                    <button class="btn-geo-tab" data-type="square">اعداد مربعی</button>
+                </div>
+
+                <div class="geo-numbers-stage">
+                    <canvas id="geo-dots-canvas" width="300" height="300"></canvas>
+                    
+                    <div class="geo-info-panel">
+                        <div class="label-text-row"><span>شماره شکل ($n$):</span> <span id="txt-geo-n" style="font-weight:900;">3</span></div>
+                        <input type="range" id="range-geo-n" min="1" max="10" value="3" style="width:100%; accent-color:var(--lilac-main)">
+                        <div style="font-weight:800; font-size:1.3rem; color:var(--text-title);">تعداد کل نقطه‌ها: <span id="txt-geo-total">6</span></div>
+                        <div class="geo-formula" id="txt-geo-formula">n * (n+1) / 2</div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ========================================================================
+           قدم ۵: مضارب اعداد
+           ======================================================================== -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۵</span>
+            <h2>مضارب یک عدد چیست؟ (نردبان اعداد)</h2>
+            <p>
+                وقتی یک الگوی عددی با عدد صفر یا خود عدد شروع شود و با اضافه شدن همان عدد بالا برود، به آن **مضارب** آن عدد می‌گوییم.
+                در واقع، مضارب یک عدد از ضرب آن عدد در عددهای ۱، ۲، ۳، ۴ و... به دست می‌آیند.
+            </p>
+            
+            <div class="teacher-speech-bubble">
+                «مضارب مثل پله‌های یک نردبان هستند که با خود اون عدد شروع می‌شوند و با همون اندازه بالا می‌روند! مضارب ۲ یعنی ۲، ۴، ۶، ۸ و...»
+            </div>
+
+            <p>این جدول بزرگ را ببین. تو عدد پایه را به او می‌دهی و او تمام مضارب آن را در جدول ۱۰۰۰ تایی (۱ تا ۱۰۰۰) هایلایت می‌کند:</p>
+
+            <!-- ابزار تعاملی ۴: جدول مضارب ۱۰۰۰ تایی -->
+            <div class="multiples-app interactive-container">
+                <div class="sim-title">❓ کاوشگر مضارب: هایلایت در جدول ۱۰۰۰ تایی</div>
+                
+                <div class="multiples-control-panel">
+                    <span>عدد پایه را وارد کن:</span>
+                    <input type="number" id="base-multi-input" class="base-multi-input" value="3" min="1" max="99">
+                    <button class="btn-ui blue" id="btn-show-multiples">نمایش مضارب</button>
+                    <button class="btn-clear" id="btn-clear-multiples" style="background:#fff; border:1px solid #e2e8f0; color:var(--danger); border-radius:30px; padding:12px 28px; font-weight:800; cursor:pointer;">پاک کردن</button>
+                </div>
+
+                <div class="mega-grid-viewport">
+                    <div class="mega-grid" id="mega-grid-1000">
+                        <!-- سلول‌ها با جاوااسکریپت ساخته می‌شوند -->
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                نکته: الگوهای مضارب همیشه از خود عدد شروع می‌شوند. اگر الگویی از خود عدد شروع نشود، مضارب آن نیست. مثلاً الگوی ۳، ۵، ۷، ۹ مضارب ۲ نیست، هرچند فاصله ۲ تا ۲ تا است.
+            </p>
+        </section>
+
+    </main>
+
+    <!-- ========================================================================
+         دکمه‌های شناور
+         ======================================================================== -->
+    <div class="floating-btns">
+        <a href="../index.html" class="float-nav-btn">🏠 خانه</a>
+        <a href="#" class="float-nav-btn" id="next-lesson-btn">بخش بعدی →</a>
+    </div>
+
+    <script>
+        /* ========================================================================
+           لاجیک صوتی
+           ======================================================================== */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTone(freq, duration) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
+        }
+
+        /* ========================================================================
+           تعامل ۱: لاجیک الگو ساز حسابی
+           ======================================================================== */
+        const patternsData = [
+            { seq: [2, 5, 8, 11], next: 14, rule: "+۳" },
+            { seq: [1, 5, 9, 13], next: 17, rule: "+۴" },
+            { seq: [10, 20, 30, 40], next: 50, rule: "+۱۰" },
+            { seq: [5, 10, 15, 20], next: 25, rule: "+۵" },
+            { seq: [20, 18, 16, 14], next: 12, rule: "-۲" },
+            { seq: [1, 2, 4, 8], next: 16, rule: "×۲" }
+        ];
+        let currentPatternIndex = 0;
+
+        function loadNewPattern() {
+            currentPatternIndex = Math.floor(Math.random() * patternsData.length);
+            const pattern = patternsData[currentPatternIndex];
+            const displayRow = document.getElementById('pattern-display-row');
+            displayRow.innerHTML = '';
+            
+            pattern.seq.forEach((num, idx) => {
+                const cell = document.createElement('span');
+                cell.className = 'pattern-num-cell';
+                cell.innerText = num;
+                displayRow.appendChild(cell);
+                if (idx < pattern.seq.length - 1) {
+                    const divider = document.createElement('span');
+                    divider.innerText = '،';
+                    displayRow.appendChild(divider);
+                }
+            });
+
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.id = 'guess-input';
+            input.className = 'guess-input-field';
+            input.placeholder = '؟';
+            displayRow.appendChild(input);
+
+            document.getElementById('guess-feedback').innerText = '';
+        }
+
+        document.getElementById('check-guess-btn').addEventListener('click', () => {
+            const pattern = patternsData[currentPatternIndex];
+            const guessInput = document.getElementById('guess-input');
+            const userGuess = parseInt(guessInput.value);
+            const feedbackEl = document.getElementById('guess-feedback');
+
+            if (isNaN(userGuess)) {
+                feedbackEl.innerText = 'لطفاً یک عدد وارد کن!';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            if (userGuess === pattern.next) {
+                feedbackEl.innerText = `آفرین! درست حدس زدی. قانون الگو "${pattern.rule}" بود.`;
+                feedbackEl.style.color = 'var(--success)';
+                playTone(600, 0.3);
+                confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
+                guessInput.disabled = true;
+            } else {
+                feedbackEl.innerText = 'اشتباه بود. دوباره سعی کن! به رابطه‌ی بین عددها دقت کن.';
+                feedbackEl.style.color = 'var(--danger)';
+                playTone(300, 0.3);
+            }
+        });
+
+        document.getElementById('get-pattern-btn').addEventListener('click', () => {
+            playTone(440, 0.05);
+            loadNewPattern();
+        });
+
+        loadNewPattern();
+
+        /* ========================================================================
+           تعامل ۲: لاجیک ماشین الگو ساز
+           ======================================================================== */
+        const shapesCanvas = document.getElementById('pattern-shapes-canvas');
+        const shapesCtx = shapesCanvas.getContext('2d');
+        const tableBody = document.getElementById('pattern-table-body');
+
+        function buildPattern() {
+            playTone(550, 0.1);
+            const mult = parseInt(document.getElementById('formula-mult').value) || 1;
+            const op = document.getElementById('formula-op').value;
+            const add = parseInt(document.getElementById('formula-add').value) || 0;
+
+            tableBody.innerHTML = '';
+            shapesCtx.clearRect(0, 0, shapesCanvas.width, shapesCanvas.height);
+
+            const colors = ['#818cf8', '#22d3ee', '#10b981'];
+
+            for (let n = 1; n <= 3; n++) {
+                let value;
+                if (op === '+') {
+                    value = (n * mult) + add;
+                } else {
+                    value = (n * mult) - add;
+                }
+                
+                const row = document.createElement('div');
+                row.className = 'table-row';
+                row.innerHTML = `<div class="table-cell">شکل ${n}</div><div class="table-cell data">${value}</div>`;
+                tableBody.appendChild(row);
+
+                const startX = 60 + (n-1) * 130;
+                const startY = 160;
+                const dotRadius = 6;
+                const dotGap = 20;
+
+                shapesCtx.fillStyle = colors[n-1];
+                shapesCtx.font = "bold 14px Vazirmatn";
+                shapesCtx.fillText(`شکل ${n}`, startX - 25, 25);
+
+                const dotsToDraw = Math.min(value, 30);
+                const cols = mult;
+                const rows = Math.ceil(dotsToDraw / cols);
+
+                for (let i = 0; i < dotsToDraw; i++) {
+                    const row_idx = Math.floor(i / cols);
+                    const col_idx = i % cols;
+                    const x = startX + col_idx * dotGap;
+                    const y = startY - row_idx * dotGap;
+                    
+                    shapesCtx.beginPath();
+                    shapesCtx.arc(x, y, dotRadius, 0, Math.PI * 2);
+                    shapesCtx.fill();
+                    shapesCtx.closePath();
+                }
+                
+                if (value > 30) {
+                    shapesCtx.fillStyle = '#64748b';
+                    shapesCtx.font = "italic 11px Vazirmatn";
+                    shapesCtx.fillText("...و غیره", startX - 25, startY - rows * dotGap - 10);
+                }
+            }
+        }
+
+        document.getElementById('btn-build-pattern').addEventListener('click', buildPattern);
+        buildPattern();
+
+        /* ========================================================================
+           تعامل ۳: لاجیک اعداد هندسی
+           ======================================================================== */
+        const geoCanvas = document.getElementById('geo-dots-canvas');
+        const geoCtx = geoCanvas.getContext('2d');
+        const geoNInput = document.getElementById('range-geo-n');
+        let currentGeoType = 'triangular';
+
+        function drawGeoNumbers() {
+            const n = parseInt(geoNInput.value);
+            document.getElementById('txt-geo-n').innerText = n;
+            geoCtx.clearRect(0, 0, geoCanvas.width, geoCanvas.height);
+
+            const startX = geoCanvas.width / 2;
+            const startY = geoCanvas.height / 2;
+            const dotRadius = 8;
+            const dotGap = 25;
+            let totalDots = 0;
+
+            if (currentGeoType === 'triangular') {
+                totalDots = (n * (n + 1)) / 2;
+                document.getElementById('txt-geo-formula').innerText = 'n * (n + 1) / 2';
+                
+                geoCtx.fillStyle = '#10b981';
+                for (let r = 1; r <= n; r++) {
+                    const y = startY + (r - (n + 1) / 2) * dotGap;
+                    const xStart = startX - (r - 1) * (dotGap / 2);
+                    for (let c = 0; c < r; c++) {
+                        const x = xStart + c * dotGap;
+                        geoCtx.beginPath();
+                        geoCtx.arc(x, y, dotRadius, 0, Math.PI * 2);
+                        geoCtx.fill();
+                        geoCtx.closePath();
+                    }
+                }
+            } else {
+                totalDots = n * n;
+                document.getElementById('txt-geo-formula').innerText = 'n * n';
+                
+                geoCtx.fillStyle = '#06b6d4';
+                for (let r = 0; r < n; r++) {
+                    const y = startY + (r - (n - 1) / 2) * dotGap;
+                    const xStart = startX - (n - 1) * (dotGap / 2);
+                    for (let c = 0; c < n; c++) {
+                        const x = xStart + c * dotGap;
+                        geoCtx.beginPath();
+                        geoCtx.arc(x, y, dotRadius, 0, Math.PI * 2);
+                        geoCtx.fill();
+                        geoCtx.closePath();
+                    }
+                }
+            }
+
+            document.getElementById('txt-geo-total').innerText = totalDots;
+        }
+
+        document.querySelectorAll('.geo-numbers-controls .btn-geo-tab').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                playTone(440, 0.05);
+                document.querySelectorAll('.geo-numbers-controls .btn-geo-tab').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentGeoType = e.target.getAttribute('data-type');
+                drawGeoNumbers();
+            });
+        });
+
+        geoNInput.addEventListener('input', () => {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            playTone(parseInt(geoNInput.value) * 50 + 100, 0.02);
+            drawGeoNumbers();
+        });
+
+        drawGeoNumbers();
+
+        /* ========================================================================
+           تعامل ۴: لاجیک جدول مضارب ۱۰۰۰ تایی
+           ======================================================================== */
+        const megaGrid = document.getElementById('mega-grid-1000');
+        const multiInput = document.getElementById('base-multi-input');
+        
+        for (let i = 1; i <= 1000; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'mega-cell';
+            cell.innerText = i;
+            cell.id = `mega-cell-${i}`;
+            megaGrid.appendChild(cell);
+        }
+
+        function highlightMultiples() {
+            const base = parseInt(multiInput.value);
+            
+            const highlighted = megaGrid.querySelectorAll('.active-highlight');
+            highlighted.forEach(cell => cell.classList.remove('active-highlight'));
+
+            if (isNaN(base) || base <= 0) {
+                return;
+            }
+
+            let count = 0;
+            for (let i = base; i <= 1000; i += base) {
+                const cell = document.getElementById(`mega-cell-${i}`);
+                if (cell) {
+                    cell.classList.add('active-highlight');
+                    count++;
+                }
+            }
+            
+            if (count > 0) {
+                playTone(count * 5 + 300, 0.1);
+                confetti({ particleCount: 15, spread: 30, origin: { y: 0.9 } });
+            }
+        }
+
+        document.getElementById('btn-show-multiples').addEventListener('click', () => {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            highlightMultiples();
+        });
+
+        document.getElementById('btn-clear-multiples').addEventListener('click', () => {
+            multiInput.value = '';
+            highlightMultiples();
+        });
+
+        highlightMultiples();
+
+        /* ========================================================================
+           مدیریت دکمه‌های شناور
+           ======================================================================== */
+        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('به بخش بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
+            // در سایت اصلی، لینک به صفحه بعدی قرار می‌گیرد.
+        });
+
+    </script>
+</body>
+</html>
