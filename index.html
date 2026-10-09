@@ -2848,6 +2848,117 @@
                 scroll-behavior: auto !important;
             }
         }
+
+
+        /* ==========================================================
+   ۱۱. اصلاح نمایش در موبایل
+   ========================================================== */
+
+        /* ---------- هدر فشرده‌تر روی موبایل ---------- */
+        @media (max-width: 640px) {
+            .header {
+                width: calc(100% - 12px);
+                margin-top: 8px;
+                padding: 6px 8px;
+                gap: 6px;
+                border-radius: 12px;
+            }
+
+            .brand {
+                font-size: .85rem;
+                gap: 6px;
+                min-width: 0;
+                flex: 1 1 auto;
+                overflow: hidden;
+            }
+
+            .brand>span:not([aria-hidden="true"]) {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .brand-badge,
+            #date-chip {
+                display: none !important;
+            }
+
+            .widgets {
+                gap: 4px;
+                flex: 0 0 auto;
+            }
+
+            .chip {
+                padding: 2px 7px;
+                font-size: .7rem;
+                gap: 3px;
+                border-width: 1px;
+            }
+
+            #progress-chip .chip-text,
+            .clock-chip .clock-time {
+                display: none !important;
+            }
+
+            .clock-chip {
+                padding: 2px 4px;
+                gap: 4px;
+            }
+
+            .analog-clock {
+                width: 24px;
+                height: 24px;
+            }
+
+            .icon-btn {
+                width: 32px;
+                height: 32px;
+                font-size: .9rem;
+            }
+
+            .stage {
+                padding: 12px 8px 90px;
+            }
+        }
+
+        /* ---------- صفحه‌های خیلی کوچک (≤400px) ---------- */
+        @media (max-width: 400px) {
+            .brand>span:not([aria-hidden="true"]) {
+                display: none;
+            }
+
+            #clock-chip,
+            #fs-btn {
+                display: none !important;
+            }
+
+            .icon-btn {
+                width: 30px;
+                height: 30px;
+                font-size: .85rem;
+            }
+
+            .widgets {
+                gap: 3px;
+            }
+        }
+
+        /* ---------- اصلاح نمایش کامل تصویر فصل ---------- */
+        .figure {
+            /* ارتفاع بر اساس نسبت تصویر اصلی (۴۸۰×۳۰۰) */
+            aspect-ratio: 480 / 300;
+            flex: 0 0 auto;
+            min-height: 0;
+            max-height: 320px;
+        }
+
+        .figure img {
+            /* تصویر کامل دیده شود، نه بریده‌شده */
+            object-fit: contain;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
     </style>
 </head>
 
