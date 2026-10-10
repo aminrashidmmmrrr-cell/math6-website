@@ -2,160 +2,116 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>فصل ۱ - بخش ۱: الگوهای عددی و مضارب | درسنامه تعاملی</title>
-    
-    <!-- قلم زیبای وزیرمتن -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 
-    <!-- انیمیشن کاغذ رنگی -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* ========================================================================
-           ۱. متغیرها و تم رنگی (هماهنگ با فایل ارسالی شما)
-           ======================================================================== */
         :root {
-            /* طیف یاسی */
             --lilac-bg: #f7f1fc;
             --lilac-soft: #f1e7fb;
             --lilac-border: #d8b4fe;
             --lilac-main: #9333ea;
             --lilac-dark: #6b21a8;
             --lilac-glow: rgba(147, 51, 234, 0.15);
-            
-            /* طیف آبی */
             --blue-soft: #e0f2fe;
             --blue-main: #0284c7;
             --blue-dark: #0369a1;
-            
-            /* عملکردی */
             --success: #16a34a;
             --success-bg: rgba(22, 163, 74, 0.1);
             --danger: #dc2626;
-            --danger-bg: rgba(220, 38, 38, 0.1);
-            --warning: #ca8a04;
-            --highlight: #fef08a; /* زرد هایلایت */
-
-            /* شیشه‌ای */
-            --glass-bg: rgba(255, 255, 255, 0.85);
+            --highlight: #fef08a;
+            --glass-bg: rgba(255, 255, 255, 0.9);
             --glass-border: rgba(255, 255, 255, 0.9);
-            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
-            --card-hover-bg: rgba(255, 255, 255, 0.95);
-            
-            /* تیپوگرافی */
+            --glass-shadow: 0 12px 36px rgba(107, 33, 168, 0.1);
             --text-title: #2e1065;
             --text-body: #475569;
             --text-muted: #64748b;
-            
             --radius-lg: 24px;
             --radius-md: 16px;
-            --radius-sm: 8px;
+            --radius-sm: 10px;
         }
 
-        /* ========================================================================
-           ۲. استایل‌های پایه
-           ======================================================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; -webkit-tap-highlight-color: transparent; }
+        html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
         body {
             background-color: var(--lilac-bg);
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
             background-attachment: fixed;
             color: var(--text-body);
             min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            line-height: 1.8;
+            padding: 16px;
+            display: flex; flex-direction: column;
+            overflow-x: hidden; line-height: 1.8;
         }
 
-        /* ========================================================================
-           ۳. نوار هدر
-           ======================================================================== */
+        .ltr { direction: ltr; unicode-bidi: isolate; }
+
+        /* ============ نوار هدر ============ */
         .lesson-top-nav {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto 20px;
-            padding: 14px 28px;
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px; padding: 14px 22px;
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
             box-shadow: var(--glass-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px; z-index: 100;
         }
 
         .go-back-link {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 800;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.2s, transform 0.2s;
+            text-decoration: none; color: var(--text-muted);
+            font-weight: 800; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 8px;
+            transition: color 0.2s, transform 0.2s; white-space: nowrap;
         }
+        .go-back-link:hover { color: var(--lilac-dark); transform: translateX(3px); }
 
-        .go-back-link:hover {
-            color: var(--lilac-dark);
-            transform: translateX(3px);
-        }
-
-        .header-lesson-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-        }
-
+        .header-lesson-info { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 0; }
         .chapter-label-badge {
+            background: var(--lilac-soft); color: var(--lilac-dark);
+            font-size: 0.72rem; font-weight: 800;
+            padding: 3px 10px; border-radius: 20px; white-space: nowrap;
+        }
+        .lesson-title-text { font-size: 1.05rem; font-weight: 900; color: var(--text-title); letter-spacing: -0.5px; }
+
+        /* ============ نوار موقعیت (کجای کتاب هستیم) ============ */
+        .book-location-bar {
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px;
+            display: flex; align-items: center; gap: 10px;
+            padding: 8px 14px;
+            background: var(--glass-bg);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(107, 33, 168, 0.06);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .location-chip {
+            display: inline-flex; align-items: center; gap: 6px;
             background: var(--lilac-soft);
             color: var(--lilac-dark);
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 20px;
-            letter-spacing: -0.2px;
+            padding: 4px 12px; border-radius: 20px;
+            font-weight: 800; font-size: 0.82rem;
+            white-space: nowrap;
         }
+        .location-chip.blue { background: var(--blue-soft); color: var(--blue-dark); }
 
-        .lesson-title-text {
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: var(--text-title);
-            letter-spacing: -0.5px;
-        }
-
-        /* ========================================================================
-           ۴. کارت‌های آموزشی
-           ======================================================================== */
+        /* ============ کارت‌های آموزشی ============ */
         .main-lesson-wrapper {
-            max-width: 1100px;
-            width: 100%;
+            max-width: 1100px; width: 100%;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding-bottom: 80px;
+            display: flex; flex-direction: column;
+            gap: 20px; padding-bottom: 120px;
         }
 
         .step-teaching-card {
@@ -164,552 +120,471 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
-            padding: 28px;
+            padding: 26px;
             box-shadow: var(--glass-shadow);
-            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .step-teaching-card:hover {
-            background-color: var(--card-hover-bg);
-            transform: translateY(-5px);
+            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s;
+            position: relative; overflow: hidden;
         }
 
         .step-number-badge {
-            display: inline-flex;
-            width: 32px;
-            height: 32px;
+            display: inline-flex; width: 34px; height: 34px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark));
-            color: white;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 0.95rem;
-            margin-bottom: 16px;
+            color: white; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1rem;
+            margin-bottom: 14px;
             box-shadow: 0 4px 10px var(--lilac-glow);
         }
 
         .step-teaching-card h2 {
-            font-size: 1.4rem;
-            color: var(--text-title);
-            margin-bottom: 12px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            letter-spacing: -0.8px;
+            font-size: 1.3rem; color: var(--text-title);
+            margin-bottom: 12px; font-weight: 900;
+            display: flex; align-items: center; gap: 10px;
+            letter-spacing: -0.8px; line-height: 1.5; flex-wrap: wrap;
         }
+        .step-teaching-card p { font-size: 1rem; line-height: 2; color: var(--text-body); margin-bottom: 14px; }
 
-        .step-teaching-card p {
-            font-size: 1rem;
-            line-height: 1.9;
-            color: var(--text-body);
-            margin-bottom: 16px;
-        }
-
-        .step-teaching-card h3 {
-            font-size: 1.1rem;
-            color: var(--lilac-dark);
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-weight: 800;
-        }
-
-        /* ========================================================================
-           ۵. المان‌های خاص
-           ======================================================================== */
+        /* ============ المان‌های خاص ============ */
         .teacher-speech-bubble {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.75);
             border-radius: var(--radius-md);
-            padding: 18px 22px;
+            padding: 16px 20px;
             border: 1px dashed var(--lilac-border);
             color: var(--lilac-dark);
-            margin: 16px 0;
-            position: relative;
-            font-style: italic;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
+            margin: 14px 0; font-style: italic;
+            display: flex; gap: 12px; align-items: flex-start;
+            font-size: 0.95rem; line-height: 1.9;
         }
-
-        .teacher-speech-bubble::before {
-            content: "🧑‍🏫";
-            font-size: 1.4rem;
-            font-style: normal;
-        }
+        .teacher-speech-bubble::before { content: "🧑‍🏫"; font-size: 1.4rem; font-style: normal; flex-shrink: 0; }
 
         .solved-example-box {
             background: var(--blue-soft);
             border: 1px solid rgba(2, 132, 199, 0.2);
             border-radius: var(--radius-md);
-            padding: 20px;
-            margin: 16px 0;
+            padding: 18px; margin: 14px 0;
         }
-
         .example-header {
-            font-weight: 800;
-            color: var(--blue-dark);
-            font-size: 1rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-weight: 800; color: var(--blue-dark);
+            font-size: 1rem; margin-bottom: 8px;
+            display: flex; align-items: center; gap: 8px;
         }
 
         .key-tip-box {
             background: var(--success-bg);
             border: 1px solid var(--success);
             border-radius: var(--radius-md);
-            padding: 16px;
-            margin: 16px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--success);
-            font-weight: 700;
-            font-size: 0.9rem;
+            padding: 14px 16px; margin: 14px 0;
+            display: flex; align-items: flex-start; gap: 10px;
+            color: var(--success); font-weight: 700;
+            font-size: 0.92rem; line-height: 1.8;
         }
+        .key-tip-box::before { content: "💡"; font-size: 1.2rem; flex-shrink: 0; }
 
-        /* ========================================================================
-           ۶. بخش تعاملی ۱: کشف الگوی عددی
-           ======================================================================== */
+        /* ============ بخش تعاملی ============ */
         .interactive-container {
             background: rgba(0, 0, 0, 0.02);
             border-radius: var(--radius-md);
-            padding: 24px;
-            margin-top: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
+            padding: 20px; margin-top: 16px;
+            display: flex; flex-direction: column; gap: 16px;
             border: 1px solid var(--glass-border);
         }
 
         .sim-title {
-            font-weight: 800;
-            font-size: 1.1rem;
+            font-weight: 800; font-size: 1.05rem;
             color: var(--lilac-dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
+            display: flex; align-items: center; gap: 8px; line-height: 1.5;
         }
 
+        /* الگو عددی */
         .pattern-display-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: var(--text-title);
-            background: #fff;
-            padding: 20px;
-            border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+            gap: 8px; font-size: 1.4rem; font-weight: 900;
+            color: var(--text-title); background: #fff;
+            padding: 18px 14px; border-radius: var(--radius-sm);
             border: 1px solid var(--lilac-border);
             box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
-            flex-wrap: wrap;
+            flex-wrap: wrap; direction: ltr;
         }
-
         .pattern-num-cell {
-            background: var(--lilac-soft);
-            padding: 6px 18px;
-            border-radius: 8px;
-            min-width: 60px;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            background: var(--lilac-soft); padding: 8px 16px;
+            border-radius: 8px; min-width: 56px;
+            text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            direction: ltr; font-variant-numeric: tabular-nums;
         }
-
+        .pattern-sep { color: var(--text-muted); font-size: 1.2rem; }
         .guess-input-field {
-            width: 80px;
-            padding: 10px;
-            font-size: 1.4rem;
-            font-weight: 900;
-            text-align: center;
-            border: 2px solid var(--lilac-border);
-            border-radius: 10px;
-            color: var(--lilac-dark);
-            background: #fafafa;
+            width: 78px; padding: 10px;
+            font-size: 1.3rem; font-weight: 900; text-align: center;
+            border: 2px dashed var(--lilac-main);
+            border-radius: 10px; color: var(--lilac-dark);
+            background: #faf5ff;
             transition: border-color 0.2s, box-shadow 0.2s;
+            direction: ltr; font-family: 'Vazirmatn', sans-serif;
         }
         .guess-input-field:focus {
-            outline: none;
+            outline: none; border-style: solid;
             border-color: var(--lilac-main);
             box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.15);
         }
 
-        .action-btns-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+        .action-btns-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
 
         .btn-ui {
             background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark));
-            color: white;
-            border: 2px solid white;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 1rem;
+            color: white; border: none;
+            padding: 12px 24px; border-radius: 30px;
+            font-weight: 800; font-size: 0.95rem;
             cursor: pointer;
             transition: transform 0.15s, box-shadow 0.15s;
             box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25);
+            font-family: 'Vazirmatn', sans-serif;
+            min-height: 46px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .btn-ui:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35);
-        }
+        .btn-ui:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
         .btn-ui:active { transform: translateY(0); }
         .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
-
         .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
         .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
+        .btn-ui.ghost { background: #fff; color: var(--danger); border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .btn-ui.ghost:hover:not(:disabled) { box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
 
         .feedback-display {
-            font-weight: 800;
-            text-align: center;
-            min-height: 28px;
-            font-size: 1rem;
-            margin-top: 10px;
-            transition: color 0.2s;
+            font-weight: 800; text-align: center;
+            min-height: 28px; font-size: 1rem;
+            margin-top: 4px; transition: color 0.2s; line-height: 1.7;
         }
 
-        /* ========================================================================
-           ۷. بخش تعاملی ۲: ماشین الگو ساز پیشرفته
-           ======================================================================== */
+        /* ماشین الگو */
         .machine-stage {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 2px dashed var(--lilac-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            background: white; border-radius: var(--radius-md);
+            padding: 20px; border: 2px dashed var(--lilac-border);
+            display: flex; flex-direction: column; gap: 18px;
         }
-
         .formula-builder-panel {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            background: var(--bg-color);
-            padding: 16px;
-            border-radius: var(--radius-sm);
-            font-weight: 700;
-            color: var(--text-title);
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px; flex-wrap: wrap;
+            background: var(--lilac-bg); padding: 16px;
+            border-radius: var(--radius-sm); font-weight: 700;
+            color: var(--text-title); text-align: center;
         }
-
-        .machine-part {
-            background: #fff;
-            padding: 6px 14px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
+        .formula-label { font-size: 0.95rem; color: var(--lilac-dark); white-space: nowrap; }
+        .formula-expression {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: #fff; padding: 8px 12px; border-radius: 10px;
+            border: 1px solid #e2e8f0; flex-wrap: wrap; justify-content: center;
         }
-
+        .formula-part-text { font-weight: 800; color: var(--text-title); font-size: 0.95rem; white-space: nowrap; }
+        .formula-symbol { font-weight: 900; color: var(--lilac-dark); font-size: 1.1rem; }
         .formula-input {
-            width: 55px;
-            padding: 6px;
-            border-radius: 6px;
+            width: 52px; padding: 6px; border-radius: 6px;
             border: 2px solid var(--lilac-soft);
-            text-align: center;
-            font-weight: 900;
-            font-size: 1.1rem;
-            color: var(--lilac-dark);
+            text-align: center; font-weight: 900; font-size: 1.05rem;
+            color: var(--lilac-dark); direction: ltr;
+            font-family: 'Vazirmatn', sans-serif;
         }
         .formula-input:focus { outline: none; border-color: var(--lilac-main); }
-
         .operator-select {
-            background: #fff;
-            border: 2px solid var(--lilac-soft);
-            border-radius: 6px;
-            padding: 5px;
-            font-weight: 700;
-            color: var(--lilac-dark);
-            cursor: pointer;
+            background: #fff; border: 2px solid var(--lilac-soft);
+            border-radius: 6px; padding: 6px 4px;
+            font-weight: 900; font-size: 1rem;
+            color: var(--lilac-dark); cursor: pointer;
+            font-family: 'Vazirmatn', sans-serif;
         }
         .operator-select:focus { outline: none; border-color: var(--lilac-main); }
 
-        .viz-output-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
+        .viz-output-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
         .shapes-visualizer {
-            background: #fafafa;
-            border-radius: var(--radius-sm);
-            padding: 16px;
-            border: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 220px;
+            background: #fafafa; border-radius: var(--radius-sm);
+            padding: 14px; border: 1px solid #e2e8f0;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 8px;
         }
-
         #pattern-shapes-canvas {
-            background: #fff;
-            border-radius: var(--radius-sm);
+            background: #fff; border-radius: var(--radius-sm);
             border: 1px solid rgba(0,0,0,0.04);
-            max-width: 100%;
+            display: block; width: 100%; max-width: 420px; height: auto;
         }
+        .canvas-caption { font-size: 0.78rem; color: var(--text-muted); text-align: center; }
 
         .pattern-data-table {
-            background: #fff;
-            border-radius: var(--radius-sm);
-            border: 1px solid #e2e8f0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            background: #fff; border-radius: var(--radius-sm);
+            border: 1px solid #e2e8f0; overflow: hidden;
+            display: flex; flex-direction: column;
         }
-
-        .table-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            border-bottom: 1px solid #f1f5f9;
-        }
+        .table-row { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #f1f5f9; }
         .table-row.head {
-            background: var(--lilac-soft);
-            color: var(--lilac-dark);
-            font-weight: 800;
-            font-size: 0.85rem;
+            background: var(--lilac-soft); color: var(--lilac-dark);
+            font-weight: 800; font-size: 0.85rem;
             border-bottom: 1px solid var(--lilac-border);
         }
         .table-row:last-child { border-bottom: none; }
-        
         .table-cell {
-            padding: 10px 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-left: 1px solid #f1f5f9;
+            padding: 12px 14px; display: flex;
+            align-items: center; justify-content: center;
+            border-left: 1px solid #f1f5f9; font-size: 0.95rem;
         }
         .table-cell:last-child { border-left: none; }
-        .table-row:not(.head) .table-cell.data { font-weight: 700; color: var(--blue-dark); }
-
-        @media (max-width: 768px) {
-            .viz-output-grid { grid-template-columns: 1fr; }
-            .formula-builder-panel { gap: 6px; }
-            .machine-part { font-size: 0.85rem; padding: 4px 10px; }
+        .table-row:not(.head) .table-cell.data {
+            font-weight: 800; color: var(--blue-dark);
+            direction: ltr; font-variant-numeric: tabular-nums;
         }
 
-        /* ========================================================================
-           ۸. بخش تعاملی ۳: اعداد هندسی پویا
-           ======================================================================== */
-        .geo-numbers-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
+        /* اعداد هندسی */
+        .geo-numbers-controls { display: flex; justify-content: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
         .btn-geo-tab {
-            background: #fff;
-            border: 1px solid var(--lilac-border);
+            background: #fff; border: 2px solid var(--lilac-border);
             color: var(--lilac-dark);
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
+            padding: 10px 18px; border-radius: 30px;
+            font-weight: 800; font-size: 0.9rem;
+            cursor: pointer; transition: all 0.2s;
+            font-family: 'Vazirmatn', sans-serif; min-height: 44px;
         }
         .btn-geo-tab:hover { background: var(--lilac-soft); }
         .btn-geo-tab.active {
-            background: var(--lilac-main);
-            color: white;
+            background: var(--lilac-main); color: white;
             border-color: var(--lilac-main);
             box-shadow: 0 6px 15px var(--lilac-glow);
         }
 
         .geo-numbers-stage {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 20px;
-            align-items: center;
-            background: white;
-            padding: 20px;
+            display: grid; grid-template-columns: 1fr auto;
+            gap: 20px; align-items: center;
+            background: white; padding: 18px;
             border-radius: var(--radius-md);
             border: 1px solid var(--glass-border);
         }
-
+        .geo-canvas-wrap { display: flex; justify-content: center; align-items: center; width: 100%; }
         #geo-dots-canvas {
-            background: #fff;
-            border-radius: var(--radius-sm);
+            background: #fff; border-radius: var(--radius-sm);
             border: 1px solid #e2e8f0;
-            max-width: 100%;
-            height: auto;
+            display: block; width: 100%; max-width: 320px; height: auto;
         }
 
         .geo-info-panel {
-            background: var(--bg-color);
-            padding: 20px;
+            background: var(--lilac-bg); padding: 16px;
             border-radius: var(--radius-sm);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            min-width: 200px;
-            align-items: center;
-            text-align: center;
+            display: flex; flex-direction: column; gap: 12px;
+            min-width: 210px; align-items: stretch; text-align: center;
         }
-
+        .geo-info-row {
+            display: flex; justify-content: space-between;
+            align-items: center; gap: 8px;
+            font-size: 0.92rem; font-weight: 700; color: var(--text-body);
+        }
+        .geo-info-row strong { color: var(--lilac-dark); font-size: 1.05rem; direction: ltr; }
+        .geo-total-display {
+            background: #fff; border-radius: 10px; padding: 10px;
+            font-weight: 800; font-size: 1rem;
+            color: var(--text-title); border: 1px solid #e2e8f0;
+        }
+        .geo-total-display span {
+            color: var(--blue-main); font-size: 1.3rem;
+            direction: ltr; display: inline-block;
+            font-variant-numeric: tabular-nums;
+        }
         .geo-formula {
-            background: #fff;
-            padding: 8px 14px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            font-weight: 700;
-            color: var(--blue-main);
-            direction: ltr;
+            background: #fff; padding: 10px 12px;
+            border-radius: 10px; border: 1px solid #e2e8f0;
+            font-weight: 700; color: var(--blue-dark);
+            font-size: 0.85rem; line-height: 1.7; text-align: center;
+        }
+        .geo-formula .formula-math {
+            display: block; margin-top: 4px;
+            font-weight: 900; font-size: 0.95rem;
+            color: var(--lilac-dark); direction: ltr;
         }
 
-        @media (max-width: 768px) {
-            .geo-numbers-stage { grid-template-columns: 1fr; }
-        }
+        input[type="range"] { width: 100%; accent-color: var(--lilac-main); height: 6px; }
 
-        /* ========================================================================
-           ۹. بخش تعاملی ۴: جدول مضارب ۱۰۰۰ تایی
-           ======================================================================== */
-        .multiples-app {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
+        /* مضارب */
+        .multiples-app { display: flex; flex-direction: column; gap: 14px; }
         .multiples-control-panel {
-            background: white;
-            border-radius: var(--radius-sm);
-            padding: 16px;
-            border: 1px solid var(--lilac-border);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
+            background: white; border-radius: var(--radius-sm);
+            padding: 16px; border: 1px solid var(--lilac-border);
+            display: flex; justify-content: center; align-items: center;
+            gap: 10px; flex-wrap: wrap;
         }
-
+        .multiples-control-panel label { font-weight: 800; color: var(--text-title); font-size: 0.92rem; }
         .base-multi-input {
-            width: 80px;
-            padding: 8px;
-            border-radius: 8px;
+            width: 76px; padding: 10px; border-radius: 10px;
             border: 2px solid var(--lilac-soft);
-            text-align: center;
-            font-weight: 900;
-            font-size: 1.2rem;
-            color: var(--lilac-dark);
+            text-align: center; font-weight: 900; font-size: 1.15rem;
+            color: var(--lilac-dark); direction: ltr;
+            font-family: 'Vazirmatn', sans-serif;
         }
-        .base-multi-input:focus { outline: none; border-color: var(--lilac-main); }
+        .base-multi-input:focus { outline: none; border-color: var(--lilac-main); box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.15); }
 
         .mega-grid-viewport {
-            background: #fff;
-            border-radius: var(--radius-sm);
+            background: #fff; border-radius: var(--radius-sm);
             border: 1px solid var(--lilac-border);
-            height: 380px;
-            overflow-y: scroll;
-            padding: 12px;
+            height: 400px; overflow-y: auto; padding: 10px;
+            -webkit-overflow-scrolling: touch;
             scrollbar-width: thin;
-            scrollbar-color: var(--lilac-soft) #fafafa;
+            scrollbar-color: var(--lilac-border) #fafafa;
         }
         .mega-grid-viewport::-webkit-scrollbar { width: 8px; }
         .mega-grid-viewport::-webkit-scrollbar-track { background: #fafafa; }
-        .mega-grid-viewport::-webkit-scrollbar-thumb { background-color: var(--lilac-soft); border-radius: 4px; }
+        .mega-grid-viewport::-webkit-scrollbar-thumb { background-color: var(--lilac-border); border-radius: 4px; }
 
-        .mega-grid {
-            display: grid;
-            grid-template-columns: repeat(15, 1fr);
-            gap: 4px;
-        }
-
+        .mega-grid { display: grid; grid-template-columns: repeat(15, 1fr); gap: 4px; }
         .mega-cell {
-            aspect-ratio: 1.1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--lilac-bg);
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            transition: all 0.1s ease;
+            aspect-ratio: 1.1; display: flex; align-items: center;
+            justify-content: center; background: var(--lilac-bg);
+            border-radius: 5px; font-size: 0.75rem; font-weight: 700;
+            color: var(--text-muted); transition: all 0.15s ease;
+            direction: ltr; font-variant-numeric: tabular-nums;
         }
-
         .mega-cell.active-highlight {
-            background-color: var(--highlight);
-            color: #713f12;
-            font-weight: 900;
-            transform: scale(1.05);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            border: 1px solid rgba(133, 77, 14, 0.1);
+            background-color: var(--highlight); color: #713f12;
+            font-weight: 900; transform: scale(1.06);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+            border: 1px solid rgba(133, 77, 14, 0.15);
         }
+        .multiples-counter { text-align: center; font-weight: 800; color: var(--lilac-dark); font-size: 0.95rem; min-height: 24px; }
+        .multiples-counter span { color: var(--blue-main); direction: ltr; display: inline-block; font-variant-numeric: tabular-nums; }
 
-        @media (max-width: 900px) {
-            .mega-grid { grid-template-columns: repeat(10, 1fr); }
-        }
-        @media (max-width: 600px) {
-            .mega-grid { grid-template-columns: repeat(8, 1fr); }
-            .mega-cell { font-size: 0.65rem; }
-        }
-
-        /* ========================================================================
-           ۱۰. دکمه‌های شناور
-           ======================================================================== */
+        /* ============ دکمه‌های شناور ناوبری بین فایل‌ها ============ */
         .floating-btns {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none;
-            z-index: 200;
-            max-width: 1100px;
-            margin: 0 auto;
+            position: fixed; bottom: 16px;
+            left: 16px; right: 16px;
+            display: flex; justify-content: space-between;
+            align-items: center; gap: 10px;
+            pointer-events: none; z-index: 200;
+            max-width: 1100px; margin: 0 auto;
         }
 
         .float-nav-btn {
             pointer-events: auto;
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 800;
-            color: var(--text-title);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 12px 20px; border-radius: 30px;
+            font-weight: 800; color: var(--text-title);
+            text-decoration: none; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
             transition: all 0.2s;
+            font-size: 0.9rem;
+            font-family: 'Vazirmatn', sans-serif;
+            position: relative;
         }
-
-        .float-nav-btn:hover {
-            background: var(--lilac-main);
-            color: white;
+        .float-nav-btn:hover:not(:disabled) {
+            background: var(--lilac-main); color: white;
             transform: translateY(-3px);
             box-shadow: 0 15px 35px var(--lilac-glow);
         }
+        .float-nav-btn:disabled {
+            opacity: 0.45; cursor: not-allowed;
+        }
+        .float-nav-btn:disabled:hover { background: var(--glass-bg); color: var(--text-title); transform: none; }
 
-        @media (max-width: 600px) {
-            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
-            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
-            .header-lesson-info { align-items: center; }
+        .float-nav-btn.home-btn {
+            background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark));
+            color: white; border-color: transparent;
+            padding: 12px 16px;
+        }
+        .float-nav-btn.home-btn:hover {
+            background: linear-gradient(135deg, var(--lilac-dark), var(--lilac-main));
+            transform: translateY(-3px) scale(1.05);
         }
 
+        /* Tooltip کوچک روی دکمه‌ها */
+        .float-nav-btn .btn-tooltip {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            background: rgba(46, 16, 101, 0.95);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 8px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .float-nav-btn:hover .btn-tooltip { opacity: 1; }
+        #prev-lesson-btn .btn-tooltip { right: 0; }
+        #next-lesson-btn .btn-tooltip { left: 0; }
+
+        /* ============ Toast ============ */
+        .toast-notification {
+            position: fixed; bottom: 100px; left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: rgba(46, 16, 101, 0.96);
+            color: white; padding: 14px 24px;
+            border-radius: 14px; font-weight: 700;
+            font-size: 0.92rem; z-index: 1000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            max-width: 90%; text-align: center;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+            line-height: 1.7;
+        }
+        .toast-notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ============ ریسپانسیو ============ */
+        @media (max-width: 900px) { .mega-grid { grid-template-columns: repeat(10, 1fr); } }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .lesson-top-nav {
+                flex-direction: column; align-items: stretch;
+                text-align: center; padding: 14px 16px; gap: 10px;
+            }
+            .header-lesson-info { align-items: center; }
+            .go-back-link { justify-content: center; }
+            .lesson-title-text { text-align: center; }
+
+            .step-teaching-card { padding: 20px 16px; border-radius: 20px; }
+            .step-teaching-card h2 { font-size: 1.15rem; }
+            .step-teaching-card p { font-size: 0.95rem; }
+
+            .viz-output-grid { grid-template-columns: 1fr; }
+            .geo-numbers-stage { grid-template-columns: 1fr; padding: 14px; }
+            .geo-info-panel { min-width: 0; width: 100%; }
+            .interactive-container { padding: 16px 12px; }
+
+            .pattern-display-row { font-size: 1.2rem; padding: 14px 10px; gap: 6px; }
+            .pattern-num-cell { padding: 6px 12px; min-width: 46px; font-size: 1.1rem; }
+            .guess-input-field { width: 66px; font-size: 1.15rem; }
+
+            .btn-ui { padding: 11px 18px; font-size: 0.9rem; }
+            .action-btns-row { flex-direction: column; align-items: stretch; }
+            .action-btns-row .btn-ui { width: 100%; }
+
+            .multiples-control-panel { padding: 14px 12px; }
+            .formula-builder-panel { padding: 12px 10px; gap: 8px; }
+            .formula-expression { gap: 6px; padding: 6px 10px; }
+            .formula-input { width: 44px; font-size: 0.95rem; }
+            .formula-part-text { font-size: 0.85rem; }
+        }
+
+        @media (max-width: 600px) {
+            .mega-grid { grid-template-columns: repeat(7, 1fr); gap: 3px; }
+            .mega-cell { font-size: 0.68rem; border-radius: 4px; }
+            .mega-grid-viewport { height: 340px; padding: 8px; }
+
+            .float-nav-btn { padding: 11px 14px; font-size: 0.82rem; gap: 5px; }
+            .float-nav-btn .btn-label { display: none; }
+            .float-nav-btn.home-btn { padding: 11px 14px; }
+
+            .teacher-speech-bubble { padding: 12px 14px; font-size: 0.88rem; }
+            .key-tip-box { padding: 12px 12px; font-size: 0.85rem; }
+        }
+
+        @media (max-width: 400px) {
+            .mega-grid { grid-template-columns: repeat(5, 1fr); }
+            .pattern-num-cell { padding: 5px 9px; min-width: 40px; font-size: 1rem; }
+            .pattern-display-row { font-size: 1rem; }
+            .guess-input-field { width: 56px; font-size: 1rem; padding: 8px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ========================================================================
-         نوار ناوبری بالای درسنامه
-         ======================================================================== -->
     <header class="lesson-top-nav">
         <a href="../index.html" class="go-back-link">
             <span>← برگشت به کتاب اصلی</span>
@@ -720,66 +595,56 @@
         </div>
     </header>
 
+    <!-- نوار موقعیت مکانی در کتاب -->
+    <div class="book-location-bar" id="book-location-bar">
+        <!-- با JS پر می‌شود -->
+    </div>
+
     <main class="main-lesson-wrapper">
 
-        <!-- ========================================================================
-           قدم ۱: مقدمه
-           ======================================================================== -->
+        <!-- قدم ۱ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۱</span>
-            <h2>سلام دانش‌آموز خوب! بیا با الگوها آشنا شویم</h2>
+            <h2>سلام دوست خوبم! بیا با الگوها آشنا شویم</h2>
             <p>
-                به اطراف خود خوب نگاه کن. خیلی چیزها نظم خاصی دارند. مثلاً کاشی‌های کف اتاق، گلبرگ‌های یک گل، یا حتی شماره خانه‌ها در یک کوچه.
-                در ریاضی، وقتی تعدادی عدد پشت سر هم قرار می‌گیرند و بین آنها یک نظم یا قانون مشخص وجود دارد، می‌گوییم یک **الگوی عددی** داریم.
+                به اطراف خودت خوب نگاه کن. خیلی چیزها نظم خاصی دارند. مثلاً کاشی‌های کف اتاق، گلبرگ‌های یک گل، یا حتی شماره خانه‌ها در یک کوچه.
+                در ریاضی، وقتی تعدادی عدد پشت سر هم قرار می‌گیرند و بین آن‌ها یک نظم یا قانون مشخص وجود دارد، می‌گوییم یک <strong>الگوی عددی</strong> داریم.
             </p>
             <div class="teacher-speech-bubble">
-                «پیدا کردن الگو یعنی کشف کردن اون قانونی که باعث شده عددها اینطوری مرتب بشوند. وقتی قانون رو پیدا کنی، می‌تونی بگی عددهای بعدی الگو چی هستند!»
+                «پیدا کردن الگو یعنی کشف کردن اون قانونی که باعث شده عددها این‌طوری مرتب بشوند. وقتی قانون رو پیدا کنی، می‌تونی بگی عددهای بعدی الگو چی هستند!»
             </div>
             <p>
                 در این درس قرار است کارآگاه عددها شویم و قانون الگوها را کشف کنیم. بعد هم یاد می‌گیریم چطور خودمان الگو بسازیم.
             </p>
         </section>
 
-        <!-- ========================================================================
-           قدم ۲: الگوهای حسابی و کشف قانون
-           ======================================================================== -->
+        <!-- قدم ۲ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۲</span>
             <h2>قانون الگو چیست؟ (الگوهای حسابی)</h2>
             <p>
-                ساده‌ترین نوع الگوها آنهایی هستند که هر عدد با اضافه شدن (یا کم شدن) یک مقدار ثابت به عدد قبلی ساخته می‌شود.
+                ساده‌ترین نوع الگوها آن‌هایی هستند که هر عدد با اضافه شدن (یا کم شدن) یک مقدار ثابت به عدد قبلی ساخته می‌شود.
                 به این مقدار ثابت، «فاصله» یا «اختلاف» الگو می‌گوییم.
             </p>
-            
             <div class="solved-example-box">
                 <div class="example-header">💡 مثال حل‌شده: الگوی زوج</div>
-                <p>به این اعداد نگاه کن: ۲، ۴، ۶، ۸، ۱۰، ...</p>
+                <p>به این اعداد نگاه کن: <span class="ltr">۲، ۴، ۶، ۸، ۱۰، ...</span></p>
                 <p>قانون الگو چیست؟ هر عدد با عدد قبلی چقدر فاصله دارد؟ بله، ۲ واحد. پس قانون الگو «+۲» است.</p>
             </div>
+            <p>حالا بیا هوش خودت را امتحان کن! به الگوهای زیر نگاه کن، قانون را کشف کن و عدد بعدی را حدس بزن:</p>
 
-            <p>حالا بیا هوش خود را امتحان کنی! به الگوهای زیر نگاه کن، قانون را کشف کن و عدد بعدی را حدس بزن:</p>
-
-            <!-- ابزار تعاملی ۱: کشف الگوی عددی -->
             <div class="interactive-container">
                 <div class="sim-title">❓ کارآگاه الگو: عدد بعدی را حدس بزن</div>
-                
-                <div class="pattern-display-row" id="pattern-display-row">
-                    <!-- عددها با JS تولید می‌شوند -->
-                </div>
-
+                <div class="pattern-display-row" id="pattern-display-row"></div>
                 <div class="action-btns-row">
-                    <button class="btn-ui blue" id="get-pattern-btn">ساخت الگوی جدید</button>
-                    <button class="btn-ui" id="check-guess-btn">بررسی حدس من</button>
+                    <button class="btn-ui blue" id="get-pattern-btn">🎲 ساخت الگوی جدید</button>
+                    <button class="btn-ui" id="check-guess-btn">✓ بررسی حدس من</button>
                 </div>
-                
                 <p id="guess-feedback" class="feedback-display"></p>
             </div>
-
         </section>
 
-        <!-- ========================================================================
-           قدم ۳: ماشین الگو ساز
-           ======================================================================== -->
+        <!-- قدم ۳ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۳</span>
             <h2>بیا خودمان یک الگوی پیچیده بسازیم (ماشین الگو)</h2>
@@ -788,164 +653,322 @@
                 اما الگوها می‌توانند سخت‌تر باشند! مثلاً قانون الگو این باشد: «شماره شکل را در ۲ ضرب کن و بعد ۱ واحد به آن اضافه کن».
                 در این حالت، الگو مضارب مستقیم یک عدد نیست.
             </p>
-            
-            <p>این ماشین را ببین. تو فرمول الگو را به او می‌دهی، و او برایت شکل‌ها و جدول اعداد را بلادرنگ می‌سازد:</p>
-            
-            <!-- ابزار تعاملی ۲: ماشین الگو ساز -->
+            <p>این ماشین را ببین. تو فرمول الگو را به او می‌دهی، و او برایت شکل‌ها و جدول اعداد را همان لحظه می‌سازد:</p>
+
             <div class="machine-stage">
                 <div class="formula-builder-panel">
-                    <span>قانون الگو: (شماره شکل</span>
-                    <div class="machine-part">
-                        <span>×</span>
+                    <span class="formula-label">قانون الگو:</span>
+                    <div class="formula-expression">
+                        <span class="formula-part-text">شماره شکل</span>
+                        <span class="formula-symbol">×</span>
                         <input type="number" id="formula-mult" class="formula-input" value="2" min="1" max="5">
-                    </div>
-                    <div class="machine-part">
                         <select id="formula-op" class="operator-select">
                             <option value="+">+</option>
-                            <option value="-">-</option>
+                            <option value="-">−</option>
                         </select>
                         <input type="number" id="formula-add" class="formula-input" value="1" min="0" max="9">
                     </div>
-                    <span>)</span>
                 </div>
-
                 <div class="viz-output-grid">
                     <div class="shapes-visualizer">
-                        <canvas id="pattern-shapes-canvas" width="400" height="200"></canvas>
-                        <span style="font-size:0.8rem; color:var(--text-muted); margin-top:10px;">نمایش بصری شکل‌های ۱ تا ۳</span>
+                        <canvas id="pattern-shapes-canvas"></canvas>
+                        <span class="canvas-caption">نمایش شکل‌های ۱ تا ۳</span>
                     </div>
                     <div class="pattern-data-table">
                         <div class="table-row head">
-                            <div class="table-cell">شماره شکل (n)</div>
-                            <div class="table-cell">تعداد عدد (الگو)</div>
+                            <div class="table-cell">شماره شکل</div>
+                            <div class="table-cell">تعداد در الگو</div>
                         </div>
-                        <div id="pattern-table-body">
-                            <!-- ردیف‌ها با JS ساخته می‌شوند -->
-                        </div>
+                        <div id="pattern-table-body"></div>
                     </div>
                 </div>
-
                 <div style="text-align: center;">
                     <button class="btn-ui" id="btn-build-pattern">✓ ساخت الگو و رسم شکل‌ها</button>
                 </div>
             </div>
 
             <div class="key-tip-box">
-                نکته: در ریاضی به جای عبارت طولانی «قانون الگو»، از «رابطه‌ی الگو» استفاده می‌کنیم و شماره شکل را با حرف $n$ نشان می‌دهیم.
+                در ریاضی به جای عبارت طولانی «قانون الگو»، از «رابطه‌ی الگو» استفاده می‌کنیم. شماره هر شکل را با یک حرف مشخص نشان می‌دهیم تا نوشتن رابطه راحت‌تر شود.
             </div>
-
         </section>
 
-        <!-- ========================================================================
-           قدم ۴: الگوهای هندسی
-           ======================================================================== -->
+        <!-- قدم ۴ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۴</span>
             <h2>الگوهای هندسی: وقتی عددها شکل می‌سازند!</h2>
             <p>
                 بعضی الگوها خیلی جالب هستند چون وقتی با نقطه‌ها یا شکل‌ها رسم می‌شوند، شکل‌های هندسی منظمی می‌سازند.
-                دو نمونه خیلی معروف، **اعداد مثلثی** و **اعداد مربعی** هستند.
+                دو نمونه خیلی معروف، <strong>اعداد مثلثی</strong> و <strong>اعداد مربعی</strong> هستند.
             </p>
-            
             <p>در ابزار زیر، شماره شکل را تغییر بده و ببین نقطه‌ها چطور چیده می‌شوند:</p>
 
-            <!-- ابزار تعاملی ۳: اعداد هندسی پویا -->
             <div class="geo-numbers-container interactive-container">
                 <div class="geo-numbers-controls">
-                    <button class="btn-geo-tab active" data-type="triangular">اعداد مثلثی</button>
-                    <button class="btn-geo-tab" data-type="square">اعداد مربعی</button>
+                    <button class="btn-geo-tab active" data-type="triangular">🔺 اعداد مثلثی</button>
+                    <button class="btn-geo-tab" data-type="square">🟦 اعداد مربعی</button>
                 </div>
-
                 <div class="geo-numbers-stage">
-                    <canvas id="geo-dots-canvas" width="300" height="300"></canvas>
-                    
+                    <div class="geo-canvas-wrap">
+                        <canvas id="geo-dots-canvas"></canvas>
+                    </div>
                     <div class="geo-info-panel">
-                        <div class="label-text-row"><span>شماره شکل ($n$):</span> <span id="txt-geo-n" style="font-weight:900;">3</span></div>
-                        <input type="range" id="range-geo-n" min="1" max="10" value="3" style="width:100%; accent-color:var(--lilac-main)">
-                        <div style="font-weight:800; font-size:1.3rem; color:var(--text-title);">تعداد کل نقطه‌ها: <span id="txt-geo-total">6</span></div>
-                        <div class="geo-formula" id="txt-geo-formula">n * (n+1) / 2</div>
+                        <div class="geo-info-row">
+                            <span>شماره شکل:</span>
+                            <strong id="txt-geo-n">۳</strong>
+                        </div>
+                        <input type="range" id="range-geo-n" min="1" max="10" value="3" aria-label="شماره شکل">
+                        <div class="geo-total-display">
+                            تعداد کل نقطه‌ها: <span id="txt-geo-total">6</span>
+                        </div>
+                        <div class="geo-formula" id="geo-formula-box">
+                            روش پیدا کردن تعداد نقطه‌ها:
+                            <span class="formula-math" id="txt-geo-formula">n × (n + 1) ÷ 2</span>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </section>
 
-        <!-- ========================================================================
-           قدم ۵: مضارب اعداد
-           ======================================================================== -->
+        <!-- قدم ۵ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۵</span>
             <h2>مضارب یک عدد چیست؟ (نردبان اعداد)</h2>
             <p>
-                وقتی یک الگوی عددی با عدد صفر یا خود عدد شروع شود و با اضافه شدن همان عدد بالا برود، به آن **مضارب** آن عدد می‌گوییم.
+                وقتی یک الگوی عددی با خود عدد شروع شود و با اضافه شدن همان عدد بالا برود، به آن <strong>مضارب</strong> آن عدد می‌گوییم.
                 در واقع، مضارب یک عدد از ضرب آن عدد در عددهای ۱، ۲، ۳، ۴ و... به دست می‌آیند.
             </p>
-            
             <div class="teacher-speech-bubble">
                 «مضارب مثل پله‌های یک نردبان هستند که با خود اون عدد شروع می‌شوند و با همون اندازه بالا می‌روند! مضارب ۲ یعنی ۲، ۴، ۶، ۸ و...»
             </div>
+            <p>این جدول بزرگ را ببین. تو عدد پایه را به او می‌دهی و او تمام مضارب آن را در جدول ۱ تا ۱۰۰۰ هایلایت می‌کند:</p>
 
-            <p>این جدول بزرگ را ببین. تو عدد پایه را به او می‌دهی و او تمام مضارب آن را در جدول ۱۰۰۰ تایی (۱ تا ۱۰۰۰) هایلایت می‌کند:</p>
-
-            <!-- ابزار تعاملی ۴: جدول مضارب ۱۰۰۰ تایی -->
             <div class="multiples-app interactive-container">
-                <div class="sim-title">❓ کاوشگر مضارب: هایلایت در جدول ۱۰۰۰ تایی</div>
-                
+                <div class="sim-title">❓ کاوشگر مضارب: هایلایت در جدول ۱ تا ۱۰۰۰</div>
                 <div class="multiples-control-panel">
-                    <span>عدد پایه را وارد کن:</span>
+                    <label for="base-multi-input">عدد پایه:</label>
                     <input type="number" id="base-multi-input" class="base-multi-input" value="3" min="1" max="99">
-                    <button class="btn-ui blue" id="btn-show-multiples">نمایش مضارب</button>
-                    <button class="btn-clear" id="btn-clear-multiples" style="background:#fff; border:1px solid #e2e8f0; color:var(--danger); border-radius:30px; padding:12px 28px; font-weight:800; cursor:pointer;">پاک کردن</button>
+                    <button class="btn-ui blue" id="btn-show-multiples">🔍 نمایش مضارب</button>
+                    <button class="btn-ui ghost" id="btn-clear-multiples">✕ پاک کردن</button>
                 </div>
-
+                <p id="multiples-counter" class="multiples-counter"></p>
                 <div class="mega-grid-viewport">
-                    <div class="mega-grid" id="mega-grid-1000">
-                        <!-- سلول‌ها با جاوااسکریپت ساخته می‌شوند -->
-                    </div>
+                    <div class="mega-grid" id="mega-grid-1000"></div>
                 </div>
             </div>
 
-            <p>
-                نکته: الگوهای مضارب همیشه از خود عدد شروع می‌شوند. اگر الگویی از خود عدد شروع نشود، مضارب آن نیست. مثلاً الگوی ۳، ۵، ۷، ۹ مضارب ۲ نیست، هرچند فاصله ۲ تا ۲ تا است.
-            </p>
+            <div class="key-tip-box">
+                الگوهای مضارب همیشه از خود عدد شروع می‌شوند. اگر الگویی از خود عدد شروع نشود، مضارب آن نیست. مثلاً الگوی <span class="ltr">۳، ۵، ۷، ۹</span> مضارب ۲ نیست، هرچند فاصله ۲ تا ۲ تا است.
+            </div>
         </section>
 
     </main>
 
-    <!-- ========================================================================
-         دکمه‌های شناور
-         ======================================================================== -->
+    <!-- دکمه‌های شناور ناوبری بین فایل‌ها -->
     <div class="floating-btns">
-        <a href="../index.html" class="float-nav-btn">🏠 خانه</a>
-        <a href="#" class="float-nav-btn" id="next-lesson-btn">بخش بعدی →</a>
+        <a class="float-nav-btn" id="prev-lesson-btn" href="#" aria-label="بخش قبلی">
+            <span>→</span>
+            <span class="btn-label">بخش قبلی</span>
+            <span class="btn-tooltip" id="prev-tooltip">بخش قبلی</span>
+        </a>
+        <a href="../index.html" class="float-nav-btn home-btn" id="home-btn" aria-label="خانه">
+            🏠<span class="btn-label" style="margin-right:4px;">خانه</span>
+        </a>
+        <a class="float-nav-btn" id="next-lesson-btn" href="#" aria-label="بخش بعدی">
+            <span class="btn-label">بخش بعدی</span>
+            <span>←</span>
+            <span class="btn-tooltip" id="next-tooltip">بخش بعدی</span>
+        </a>
     </div>
 
+    <!-- Toast -->
+    <div class="toast-notification" id="toast"></div>
+
     <script>
-        /* ========================================================================
-           لاجیک صوتی
-           ======================================================================== */
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        /* ==========================================================
+           ترتیب فایل‌های درسنامه (طبق تصویر پوشه)
+           ========================================================== */
+        const FILES_ORDER = [
+            'ch01_sec01.html', 'ch01_sec02.html', 'ch01_sec03.html', 'ch01_sec04.html',
+            'ch02_sec01.html', 'ch02_sec02.html', 'ch02_sec03.html', 'ch02_sec04.html',
+            'ch03_sec01.html', 'ch03_sec02.html', 'ch03_sec03.html', 'ch03_sec04.html',
+            'ch04_sec01.html', 'ch04_sec02.html', 'ch04_sec03.html', 'ch04_sec04.html',
+            'ch05_sec01.html', 'ch05_sec02.html', 'ch05_sec03.html', 'ch05_sec04.html',
+            'ch06_sec01.html', 'ch06_sec02.html', 'ch06_sec03.html', 'ch06_sec04.html',
+            'ch07_sec01.html', 'ch07_sec02.html'
+        ];
+
+        const chapterTitles = {
+            '01': 'عدد و الگوهای عددی',
+            '02': 'کسرها',
+            '03': 'اعداد اعشاری',
+            '04': 'تقارن و مختصات',
+            '05': 'اندازه‌گیری',
+            '06': 'آمار و احتمال',
+            '07': 'مرور و جمع‌بندی'
+        };
+
+        /* ============ اعداد فارسی ============ */
+        const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+        function toFa(num) { return String(num).replace(/\d/g, d => faDigits[+d]); }
+
+        /* ============ نام فایل فعلی ============ */
+        function getCurrentFileName() {
+            const path = window.location.pathname;
+            let name = path.substring(path.lastIndexOf('/') + 1);
+            // اگر آدرس بدون .html باز شد یا پیش‌فرض شد
+            if (!name || name === '') name = 'ch01_sec01.html';
+            return name.toLowerCase();
+        }
+
+        /* ============ استخراج اطلاعات از نام فایل ============ */
+        function parseFileName(name) {
+            const match = name.match(/ch(\d+)_sec(\d+)\.html?$/i);
+            if (!match) return null;
+            return {
+                chapter: parseInt(match[1], 10),
+                section: parseInt(match[2], 10)
+            };
+        }
+
+        const currentFile = getCurrentFileName();
+        const currentInfo = parseFileName(currentFile) || { chapter: 1, section: 1 };
+        const currentIdx = FILES_ORDER.indexOf(currentFile);
+
+        /* ============ پیدا کردن فایل قبلی و بعدی ============ */
+        function getPrevFile() {
+            if (currentIdx > 0) return FILES_ORDER[currentIdx - 1];
+            return null; // یعنی این اولین فایل کتاب است
+        }
+        function getNextFile() {
+            if (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) return FILES_ORDER[currentIdx + 1];
+            return null; // یعنی این آخرین فایل کتاب است
+        }
+
+        /* ============ برچسب زیبا برای هر فایل ============ */
+        function fileLabel(fileName) {
+            const info = parseFileName(fileName);
+            if (!info) return fileName;
+            return `فصل ${toFa(info.chapter)} - بخش ${toFa(info.section)}`;
+        }
+
+        /* ============ نوار موقعیت ============ */
+        const locationBar = document.getElementById('book-location-bar');
+        function renderLocationBar() {
+            if (!locationBar) return;
+            const prevFile = getPrevFile();
+            const nextFile = getNextFile();
+
+            let html = '';
+            html += `<span class="location-chip blue">📍 الان اینجایی: فصل ${toFa(currentInfo.chapter)} - بخش ${toFa(currentInfo.section)}</span>`;
+            if (chapterTitles[String(currentInfo.chapter).padStart(2, '0')]) {
+                html += `<span class="location-chip">📖 ${chapterTitles[String(currentInfo.chapter).padStart(2, '0')]}</span>`;
+            }
+            if (nextFile) {
+                html += `<span class="location-chip" style="background:#fef9c3;color:#854d0e;">⏭️ بعدی: ${fileLabel(nextFile)}</span>`;
+            } else {
+                html += `<span class="location-chip" style="background:#dcfce7;color:#166534;">🎉 آخرین بخش کتاب</span>`;
+            }
+            locationBar.innerHTML = html;
+        }
+        renderLocationBar();
+
+        /* ============ دکمه‌های قبلی / بعدی ============ */
+        const prevBtn = document.getElementById('prev-lesson-btn');
+        const nextBtn = document.getElementById('next-lesson-btn');
+        const prevTooltip = document.getElementById('prev-tooltip');
+        const nextTooltip = document.getElementById('next-tooltip');
+
+        const prevFile = getPrevFile();
+        const nextFile = getNextFile();
+
+        if (prevFile) {
+            prevBtn.href = prevFile;
+            prevTooltip.textContent = `→ ${fileLabel(prevFile)}`;
+        } else {
+            // اولین فایل کتاب: دکمه قبلی غیرفعال
+            prevBtn.removeAttribute('href');
+            prevBtn.style.opacity = '0.45';
+            prevBtn.style.cursor = 'not-allowed';
+            prevTooltip.textContent = 'این اولین بخش کتاب است';
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                ensureAudio();
+                showToast('این اولین بخش کتاب است. از دکمه «خانه» می‌توانی به فهرست برگردی. 😊');
+                playTone(300, 0.15);
+            });
+        }
+
+        if (nextFile) {
+            nextBtn.href = nextFile;
+            nextTooltip.textContent = `${fileLabel(nextFile)} ←`;
+        } else {
+            // آخرین فایل کتاب: دکمه بعدی غیرفعال
+            nextBtn.removeAttribute('href');
+            nextBtn.style.opacity = '0.45';
+            nextBtn.style.cursor = 'not-allowed';
+            nextTooltip.textContent = 'این آخرین بخش کتاب است';
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                ensureAudio();
+                showToast('🎉 تبریک! این آخرین بخش کتاب بود. تمام فصل‌ها را کامل خواندی!');
+                playTone(700, 0.25);
+                confetti({ particleCount: 120, spread: 100, origin: { y: 0.6 } });
+            });
+        }
+
+        /* ============ صوت ============ */
+        let audioCtx;
+        function ensureAudio() {
+            if (!audioCtx) {
+                try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+                catch (e) { audioCtx = null; }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        }
         function playTone(freq, duration) {
+            if (!audioCtx) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
             gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
             osc.start(); osc.stop(audioCtx.currentTime + duration);
         }
 
+        /* ============ Toast ============ */
+        const toastEl = document.getElementById('toast');
+        let toastTimer;
+        function showToast(msg, duration = 3200) {
+            toastEl.textContent = msg;
+            toastEl.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
+        }
+
+        /* ============ Canvas ریسپانسیو ============ */
+        function setupCanvas(canvas, logicalW, logicalH) {
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            canvas.width = logicalW * dpr;
+            canvas.height = logicalH * dpr;
+            canvas.style.aspectRatio = `${logicalW} / ${logicalH}`;
+            const ctx = canvas.getContext('2d');
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            return { ctx, w: logicalW, h: logicalH };
+        }
+
         /* ========================================================================
-           تعامل ۱: لاجیک الگو ساز حسابی
+           تعامل ۱: الگو حسابی
            ======================================================================== */
         const patternsData = [
-            { seq: [2, 5, 8, 11], next: 14, rule: "+۳" },
-            { seq: [1, 5, 9, 13], next: 17, rule: "+۴" },
-            { seq: [10, 20, 30, 40], next: 50, rule: "+۱۰" },
-            { seq: [5, 10, 15, 20], next: 25, rule: "+۵" },
-            { seq: [20, 18, 16, 14], next: 12, rule: "-۲" },
-            { seq: [1, 2, 4, 8], next: 16, rule: "×۲" }
+            { seq: [2, 5, 8, 11], next: 14, rule: "هر بار ۳ واحد اضافه می‌شود (+۳)" },
+            { seq: [1, 5, 9, 13], next: 17, rule: "هر بار ۴ واحد اضافه می‌شود (+۴)" },
+            { seq: [10, 20, 30, 40], next: 50, rule: "هر بار ۱۰ واحد اضافه می‌شود (+۱۰)" },
+            { seq: [5, 10, 15, 20], next: 25, rule: "هر بار ۵ واحد اضافه می‌شود (+۵)" },
+            { seq: [20, 18, 16, 14], next: 12, rule: "هر بار ۲ واحد کم می‌شود (−۲)" },
+            { seq: [1, 3, 9, 27], next: 81, rule: "هر عدد ۳ برابر عدد قبلی است (×۳)" },
+            { seq: [100, 90, 80, 70], next: 60, rule: "هر بار ۱۰ واحد کم می‌شود (−۱۰)" }
         ];
         let currentPatternIndex = 0;
 
@@ -954,152 +977,176 @@
             const pattern = patternsData[currentPatternIndex];
             const displayRow = document.getElementById('pattern-display-row');
             displayRow.innerHTML = '';
-            
+
             pattern.seq.forEach((num, idx) => {
                 const cell = document.createElement('span');
                 cell.className = 'pattern-num-cell';
-                cell.innerText = num;
+                cell.textContent = toFa(num);
                 displayRow.appendChild(cell);
+
                 if (idx < pattern.seq.length - 1) {
                     const divider = document.createElement('span');
-                    divider.innerText = '،';
+                    divider.className = 'pattern-sep';
+                    divider.textContent = '،';
                     displayRow.appendChild(divider);
                 }
             });
+
+            const sep = document.createElement('span');
+            sep.className = 'pattern-sep';
+            sep.textContent = '،';
+            displayRow.appendChild(sep);
 
             const input = document.createElement('input');
             input.type = 'number';
             input.id = 'guess-input';
             input.className = 'guess-input-field';
             input.placeholder = '؟';
+            input.inputMode = 'numeric';
             displayRow.appendChild(input);
 
-            document.getElementById('guess-feedback').innerText = '';
+            document.getElementById('guess-feedback').textContent = '';
         }
 
         document.getElementById('check-guess-btn').addEventListener('click', () => {
+            ensureAudio();
             const pattern = patternsData[currentPatternIndex];
             const guessInput = document.getElementById('guess-input');
-            const userGuess = parseInt(guessInput.value);
+            const userGuess = parseInt(guessInput.value, 10);
             const feedbackEl = document.getElementById('guess-feedback');
 
             if (isNaN(userGuess)) {
-                feedbackEl.innerText = 'لطفاً یک عدد وارد کن!';
+                feedbackEl.textContent = 'لطفاً یک عدد وارد کن! 🙂';
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
             }
-
             if (userGuess === pattern.next) {
-                feedbackEl.innerText = `آفرین! درست حدس زدی. قانون الگو "${pattern.rule}" بود.`;
+                feedbackEl.textContent = `آفرین! درست حدس زدی. قانون الگو: ${pattern.rule}`;
                 feedbackEl.style.color = 'var(--success)';
-                playTone(600, 0.3);
-                confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
+                playTone(660, 0.3);
+                confetti({ particleCount: 60, spread: 70, origin: { y: 0.7 } });
                 guessInput.disabled = true;
             } else {
-                feedbackEl.innerText = 'اشتباه بود. دوباره سعی کن! به رابطه‌ی بین عددها دقت کن.';
+                feedbackEl.textContent = 'اشتباه بود. دوباره سعی کن! به رابطه‌ی بین عددها دقت کن. 🤔';
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(300, 0.3);
             }
         });
 
         document.getElementById('get-pattern-btn').addEventListener('click', () => {
-            playTone(440, 0.05);
+            ensureAudio();
+            playTone(520, 0.08);
             loadNewPattern();
         });
 
         loadNewPattern();
 
         /* ========================================================================
-           تعامل ۲: لاجیک ماشین الگو ساز
+           تعامل ۲: ماشین الگو
            ======================================================================== */
         const shapesCanvas = document.getElementById('pattern-shapes-canvas');
-        const shapesCtx = shapesCanvas.getContext('2d');
+        const shapesSetup = setupCanvas(shapesCanvas, 420, 220);
+        const shapesCtx = shapesSetup.ctx;
         const tableBody = document.getElementById('pattern-table-body');
 
         function buildPattern() {
+            ensureAudio();
             playTone(550, 0.1);
-            const mult = parseInt(document.getElementById('formula-mult').value) || 1;
+
+            const mult = Math.max(1, Math.min(5, parseInt(document.getElementById('formula-mult').value, 10) || 1));
             const op = document.getElementById('formula-op').value;
-            const add = parseInt(document.getElementById('formula-add').value) || 0;
+            const add = Math.max(0, Math.min(9, parseInt(document.getElementById('formula-add').value, 10) || 0));
+
+            document.getElementById('formula-mult').value = mult;
+            document.getElementById('formula-add').value = add;
 
             tableBody.innerHTML = '';
-            shapesCtx.clearRect(0, 0, shapesCanvas.width, shapesCanvas.height);
+            shapesCtx.clearRect(0, 0, shapesSetup.w, shapesSetup.h);
 
-            const colors = ['#818cf8', '#22d3ee', '#10b981'];
+            const colors = ['#a78bfa', '#22d3ee', '#10b981'];
 
             for (let n = 1; n <= 3; n++) {
-                let value;
-                if (op === '+') {
-                    value = (n * mult) + add;
-                } else {
-                    value = (n * mult) - add;
-                }
-                
+                const value = (op === '+') ? (n * mult) + add : (n * mult) - add;
                 const row = document.createElement('div');
                 row.className = 'table-row';
-                row.innerHTML = `<div class="table-cell">شکل ${n}</div><div class="table-cell data">${value}</div>`;
+                row.innerHTML = `<div class="table-cell">شکل ${toFa(n)}</div><div class="table-cell data">${toFa(value)}</div>`;
                 tableBody.appendChild(row);
+            }
 
-                const startX = 60 + (n-1) * 130;
-                const startY = 160;
-                const dotRadius = 6;
-                const dotGap = 20;
+            const sectionWidth = shapesSetup.w / 3;
+            const startY = shapesSetup.h - 30;
+            const dotRadius = 5;
+            const dotGap = 18;
+            const maxCols = Math.min(mult, 5);
 
-                shapesCtx.fillStyle = colors[n-1];
-                shapesCtx.font = "bold 14px Vazirmatn";
-                shapesCtx.fillText(`شکل ${n}`, startX - 25, 25);
+            for (let n = 1; n <= 3; n++) {
+                const value = (op === '+') ? (n * mult) + add : (n * mult) - add;
+                const centerX = sectionWidth * (n - 0.5);
 
-                const dotsToDraw = Math.min(value, 30);
-                const cols = mult;
+                shapesCtx.fillStyle = colors[n - 1];
+                shapesCtx.font = "bold 13px Vazirmatn";
+                shapesCtx.textAlign = 'center';
+                shapesCtx.fillText(`شکل ${toFa(n)}`, centerX, 20);
+
+                const dotsToDraw = Math.min(value, 25);
+                const cols = Math.min(maxCols, Math.max(1, dotsToDraw));
                 const rows = Math.ceil(dotsToDraw / cols);
+                const totalWidth = (cols - 1) * dotGap;
+                const totalHeight = (rows - 1) * dotGap;
+                const startXShape = centerX - totalWidth / 2;
+                const startYShape = startY - totalHeight;
 
                 for (let i = 0; i < dotsToDraw; i++) {
-                    const row_idx = Math.floor(i / cols);
-                    const col_idx = i % cols;
-                    const x = startX + col_idx * dotGap;
-                    const y = startY - row_idx * dotGap;
-                    
+                    const rowIdx = Math.floor(i / cols);
+                    const colIdx = i % cols;
+                    const x = startXShape + colIdx * dotGap;
+                    const y = startYShape + rowIdx * dotGap;
                     shapesCtx.beginPath();
                     shapesCtx.arc(x, y, dotRadius, 0, Math.PI * 2);
                     shapesCtx.fill();
                     shapesCtx.closePath();
                 }
-                
-                if (value > 30) {
+
+                if (value > 25) {
                     shapesCtx.fillStyle = '#64748b';
-                    shapesCtx.font = "italic 11px Vazirmatn";
-                    shapesCtx.fillText("...و غیره", startX - 25, startY - rows * dotGap - 10);
+                    shapesCtx.font = "italic 10px Vazirmatn";
+                    shapesCtx.fillText(`(${toFa(value)} تا)`, centerX, startYShape - 10);
                 }
             }
         }
 
         document.getElementById('btn-build-pattern').addEventListener('click', buildPattern);
+        ['formula-mult', 'formula-op', 'formula-add'].forEach(id => {
+            document.getElementById(id).addEventListener('input', buildPattern);
+            document.getElementById(id).addEventListener('change', buildPattern);
+        });
         buildPattern();
 
         /* ========================================================================
-           تعامل ۳: لاجیک اعداد هندسی
+           تعامل ۳: اعداد هندسی
            ======================================================================== */
         const geoCanvas = document.getElementById('geo-dots-canvas');
-        const geoCtx = geoCanvas.getContext('2d');
+        const geoSetup = setupCanvas(geoCanvas, 320, 320);
+        const geoCtx = geoSetup.ctx;
         const geoNInput = document.getElementById('range-geo-n');
         let currentGeoType = 'triangular';
 
         function drawGeoNumbers() {
-            const n = parseInt(geoNInput.value);
-            document.getElementById('txt-geo-n').innerText = n;
-            geoCtx.clearRect(0, 0, geoCanvas.width, geoCanvas.height);
+            const n = parseInt(geoNInput.value, 10);
+            document.getElementById('txt-geo-n').textContent = toFa(n);
+            geoCtx.clearRect(0, 0, geoSetup.w, geoSetup.h);
 
-            const startX = geoCanvas.width / 2;
-            const startY = geoCanvas.height / 2;
-            const dotRadius = 8;
-            const dotGap = 25;
+            const startX = geoSetup.w / 2;
+            const startY = geoSetup.h / 2;
+            const dotRadius = Math.max(6, 10 - Math.floor(n / 4));
+            const dotGap = Math.max(20, 230 / n);
             let totalDots = 0;
+            const formulaEl = document.getElementById('txt-geo-formula');
 
             if (currentGeoType === 'triangular') {
                 totalDots = (n * (n + 1)) / 2;
-                document.getElementById('txt-geo-formula').innerText = 'n * (n + 1) / 2';
-                
+                formulaEl.textContent = 'n × (n + 1) ÷ 2';
                 geoCtx.fillStyle = '#10b981';
                 for (let r = 1; r <= n; r++) {
                     const y = startY + (r - (n + 1) / 2) * dotGap;
@@ -1108,14 +1155,12 @@
                         const x = xStart + c * dotGap;
                         geoCtx.beginPath();
                         geoCtx.arc(x, y, dotRadius, 0, Math.PI * 2);
-                        geoCtx.fill();
-                        geoCtx.closePath();
+                        geoCtx.fill(); geoCtx.closePath();
                     }
                 }
             } else {
                 totalDots = n * n;
-                document.getElementById('txt-geo-formula').innerText = 'n * n';
-                
+                formulaEl.textContent = 'n × n';
                 geoCtx.fillStyle = '#06b6d4';
                 for (let r = 0; r < n; r++) {
                     const y = startY + (r - (n - 1) / 2) * dotGap;
@@ -1124,93 +1169,99 @@
                         const x = xStart + c * dotGap;
                         geoCtx.beginPath();
                         geoCtx.arc(x, y, dotRadius, 0, Math.PI * 2);
-                        geoCtx.fill();
-                        geoCtx.closePath();
+                        geoCtx.fill(); geoCtx.closePath();
                     }
                 }
             }
-
-            document.getElementById('txt-geo-total').innerText = totalDots;
+            document.getElementById('txt-geo-total').textContent = toFa(totalDots);
         }
 
         document.querySelectorAll('.geo-numbers-controls .btn-geo-tab').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                playTone(440, 0.05);
+                ensureAudio();
+                playTone(500, 0.08);
                 document.querySelectorAll('.geo-numbers-controls .btn-geo-tab').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                currentGeoType = e.target.getAttribute('data-type');
+                e.currentTarget.classList.add('active');
+                currentGeoType = e.currentTarget.getAttribute('data-type');
                 drawGeoNumbers();
             });
         });
 
         geoNInput.addEventListener('input', () => {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            playTone(parseInt(geoNInput.value) * 50 + 100, 0.02);
+            ensureAudio();
+            const v = parseInt(geoNInput.value, 10);
+            playTone(200 + v * 60, 0.03);
             drawGeoNumbers();
         });
-
         drawGeoNumbers();
 
         /* ========================================================================
-           تعامل ۴: لاجیک جدول مضارب ۱۰۰۰ تایی
+           تعامل ۴: جدول مضارب
            ======================================================================== */
         const megaGrid = document.getElementById('mega-grid-1000');
         const multiInput = document.getElementById('base-multi-input');
-        
+        const counterEl = document.getElementById('multiples-counter');
+
+        const fragment = document.createDocumentFragment();
         for (let i = 1; i <= 1000; i++) {
             const cell = document.createElement('div');
             cell.className = 'mega-cell';
-            cell.innerText = i;
-            cell.id = `mega-cell-${i}`;
-            megaGrid.appendChild(cell);
+            cell.textContent = toFa(i);
+            cell.dataset.value = i;
+            fragment.appendChild(cell);
         }
+        megaGrid.appendChild(fragment);
 
-        function highlightMultiples() {
-            const base = parseInt(multiInput.value);
-            
-            const highlighted = megaGrid.querySelectorAll('.active-highlight');
-            highlighted.forEach(cell => cell.classList.remove('active-highlight'));
+        function highlightMultiples(silent = false) {
+            const base = parseInt(multiInput.value, 10);
+            const prev = megaGrid.querySelectorAll('.active-highlight');
+            prev.forEach(c => c.classList.remove('active-highlight'));
 
             if (isNaN(base) || base <= 0) {
+                counterEl.textContent = '';
                 return;
             }
 
             let count = 0;
             for (let i = base; i <= 1000; i += base) {
-                const cell = document.getElementById(`mega-cell-${i}`);
-                if (cell) {
-                    cell.classList.add('active-highlight');
-                    count++;
-                }
+                const cell = megaGrid.children[i - 1];
+                if (cell) { cell.classList.add('active-highlight'); count++; }
             }
-            
+
             if (count > 0) {
-                playTone(count * 5 + 300, 0.1);
-                confetti({ particleCount: 15, spread: 30, origin: { y: 0.9 } });
+                counterEl.innerHTML = `تعداد مضارب پیدا شده: <span>${toFa(count)}</span> عدد`;
+                if (!silent) {
+                    playTone(Math.min(300 + count * 8, 900), 0.12);
+                    confetti({ particleCount: 20, spread: 40, origin: { y: 0.9 } });
+                }
+            } else {
+                counterEl.textContent = '';
             }
         }
 
         document.getElementById('btn-show-multiples').addEventListener('click', () => {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
+            ensureAudio();
             highlightMultiples();
         });
 
         document.getElementById('btn-clear-multiples').addEventListener('click', () => {
+            ensureAudio();
+            playTone(300, 0.1);
             multiInput.value = '';
-            highlightMultiples();
+            highlightMultiples(true);
         });
 
-        highlightMultiples();
-
-        /* ========================================================================
-           مدیریت دکمه‌های شناور
-           ======================================================================== */
-        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('به بخش بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
-            // در سایت اصلی، لینک به صفحه بعدی قرار می‌گیرد.
+        multiInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { ensureAudio(); highlightMultiples(); }
         });
 
+        highlightMultiples(true);
+
+        /* ============ راه‌اندازی AudioCtx با اولین تعامل ============ */
+        document.body.addEventListener('click', function initAudioOnce() {
+            ensureAudio();
+            document.body.removeEventListener('click', initAudioOnce);
+        }, { once: true });
     </script>
 </body>
 </html>
