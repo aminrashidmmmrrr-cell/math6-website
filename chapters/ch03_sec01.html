@@ -349,12 +349,14 @@
             line-height: 2.2;
         }
 
+        /* ============ جدول ارزش مکانی ============ */
         .place-value-table-wrap {
             width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             border-radius: var(--radius-sm);
         }
+        /* ✅ جدول کاملاً LTR تا دهم/صدم/هزارم سمت راست قرار بگیرند */
         .place-value-table {
             width: 100%;
             min-width: 520px;
@@ -362,6 +364,7 @@
             background: white;
             border-radius: var(--radius-sm);
             overflow: hidden;
+            direction: ltr;
         }
         .place-value-table th {
             background: var(--teal-soft);
@@ -371,6 +374,8 @@
             border: 1px solid #99f6e4;
             font-size: 0.82rem;
             white-space: nowrap;
+            direction: rtl;
+            text-align: center;
         }
         .place-value-table th.dec-col { background: #fef08a; color: #713f12; }
         .place-value-table td {
@@ -786,7 +791,8 @@
                 </div>
 
                 <div class="place-value-table-wrap">
-                    <table class="place-value-table" id="decimal-place-table">
+                    <!-- ✅ dir="ltr" باعث می‌شود ستون‌های دهم/صدم/هزارم در سمت راست قرار بگیرند -->
+                    <table class="place-value-table" id="decimal-place-table" dir="ltr">
                         <thead>
                             <tr>
                                 <th>هزارگان</th>
