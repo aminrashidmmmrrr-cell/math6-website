@@ -2,19 +2,13 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>فصل ۱ - بخش ۳: بخش‌پذیری و قواعد کاربردی | درسنامه تعاملی</title>
-    
-    <!-- قلم زیبای وزیرمتن -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 
-    <!-- انیمیشن کاغذ رنگی -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* ========================================================================
-           ۱. متغیرها و تم رنگی
-           ======================================================================== */
         :root {
             --lilac-bg: #f7f1fc;
             --lilac-soft: #f1e7fb;
@@ -22,11 +16,9 @@
             --lilac-main: #9333ea;
             --lilac-dark: #6b21a8;
             --lilac-glow: rgba(147, 51, 234, 0.15);
-            
             --blue-soft: #e0f2fe;
             --blue-main: #0284c7;
             --blue-dark: #0369a1;
-            
             --success: #16a34a;
             --success-bg: rgba(22, 163, 74, 0.1);
             --danger: #dc2626;
@@ -34,472 +26,417 @@
             --warning: #ca8a04;
             --highlight: #fef08a;
 
-            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-bg: rgba(255, 255, 255, 0.9);
             --glass-border: rgba(255, 255, 255, 0.9);
-            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
-            --card-hover-bg: rgba(255, 255, 255, 0.95);
-            
+            --glass-shadow: 0 12px 36px rgba(107, 33, 168, 0.1);
             --text-title: #2e1065;
             --text-body: #475569;
             --text-muted: #64748b;
-            
             --radius-lg: 24px;
             --radius-md: 16px;
-            --radius-sm: 8px;
+            --radius-sm: 10px;
         }
 
-        /* ========================================================================
-           ۲. استایل‌های پایه
-           ======================================================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; -webkit-tap-highlight-color: transparent; }
+        html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
         body {
             background-color: var(--lilac-bg);
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
             background-attachment: fixed;
             color: var(--text-body);
             min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            line-height: 1.8;
+            padding: 16px;
+            display: flex; flex-direction: column;
+            overflow-x: hidden; line-height: 1.8;
         }
 
-        /* ========================================================================
-           ۳. نوار هدر
-           ======================================================================== */
+        .ltr { direction: ltr; unicode-bidi: isolate; }
+
+        /* ============ هدر ============ */
         .lesson-top-nav {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto 20px;
-            padding: 14px 28px;
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px; padding: 14px 22px;
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
             box-shadow: var(--glass-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px; z-index: 100;
         }
-
         .go-back-link {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 800;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.2s, transform 0.2s;
+            text-decoration: none; color: var(--text-muted);
+            font-weight: 800; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 8px;
+            transition: color 0.2s, transform 0.2s; white-space: nowrap;
         }
-
-        .go-back-link:hover {
-            color: var(--lilac-dark);
-            transform: translateX(3px);
-        }
-
-        .header-lesson-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-        }
-
+        .go-back-link:hover { color: var(--lilac-dark); transform: translateX(3px); }
+        .header-lesson-info { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 0; }
         .chapter-label-badge {
-            background: var(--lilac-soft);
-            color: var(--lilac-dark);
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 3px 10px;
+            background: var(--lilac-soft); color: var(--lilac-dark);
+            font-size: 0.72rem; font-weight: 800;
+            padding: 3px 10px; border-radius: 20px; white-space: nowrap;
+        }
+        .lesson-title-text { font-size: 1.05rem; font-weight: 900; color: var(--text-title); letter-spacing: -0.5px; }
+
+        /* ============ نوار موقعیت ============ */
+        .book-location-bar {
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px;
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 14px;
+            background: var(--glass-bg);
             border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(107, 33, 168, 0.06);
+            flex-wrap: wrap;
+            justify-content: center;
         }
-
-        .lesson-title-text {
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: var(--text-title);
+        .location-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--lilac-soft); color: var(--lilac-dark);
+            padding: 4px 12px; border-radius: 20px;
+            font-weight: 800; font-size: 0.82rem;
+            white-space: nowrap;
         }
+        .location-chip.blue { background: var(--blue-soft); color: var(--blue-dark); }
+        .location-chip.yellow { background: #fef9c3; color: #854d0e; }
+        .location-chip.green { background: #dcfce7; color: #166534; }
 
-        /* ========================================================================
-           ۴. کارت‌های آموزشی
-           ======================================================================== */
+        /* ============ کارت‌ها ============ */
         .main-lesson-wrapper {
-            max-width: 1100px;
-            width: 100%;
+            max-width: 1100px; width: 100%;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding-bottom: 80px;
+            display: flex; flex-direction: column;
+            gap: 20px; padding-bottom: 120px;
         }
-
         .step-teaching-card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
-            padding: 28px;
+            padding: 26px;
             box-shadow: var(--glass-shadow);
-            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
-
-        .step-teaching-card:hover {
-            background-color: var(--card-hover-bg);
-            transform: translateY(-5px);
-        }
-
         .step-number-badge {
-            display: inline-flex;
-            width: 32px;
-            height: 32px;
+            display: inline-flex; width: 34px; height: 34px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark));
-            color: white;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 0.95rem;
-            margin-bottom: 16px;
+            color: white; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1rem;
+            margin-bottom: 14px;
             box-shadow: 0 4px 10px var(--lilac-glow);
         }
-
         .step-teaching-card h2 {
-            font-size: 1.4rem;
-            color: var(--text-title);
-            margin-bottom: 12px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-size: 1.3rem; color: var(--text-title);
+            margin-bottom: 12px; font-weight: 900;
+            display: flex; align-items: center; gap: 10px;
+            letter-spacing: -0.8px; line-height: 1.6; flex-wrap: wrap;
+        }
+        .step-teaching-card p { font-size: 1rem; line-height: 2; color: var(--text-body); margin-bottom: 14px; }
+        .step-teaching-card ul, .step-teaching-card ol {
+            margin-right: 22px; color: var(--text-body);
+            font-weight: 600; line-height: 2.1; margin-bottom: 12px;
         }
 
-        .step-teaching-card p {
-            font-size: 1rem;
-            line-height: 1.9;
-            color: var(--text-body);
-            margin-bottom: 16px;
-        }
-
-        .step-teaching-card h3 {
-            font-size: 1.1rem;
-            color: var(--lilac-dark);
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-weight: 800;
-        }
-
-        /* ========================================================================
-           ۵. المان‌های خاص
-           ======================================================================== */
+        /* ============ المان‌های خاص ============ */
         .teacher-speech-bubble {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.75);
             border-radius: var(--radius-md);
-            padding: 18px 22px;
+            padding: 16px 20px;
             border: 1px dashed var(--lilac-border);
             color: var(--lilac-dark);
-            margin: 16px 0;
-            position: relative;
-            font-style: italic;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
+            margin: 14px 0; font-style: italic;
+            display: flex; gap: 12px; align-items: flex-start;
+            font-size: 0.95rem; line-height: 1.9;
         }
-
-        .teacher-speech-bubble::before {
-            content: "🧑‍🏫";
-            font-size: 1.4rem;
-            font-style: normal;
-        }
+        .teacher-speech-bubble::before { content: "🧑‍🏫"; font-size: 1.4rem; font-style: normal; flex-shrink: 0; }
 
         .solved-example-box {
             background: var(--blue-soft);
             border: 1px solid rgba(2, 132, 199, 0.2);
             border-radius: var(--radius-md);
-            padding: 20px;
-            margin: 16px 0;
+            padding: 18px; margin: 14px 0;
+            word-break: break-word;
         }
-
         .example-header {
-            font-weight: 800;
-            color: var(--blue-dark);
-            font-size: 1rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-weight: 800; color: var(--blue-dark);
+            font-size: 1rem; margin-bottom: 8px;
+            display: flex; align-items: center; gap: 8px;
+            flex-wrap: wrap;
         }
 
         .key-tip-box {
             background: var(--success-bg);
             border: 1px solid var(--success);
             border-radius: var(--radius-md);
-            padding: 16px;
-            margin: 16px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--success);
-            font-weight: 700;
-            font-size: 0.9rem;
+            padding: 14px 16px; margin: 14px 0;
+            color: var(--success); font-weight: 700;
+            font-size: 0.92rem; line-height: 1.9;
         }
+        .key-tip-box strong { color: var(--success); }
+        .key-tip-box ul { margin-top: 8px; margin-right: 20px; line-height: 2.2; color: var(--success); }
 
-        /* ========================================================================
-           ۶. بخش تعاملی ۱: آزمایشگاه بخش‌پذیری
-           ======================================================================== */
+        /* ============ بخش تعاملی ============ */
         .interactive-container {
             background: rgba(0, 0, 0, 0.02);
             border-radius: var(--radius-md);
-            padding: 24px;
-            margin-top: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
+            padding: 20px; margin-top: 16px;
+            display: flex; flex-direction: column; gap: 16px;
             border: 1px solid var(--glass-border);
         }
-
         .sim-title {
-            font-weight: 800;
-            font-size: 1.1rem;
+            font-weight: 800; font-size: 1.05rem;
             color: var(--lilac-dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .divisibility-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .divisibility-input-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
+            display: flex; align-items: center; gap: 8px; line-height: 1.6;
             flex-wrap: wrap;
         }
 
+        /* ============ آزمایشگاه بخش‌پذیری ============ */
+        .divisibility-lab {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 20px;
+            border: 1px solid var(--glass-border);
+            display: flex; flex-direction: column; gap: 18px;
+        }
+        .divisibility-input-row {
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px; flex-wrap: wrap;
+        }
+        .divisibility-input-row label {
+            font-weight: 800; font-size: 1rem;
+            color: var(--text-title);
+        }
         .divisibility-input-row input {
-            width: 140px;
+            width: 150px;
+            max-width: 100%;
             padding: 12px;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 900;
             text-align: center;
             border: 2px solid var(--lilac-border);
             border-radius: 10px;
             color: var(--lilac-dark);
             background: #fafafa;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: 'Vazirmatn', sans-serif;
+            direction: ltr;
         }
-        .divisibility-input-row input:focus { outline: none; border-color: var(--lilac-main); box-shadow: 0 0 0 4px var(--lilac-glow); }
+        .divisibility-input-row input:focus {
+            outline: none;
+            border-color: var(--lilac-main);
+            box-shadow: 0 0 0 4px var(--lilac-glow);
+        }
 
         .divisibility-result-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 12px;
         }
-
         .div-card {
             background: #fafafa;
             border-radius: var(--radius-sm);
-            padding: 16px;
+            padding: 14px 10px;
             text-align: center;
             border: 2px solid #e2e8f0;
             transition: all 0.3s;
         }
-
-        .div-card .div-number { font-size: 1.8rem; font-weight: 900; color: var(--text-title); }
-        .div-card .div-status { font-weight: 800; font-size: 0.95rem; margin-top: 8px; display: block; }
-        .div-card .div-reason { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; display: block; }
+        .div-card .div-number {
+            font-size: 1.6rem; font-weight: 900;
+            color: var(--text-title);
+            line-height: 1;
+        }
+        .div-card .div-status {
+            font-weight: 800; font-size: 0.88rem;
+            margin-top: 8px; display: block;
+            line-height: 1.4;
+        }
+        .div-card .div-reason {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            display: block;
+            line-height: 1.5;
+            word-break: break-word;
+        }
         .div-card.yes { background: var(--success-bg); border-color: var(--success); }
         .div-card.yes .div-status { color: var(--success); }
         .div-card.no { background: var(--danger-bg); border-color: var(--danger); }
         .div-card.no .div-status { color: var(--danger); }
 
-        @media (max-width: 600px) {
-            .divisibility-result-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        /* ========================================================================
-           ۷. بخش تعاملی ۲: جدول بخش‌پذیری
-           ======================================================================== */
+        /* ============ جدول بخش‌پذیری ============ */
         .divisibility-table-container {
             background: white;
             border-radius: var(--radius-md);
-            padding: 20px;
+            padding: 16px;
             border: 1px solid var(--glass-border);
-            overflow-x: auto;
         }
-
+        .table-scroll-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 0 -8px;
+            padding: 0 8px 6px;
+        }
         .divisibility-table {
             width: 100%;
+            min-width: 380px;
             border-collapse: collapse;
             text-align: center;
         }
-
         .divisibility-table th {
             background: var(--lilac-soft);
             color: var(--lilac-dark);
-            padding: 12px;
+            padding: 10px 6px;
             font-weight: 800;
+            font-size: 0.9rem;
             border-bottom: 2px solid var(--lilac-border);
+            white-space: nowrap;
         }
-
         .divisibility-table td {
-            padding: 10px;
+            padding: 8px 6px;
             border-bottom: 1px solid #f1f5f9;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 0.9rem;
+            direction: ltr;
+            font-variant-numeric: tabular-nums;
         }
-
+        .divisibility-table td:first-child {
+            font-weight: 900;
+            color: var(--lilac-dark);
+        }
         .divisibility-table td.highlight-cell {
             background: var(--highlight);
             font-weight: 900;
             color: #713f12;
             border-radius: 4px;
         }
+        .divisibility-table tbody tr { cursor: pointer; transition: background 0.15s; }
+        .divisibility-table tbody tr:hover { background: #faf5ff; }
 
-        /* ========================================================================
-           ۸. بخش تعاملی ۳: بازی بخش‌پذیری
-           ======================================================================== */
+        /* ============ بازی بخش‌پذیری ============ */
         .game-lab {
             background: white;
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 20px;
             border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            display: flex; flex-direction: column; gap: 16px;
             align-items: center;
         }
-
         .game-score-board {
-            display: flex;
-            gap: 24px;
+            display: flex; gap: 20px;
             justify-content: center;
-            font-weight: 800;
-            font-size: 1.1rem;
+            font-weight: 800; font-size: 1rem;
             color: var(--lilac-dark);
             flex-wrap: wrap;
         }
-
         .game-question-box {
-            background: var(--lilac-soft);
-            padding: 20px 32px;
+            background: linear-gradient(135deg, #faf5ff, #f1e7fb);
+            padding: 18px 20px;
             border-radius: var(--radius-sm);
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1.15rem;
             font-weight: 900;
             color: var(--text-title);
             direction: rtl;
-            min-width: 200px;
+            width: 100%;
+            line-height: 1.9;
+            border: 1px solid var(--lilac-border);
         }
-
         .game-question-box .num-highlight {
             color: var(--lilac-main);
-            font-size: 2rem;
+            font-size: 1.5rem;
+            font-weight: 900;
+            direction: ltr;
+            display: inline-block;
+            padding: 0 4px;
+            font-variant-numeric: tabular-nums;
         }
-
         .game-options-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: flex; gap: 10px;
+            flex-wrap: wrap; justify-content: center;
+            width: 100%;
         }
-
         .game-option-btn {
+            flex: 1;
+            min-width: 120px;
+            max-width: 200px;
             background: #fafafa;
             border: 2px solid #e2e8f0;
             border-radius: var(--radius-sm);
-            padding: 14px 28px;
+            padding: 14px 20px;
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             cursor: pointer;
             transition: all 0.2s;
             color: var(--text-body);
+            font-family: 'Vazirmatn', sans-serif;
+            min-height: 50px;
         }
-
         .game-option-btn:hover:not(:disabled) {
             border-color: var(--lilac-main);
             background: var(--lilac-soft);
             transform: translateY(-2px);
         }
-
         .game-option-btn.correct {
             background: var(--success-bg);
             border-color: var(--success);
             color: var(--success);
         }
-
         .game-option-btn.wrong {
             background: var(--danger-bg);
             border-color: var(--danger);
             color: var(--danger);
         }
+        .game-option-btn:disabled { cursor: not-allowed; opacity: 0.6; }
 
-        .game-option-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-
-        /* ========================================================================
-           ۹. بخش تعاملی ۴: چالش بخش‌پذیری
-           ======================================================================== */
+        /* ============ چالش ============ */
         .challenge-lab {
             background: white;
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 20px;
             border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            display: flex; flex-direction: column; gap: 16px;
         }
-
         .challenge-question {
             background: var(--blue-soft);
-            padding: 16px;
+            padding: 18px;
             border-radius: var(--radius-sm);
             font-weight: 700;
             color: var(--blue-dark);
             text-align: center;
+            font-size: 1.05rem;
+            line-height: 2;
+            border: 1px solid rgba(2, 132, 199, 0.2);
+            word-break: break-word;
         }
-
+        .challenge-question strong {
+            font-size: 1.3rem;
+            color: var(--blue-dark);
+            padding: 2px 8px;
+            background: white;
+            border-radius: 6px;
+            direction: ltr;
+            display: inline-block;
+            font-variant-numeric: tabular-nums;
+        }
         .challenge-input-row {
-            display: flex;
-            align-items: center;
+            display: flex; align-items: center;
             justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
+            gap: 10px; flex-wrap: wrap;
         }
-
+        .challenge-input-row label {
+            font-weight: 800;
+            color: var(--text-title);
+        }
         .challenge-input-row input {
-            width: 100px;
+            width: 80px;
             padding: 10px;
             font-size: 1.3rem;
             font-weight: 900;
@@ -508,104 +445,123 @@
             border-radius: 10px;
             color: var(--lilac-dark);
             background: #fafafa;
+            font-family: 'Vazirmatn', sans-serif;
+            direction: ltr;
         }
-        .challenge-input-row input:focus { outline: none; border-color: var(--lilac-main); }
+        .challenge-input-row input:focus {
+            outline: none;
+            border-color: var(--lilac-main);
+            box-shadow: 0 0 0 4px var(--lilac-glow);
+        }
 
-        /* ========================================================================
-           ۱۰. دکمه‌ها
-           ======================================================================== */
+        /* ============ دکمه‌ها ============ */
         .btn-ui {
             background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark));
-            color: white;
-            border: 2px solid white;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 1rem;
+            color: white; border: none;
+            padding: 12px 24px; border-radius: 30px;
+            font-weight: 800; font-size: 0.95rem;
             cursor: pointer;
             transition: transform 0.15s, box-shadow 0.15s;
             box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25);
+            font-family: 'Vazirmatn', sans-serif;
+            min-height: 46px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .btn-ui:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35);
-        }
+        .btn-ui:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
         .btn-ui:active { transform: translateY(0); }
         .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
-
         .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
         .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
-
         .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
         .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
 
         .action-btns-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            display: flex; justify-content: center;
+            gap: 10px; flex-wrap: wrap;
         }
-
         .feedback-display {
-            font-weight: 800;
-            text-align: center;
-            min-height: 28px;
-            font-size: 1rem;
-            margin-top: 10px;
-            transition: color 0.2s;
+            font-weight: 800; text-align: center;
+            min-height: 28px; font-size: 0.98rem;
+            margin-top: 8px; transition: color 0.2s; line-height: 1.8;
         }
 
-        /* ========================================================================
-           ۱۱. دکمه‌های شناور
-           ======================================================================== */
+        /* ============ دکمه‌های شناور ============ */
         .floating-btns {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none;
-            z-index: 200;
-            max-width: 1100px;
-            margin: 0 auto;
+            position: fixed; bottom: 16px;
+            left: 16px; right: 16px;
+            display: flex; justify-content: space-between;
+            align-items: center; gap: 10px;
+            pointer-events: none; z-index: 200;
+            max-width: 1100px; margin: 0 auto;
         }
-
         .float-nav-btn {
             pointer-events: auto;
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 800;
-            color: var(--text-title);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 12px 20px; border-radius: 30px;
+            font-weight: 800; color: var(--text-title);
+            text-decoration: none; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
             transition: all 0.2s;
+            font-size: 0.9rem;
+            font-family: 'Vazirmatn', sans-serif;
+            position: relative;
         }
-
-        .float-nav-btn:hover {
-            background: var(--lilac-main);
-            color: white;
+        .float-nav-btn:hover:not(.disabled) {
+            background: var(--lilac-main); color: white;
             transform: translateY(-3px);
             box-shadow: 0 15px 35px var(--lilac-glow);
         }
-
-        @media (max-width: 600px) {
-            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
-            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
-            .header-lesson-info { align-items: center; }
+        .float-nav-btn.disabled { opacity: 0.45; cursor: not-allowed; }
+        .float-nav-btn.disabled:hover { background: var(--glass-bg); color: var(--text-title); transform: none; }
+        .float-nav-btn.home-btn {
+            background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark));
+            color: white; border-color: transparent;
+            padding: 12px 16px;
         }
+        .float-nav-btn.home-btn:hover {
+            background: linear-gradient(135deg, var(--lilac-dark), var(--lilac-main));
+            transform: translateY(-3px) scale(1.05);
+        }
+        .float-nav-btn .btn-tooltip {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            background: rgba(46, 16, 101, 0.95);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 8px;
+            white-space: nowrap;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .float-nav-btn:hover .btn-tooltip { opacity: 1; }
+        #prev-lesson-btn .btn-tooltip { right: 0; }
+        #next-lesson-btn .btn-tooltip { left: 0; }
 
-        /* ========================================================================
-           ۱۲. انیمیشن
-           ======================================================================== */
+        /* ============ Toast ============ */
+        .toast-notification {
+            position: fixed; bottom: 100px; left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: rgba(46, 16, 101, 0.96);
+            color: white; padding: 14px 24px;
+            border-radius: 14px; font-weight: 700;
+            font-size: 0.92rem; z-index: 1000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            max-width: 90%; text-align: center;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+            line-height: 1.7;
+        }
+        .toast-notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ============ انیمیشن ============ */
         @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
+            0% { transform: scale(0.6); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
         .pop-in { animation: popIn 0.3s ease-out forwards; }
@@ -618,13 +574,60 @@
             80% { transform: translateX(4px); }
         }
         .shake-anim { animation: shake 0.4s ease-in-out; }
+
+        /* ============ ریسپانسیو ============ */
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .lesson-top-nav {
+                flex-direction: column; align-items: stretch;
+                text-align: center; padding: 14px 16px; gap: 10px;
+            }
+            .header-lesson-info { align-items: center; }
+            .go-back-link { justify-content: center; }
+            .lesson-title-text { text-align: center; }
+
+            .step-teaching-card { padding: 20px 16px; border-radius: 20px; }
+            .step-teaching-card h2 { font-size: 1.15rem; }
+            .step-teaching-card p { font-size: 0.95rem; }
+            .step-teaching-card ul, .step-teaching-card ol { margin-right: 18px; font-size: 0.95rem; }
+
+            .interactive-container { padding: 16px 12px; }
+            .divisibility-lab, .divisibility-table-container,
+            .game-lab, .challenge-lab { padding: 16px 12px; }
+
+            .divisibility-result-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .div-card { padding: 12px 8px; }
+            .div-card .div-number { font-size: 1.4rem; }
+            .div-card .div-status { font-size: 0.82rem; }
+
+            .float-nav-btn { padding: 11px 14px; font-size: 0.82rem; gap: 5px; }
+            .float-nav-btn .btn-label { display: none; }
+            .float-nav-btn.home-btn { padding: 11px 14px; }
+
+            .teacher-speech-bubble { padding: 12px 14px; font-size: 0.88rem; }
+            .key-tip-box { padding: 12px 12px; font-size: 0.85rem; }
+
+            .game-question-box { font-size: 1rem; padding: 14px 12px; }
+            .game-question-box .num-highlight { font-size: 1.3rem; }
+            .game-option-btn { font-size: 1rem; padding: 12px 14px; }
+
+            .challenge-question { font-size: 0.95rem; padding: 14px 12px; }
+            .challenge-question strong { font-size: 1.15rem; }
+        }
+
+        @media (max-width: 480px) {
+            .divisibility-input-row { flex-direction: column; gap: 8px; }
+            .divisibility-input-row input { width: 100%; max-width: 240px; }
+            .game-option-btn { min-width: 100px; font-size: 0.95rem; }
+            .compare-num-box { min-width: 0; }
+            .game-score-board { gap: 12px; font-size: 0.9rem; }
+            .challenge-input-row { flex-direction: column; gap: 8px; }
+            .challenge-input-row input { width: 100px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ========================================================================
-         نوار ناوبری بالای درسنامه
-         ======================================================================== -->
     <header class="lesson-top-nav">
         <a href="../index.html" class="go-back-link">
             <span>← برگشت به کتاب اصلی</span>
@@ -635,26 +638,26 @@
         </div>
     </header>
 
+    <div class="book-location-bar" id="book-location-bar"></div>
+
     <main class="main-lesson-wrapper">
 
-        <!-- ========================================================================
-           قدم ۱: مقدمه‌ای بر بخش‌پذیری
-           ======================================================================== -->
+        <!-- ============ قدم ۱ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۱</span>
             <h2>بخش‌پذیری چیست؟</h2>
             <p>
-                بخش‌پذیری یعنی اینکه یک عدد را بتوانیم بدون باقی‌مانده بر عدد دیگری تقسیم کنیم. 
+                بخش‌پذیری یعنی اینکه یک عدد را بتوانیم بدون باقی‌مانده بر عدد دیگری تقسیم کنیم.
                 برای بعضی اعداد، قانون‌های ساده‌ای وجود دارد که به ما کمک می‌کند سریع بفهمیم یک عدد بر آن‌ها بخش‌پذیر است یا نه.
             </p>
-            
+
             <div class="teacher-speech-bubble">
                 «مثلاً فرض کن می‌خوای ۲۴ تا شکلات رو بین ۳ نفر تقسیم کنی. آیا می‌تونی بدون اینکه شکلاتی باقی بمونه این کار رو بکنی؟ بله، چون ۲۴ بر ۳ بخش‌پذیره!»
             </div>
 
             <div class="key-tip-box">
                 <strong>📌 قوانین طلایی بخش‌پذیری:</strong>
-                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.2;">
+                <ul>
                     <li><strong>بر ۲:</strong> رقم یکان زوج باشد (۰، ۲، ۴، ۶، ۸)</li>
                     <li><strong>بر ۵:</strong> رقم یکان ۰ یا ۵ باشد</li>
                     <li><strong>بر ۳:</strong> مجموع رقم‌ها بر ۳ بخش‌پذیر باشد</li>
@@ -672,9 +675,7 @@
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۲: آزمایشگاه بخش‌پذیری
-           ======================================================================== -->
+        <!-- ============ قدم ۲ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۲</span>
             <h2>آزمایشگاه بخش‌پذیری: خودت امتحان کن!</h2>
@@ -682,13 +683,12 @@
                 یک عدد وارد کن و ببین آیا بر ۲، ۳، ۵ و ۹ بخش‌پذیر است یا نه. دلیل هر کدام را هم برایت توضیح می‌دهیم.
             </p>
 
-            <!-- ابزار تعاملی ۱: آزمایشگاه بخش‌پذیری -->
             <div class="divisibility-lab">
                 <div class="divisibility-input-row">
-                    <span style="font-weight:800; font-size:1.1rem;">عدد را وارد کن:</span>
-                    <input type="number" id="divisibility-input" value="825" min="1" max="999999999">
+                    <label for="divisibility-input">عدد را وارد کن:</label>
+                    <input type="number" id="divisibility-input" value="825" min="1" max="999999999" inputmode="numeric">
                 </div>
-                
+
                 <div class="divisibility-result-grid" id="divisibility-results">
                     <div class="div-card" data-div="2">
                         <div class="div-number">۲</div>
@@ -711,67 +711,62 @@
                         <span class="div-reason"></span>
                     </div>
                 </div>
-                
+
                 <div style="text-align: center;">
-                    <button class="btn-ui green" id="btn-check-divisibility">بررسی بخش‌پذیری</button>
+                    <button class="btn-ui green" id="btn-check-divisibility">🔍 بررسی بخش‌پذیری</button>
                 </div>
                 <p id="divisibility-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۳: جدول بخش‌پذیری
-           ======================================================================== -->
+        <!-- ============ قدم ۳ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۳</span>
             <h2>جدول بخش‌پذیری: الگوها را ببین!</h2>
             <p>
-                وقتی اعداد را در یک جدول کنار هم می‌چینیم، الگوهای بخش‌پذیری به راحتی دیده می‌شوند. 
-                در جدول زیر، اعداد بخش‌پذیر بر ۲، ۳، ۵ و ۹ با رنگ‌های مختلف مشخص شده‌اند. 
-                روی هر عدد کلیک کن تا بخش‌پذیری آن را ببینی.
+                وقتی اعداد را در یک جدول کنار هم می‌چینیم، الگوهای بخش‌پذیری به راحتی دیده می‌شوند.
+                روی هر ردیف کلیک کن تا جزئیات آن را ببینی.
             </p>
 
-            <!-- ابزار تعاملی ۲: جدول بخش‌پذیری -->
             <div class="divisibility-table-container">
-                <table class="divisibility-table" id="divisibility-table">
-                    <thead>
-                        <tr>
-                            <th>عدد</th>
-                            <th>بر ۲</th>
-                            <th>بر ۳</th>
-                            <th>بر ۵</th>
-                            <th>بر ۹</th>
-                        </tr>
-                    </thead>
-                    <tbody id="divisibility-table-body">
-                        <!-- ردیف‌ها با JS ساخته می‌شوند -->
-                    </tbody>
-                </table>
+                <div class="table-scroll-wrap">
+                    <table class="divisibility-table" id="divisibility-table">
+                        <thead>
+                            <tr>
+                                <th>عدد</th>
+                                <th>بر ۲</th>
+                                <th>بر ۳</th>
+                                <th>بر ۵</th>
+                                <th>بر ۹</th>
+                            </tr>
+                        </thead>
+                        <tbody id="divisibility-table-body"></tbody>
+                    </table>
+                </div>
             </div>
-            <p style="margin-top: 12px; font-size: 0.9rem; color: var(--text-muted);">💡 راهنما: خانه‌های رنگی نشان‌دهنده بخش‌پذیری هستند. با کلیک روی هر ردیف، جزئیات آن را ببینید.</p>
+            <p style="margin-top: 12px; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+                💡 خانه‌های زردرنگ نشان‌دهنده بخش‌پذیری هستند.
+            </p>
             <p id="table-click-feedback" class="feedback-display"></p>
         </section>
 
-        <!-- ========================================================================
-           قدم ۴: بازی بخش‌پذیری
-           ======================================================================== -->
+        <!-- ============ قدم ۴ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۴</span>
             <h2>بازی بخش‌پذیری: سریع جواب بده!</h2>
             <p>
-                در این بازی، یک عدد به تو نشان داده می‌شود و باید سریع بگویی بر کدام عدد بخش‌پذیر است. 
+                در این بازی، یک عدد به تو نشان داده می‌شود و باید سریع بگویی بر کدام عدد بخش‌پذیر است.
                 هر پاسخ درست، یک امتیاز دارد!
             </p>
 
-            <!-- ابزار تعاملی ۳: بازی بخش‌پذیری -->
             <div class="game-lab">
                 <div class="game-score-board">
                     <span>🏆 امتیاز: <span id="game-score">۰</span></span>
-                    <span>🎯 تعداد سوال: <span id="game-round">۱</span></span>
+                    <span>🎯 سوال: <span id="game-round">۱</span></span>
                 </div>
 
                 <div class="game-question-box" id="game-question-box">
-                    آیا <span class="num-highlight" id="game-number">۲۴</span> بر 
+                    آیا <span class="num-highlight" id="game-number">۲۴</span> بر
                     <span class="num-highlight" id="game-divisor">۳</span> بخش‌پذیر است؟
                 </div>
 
@@ -781,45 +776,43 @@
                 </div>
 
                 <p id="game-feedback" class="feedback-display"></p>
-                <button class="btn-ui blue" id="btn-game-next">سوال بعدی</button>
+                <button class="btn-ui blue" id="btn-game-next">سوال بعدی →</button>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۵: چالش بخش‌پذیری
-           ======================================================================== -->
+        <!-- ============ قدم ۵ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۵</span>
             <h2>چالش بخش‌پذیری: عدد گمشده را پیدا کن!</h2>
             <p>
                 در این چالش، یک عدد ناقص به تو نشان داده می‌شود و باید رقمی را پیدا کنی که عدد حاصل بر عدد خواسته‌شده بخش‌پذیر باشد.
+                <strong>دقت کن که ممکن است چند رقم درست وجود داشته باشد!</strong>
             </p>
 
-            <!-- ابزار تعاملی ۴: چالش بخش‌پذیری -->
             <div class="challenge-lab">
                 <div class="challenge-question" id="challenge-question">
-                    عدد <strong>۳□۵</strong> را طوری کامل کن که بر <strong>۳</strong> بخش‌پذیر باشد.
+                    در حال آماده‌سازی...
                 </div>
 
                 <div class="challenge-input-row">
-                    <span style="font-weight:800;">رقم جای خالی:</span>
-                    <input type="number" id="challenge-input" min="0" max="9" placeholder="؟">
-                    <button class="btn-ui green" id="btn-check-challenge">بررسی</button>
+                    <label for="challenge-input">رقم جای خالی:</label>
+                    <input type="number" id="challenge-input" min="0" max="9" placeholder="؟" inputmode="numeric">
+                    <button class="btn-ui green" id="btn-check-challenge">✓ بررسی</button>
                 </div>
 
                 <p id="challenge-feedback" class="feedback-display"></p>
-                <button class="btn-ui blue" id="btn-new-challenge">چالش جدید</button>
+                <div style="text-align: center;">
+                    <button class="btn-ui blue" id="btn-new-challenge">🎲 چالش جدید</button>
+                </div>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۶: جمع‌بندی
-           ======================================================================== -->
+        <!-- ============ قدم ۶ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۶</span>
             <h2>جمع‌بندی و تمرین</h2>
             <p>در این بخش یاد گرفتیم:</p>
-            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
+            <ul>
                 <li>✅ بخش‌پذیری بر ۲: رقم یکان زوج باشد</li>
                 <li>✅ بخش‌پذیری بر ۵: رقم یکان ۰ یا ۵ باشد</li>
                 <li>✅ بخش‌پذیری بر ۳: مجموع رقم‌ها بر ۳ بخش‌پذیر باشد</li>
@@ -832,39 +825,173 @@
 
             <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
                 <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
-                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
+                <ol style="color: #92400e;">
                     <li>کدام یک از اعداد زیر بر ۳ بخش‌پذیر است؟ ۱۲۳، ۴۵۶، ۷۸۹، ۱۰۱</li>
                     <li>عدد ۴۵۰ بر کدام یک از اعداد ۲، ۳، ۵ و ۹ بخش‌پذیر است؟</li>
                     <li>یک عدد ۳ رقمی بنویسید که هم بر ۲ و هم بر ۵ بخش‌پذیر باشد.</li>
-                    <li>در عدد ۷□۲، چه رقمی قرار دهیم تا بر ۹ بخش‌پذیر شود؟</li>
+                    <li>در عدد ۷□۲، چه رقمی قرار دهیم تا بر ۹ بخش‌پذیر شود؟ (راهنمایی: ممکن است چند جواب داشته باشد)</li>
                 </ol>
             </div>
         </section>
 
     </main>
 
-    <!-- ========================================================================
-         دکمه‌های شناور
-         ======================================================================== -->
     <div class="floating-btns">
-        <a href="chapter1_part2.html" class="float-nav-btn">→ بخش قبلی</a>
-        <a href="chapter1_part4.html" class="float-nav-btn" id="next-lesson-btn">بخش بعدی ←</a>
+        <a class="float-nav-btn" id="prev-lesson-btn" href="#">
+            <span>→</span>
+            <span class="btn-label">بخش قبلی</span>
+            <span class="btn-tooltip" id="prev-tooltip">بخش قبلی</span>
+        </a>
+        <a href="../index.html" class="float-nav-btn home-btn">
+            🏠<span class="btn-label" style="margin-right:4px;">خانه</span>
+        </a>
+        <a class="float-nav-btn" id="next-lesson-btn" href="#">
+            <span class="btn-label">بخش بعدی</span>
+            <span>←</span>
+            <span class="btn-tooltip" id="next-tooltip">بخش بعدی</span>
+        </a>
     </div>
 
+    <div class="toast-notification" id="toast"></div>
+
     <script>
-        /* ========================================================================
-           لاجیک صوتی
-           ======================================================================== */
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        /* ============ ترتیب فایل‌ها ============ */
+        const FILES_ORDER = [
+            'ch01_sec01.html', 'ch01_sec02.html', 'ch01_sec03.html', 'ch01_sec04.html',
+            'ch02_sec01.html', 'ch02_sec02.html', 'ch02_sec03.html', 'ch02_sec04.html',
+            'ch03_sec01.html', 'ch03_sec02.html', 'ch03_sec03.html', 'ch03_sec04.html',
+            'ch04_sec01.html', 'ch04_sec02.html', 'ch04_sec03.html', 'ch04_sec04.html',
+            'ch05_sec01.html', 'ch05_sec02.html', 'ch05_sec03.html', 'ch05_sec04.html',
+            'ch06_sec01.html', 'ch06_sec02.html', 'ch06_sec03.html', 'ch06_sec04.html',
+            'ch07_sec01.html', 'ch07_sec02.html'
+        ];
+
+        const chapterTitles = {
+            '01': 'عدد و الگوهای عددی',
+            '02': 'کسرها',
+            '03': 'اعداد اعشاری',
+            '04': 'تقارن و مختصات',
+            '05': 'اندازه‌گیری',
+            '06': 'آمار و احتمال',
+            '07': 'مرور و جمع‌بندی'
+        };
+
+        /* ============ اعداد فارسی ============ */
+        const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+        function toFa(num) { return String(num).replace(/\d/g, d => faDigits[+d]); }
+        function formatFa(num) { return toFa(num).replace(/\B(?=(\d{3})+(?!\d))/g, '٬'); }
+
+        /* ============ تشخیص فایل جاری ============ */
+        function getCurrentFileName() {
+            const path = window.location.pathname;
+            let name = path.substring(path.lastIndexOf('/') + 1);
+            if (!name || name === '') name = 'ch01_sec03.html';
+            return name.toLowerCase();
+        }
+        function parseFileName(name) {
+            const match = name.match(/ch(\d+)_sec(\d+)\.html?$/i);
+            if (!match) return null;
+            return { chapter: parseInt(match[1], 10), section: parseInt(match[2], 10) };
+        }
+        function fileLabel(fileName) {
+            const info = parseFileName(fileName);
+            if (!info) return fileName;
+            return `فصل ${toFa(info.chapter)} - بخش ${toFa(info.section)}`;
+        }
+
+        const currentFile = getCurrentFileName();
+        const currentInfo = parseFileName(currentFile) || { chapter: 1, section: 3 };
+        const currentIdx = FILES_ORDER.indexOf(currentFile);
+
+        /* ============ نوار موقعیت ============ */
+        function renderLocationBar() {
+            const bar = document.getElementById('book-location-bar');
+            if (!bar) return;
+            const prevFile = currentIdx > 0 ? FILES_ORDER[currentIdx - 1] : null;
+            const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+            let html = '';
+            html += `<span class="location-chip blue">📍 الان اینجایی: فصل ${toFa(currentInfo.chapter)} - بخش ${toFa(currentInfo.section)}</span>`;
+            const chKey = String(currentInfo.chapter).padStart(2, '0');
+            if (chapterTitles[chKey]) {
+                html += `<span class="location-chip">📖 ${chapterTitles[chKey]}</span>`;
+            }
+            if (nextFile) {
+                html += `<span class="location-chip yellow">⏭️ بعدی: ${fileLabel(nextFile)}</span>`;
+            } else {
+                html += `<span class="location-chip green">🎉 آخرین بخش کتاب</span>`;
+            }
+            bar.innerHTML = html;
+        }
+        renderLocationBar();
+
+        /* ============ دکمه‌های ناوبری ============ */
+        const prevBtn = document.getElementById('prev-lesson-btn');
+        const nextBtn = document.getElementById('next-lesson-btn');
+        const prevTooltip = document.getElementById('prev-tooltip');
+        const nextTooltip = document.getElementById('next-tooltip');
+
+        const prevFile = currentIdx > 0 ? FILES_ORDER[currentIdx - 1] : null;
+        const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+        if (prevFile) {
+            prevBtn.href = prevFile;
+            prevTooltip.textContent = `→ ${fileLabel(prevFile)}`;
+        } else {
+            prevBtn.removeAttribute('href');
+            prevBtn.classList.add('disabled');
+            prevTooltip.textContent = 'این اولین بخش کتاب است';
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('این اولین بخش کتاب است. 😊');
+                playTone(300, 0.15);
+            });
+        }
+
+        if (nextFile) {
+            nextBtn.href = nextFile;
+            nextTooltip.textContent = `${fileLabel(nextFile)} ←`;
+        } else {
+            nextBtn.removeAttribute('href');
+            nextBtn.classList.add('disabled');
+            nextTooltip.textContent = 'این آخرین بخش کتاب است';
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('🎉 تبریک! تمام فصل‌ها را کامل خواندی!');
+                playTone(700, 0.25);
+                confetti({ particleCount: 120, spread: 100, origin: { y: 0.6 } });
+            });
+        }
+
+        /* ============ صوت ============ */
+        let audioCtx;
+        function ensureAudio() {
+            if (!audioCtx) {
+                try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+                catch (e) { audioCtx = null; }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        }
         function playTone(freq, duration) {
+            if (!audioCtx) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
             gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
             osc.start(); osc.stop(audioCtx.currentTime + duration);
+        }
+
+        /* ============ Toast ============ */
+        const toastEl = document.getElementById('toast');
+        let toastTimer;
+        function showToast(msg, duration = 3200) {
+            toastEl.textContent = msg;
+            toastEl.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
         }
 
         /* ========================================================================
@@ -872,25 +999,36 @@
            ======================================================================== */
         function checkDivisibility(num) {
             const strNum = num.toString();
-            const lastDigit = parseInt(strNum[strNum.length - 1]);
-            const sumDigits = strNum.split('').reduce((a, b) => a + parseInt(b), 0);
+            const lastDigit = parseInt(strNum[strNum.length - 1], 10);
+            const sumDigits = strNum.split('').reduce((a, b) => a + parseInt(b, 10), 0);
 
-            const results = {
-                2: { isDiv: lastDigit % 2 === 0, reason: `رقم یکان ${lastDigit} ${lastDigit % 2 === 0 ? 'زوج' : 'فرد'} است.` },
-                3: { isDiv: sumDigits % 3 === 0, reason: `مجموع رقم‌ها ${sumDigits} است و ${sumDigits % 3 === 0 ? 'بر ۳ بخش‌پذیر است' : 'بر ۳ بخش‌پذیر نیست'}.` },
-                5: { isDiv: lastDigit === 0 || lastDigit === 5, reason: `رقم یکان ${lastDigit} ${lastDigit === 0 || lastDigit === 5 ? '۰ یا ۵ است' : '۰ یا ۵ نیست'}.` },
-                9: { isDiv: sumDigits % 9 === 0, reason: `مجموع رقم‌ها ${sumDigits} است و ${sumDigits % 9 === 0 ? 'بر ۹ بخش‌پذیر است' : 'بر ۹ بخش‌پذیر نیست'}.` }
+            return {
+                2: {
+                    isDiv: lastDigit % 2 === 0,
+                    reason: `رقم یکان (${toFa(lastDigit)}) ${lastDigit % 2 === 0 ? 'زوج است ✓' : 'فرد است ✗'}`
+                },
+                3: {
+                    isDiv: sumDigits % 3 === 0,
+                    reason: `مجموع رقم‌ها = ${toFa(sumDigits)} → ${sumDigits % 3 === 0 ? 'بخش‌پذیر بر ۳ ✓' : 'بخش‌پذیر نیست ✗'}`
+                },
+                5: {
+                    isDiv: lastDigit === 0 || lastDigit === 5,
+                    reason: `رقم یکان (${toFa(lastDigit)}) ${(lastDigit === 0 || lastDigit === 5) ? '۰ یا ۵ است ✓' : '۰ یا ۵ نیست ✗'}`
+                },
+                9: {
+                    isDiv: sumDigits % 9 === 0,
+                    reason: `مجموع رقم‌ها = ${toFa(sumDigits)} → ${sumDigits % 9 === 0 ? 'بخش‌پذیر بر ۹ ✓' : 'بخش‌پذیر نیست ✗'}`
+                }
             };
-            return results;
         }
 
         function updateDivisibilityCards() {
             const input = document.getElementById('divisibility-input');
-            const num = parseInt(input.value);
+            const num = parseInt(input.value, 10);
             const feedbackEl = document.getElementById('divisibility-feedback');
 
             if (isNaN(num) || num < 0) {
-                feedbackEl.innerText = 'لطفاً یک عدد صحیح مثبت وارد کن!';
+                feedbackEl.textContent = 'لطفاً یک عدد صحیح مثبت وارد کن!';
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
@@ -898,9 +1036,9 @@
 
             const results = checkDivisibility(num);
             const cards = document.querySelectorAll('.div-card');
-            
+
             cards.forEach(card => {
-                const divNum = parseInt(card.dataset.div);
+                const divNum = parseInt(card.dataset.div, 10);
                 const result = results[divNum];
                 const statusEl = card.querySelector('.div-status');
                 const reasonEl = card.querySelector('.div-reason');
@@ -908,31 +1046,32 @@
                 card.classList.remove('yes', 'no');
                 if (result.isDiv) {
                     card.classList.add('yes');
-                    statusEl.innerText = '✅ بخش‌پذیر';
+                    statusEl.textContent = '✅ بخش‌پذیر';
                 } else {
                     card.classList.add('no');
-                    statusEl.innerText = '❌ بخش‌پذیر نیست';
+                    statusEl.textContent = '❌ بخش‌پذیر نیست';
                 }
-                reasonEl.innerText = result.reason;
+                reasonEl.textContent = result.reason;
             });
 
-            feedbackEl.innerText = `تحلیل عدد ${num.toLocaleString('fa-IR')} انجام شد.`;
+            feedbackEl.textContent = `تحلیل عدد ${formatFa(num)} انجام شد.`;
             feedbackEl.style.color = 'var(--success)';
         }
 
         document.getElementById('btn-check-divisibility').addEventListener('click', () => {
+            ensureAudio();
             playTone(550, 0.1);
             updateDivisibilityCards();
         });
 
-        document.getElementById('divisibility-input').addEventListener('keypress', (e) => {
+        document.getElementById('divisibility-input').addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
+                ensureAudio();
                 playTone(550, 0.1);
                 updateDivisibilityCards();
             }
         });
 
-        // اجرای اولیه
         updateDivisibilityCards();
 
         /* ========================================================================
@@ -947,8 +1086,8 @@
 
             numbers.forEach(num => {
                 const strNum = num.toString();
-                const lastDigit = parseInt(strNum[strNum.length - 1]);
-                const sumDigits = strNum.split('').reduce((a, b) => a + parseInt(b), 0);
+                const lastDigit = parseInt(strNum[strNum.length - 1], 10);
+                const sumDigits = strNum.split('').reduce((a, b) => a + parseInt(b, 10), 0);
 
                 const isDiv2 = lastDigit % 2 === 0;
                 const isDiv3 = sumDigits % 3 === 0;
@@ -957,26 +1096,27 @@
 
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${num.toLocaleString('fa-IR')}</td>
-                    <td class="${isDiv2 ? 'highlight-cell' : ''}">${isDiv2 ? '✅' : '❌'}</td>
-                    <td class="${isDiv3 ? 'highlight-cell' : ''}">${isDiv3 ? '✅' : '❌'}</td>
-                    <td class="${isDiv5 ? 'highlight-cell' : ''}">${isDiv5 ? '✅' : '❌'}</td>
-                    <td class="${isDiv9 ? 'highlight-cell' : ''}">${isDiv9 ? '✅' : '❌'}</td>
+                    <td>${formatFa(num)}</td>
+                    <td class="${isDiv2 ? 'highlight-cell' : ''}">${isDiv2 ? '✓' : '✗'}</td>
+                    <td class="${isDiv3 ? 'highlight-cell' : ''}">${isDiv3 ? '✓' : '✗'}</td>
+                    <td class="${isDiv5 ? 'highlight-cell' : ''}">${isDiv5 ? '✓' : '✗'}</td>
+                    <td class="${isDiv9 ? 'highlight-cell' : ''}">${isDiv9 ? '✓' : '✗'}</td>
                 `;
-                row.style.cursor = 'pointer';
                 row.addEventListener('click', () => {
+                    ensureAudio();
                     playTone(440, 0.05);
-                    tableClickFeedback.innerHTML = `عدد <strong>${num.toLocaleString('fa-IR')}</strong> : 
-                        بر ۲ ${isDiv2 ? 'بخش‌پذیر' : 'بخش‌پذیر نیست'} | 
-                        بر ۳ ${isDiv3 ? 'بخش‌پذیر' : 'بخش‌پذیر نیست'} | 
-                        بر ۵ ${isDiv5 ? 'بخش‌پذیر' : 'بخش‌پذیر نیست'} | 
-                        بر ۹ ${isDiv9 ? 'بخش‌پذیر' : 'بخش‌پذیر نیست'}`;
+                    const parts = [];
+                    parts.push(`عدد ${formatFa(num)}`);
+                    parts.push(`بر ۲ ${isDiv2 ? '✓ بخش‌پذیر' : '✗ نیست'}`);
+                    parts.push(`بر ۳ ${isDiv3 ? '✓ بخش‌پذیر' : '✗ نیست'}`);
+                    parts.push(`بر ۵ ${isDiv5 ? '✓ بخش‌پذیر' : '✗ نیست'}`);
+                    parts.push(`بر ۹ ${isDiv9 ? '✓ بخش‌پذیر' : '✗ نیست'}`);
+                    tableClickFeedback.textContent = parts.join('  |  ');
                     tableClickFeedback.style.color = 'var(--lilac-dark)';
                 });
                 divisibilityTableBody.appendChild(row);
             });
         }
-
         buildDivisibilityTable();
 
         /* ========================================================================
@@ -991,72 +1131,70 @@
 
         function generateGameQuestion() {
             gameLocked = false;
-            // انتخاب تصادفی عدد و مقسوم‌علیه
             const divisors = [2, 3, 5, 9];
             gameCurrentDiv = divisors[Math.floor(Math.random() * divisors.length)];
-            
-            // تولید عدد تصادفی بین 10 تا 200
+
             gameCurrentNum = Math.floor(10 + Math.random() * 190);
 
-            // محاسبه پاسخ درست
             const strNum = gameCurrentNum.toString();
-            const lastDigit = parseInt(strNum[strNum.length - 1]);
-            const sumDigits = strNum.split('').reduce((a, b) => a + parseInt(b), 0);
+            const lastDigit = parseInt(strNum[strNum.length - 1], 10);
+            const sumDigits = strNum.split('').reduce((a, b) => a + parseInt(b, 10), 0);
 
             if (gameCurrentDiv === 2) gameCurrentAnswer = lastDigit % 2 === 0;
             else if (gameCurrentDiv === 3) gameCurrentAnswer = sumDigits % 3 === 0;
             else if (gameCurrentDiv === 5) gameCurrentAnswer = (lastDigit === 0 || lastDigit === 5);
             else if (gameCurrentDiv === 9) gameCurrentAnswer = sumDigits % 9 === 0;
 
-            // به‌روزرسانی UI
-            document.getElementById('game-number').innerText = gameCurrentNum.toLocaleString('fa-IR');
-            document.getElementById('game-divisor').innerText = gameCurrentDiv.toLocaleString('fa-IR');
-            document.getElementById('game-round').innerText = gameRound.toLocaleString('fa-IR');
-            document.getElementById('game-score').innerText = gameScore.toLocaleString('fa-IR');
-            
+            document.getElementById('game-number').textContent = formatFa(gameCurrentNum);
+            document.getElementById('game-divisor').textContent = toFa(gameCurrentDiv);
+            document.getElementById('game-round').textContent = toFa(gameRound);
+            document.getElementById('game-score').textContent = toFa(gameScore);
+
             const feedbackEl = document.getElementById('game-feedback');
-            feedbackEl.innerText = '';
-            
-            // فعال‌سازی دکمه‌ها
-            document.getElementById('game-btn-yes').disabled = false;
-            document.getElementById('game-btn-no').disabled = false;
-            document.getElementById('game-btn-yes').classList.remove('correct', 'wrong');
-            document.getElementById('game-btn-no').classList.remove('correct', 'wrong');
+            feedbackEl.textContent = '';
+
+            const yesBtn = document.getElementById('game-btn-yes');
+            const noBtn = document.getElementById('game-btn-no');
+            yesBtn.disabled = false;
+            noBtn.disabled = false;
+            yesBtn.classList.remove('correct', 'wrong');
+            noBtn.classList.remove('correct', 'wrong');
         }
 
         function handleGameAnswer(userAnswer) {
             if (gameLocked) return;
             gameLocked = true;
+            ensureAudio();
 
             const feedbackEl = document.getElementById('game-feedback');
             const yesBtn = document.getElementById('game-btn-yes');
             const noBtn = document.getElementById('game-btn-no');
-            
+
             yesBtn.disabled = true;
             noBtn.disabled = true;
 
             if (userAnswer === gameCurrentAnswer) {
                 gameScore++;
-                feedbackEl.innerText = '✅ آفرین! درست جواب دادی.';
+                feedbackEl.textContent = '✅ آفرین! درست جواب دادی.';
                 feedbackEl.style.color = 'var(--success)';
                 playTone(600, 0.3);
                 confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
             } else {
-                feedbackEl.innerText = `❌ اشتباه بود! پاسخ درست «${gameCurrentAnswer ? 'بله' : 'خیر'}» بود.`;
+                feedbackEl.textContent = `❌ اشتباه بود! پاسخ درست «${gameCurrentAnswer ? 'بله' : 'خیر'}» بود.`;
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(300, 0.3);
-                // انیمیشن لرزش
-                document.getElementById('game-question-box').classList.add('shake-anim');
-                setTimeout(() => document.getElementById('game-question-box').classList.remove('shake-anim'), 500);
+                const box = document.getElementById('game-question-box');
+                box.classList.add('shake-anim');
+                setTimeout(() => box.classList.remove('shake-anim'), 500);
             }
 
-            // به‌روزرسانی امتیاز
-            document.getElementById('game-score').innerText = gameScore.toLocaleString('fa-IR');
+            document.getElementById('game-score').textContent = toFa(gameScore);
         }
 
         document.getElementById('game-btn-yes').addEventListener('click', () => handleGameAnswer(true));
         document.getElementById('game-btn-no').addEventListener('click', () => handleGameAnswer(false));
         document.getElementById('btn-game-next').addEventListener('click', () => {
+            ensureAudio();
             playTone(440, 0.05);
             gameRound++;
             generateGameQuestion();
@@ -1065,116 +1203,126 @@
         generateGameQuestion();
 
         /* ========================================================================
-           تعامل ۴: چالش بخش‌پذیری
+           تعامل ۴: چالش بخش‌پذیری (اصلاح ریاضی)
            ======================================================================== */
-        let challengeCorrectDigit = 2;
+        let challengeCorrectDigits = [2];
         let challengeDivisor = 3;
 
         function generateChallenge() {
             const divisors = [3, 9, 5, 2];
             challengeDivisor = divisors[Math.floor(Math.random() * divisors.length)];
-            
-            // ساخت یک عدد سه رقمی ناقص
-            let firstDigit, lastDigit;
-            
+
+            let firstDigit, middleDigit, lastDigit;
+            let blankPosition = 'middle'; // 'middle' یا 'last'
+            let correctDigits = [];
+
             if (challengeDivisor === 5) {
-                // برای ۵، رقم آخر باید ۰ یا ۵ باشد
+                // برای ۵، بخش‌پذیری فقط به رقم یکان بستگی دارد
+                // پس جای خالی روی رقم یکان می‌ذاریم
                 firstDigit = Math.floor(1 + Math.random() * 8);
-                lastDigit = Math.random() > 0.5 ? 0 : 5;
+                middleDigit = Math.floor(Math.random() * 10);
+                blankPosition = 'last';
+                correctDigits = [0, 5];
             } else if (challengeDivisor === 2) {
-                // برای ۲، رقم آخر باید زوج باشد
+                // برای ۲، بخش‌پذیری فقط به رقم یکان بستگی دارد
                 firstDigit = Math.floor(1 + Math.random() * 8);
-                const evenDigits = [0, 2, 4, 6, 8];
-                lastDigit = evenDigits[Math.floor(Math.random() * evenDigits.length)];
+                middleDigit = Math.floor(Math.random() * 10);
+                blankPosition = 'last';
+                correctDigits = [0, 2, 4, 6, 8];
             } else {
-                // برای ۳ و ۹، رقم آخر را تصادفی انتخاب می‌کنیم
+                // برای ۳ و ۹، بخش‌پذیری به مجموع رقم‌ها بستگی دارد
+                // پس جای خالی روی رقم وسط می‌ذاریم
                 firstDigit = Math.floor(1 + Math.random() * 8);
-                lastDigit = Math.floor(Math.random() * 9);
-            }
+                lastDigit = Math.floor(Math.random() * 10);
+                blankPosition = 'middle';
 
-            // پیدا کردن رقم درست برای جای خالی
-            let correct = -1;
-            for (let d = 0; d <= 9; d++) {
-                const num = firstDigit * 100 + d * 10 + lastDigit;
-                const strNum = num.toString();
-                const sumDigits = strNum.split('').reduce((a, b) => a + parseInt(b), 0);
-                
-                if (challengeDivisor === 3 && sumDigits % 3 === 0) { correct = d; break; }
-                if (challengeDivisor === 9 && sumDigits % 9 === 0) { correct = d; break; }
-                if (challengeDivisor === 5 && (lastDigit === 0 || lastDigit === 5)) { correct = d; break; }
-                if (challengeDivisor === 2 && lastDigit % 2 === 0) { correct = d; break; }
-            }
+                for (let d = 0; d <= 9; d++) {
+                    const sum = firstDigit + d + lastDigit;
+                    if (challengeDivisor === 3 && sum % 3 === 0) correctDigits.push(d);
+                    if (challengeDivisor === 9 && sum % 9 === 0) correctDigits.push(d);
+                }
 
-            // اگر رقم درست پیدا نشد، دوباره تلاش کن
-            if (correct === -1) {
-                // برای اطمینان، یک عدد ساده‌تر انتخاب می‌کنیم
-                if (challengeDivisor === 3) {
-                    firstDigit = 1; lastDigit = 2;
-                    // عدد 1d2 باید بر 3 بخش‌پذیر باشد → 1+d+2 = 3+d → d=0,3,6,9
-                    const possible = [0, 3, 6, 9];
-                    correct = possible[Math.floor(Math.random() * possible.length)];
-                } else if (challengeDivisor === 9) {
-                    firstDigit = 1; lastDigit = 8;
-                    // عدد 1d8 باید بر 9 بخش‌پذیر باشد → 1+d+8 = 9+d → d=0,9
-                    correct = Math.random() > 0.5 ? 0 : 9;
-                } else if (challengeDivisor === 5) {
-                    firstDigit = 3; lastDigit = 5;
-                    correct = Math.floor(Math.random() * 10);
-                } else if (challengeDivisor === 2) {
-                    firstDigit = 3; lastDigit = 4;
-                    correct = Math.floor(Math.random() * 10);
+                // اگر هیچ رقمی پیدا نشد (نباید اتفاق بیفتد اما برای اطمینان)
+                if (correctDigits.length === 0) {
+                    // دوباره سعی کن
+                    return generateChallenge();
                 }
             }
 
-            challengeCorrectDigit = correct;
+            challengeCorrectDigits = correctDigits;
 
-            // نمایش سوال
+            // ساخت متن سوال
             const questionEl = document.getElementById('challenge-question');
-            questionEl.innerHTML = `عدد <strong>${firstDigit}□${lastDigit}</strong> را طوری کامل کن که بر <strong>${challengeDivisor}</strong> بخش‌پذیر باشد.`;
-            
+            let numberPattern = '';
+            if (blankPosition === 'last') {
+                numberPattern = `${firstDigit}${middleDigit}□`;
+            } else {
+                numberPattern = `${firstDigit}□${lastDigit}`;
+            }
+
+            questionEl.innerHTML = `
+                عدد <strong>${numberPattern}</strong> را طوری کامل کن که بر <strong>${toFa(challengeDivisor)}</strong> بخش‌پذیر باشد.
+            `;
+
             document.getElementById('challenge-input').value = '';
-            document.getElementById('challenge-feedback').innerText = '';
+            document.getElementById('challenge-feedback').textContent = '';
+            document.getElementById('challenge-feedback').style.color = 'var(--text-body)';
         }
 
         document.getElementById('btn-check-challenge').addEventListener('click', () => {
+            ensureAudio();
             const input = document.getElementById('challenge-input');
-            const userDigit = parseInt(input.value);
+            const userDigit = parseInt(input.value, 10);
             const feedbackEl = document.getElementById('challenge-feedback');
-            
+
             if (isNaN(userDigit) || userDigit < 0 || userDigit > 9) {
-                feedbackEl.innerText = 'لطفاً یک رقم بین ۰ تا ۹ وارد کن!';
+                feedbackEl.textContent = 'لطفاً یک رقم بین ۰ تا ۹ وارد کن!';
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
             }
 
-            if (userDigit === challengeCorrectDigit) {
-                feedbackEl.innerText = `✅ آفرین! رقم ${userDigit} درست است. عدد حاصل بخش‌پذیر می‌شود.`;
+            if (challengeCorrectDigits.includes(userDigit)) {
+                let msg = `✅ آفرین! رقم ${toFa(userDigit)} درست است.`;
+                if (challengeCorrectDigits.length > 1) {
+                    msg += ` (پاسخ‌های درست دیگر: ${challengeCorrectDigits.filter(d => d !== userDigit).map(toFa).join('، ')})`;
+                }
+                feedbackEl.textContent = msg;
                 feedbackEl.style.color = 'var(--success)';
                 playTone(600, 0.3);
                 confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
             } else {
-                feedbackEl.innerText = `❌ اشتباه! رقم درست ${challengeCorrectDigit} است.`;
+                let msg = `❌ اشتباه! `;
+                if (challengeCorrectDigits.length === 1) {
+                    msg += `رقم درست ${toFa(challengeCorrectDigits[0])} است.`;
+                } else {
+                    msg += `پاسخ‌های درست عبارتند از: ${challengeCorrectDigits.map(toFa).join('، ')}`;
+                }
+                feedbackEl.textContent = msg;
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(300, 0.3);
             }
         });
 
+        document.getElementById('challenge-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('btn-check-challenge').click();
+            }
+        });
+
         document.getElementById('btn-new-challenge').addEventListener('click', () => {
+            ensureAudio();
             playTone(440, 0.05);
             generateChallenge();
         });
 
         generateChallenge();
 
-        /* ========================================================================
-           مدیریت دکمه‌های شناور
-           ======================================================================== */
-        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('به بخش بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
-        });
-
+        /* ============ راه‌اندازی AudioCtx ============ */
+        document.body.addEventListener('click', function initAudioOnce() {
+            ensureAudio();
+            document.body.removeEventListener('click', initAudioOnce);
+        }, { once: true });
     </script>
 </body>
 </html>

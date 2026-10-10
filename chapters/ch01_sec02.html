@@ -2,19 +2,13 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>فصل ۱ - بخش ۲: یادآوری عددنویسی و ارزش مکانی | درسنامه تعاملی</title>
-    
-    <!-- قلم زیبای وزیرمتن -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 
-    <!-- انیمیشن کاغذ رنگی -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* ========================================================================
-           ۱. متغیرها و تم رنگی
-           ======================================================================== */
         :root {
             --lilac-bg: #f7f1fc;
             --lilac-soft: #f1e7fb;
@@ -22,11 +16,9 @@
             --lilac-main: #9333ea;
             --lilac-dark: #6b21a8;
             --lilac-glow: rgba(147, 51, 234, 0.15);
-            
             --blue-soft: #e0f2fe;
             --blue-main: #0284c7;
             --blue-dark: #0369a1;
-            
             --success: #16a34a;
             --success-bg: rgba(22, 163, 74, 0.1);
             --danger: #dc2626;
@@ -34,607 +26,637 @@
             --warning: #ca8a04;
             --highlight: #fef08a;
 
-            --glass-bg: rgba(255, 255, 255, 0.85);
+            /* رنگ گروه‌های ارزش مکانی */
+            --group-ones-bg: #dcfce7;
+            --group-ones-border: #86efac;
+            --group-thousands-bg: #f1e7fb;
+            --group-thousands-border: #d8b4fe;
+            --group-millions-bg: #e0f2fe;
+            --group-millions-border: #7dd3fc;
+
+            --glass-bg: rgba(255, 255, 255, 0.9);
             --glass-border: rgba(255, 255, 255, 0.9);
-            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
-            --card-hover-bg: rgba(255, 255, 255, 0.95);
-            
+            --glass-shadow: 0 12px 36px rgba(107, 33, 168, 0.1);
             --text-title: #2e1065;
             --text-body: #475569;
             --text-muted: #64748b;
-            
             --radius-lg: 24px;
             --radius-md: 16px;
-            --radius-sm: 8px;
+            --radius-sm: 10px;
         }
 
-        /* ========================================================================
-           ۲. استایل‌های پایه
-           ======================================================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; -webkit-tap-highlight-color: transparent; }
+        html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
         body {
             background-color: var(--lilac-bg);
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
             background-attachment: fixed;
             color: var(--text-body);
             min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            line-height: 1.8;
+            padding: 16px;
+            display: flex; flex-direction: column;
+            overflow-x: hidden; line-height: 1.8;
         }
 
-        /* ========================================================================
-           ۳. نوار هدر
-           ======================================================================== */
+        .ltr { direction: ltr; unicode-bidi: isolate; }
+
+        /* ============ هدر ============ */
         .lesson-top-nav {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto 20px;
-            padding: 14px 28px;
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px; padding: 14px 22px;
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
             box-shadow: var(--glass-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px; z-index: 100;
         }
-
         .go-back-link {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 800;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.2s, transform 0.2s;
+            text-decoration: none; color: var(--text-muted);
+            font-weight: 800; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 8px;
+            transition: color 0.2s, transform 0.2s; white-space: nowrap;
         }
-
-        .go-back-link:hover {
-            color: var(--lilac-dark);
-            transform: translateX(3px);
-        }
-
-        .header-lesson-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-        }
-
+        .go-back-link:hover { color: var(--lilac-dark); transform: translateX(3px); }
+        .header-lesson-info { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 0; }
         .chapter-label-badge {
-            background: var(--lilac-soft);
-            color: var(--lilac-dark);
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 3px 10px;
+            background: var(--lilac-soft); color: var(--lilac-dark);
+            font-size: 0.72rem; font-weight: 800;
+            padding: 3px 10px; border-radius: 20px; white-space: nowrap;
+        }
+        .lesson-title-text { font-size: 1.05rem; font-weight: 900; color: var(--text-title); letter-spacing: -0.5px; }
+
+        /* ============ نوار موقعیت ============ */
+        .book-location-bar {
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px;
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 14px;
+            background: var(--glass-bg);
             border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(107, 33, 168, 0.06);
+            flex-wrap: wrap;
+            justify-content: center;
         }
-
-        .lesson-title-text {
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: var(--text-title);
+        .location-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--lilac-soft); color: var(--lilac-dark);
+            padding: 4px 12px; border-radius: 20px;
+            font-weight: 800; font-size: 0.82rem;
+            white-space: nowrap;
         }
+        .location-chip.blue { background: var(--blue-soft); color: var(--blue-dark); }
+        .location-chip.yellow { background: #fef9c3; color: #854d0e; }
+        .location-chip.green { background: #dcfce7; color: #166534; }
 
-        /* ========================================================================
-           ۴. کارت‌های آموزشی
-           ======================================================================== */
+        /* ============ کارت‌ها ============ */
         .main-lesson-wrapper {
-            max-width: 1100px;
-            width: 100%;
+            max-width: 1100px; width: 100%;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding-bottom: 80px;
+            display: flex; flex-direction: column;
+            gap: 20px; padding-bottom: 120px;
         }
-
         .step-teaching-card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
-            padding: 28px;
+            padding: 26px;
             box-shadow: var(--glass-shadow);
-            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
-
-        .step-teaching-card:hover {
-            background-color: var(--card-hover-bg);
-            transform: translateY(-5px);
-        }
-
         .step-number-badge {
-            display: inline-flex;
-            width: 32px;
-            height: 32px;
+            display: inline-flex; width: 34px; height: 34px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark));
-            color: white;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 0.95rem;
-            margin-bottom: 16px;
+            color: white; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1rem;
+            margin-bottom: 14px;
             box-shadow: 0 4px 10px var(--lilac-glow);
         }
-
         .step-teaching-card h2 {
-            font-size: 1.4rem;
-            color: var(--text-title);
-            margin-bottom: 12px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-size: 1.3rem; color: var(--text-title);
+            margin-bottom: 12px; font-weight: 900;
+            display: flex; align-items: center; gap: 10px;
+            letter-spacing: -0.8px; line-height: 1.6; flex-wrap: wrap;
+        }
+        .step-teaching-card p { font-size: 1rem; line-height: 2; color: var(--text-body); margin-bottom: 14px; }
+        .step-teaching-card ul, .step-teaching-card ol {
+            margin-right: 22px; color: var(--text-body);
+            font-weight: 600; line-height: 2.1; margin-bottom: 12px;
         }
 
-        .step-teaching-card p {
-            font-size: 1rem;
-            line-height: 1.9;
-            color: var(--text-body);
-            margin-bottom: 16px;
-        }
-
-        .step-teaching-card h3 {
-            font-size: 1.1rem;
-            color: var(--lilac-dark);
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-weight: 800;
-        }
-
-        /* ========================================================================
-           ۵. المان‌های خاص
-           ======================================================================== */
+        /* ============ المان‌های خاص ============ */
         .teacher-speech-bubble {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.75);
             border-radius: var(--radius-md);
-            padding: 18px 22px;
+            padding: 16px 20px;
             border: 1px dashed var(--lilac-border);
             color: var(--lilac-dark);
-            margin: 16px 0;
-            position: relative;
-            font-style: italic;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
+            margin: 14px 0; font-style: italic;
+            display: flex; gap: 12px; align-items: flex-start;
+            font-size: 0.95rem; line-height: 1.9;
         }
-
-        .teacher-speech-bubble::before {
-            content: "🧑‍🏫";
-            font-size: 1.4rem;
-            font-style: normal;
-        }
+        .teacher-speech-bubble::before { content: "🧑‍🏫"; font-size: 1.4rem; font-style: normal; flex-shrink: 0; }
 
         .solved-example-box {
             background: var(--blue-soft);
             border: 1px solid rgba(2, 132, 199, 0.2);
             border-radius: var(--radius-md);
-            padding: 20px;
-            margin: 16px 0;
+            padding: 18px; margin: 14px 0;
+            word-break: break-word;
         }
-
         .example-header {
-            font-weight: 800;
-            color: var(--blue-dark);
-            font-size: 1rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-weight: 800; color: var(--blue-dark);
+            font-size: 1rem; margin-bottom: 8px;
+            display: flex; align-items: center; gap: 8px;
+            flex-wrap: wrap;
         }
 
         .key-tip-box {
             background: var(--success-bg);
             border: 1px solid var(--success);
             border-radius: var(--radius-md);
-            padding: 16px;
-            margin: 16px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--success);
-            font-weight: 700;
-            font-size: 0.9rem;
+            padding: 14px 16px; margin: 14px 0;
+            color: var(--success); font-weight: 700;
+            font-size: 0.92rem; line-height: 1.9;
         }
+        .key-tip-box::before { content: "💡"; margin-left: 8px; font-size: 1.2rem; }
 
-        /* ========================================================================
-           ۶. بخش تعاملی ۱: ماشین عددنویسی
-           ======================================================================== */
+        /* ============ چارت ارزش مکانی ============ */
+        .place-value-chart {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+        .pv-chip {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.82rem;
+            white-space: nowrap;
+        }
+        .pv-chip.ones { background: var(--group-ones-bg); color: #166534; border: 1px solid var(--group-ones-border); }
+        .pv-chip.thousands { background: var(--group-thousands-bg); color: var(--lilac-dark); border: 1px solid var(--group-thousands-border); }
+        .pv-chip.millions { background: var(--group-millions-bg); color: var(--blue-dark); border: 1px solid var(--group-millions-border); }
+
+        /* ============ بخش تعاملی ============ */
         .interactive-container {
             background: rgba(0, 0, 0, 0.02);
             border-radius: var(--radius-md);
-            padding: 24px;
-            margin-top: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
+            padding: 20px; margin-top: 16px;
+            display: flex; flex-direction: column; gap: 16px;
             border: 1px solid var(--glass-border);
         }
-
         .sim-title {
-            font-weight: 800;
-            font-size: 1.1rem;
+            font-weight: 800; font-size: 1.05rem;
             color: var(--lilac-dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
+            display: flex; align-items: center; gap: 8px; line-height: 1.6;
+            flex-wrap: wrap;
         }
 
+        /* ============ ماشین ارزش مکانی ============ */
         .numeral-machine {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            background: white;
-            padding: 24px;
+            display: flex; flex-direction: column;
+            align-items: center; gap: 16px;
+            background: white; padding: 20px 16px;
             border-radius: var(--radius-md);
             border: 2px dashed var(--lilac-border);
         }
-
-        .digit-input-row {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: center;
+        .digit-grid-scroll {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 4px;
         }
-
+        .digit-input-grid, .place-value-labels-grid {
+            display: grid;
+            grid-template-columns: repeat(9, minmax(0, 1fr));
+            gap: 5px;
+            width: 100%;
+            max-width: 620px;
+            margin: 0 auto;
+        }
         .digit-input-box {
-            width: 55px;
-            height: 70px;
-            border: 2px solid var(--lilac-border);
+            width: 100%;
+            height: clamp(48px, 11vw, 72px);
+            border: 2px solid #e2e8f0;
             border-radius: 10px;
             text-align: center;
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--lilac-dark);
-            background: #fafafa;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-        .digit-input-box:focus { outline: none; border-color: var(--lilac-main); box-shadow: 0 0 0 4px var(--lilac-glow); }
-
-        .place-value-labels-row {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .place-value-labels-row span {
-            width: 55px;
-            text-align: center;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            font-weight: 700;
-            line-height: 1.3;
-        }
-
-        .numeral-output-box {
-            background: var(--lilac-soft);
-            padding: 16px 24px;
-            border-radius: var(--radius-sm);
-            font-weight: 800;
-            color: var(--lilac-dark);
-            text-align: center;
-            font-size: 1.1rem;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            line-height: 1.6;
-        }
-
-        /* ========================================================================
-           ۷. بخش تعاملی ۲: خواندن عدد به حروف
-           ======================================================================== */
-        .reading-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .reading-display {
-            background: var(--lilac-soft);
-            padding: 20px;
-            border-radius: var(--radius-sm);
-            text-align: center;
-            font-size: 1.8rem;
+            font-size: clamp(1rem, 2.8vw, 1.5rem);
             font-weight: 900;
             color: var(--text-title);
-            letter-spacing: 2px;
+            background: #fafafa;
+            transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+            font-family: 'Vazirmatn', sans-serif;
+            padding: 0;
             direction: ltr;
         }
+        .digit-input-box:focus {
+            outline: none;
+            border-color: var(--lilac-main);
+            box-shadow: 0 0 0 3px var(--lilac-glow);
+        }
+        .digit-input-box.group-ones { background: var(--group-ones-bg); border-color: var(--group-ones-border); }
+        .digit-input-box.group-thousands { background: var(--group-thousands-bg); border-color: var(--group-thousands-border); }
+        .digit-input-box.group-millions { background: var(--group-millions-bg); border-color: var(--group-millions-border); }
 
+        .place-value-labels-grid span {
+            text-align: center;
+            font-size: clamp(0.52rem, 1.3vw, 0.7rem);
+            color: var(--text-muted);
+            font-weight: 800;
+            line-height: 1.2;
+            word-break: break-word;
+            padding: 2px 0;
+        }
+
+        .group-divider-legend {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 0.78rem;
+            font-weight: 800;
+            margin-top: 6px;
+        }
+        .group-divider-legend span {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 3px 10px; border-radius: 20px;
+        }
+        .gdl-ones { background: var(--group-ones-bg); color: #166534; }
+        .gdl-thousands { background: var(--group-thousands-bg); color: var(--lilac-dark); }
+        .gdl-millions { background: var(--group-millions-bg); color: var(--blue-dark); }
+        .gdl-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+        .gdl-ones .gdl-dot { background: var(--group-ones-border); }
+        .gdl-thousands .gdl-dot { background: var(--group-thousands-border); }
+        .gdl-millions .gdl-dot { background: var(--group-millions-border); }
+
+        .numeral-output-box {
+            background: linear-gradient(135deg, #faf5ff, #f1e7fb);
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            color: var(--text-title);
+            text-align: center;
+            font-size: 1rem;
+            min-height: 80px;
+            width: 100%;
+            line-height: 1.7;
+            border: 1px solid var(--lilac-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            word-break: break-word;
+        }
+        .numeral-output-box .output-number {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            font-weight: 900;
+            color: var(--lilac-dark);
+            direction: ltr;
+            font-variant-numeric: tabular-nums;
+        }
+        .numeral-output-box .output-words {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-body);
+            line-height: 1.9;
+        }
+
+        /* ============ آزمایشگاه خواندن ============ */
+        .reading-lab {
+            background: white; border-radius: var(--radius-md);
+            padding: 20px; border: 1px solid var(--glass-border);
+            display: flex; flex-direction: column; gap: 16px;
+        }
+        .reading-display {
+            background: linear-gradient(135deg, #faf5ff, #f1e7fb);
+            padding: 18px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: clamp(1.4rem, 5vw, 2rem);
+            font-weight: 900;
+            color: var(--text-title);
+            letter-spacing: 1.5px;
+            direction: ltr;
+            border: 1px solid var(--lilac-border);
+            font-variant-numeric: tabular-nums;
+            word-break: break-all;
+        }
         .reading-options {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
         }
-
         .reading-option-btn {
             background: #fafafa;
             border: 2px solid #e2e8f0;
             border-radius: var(--radius-sm);
-            padding: 16px;
+            padding: 14px 16px;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             cursor: pointer;
             transition: all 0.2s;
             text-align: right;
             color: var(--text-body);
-            line-height: 1.6;
+            line-height: 1.8;
+            font-family: 'Vazirmatn', sans-serif;
         }
-
-        .reading-option-btn:hover {
+        .reading-option-btn:hover:not(:disabled) {
             border-color: var(--lilac-border);
             background: var(--lilac-soft);
         }
+        .reading-option-btn.correct { background: var(--success-bg); border-color: var(--success); color: var(--success); }
+        .reading-option-btn.wrong { background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
+        .reading-option-btn:disabled { cursor: not-allowed; opacity: 0.75; }
 
-        .reading-option-btn.correct {
-            background: var(--success-bg);
-            border-color: var(--success);
-            color: var(--success);
-        }
-
-        .reading-option-btn.wrong {
-            background: var(--danger-bg);
-            border-color: var(--danger);
-            color: var(--danger);
-        }
-
-        .reading-option-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        @media (max-width: 600px) {
-            .reading-options { grid-template-columns: 1fr; }
-        }
-
-        /* ========================================================================
-           ۸. بخش تعاملی ۳: گسترده‌نویسی
-           ======================================================================== */
+        /* ============ گسترده‌نویسی ============ */
         .expanded-form-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            background: white; border-radius: var(--radius-md);
+            padding: 20px; border: 1px solid var(--glass-border);
+            display: flex; flex-direction: column; gap: 16px;
         }
-
         .expanded-number-display {
-            background: var(--blue-soft);
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
             padding: 16px;
             border-radius: var(--radius-sm);
             text-align: center;
-            font-size: 1.6rem;
+            font-size: clamp(1.3rem, 4vw, 1.7rem);
             font-weight: 900;
             color: var(--blue-dark);
             direction: ltr;
+            border: 1px solid #7dd3fc;
+            font-variant-numeric: tabular-nums;
         }
-
         .expanded-form-output {
             background: #fafafa;
-            padding: 20px;
+            padding: 18px 14px;
             border-radius: var(--radius-sm);
             border: 1px solid #e2e8f0;
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text-title);
-            line-height: 2;
-            direction: ltr;
-            text-align: left;
-            min-height: 80px;
+            min-height: 90px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 4px;
+            gap: 8px;
+            direction: ltr;
+            font-variant-numeric: tabular-nums;
         }
-
+        .expanded-form-output .placeholder-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            direction: rtl;
+            font-weight: 700;
+        }
+        .expanded-number-token {
+            background: linear-gradient(135deg, var(--blue-main), var(--blue-dark));
+            color: white;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-weight: 900;
+            font-size: clamp(1rem, 3vw, 1.25rem);
+            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.25);
+        }
+        .eq-sign {
+            font-weight: 900;
+            font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+            color: var(--text-title);
+            padding: 0 4px;
+        }
         .expanded-part {
             background: white;
-            padding: 4px 10px;
-            border-radius: 6px;
-            border: 1px solid var(--lilac-border);
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 2px solid var(--lilac-border);
             color: var(--lilac-dark);
-            font-weight: 800;
+            font-weight: 900;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
         }
-
-        /* ========================================================================
-           ۹. بخش تعاملی ۴: مقایسه اعداد
-           ======================================================================== */
-        .compare-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .compare-numbers-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .compare-num-box {
-            background: var(--lilac-soft);
-            padding: 12px 20px;
-            border-radius: var(--radius-sm);
+        .op-sign {
+            font-weight: 900;
+            color: var(--text-muted);
             font-size: 1.1rem;
+        }
+
+        /* ============ مقایسه ============ */
+        .compare-lab {
+            background: white; border-radius: var(--radius-md);
+            padding: 20px; border: 1px solid var(--glass-border);
+            display: flex; flex-direction: column; gap: 16px;
+        }
+        .compare-numbers-row {
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; flex-wrap: wrap;
+        }
+        .compare-num-box {
+            background: linear-gradient(135deg, #faf5ff, #f1e7fb);
+            padding: 12px 18px;
+            border-radius: var(--radius-sm);
+            font-size: clamp(1rem, 3vw, 1.15rem);
             font-weight: 900;
             color: var(--lilac-dark);
             direction: ltr;
-            min-width: 100px;
+            min-width: 110px;
             text-align: center;
+            border: 1px solid var(--lilac-border);
+            font-variant-numeric: tabular-nums;
         }
-
         .compare-symbol-input {
-            width: 60px;
-            height: 60px;
+            width: 60px; height: 60px;
             border: 2px solid var(--lilac-border);
             border-radius: 50%;
             text-align: center;
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             font-weight: 900;
             color: var(--lilac-dark);
             background: #fafafa;
             cursor: pointer;
-            transition: all 0.2s;
+            font-family: 'Vazirmatn', sans-serif;
+            padding: 0;
         }
         .compare-symbol-input:focus { outline: none; border-color: var(--lilac-main); box-shadow: 0 0 0 4px var(--lilac-glow); }
 
-        .compare-buttons-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+        .compare-buttons-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
 
-        /* ========================================================================
-           ۱۰. دکمه‌ها
-           ======================================================================== */
+        /* ============ دکمه‌ها ============ */
         .btn-ui {
             background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark));
-            color: white;
-            border: 2px solid white;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 1rem;
+            color: white; border: none;
+            padding: 12px 24px; border-radius: 30px;
+            font-weight: 800; font-size: 0.95rem;
             cursor: pointer;
             transition: transform 0.15s, box-shadow 0.15s;
             box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25);
+            font-family: 'Vazirmatn', sans-serif;
+            min-height: 46px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .btn-ui:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35);
-        }
+        .btn-ui:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
         .btn-ui:active { transform: translateY(0); }
         .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
-
         .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
         .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
-
         .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
         .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
+        .btn-ui.ghost { background: #fff; color: var(--danger); border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 
         .action-btns-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            display: flex; justify-content: center;
+            gap: 10px; flex-wrap: wrap;
         }
-
         .feedback-display {
-            font-weight: 800;
-            text-align: center;
-            min-height: 28px;
-            font-size: 1rem;
-            margin-top: 10px;
-            transition: color 0.2s;
+            font-weight: 800; text-align: center;
+            min-height: 28px; font-size: 0.98rem;
+            margin-top: 8px; transition: color 0.2s; line-height: 1.8;
         }
 
-        /* ========================================================================
-           ۱۱. دکمه‌های شناور
-           ======================================================================== */
+        /* ============ دکمه‌های شناور ============ */
         .floating-btns {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none;
-            z-index: 200;
-            max-width: 1100px;
-            margin: 0 auto;
+            position: fixed; bottom: 16px;
+            left: 16px; right: 16px;
+            display: flex; justify-content: space-between;
+            align-items: center; gap: 10px;
+            pointer-events: none; z-index: 200;
+            max-width: 1100px; margin: 0 auto;
         }
-
         .float-nav-btn {
             pointer-events: auto;
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 800;
-            color: var(--text-title);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 12px 20px; border-radius: 30px;
+            font-weight: 800; color: var(--text-title);
+            text-decoration: none; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
             transition: all 0.2s;
+            font-size: 0.9rem;
+            font-family: 'Vazirmatn', sans-serif;
+            position: relative;
         }
-
-        .float-nav-btn:hover {
-            background: var(--lilac-main);
-            color: white;
+        .float-nav-btn:hover:not(.disabled) {
+            background: var(--lilac-main); color: white;
             transform: translateY(-3px);
             box-shadow: 0 15px 35px var(--lilac-glow);
         }
-
-        @media (max-width: 600px) {
-            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
-            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
-            .header-lesson-info { align-items: center; }
+        .float-nav-btn.disabled { opacity: 0.45; cursor: not-allowed; }
+        .float-nav-btn.disabled:hover { background: var(--glass-bg); color: var(--text-title); transform: none; }
+        .float-nav-btn.home-btn {
+            background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark));
+            color: white; border-color: transparent;
+            padding: 12px 16px;
         }
+        .float-nav-btn.home-btn:hover {
+            background: linear-gradient(135deg, var(--lilac-dark), var(--lilac-main));
+            transform: translateY(-3px) scale(1.05);
+        }
+        .float-nav-btn .btn-tooltip {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            background: rgba(46, 16, 101, 0.95);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 8px;
+            white-space: nowrap;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .float-nav-btn:hover .btn-tooltip { opacity: 1; }
+        #prev-lesson-btn .btn-tooltip { right: 0; }
+        #next-lesson-btn .btn-tooltip { left: 0; }
 
-        /* ========================================================================
-           ۱۲. انیمیشن
-           ======================================================================== */
+        /* ============ Toast ============ */
+        .toast-notification {
+            position: fixed; bottom: 100px; left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: rgba(46, 16, 101, 0.96);
+            color: white; padding: 14px 24px;
+            border-radius: 14px; font-weight: 700;
+            font-size: 0.92rem; z-index: 1000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            max-width: 90%; text-align: center;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+            line-height: 1.7;
+        }
+        .toast-notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ============ انیمیشن ============ */
         @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
+            0% { transform: scale(0.6); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
         .pop-in { animation: popIn 0.3s ease-out forwards; }
+
+        /* ============ ریسپانسیو ============ */
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .lesson-top-nav {
+                flex-direction: column; align-items: stretch;
+                text-align: center; padding: 14px 16px; gap: 10px;
+            }
+            .header-lesson-info { align-items: center; }
+            .go-back-link { justify-content: center; }
+            .lesson-title-text { text-align: center; }
+
+            .step-teaching-card { padding: 20px 16px; border-radius: 20px; }
+            .step-teaching-card h2 { font-size: 1.15rem; }
+            .step-teaching-card p { font-size: 0.95rem; }
+            .step-teaching-card ul, .step-teaching-card ol { margin-right: 18px; font-size: 0.95rem; }
+
+            .interactive-container { padding: 16px 12px; }
+            .numeral-machine { padding: 16px 10px; }
+            .reading-lab, .expanded-form-lab, .compare-lab { padding: 16px 12px; }
+
+            .reading-options { grid-template-columns: 1fr; }
+            .reading-option-btn { font-size: 0.88rem; padding: 12px 14px; }
+
+            .action-btns-row { flex-direction: column; align-items: stretch; }
+            .action-btns-row .btn-ui { width: 100%; }
+            .compare-buttons-row { flex-direction: column; align-items: stretch; }
+            .compare-buttons-row .btn-ui { width: 100%; }
+
+            .float-nav-btn { padding: 11px 14px; font-size: 0.82rem; gap: 5px; }
+            .float-nav-btn .btn-label { display: none; }
+            .float-nav-btn.home-btn { padding: 11px 14px; }
+
+            .teacher-speech-bubble { padding: 12px 14px; font-size: 0.88rem; }
+            .key-tip-box { padding: 12px 12px; font-size: 0.85rem; }
+        }
+
+        @media (max-width: 500px) {
+            .digit-input-grid, .place-value-labels-grid {
+                gap: 3px;
+                min-width: 340px;
+            }
+            .compare-num-box { min-width: 90px; padding: 10px 14px; }
+            .compare-symbol-input { width: 50px; height: 50px; font-size: 1.4rem; }
+            .expanded-form-output { padding: 14px 10px; gap: 6px; }
+        }
+
+        @media (max-width: 380px) {
+            .digit-input-grid, .place-value-labels-grid {
+                min-width: 310px;
+                gap: 2px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ========================================================================
-         نوار ناوبری بالای درسنامه
-         ======================================================================== -->
     <header class="lesson-top-nav">
         <a href="../index.html" class="go-back-link">
             <span>← برگشت به کتاب اصلی</span>
@@ -645,22 +667,20 @@
         </div>
     </header>
 
+    <div class="book-location-bar" id="book-location-bar"></div>
+
     <main class="main-lesson-wrapper">
 
-        <!-- ========================================================================
-           قدم ۱: ارزش مکانی
-           ======================================================================== -->
+        <!-- ============ قدم ۱: ارزش مکانی ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۱</span>
             <h2>ارزش مکانی: جایگاه هر رقم</h2>
             <p>
-                در عددنویسی، هر رقم در یک عدد، بسته به جایگاهی که دارد، ارزش متفاوتی دارد. 
+                در عددنویسی، هر رقم در یک عدد، بسته به جایگاهی که دارد، ارزش متفاوتی دارد.
                 به این ترتیب، یک رقم مشابه در جایگاه‌های مختلف، ارزش متفاوتی پیدا می‌کند.
             </p>
-            <p>
-                مثلاً در عدد <strong>۳۴۵</strong>:
-            </p>
-            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
+            <p>مثلاً در عدد <strong>۳۴۵</strong>:</p>
+            <ul>
                 <li>رقم ۳ در جایگاه <strong>صدگان</strong> است و ارزش آن ۳۰۰ می‌باشد.</li>
                 <li>رقم ۴ در جایگاه <strong>دهگان</strong> است و ارزش آن ۴۰ می‌باشد.</li>
                 <li>رقم ۵ در جایگاه <strong>یکان</strong> است و ارزش آن ۵ می‌باشد.</li>
@@ -671,86 +691,89 @@
             </div>
 
             <div class="key-tip-box">
-                <strong>📌 جدول ارزش مکانی اعداد بزرگ:</strong>
-                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; direction: rtl;">
-                    <span style="background: var(--lilac-soft); padding: 4px 12px; border-radius: 6px;">یکان</span>
-                    <span style="background: var(--lilac-soft); padding: 4px 12px; border-radius: 6px;">دهگان</span>
-                    <span style="background: var(--lilac-soft); padding: 4px 12px; border-radius: 6px;">صدگان</span>
-                    <span style="background: var(--blue-soft); padding: 4px 12px; border-radius: 6px;">هزار</span>
-                    <span style="background: var(--blue-soft); padding: 4px 12px; border-radius: 6px;">ده‌هزار</span>
-                    <span style="background: var(--blue-soft); padding: 4px 12px; border-radius: 6px;">صد‌هزار</span>
-                    <span style="background: var(--lilac-soft); padding: 4px 12px; border-radius: 6px;">میلیون</span>
-                    <span style="background: var(--lilac-soft); padding: 4px 12px; border-radius: 6px;">ده‌میلیون</span>
-                    <span style="background: var(--lilac-soft); padding: 4px 12px; border-radius: 6px;">صدمیلیون</span>
-                    <span style="background: var(--blue-soft); padding: 4px 12px; border-radius: 6px;">میلیارد</span>
+                <strong>📌 جدول ارزش مکانی اعداد بزرگ (از راست به چپ، هر ۳ رقم یک دسته):</strong>
+                <div class="place-value-chart">
+                    <span class="pv-chip ones">یکان</span>
+                    <span class="pv-chip ones">دهگان</span>
+                    <span class="pv-chip ones">صدگان</span>
+                    <span class="pv-chip thousands">هزار</span>
+                    <span class="pv-chip thousands">ده‌هزار</span>
+                    <span class="pv-chip thousands">صد‌هزار</span>
+                    <span class="pv-chip millions">میلیون</span>
+                    <span class="pv-chip millions">ده‌میلیون</span>
+                    <span class="pv-chip millions">صد‌میلیون</span>
                 </div>
+                <p style="margin-top: 10px; font-size: 0.85rem; color: var(--success); font-weight: 700;">
+                    🔎 هر گروه ۳ رقمی، یک «دسته» حساب می‌شود: دسته یکان، دسته هزار، دسته میلیون و...
+                </p>
             </div>
 
-            <!-- ابزار تعاملی ۱: ماشین ارزش مکانی -->
             <div class="interactive-container">
-                <div class="sim-title">🔢 ماشین ارزش مکانی: عددت رو وارد کن!</div>
-                
+                <div class="sim-title">🔢 ماشین ارزش مکانی: عددت را وارد کن!</div>
+
                 <div class="numeral-machine">
-                    <p style="font-weight:700; color: var(--text-title);">یک عدد تا ۹ رقم وارد کن:</p>
-                    <div class="digit-input-row" id="digit-inputs">
-                        <!-- ۹ اینپوت -->
+                    <p style="font-weight:800; color: var(--text-title); text-align: center;">
+                        اعداد را از راست (یکان) شروع کن به نوشتن یا از چپ هم می‌تونی پر کنی:
+                    </p>
+
+                    <div class="digit-grid-scroll">
+                        <div class="digit-input-grid" id="digit-inputs"></div>
+                        <div class="place-value-labels-grid" id="place-value-labels" style="margin-top: 6px;"></div>
                     </div>
-                    <div class="place-value-labels-row" id="place-value-labels">
-                        <!-- برچسب‌ها -->
+
+                    <div class="group-divider-legend">
+                        <span class="gdl-ones"><span class="gdl-dot"></span> دسته یکان</span>
+                        <span class="gdl-thousands"><span class="gdl-dot"></span> دسته هزار</span>
+                        <span class="gdl-millions"><span class="gdl-dot"></span> دسته میلیون</span>
                     </div>
+
                     <div class="numeral-output-box" id="numeral-words">
-                        عدد را وارد کنید...
+                        <span class="output-words">عدد را وارد کن و دکمه «تحلیل عدد» را بزن...</span>
                     </div>
-                    <button class="btn-ui blue" id="btn-analyze-number">تحلیل عدد</button>
+
+                    <button class="btn-ui blue" id="btn-analyze-number">🔍 تحلیل عدد</button>
                 </div>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۲: خواندن عدد به حروف
-           ======================================================================== -->
+        <!-- ============ قدم ۲: خواندن عدد ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۲</span>
             <h2>خواندن عدد به حروف</h2>
-            <p>
-                برای خواندن یک عدد بزرگ، آن را از سمت چپ به سه دسته‌ی سه‌رقمی تقسیم می‌کنیم:
-            </p>
-            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
-                <li><strong>دسته‌ی میلیارد</strong> (سه رقم اول از چپ)</li>
-                <li><strong>دسته‌ی میلیون</strong> (سه رقم وسط)</li>
-                <li><strong>دسته‌ی هزار</strong> (سه رقم بعد)</li>
-                <li><strong>دسته‌ی یکان</strong> (سه رقم آخر)</li>
+            <p>برای خواندن یک عدد بزرگ، آن را از سمت راست به سه دسته‌ی سه‌رقمی تقسیم می‌کنیم:</p>
+            <ul>
+                <li><strong>دسته‌ی یکان</strong> (سه رقم اول از راست)</li>
+                <li><strong>دسته‌ی هزار</strong> (سه رقم بعدی)</li>
+                <li><strong>دسته‌ی میلیون</strong> (سه رقم بعدی)</li>
+                <li><strong>دسته‌ی میلیارد</strong> (سه رقم بعدی)</li>
             </ul>
 
             <div class="solved-example-box">
                 <div class="example-header">💡 مثال: عدد ۶۳۸۳۱۵۶۸</div>
-                <p>دسته‌بندی: ۶۳ | ۸۳۱ | ۵۶۸</p>
+                <p>دسته‌بندی از راست: <span class="ltr">۶۳ | ۸۳۱ | ۵۶۸</span></p>
                 <p>میلیون: ۶۳ میلیون</p>
                 <p>هزار: ۸۳۱ هزار</p>
                 <p>یکان: ۵۶۸</p>
-                <p style="margin-top: 10px; font-weight: 800; color: var(--lilac-dark);">خوانده می‌شود: شصت و سه میلیون و هشتصد و سی و یک هزار و پانصد و شصت و هشت</p>
+                <p style="margin-top: 10px; font-weight: 800; color: var(--lilac-dark);">
+                    خوانده می‌شود: شصت و سه میلیون و هشتصد و سی و یک هزار و پانصد و شصت و هشت
+                </p>
             </div>
 
             <p>حالا خودت امتحان کن! عدد را بخوان و گزینه‌ی درست را انتخاب کن:</p>
 
-            <!-- ابزار تعاملی ۲: خواندن عدد به حروف -->
             <div class="reading-lab">
-                <div class="reading-display" id="reading-number-display">۶۳۸۳۱۵۶۸</div>
-                
-                <div class="reading-options" id="reading-options">
-                    <!-- گزینه‌ها با JS ساخته می‌شوند -->
-                </div>
-                
+                <div class="reading-display" id="reading-number-display">۶۳٬۸۳۱٬۵۶۸</div>
+
+                <div class="reading-options" id="reading-options"></div>
+
                 <div style="text-align: center;">
-                    <button class="btn-ui blue" id="btn-new-reading-number">عدد جدید</button>
+                    <button class="btn-ui blue" id="btn-new-reading-number">🎲 عدد جدید</button>
                 </div>
                 <p id="reading-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۳: گسترده‌نویسی
-           ======================================================================== -->
+        <!-- ============ قدم ۳: گسترده‌نویسی ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۳</span>
             <h2>گسترده‌نویسی: عدد را باز کن!</h2>
@@ -761,31 +784,30 @@
 
             <div class="solved-example-box">
                 <div class="example-header">💡 مثال: عدد ۴۵۲۳</div>
-                <p>۴۵۲۳ = ۴۰۰۰ + ۵۰۰ + ۲۰ + ۳</p>
-                <p>یعنی ۴ در جایگاه هزار (۴۰۰۰)، ۵ در جایگاه صدگان (۵۰۰)، ۲ در جایگاه دهگان (۲۰) و ۳ در جایگاه یکان (۳).</p>
+                <p class="ltr" style="font-weight: 800; color: var(--blue-dark); font-size: 1.05rem;">۴۵۲۳ = ۴۰۰۰ + ۵۰۰ + ۲۰ + ۳</p>
+                <p style="margin-top: 8px;">
+                    یعنی ۴ در جایگاه هزار (۴۰۰۰)، ۵ در جایگاه صدگان (۵۰۰)، ۲ در جایگاه دهگان (۲۰) و ۳ در جایگاه یکان (۳).
+                </p>
             </div>
 
-            <!-- ابزار تعاملی ۳: گسترده‌نویسی -->
             <div class="expanded-form-lab">
                 <div class="sim-title">📝 ماشین گسترده‌نویسی</div>
-                
-                <div class="expanded-number-display" id="expanded-number-display">۴۵۲۳</div>
-                
+
+                <div class="expanded-number-display" id="expanded-number-display">۴٬۵۲۳</div>
+
                 <div class="expanded-form-output" id="expanded-form-output">
-                    <!-- خروجی گسترده -->
+                    <span class="placeholder-text">دکمه «گسترده کن» را بزن...</span>
                 </div>
-                
+
                 <div style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn-ui blue" id="btn-expand-number">گسترده کن</button>
-                    <button class="btn-ui green" id="btn-new-expand-number">عدد جدید</button>
+                    <button class="btn-ui blue" id="btn-expand-number">✂️ گسترده کن</button>
+                    <button class="btn-ui green" id="btn-new-expand-number">🎲 عدد جدید</button>
                 </div>
                 <p id="expanded-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۴: مقایسه اعداد
-           ======================================================================== -->
+        <!-- ============ قدم ۴: مقایسه اعداد ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۴</span>
             <h2>مقایسه اعداد: کدام بزرگ‌تر است؟</h2>
@@ -796,28 +818,27 @@
 
             <div class="key-tip-box">
                 <strong>📌 نکته:</strong>
-                <p style="margin-top: 6px;">اگر تعداد رقم‌های دو عدد متفاوت باشد، عددی که رقم‌های بیشتری دارد، بزرگ‌تر است. مثلاً ۱۰۰۰ > ۹۹۹</p>
+                اگر تعداد رقم‌های دو عدد متفاوت باشد، عددی که رقم‌های بیشتری دارد، بزرگ‌تر است. مثلاً <span class="ltr" style="font-weight:900;">۱۰۰۰ > ۹۹۹</span>
             </div>
 
             <div class="solved-example-box">
                 <div class="example-header">💡 مثال: مقایسه ۵۶۷۸ و ۵۶۹۱</div>
                 <p>هر دو ۴ رقمی هستند. از چپ شروع می‌کنیم:</p>
-                <ul style="margin-right: 20px; color: #0369a1; font-weight: 600;">
+                <ul style="color: #0369a1;">
                     <li>رقم اول: ۵ = ۵</li>
                     <li>رقم دوم: ۶ = ۶</li>
-                    <li>رقم سوم: ۷ < ۹ ← پس ۵۶۹۱ بزرگ‌تر است.</li>
+                    <li>رقم سوم: ۷ &lt; ۹ ← پس ۵۶۹۱ بزرگ‌تر است.</li>
                 </ul>
-                <p style="margin-top: 8px;">پس: ۵۶۷۸ < ۵۶۹۱</p>
+                <p style="margin-top: 8px; font-weight: 800;">پس: <span class="ltr">۵۶۷۸ &lt; ۵۶۹۱</span></p>
             </div>
 
-            <!-- ابزار تعاملی ۴: مقایسه اعداد -->
             <div class="compare-lab">
                 <div class="sim-title">⚖️ مقایسه اعداد: علامت مناسب را انتخاب کن!</div>
-                
+
                 <div class="compare-numbers-row">
-                    <div class="compare-num-box" id="compare-num1">۵۶۷۸</div>
+                    <div class="compare-num-box" id="compare-num1">۵٬۶۷۸</div>
                     <input type="text" class="compare-symbol-input" id="compare-symbol" placeholder="؟" maxlength="1" readonly>
-                    <div class="compare-num-box" id="compare-num2">۵۶۹۱</div>
+                    <div class="compare-num-box" id="compare-num2">۵٬۶۹۱</div>
                 </div>
 
                 <div class="compare-buttons-row">
@@ -825,22 +846,20 @@
                     <button class="btn-ui green" id="btn-compare-equal">= مساوی</button>
                     <button class="btn-ui blue" id="btn-compare-greater">&gt; بزرگ‌تر</button>
                 </div>
-                
+
                 <div style="text-align: center;">
-                    <button class="btn-ui" id="btn-new-compare">اعداد جدید</button>
+                    <button class="btn-ui" id="btn-new-compare">🎲 اعداد جدید</button>
                 </div>
                 <p id="compare-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۵: جمع‌بندی
-           ======================================================================== -->
+        <!-- ============ قدم ۵: جمع‌بندی ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۵</span>
             <h2>جمع‌بندی و تمرین</h2>
             <p>در این بخش یاد گرفتیم:</p>
-            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
+            <ul>
                 <li>✅ ارزش مکانی رقم‌ها در اعداد بزرگ</li>
                 <li>✅ خواندن و نوشتن اعداد به حروف</li>
                 <li>✅ گسترده‌نویسی اعداد</li>
@@ -853,7 +872,7 @@
 
             <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
                 <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
-                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
+                <ol style="color: #92400e;">
                     <li>عدد ۴۵۶۷۸۹ را به حروف بنویسید.</li>
                     <li>گسترده‌نویسی عدد ۹۰۸۷۶ را بنویسید.</li>
                     <li>ارزش مکانی رقم ۷ در عدد ۷۲۳۴۵۶ چقدر است؟</li>
@@ -864,93 +883,259 @@
 
     </main>
 
-    <!-- ========================================================================
-         دکمه‌های شناور
-         ======================================================================== -->
     <div class="floating-btns">
-        <a href="chapter1_part1.html" class="float-nav-btn">→ بخش قبلی</a>
-        <a href="chapter1_part3.html" class="float-nav-btn" id="next-lesson-btn">بخش بعدی ←</a>
+        <a class="float-nav-btn" id="prev-lesson-btn" href="#">
+            <span>→</span>
+            <span class="btn-label">بخش قبلی</span>
+            <span class="btn-tooltip" id="prev-tooltip">بخش قبلی</span>
+        </a>
+        <a href="../index.html" class="float-nav-btn home-btn">
+            🏠<span class="btn-label" style="margin-right:4px;">خانه</span>
+        </a>
+        <a class="float-nav-btn" id="next-lesson-btn" href="#">
+            <span class="btn-label">بخش بعدی</span>
+            <span>←</span>
+            <span class="btn-tooltip" id="next-tooltip">بخش بعدی</span>
+        </a>
     </div>
 
+    <div class="toast-notification" id="toast"></div>
+
     <script>
-        /* ========================================================================
-           لاجیک صوتی
-           ======================================================================== */
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        /* ============ ترتیب فایل‌ها ============ */
+        const FILES_ORDER = [
+            'ch01_sec01.html', 'ch01_sec02.html', 'ch01_sec03.html', 'ch01_sec04.html',
+            'ch02_sec01.html', 'ch02_sec02.html', 'ch02_sec03.html', 'ch02_sec04.html',
+            'ch03_sec01.html', 'ch03_sec02.html', 'ch03_sec03.html', 'ch03_sec04.html',
+            'ch04_sec01.html', 'ch04_sec02.html', 'ch04_sec03.html', 'ch04_sec04.html',
+            'ch05_sec01.html', 'ch05_sec02.html', 'ch05_sec03.html', 'ch05_sec04.html',
+            'ch06_sec01.html', 'ch06_sec02.html', 'ch06_sec03.html', 'ch06_sec04.html',
+            'ch07_sec01.html', 'ch07_sec02.html'
+        ];
+
+        const chapterTitles = {
+            '01': 'عدد و الگوهای عددی',
+            '02': 'کسرها',
+            '03': 'اعداد اعشاری',
+            '04': 'تقارن و مختصات',
+            '05': 'اندازه‌گیری',
+            '06': 'آمار و احتمال',
+            '07': 'مرور و جمع‌بندی'
+        };
+
+        /* ============ اعداد فارسی ============ */
+        const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+        function toFa(num) { return String(num).replace(/\d/g, d => faDigits[+d]); }
+
+        /* ============ تشخیص فایل جاری ============ */
+        function getCurrentFileName() {
+            const path = window.location.pathname;
+            let name = path.substring(path.lastIndexOf('/') + 1);
+            if (!name || name === '') name = 'ch01_sec02.html';
+            return name.toLowerCase();
+        }
+        function parseFileName(name) {
+            const match = name.match(/ch(\d+)_sec(\d+)\.html?$/i);
+            if (!match) return null;
+            return { chapter: parseInt(match[1], 10), section: parseInt(match[2], 10) };
+        }
+        function fileLabel(fileName) {
+            const info = parseFileName(fileName);
+            if (!info) return fileName;
+            return `فصل ${toFa(info.chapter)} - بخش ${toFa(info.section)}`;
+        }
+
+        const currentFile = getCurrentFileName();
+        const currentInfo = parseFileName(currentFile) || { chapter: 1, section: 2 };
+        const currentIdx = FILES_ORDER.indexOf(currentFile);
+
+        /* ============ نوار موقعیت ============ */
+        function renderLocationBar() {
+            const bar = document.getElementById('book-location-bar');
+            if (!bar) return;
+            const prevFile = currentIdx > 0 ? FILES_ORDER[currentIdx - 1] : null;
+            const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+            let html = '';
+            html += `<span class="location-chip blue">📍 الان اینجایی: فصل ${toFa(currentInfo.chapter)} - بخش ${toFa(currentInfo.section)}</span>`;
+            const chKey = String(currentInfo.chapter).padStart(2, '0');
+            if (chapterTitles[chKey]) {
+                html += `<span class="location-chip">📖 ${chapterTitles[chKey]}</span>`;
+            }
+            if (nextFile) {
+                html += `<span class="location-chip yellow">⏭️ بعدی: ${fileLabel(nextFile)}</span>`;
+            } else {
+                html += `<span class="location-chip green">🎉 آخرین بخش کتاب</span>`;
+            }
+            bar.innerHTML = html;
+        }
+        renderLocationBar();
+
+        /* ============ دکمه‌های ناوبری ============ */
+        const prevBtn = document.getElementById('prev-lesson-btn');
+        const nextBtn = document.getElementById('next-lesson-btn');
+        const prevTooltip = document.getElementById('prev-tooltip');
+        const nextTooltip = document.getElementById('next-tooltip');
+
+        const prevFile = currentIdx > 0 ? FILES_ORDER[currentIdx - 1] : null;
+        const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+        if (prevFile) {
+            prevBtn.href = prevFile;
+            prevTooltip.textContent = `→ ${fileLabel(prevFile)}`;
+        } else {
+            prevBtn.removeAttribute('href');
+            prevBtn.classList.add('disabled');
+            prevTooltip.textContent = 'این اولین بخش کتاب است';
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('این اولین بخش کتاب است. 😊');
+                playTone(300, 0.15);
+            });
+        }
+
+        if (nextFile) {
+            nextBtn.href = nextFile;
+            nextTooltip.textContent = `${fileLabel(nextFile)} ←`;
+        } else {
+            nextBtn.removeAttribute('href');
+            nextBtn.classList.add('disabled');
+            nextTooltip.textContent = 'این آخرین بخش کتاب است';
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('🎉 تبریک! تمام فصل‌ها را کامل خواندی!');
+                playTone(700, 0.25);
+                confetti({ particleCount: 120, spread: 100, origin: { y: 0.6 } });
+            });
+        }
+
+        /* ============ صوت ============ */
+        let audioCtx;
+        function ensureAudio() {
+            if (!audioCtx) {
+                try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+                catch (e) { audioCtx = null; }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        }
         function playTone(freq, duration) {
+            if (!audioCtx) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
             gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
             osc.start(); osc.stop(audioCtx.currentTime + duration);
         }
 
+        /* ============ Toast ============ */
+        const toastEl = document.getElementById('toast');
+        let toastTimer;
+        function showToast(msg, duration = 3200) {
+            toastEl.textContent = msg;
+            toastEl.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
+        }
+
         /* ========================================================================
-           تعامل ۱: ماشین ارزش مکانی
+           تعامل ۱: ماشین ارزش مکانی (اصلاح‌شده)
            ======================================================================== */
+        // ترتیب از راست به چپ: یکان، دهگان، صدگان، هزار، ده‌هزار، صد‌هزار، میلیون، ده‌میلیون، صد‌میلیون
+        const placeNames = [
+            'یکان', 'دهگان', 'صدگان',
+            'هزار', 'ده‌هزار', 'صد‌هزار',
+            'میلیون', 'ده‌میلیون', 'صد‌میلیون'
+        ];
+        // ارزش هر جایگاه
+        const placeValues = [
+            1, 10, 100,
+            1000, 10000, 100000,
+            1000000, 10000000, 100000000
+        ];
+        // رنگ هر گروه (برای تمایز بصری)
+        const groupClasses = [
+            'group-ones', 'group-ones', 'group-ones',
+            'group-thousands', 'group-thousands', 'group-thousands',
+            'group-millions', 'group-millions', 'group-millions'
+        ];
+
         const digitInputsContainer = document.getElementById('digit-inputs');
         const placeValueLabels = document.getElementById('place-value-labels');
-        
-        // ساخت ۹ اینپوت برای ۹ رقم
-        const placeNames = ['صد میلیون', 'ده میلیون', 'میلیون', 'صد هزار', 'ده هزار', 'هزار', 'صدگان', 'دهگان', 'یکان'];
-        const placeValues = [100000000, 10000000, 1000000, 100000, 10000, 1000, 100, 10, 1];
 
+        // ساخت 9 سلول ورودی + برچسب در یک grid مشترک
         for (let i = 0; i < 9; i++) {
             const input = document.createElement('input');
-            input.type = 'number';
-            input.className = 'digit-input-box';
-            input.min = 0;
-            input.max = 9;
-            input.placeholder = '-';
+            input.type = 'text';
+            input.inputMode = 'numeric';
+            input.pattern = '[0-9]*';
+            input.maxLength = 1;
+            input.className = 'digit-input-box ' + groupClasses[i];
+            input.placeholder = '·';
             input.dataset.index = i;
             input.addEventListener('input', function() {
+                // فقط رقم بپذیر
+                this.value = this.value.replace(/[^0-9۰-۹]/g, '');
                 if (this.value.length > 1) this.value = this.value.slice(0, 1);
+                // تبدیل اعداد فارسی به انگلیسی
+                this.value = this.value.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+                // اگر رقم پر شد، خودکار برو خانه بعدی (به سمت چپ)
+                if (this.value.length === 1) {
+                    const next = document.querySelectorAll('.digit-input-box')[i + 1];
+                    if (next) next.focus();
+                }
+            });
+            input.addEventListener('keydown', function(e) {
+                // Backspace روی خانه خالی → برو خانه قبلی
+                if (e.key === 'Backspace' && this.value === '') {
+                    const prev = document.querySelectorAll('.digit-input-box')[i - 1];
+                    if (prev) { prev.focus(); }
+                }
             });
             digitInputsContainer.appendChild(input);
 
             const label = document.createElement('span');
-            label.innerText = placeNames[i];
+            label.textContent = placeNames[i];
             placeValueLabels.appendChild(label);
         }
 
         document.getElementById('btn-analyze-number').addEventListener('click', function() {
+            ensureAudio();
             playTone(550, 0.1);
+
             const inputs = document.querySelectorAll('.digit-input-box');
+            let numValue = 0;
             let digits = [];
-            inputs.forEach(input => {
-                digits.push(input.value ? parseInt(input.value) : 0);
+            inputs.forEach((input, i) => {
+                const v = parseInt(input.value, 10) || 0;
+                digits.push(v);
+                numValue += v * placeValues[i];
             });
 
-            // ساخت عدد
-            let numValue = 0;
-            for (let i = 0; i < digits.length; i++) {
-                numValue += digits[i] * placeValues[i];
-            }
-
-            // تولید متن حروفی
-            const words = numberToPersianWords(numValue);
-            
-            // نمایش خروجی
             const outputBox = document.getElementById('numeral-words');
             if (numValue === 0) {
-                outputBox.innerText = 'عدد را وارد کنید...';
+                outputBox.innerHTML = '<span class="output-words">یه عدد بزرگ‌تر وارد کن! 🙂</span>';
             } else {
-                outputBox.innerHTML = `<strong>${numValue.toLocaleString('fa-IR')}</strong><br><span style="font-size:0.95rem;">${words}</span>`;
+                const words = numberToPersianWords(numValue);
+                outputBox.innerHTML = `
+                    <div class="output-number">${toFa(numValue).replace(/\B(?=(\d{3})+(?!\d))/g, '٬')}</div>
+                    <div class="output-words">${words}</div>
+                `;
             }
 
-            // انیمیشن
             outputBox.classList.remove('pop-in');
             void outputBox.offsetWidth;
             outputBox.classList.add('pop-in');
         });
 
-        // تابع تبدیل عدد به حروف فارسی
+        /* ========================================================================
+           تبدیل عدد به حروف فارسی
+           ======================================================================== */
         function numberToPersianWords(num) {
             if (num === 0) return 'صفر';
-            
+
             const yekan = ['', 'یک', 'دو', 'سه', 'چهار', 'پنج', 'شش', 'هفت', 'هشت', 'نه'];
             const dahgan = ['', '', 'بیست', 'سی', 'چهل', 'پنجاه', 'شصت', 'هفتاد', 'هشتاد', 'نود'];
             const dah = ['ده', 'یازده', 'دوازده', 'سیزده', 'چهارده', 'پانزده', 'شانزده', 'هفده', 'هجده', 'نوزده'];
@@ -961,9 +1146,9 @@
                 let parts = [];
                 const s = Math.floor(n / 100);
                 const remainder = n % 100;
-                
+
                 if (s > 0) parts.push(sadgan[s]);
-                
+
                 if (remainder >= 10 && remainder < 20) {
                     parts.push(dah[remainder - 10]);
                 } else {
@@ -972,7 +1157,7 @@
                     if (d > 0) parts.push(dahgan[d]);
                     if (y > 0) parts.push(yekan[y]);
                 }
-                
+
                 return parts.join(' و ');
             }
 
@@ -996,14 +1181,26 @@
             return result.join(' و ');
         }
 
-        // اجرای اولیه
-        // قرار دادن عدد ۶۳۸۳۱۵۶۸ در اینپوت‌ها به صورت پیش‌فرض
-        const defaultDigits = [0, 6, 3, 8, 3, 1, 5, 6, 8];
-        const allInputs = document.querySelectorAll('.digit-input-box');
+        // مقدار اولیه
+        const defaultDigits = [8, 6, 5, 1, 3, 8, 3, 6, 0]; // یعنی عدد 063831568 → 63831568
+        const initInputs = document.querySelectorAll('.digit-input-box');
         defaultDigits.forEach((val, idx) => {
-            if (allInputs[idx]) allInputs[idx].value = val;
+            if (initInputs[idx]) initInputs[idx].value = val;
         });
-        document.getElementById('btn-analyze-number').click();
+        // به‌روزرسانی خروجی بدون صدا
+        (function initAnalyze() {
+            const inputs = document.querySelectorAll('.digit-input-box');
+            let numValue = 0;
+            inputs.forEach((input, i) => {
+                numValue += (parseInt(input.value, 10) || 0) * placeValues[i];
+            });
+            const outputBox = document.getElementById('numeral-words');
+            const words = numberToPersianWords(numValue);
+            outputBox.innerHTML = `
+                <div class="output-number">${toFa(numValue).replace(/\B(?=(\d{3})+(?!\d))/g, '٬')}</div>
+                <div class="output-words">${words}</div>
+            `;
+        })();
 
         /* ========================================================================
            تعامل ۲: خواندن عدد به حروف
@@ -1017,66 +1214,65 @@
             { num: 9080706, words: 'نه میلیون و هشتاد هزار و هفتصد و شش' }
         ];
         let currentReadingIndex = 0;
-        let readingOptionsData = [];
 
         function generateReadingQuestion() {
             currentReadingIndex = Math.floor(Math.random() * readingNumbers.length);
             const correctData = readingNumbers[currentReadingIndex];
-            
-            // تولید گزینه‌های غلط
+
             const wrongOptions = readingNumbers
                 .filter((_, idx) => idx !== currentReadingIndex)
                 .map(item => item.words)
                 .sort(() => Math.random() - 0.5)
                 .slice(0, 3);
-            
-            readingOptionsData = [
+
+            const allOptions = [
                 { text: correctData.words, isCorrect: true },
                 ...wrongOptions.map(w => ({ text: w, isCorrect: false }))
             ].sort(() => Math.random() - 0.5);
 
-            // نمایش عدد
-            document.getElementById('reading-number-display').innerText = correctData.num.toLocaleString('fa-IR');
+            document.getElementById('reading-number-display').textContent =
+                toFa(correctData.num).replace(/\B(?=(\d{3})+(?!\d))/g, '٬');
 
-            // ساخت گزینه‌ها
             const optionsContainer = document.getElementById('reading-options');
             optionsContainer.innerHTML = '';
-            readingOptionsData.forEach((opt, idx) => {
+            allOptions.forEach((opt) => {
                 const btn = document.createElement('button');
                 btn.className = 'reading-option-btn';
-                btn.innerText = opt.text;
-                btn.dataset.index = idx;
+                btn.textContent = opt.text;
                 btn.addEventListener('click', function() {
                     checkReadingAnswer(this, opt.isCorrect);
                 });
                 optionsContainer.appendChild(btn);
             });
 
-            document.getElementById('reading-feedback').innerText = '';
+            document.getElementById('reading-feedback').textContent = '';
         }
 
         function checkReadingAnswer(btn, isCorrect) {
+            ensureAudio();
             const allBtns = document.querySelectorAll('.reading-option-btn');
             allBtns.forEach(b => {
                 b.disabled = true;
-                if (b.dataset.index == btn.dataset.index) {
+                if (b === btn) {
                     b.classList.add(isCorrect ? 'correct' : 'wrong');
                 }
             });
 
+            const fb = document.getElementById('reading-feedback');
             if (isCorrect) {
-                document.getElementById('reading-feedback').innerText = '✅ آفرین! درست انتخاب کردی.';
-                document.getElementById('reading-feedback').style.color = 'var(--success)';
+                fb.textContent = '✅ آفرین! درست انتخاب کردی.';
+                fb.style.color = 'var(--success)';
                 playTone(600, 0.3);
                 confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
             } else {
-                document.getElementById('reading-feedback').innerText = '❌ اشتباه بود. دوباره تلاش کن!';
-                document.getElementById('reading-feedback').style.color = 'var(--danger)';
+                fb.textContent = '❌ اشتباه بود. دوباره تلاش کن!';
+                fb.style.color = 'var(--danger)';
                 playTone(300, 0.3);
             }
         }
 
         document.getElementById('btn-new-reading-number').addEventListener('click', () => {
+            ensureAudio();
             playTone(440, 0.05);
             generateReadingQuestion();
         });
@@ -1084,60 +1280,78 @@
         generateReadingQuestion();
 
         /* ========================================================================
-           تعامل ۳: گسترده‌نویسی
+           تعامل ۳: گسترده‌نویسی (اصلاح‌شده)
            ======================================================================== */
         let currentExpandNumber = 4523;
 
         function generateExpandNumber() {
-            // تولید عدد تصادفی ۴ رقمی
             currentExpandNumber = Math.floor(1000 + Math.random() * 9000);
-            document.getElementById('expanded-number-display').innerText = currentExpandNumber.toLocaleString('fa-IR');
-            document.getElementById('expanded-form-output').innerHTML = '<span style="color: var(--text-muted);">دکمه «گسترده کن» را بزن...</span>';
-            document.getElementById('expanded-feedback').innerText = '';
+            document.getElementById('expanded-number-display').textContent =
+                toFa(currentExpandNumber).replace(/\B(?=(\d{3})+(?!\d))/g, '٬');
+            document.getElementById('expanded-form-output').innerHTML =
+                '<span class="placeholder-text">دکمه «گسترده کن» را بزن...</span>';
+            document.getElementById('expanded-feedback').textContent = '';
         }
 
         document.getElementById('btn-expand-number').addEventListener('click', function() {
+            ensureAudio();
             playTone(550, 0.1);
+
             const numStr = currentExpandNumber.toString();
             const len = numStr.length;
             let parts = [];
-            
+
             for (let i = 0; i < len; i++) {
-                const digit = parseInt(numStr[i]);
+                const digit = parseInt(numStr[i], 10);
                 if (digit !== 0) {
-                    const placeValue = digit * Math.pow(10, len - 1 - i);
-                    parts.push(placeValue);
+                    parts.push(digit * Math.pow(10, len - 1 - i));
                 }
             }
 
             const outputBox = document.getElementById('expanded-form-output');
             outputBox.innerHTML = '';
-            
+
+            // عدد اصلی سمت چپ تساوی
+            const numToken = document.createElement('span');
+            numToken.className = 'expanded-number-token pop-in';
+            numToken.textContent = toFa(currentExpandNumber);
+            outputBox.appendChild(numToken);
+
+            // علامت تساوی
+            const eqSign = document.createElement('span');
+            eqSign.className = 'eq-sign';
+            eqSign.textContent = '=';
+            outputBox.appendChild(eqSign);
+
+            // اجزای گسترده
             parts.forEach((val, idx) => {
                 const span = document.createElement('span');
                 span.className = 'expanded-part pop-in';
-                span.innerText = val.toLocaleString('fa-IR');
+                span.textContent = toFa(val);
                 outputBox.appendChild(span);
-                
+
                 if (idx < parts.length - 1) {
                     const plusSpan = document.createElement('span');
-                    plusSpan.innerText = ' + ';
-                    plusSpan.style.fontWeight = '900';
-                    plusSpan.style.color = 'var(--text-muted)';
+                    plusSpan.className = 'op-sign';
+                    plusSpan.textContent = '+';
                     outputBox.appendChild(plusSpan);
                 }
             });
 
-            document.getElementById('expanded-feedback').innerText = `✅ گسترده‌نویسی عدد ${currentExpandNumber.toLocaleString('fa-IR')} انجام شد.`;
-            document.getElementById('expanded-feedback').style.color = 'var(--success)';
+            const fb = document.getElementById('expanded-feedback');
+            fb.textContent = `✅ گسترده‌نویسی عدد ${toFa(currentExpandNumber)} انجام شد.`;
+            fb.style.color = 'var(--success)';
         });
 
         document.getElementById('btn-new-expand-number').addEventListener('click', () => {
+            ensureAudio();
             playTone(440, 0.05);
             generateExpandNumber();
         });
 
-        generateExpandNumber();
+        // مقدار اولیه
+        document.getElementById('expanded-number-display').textContent =
+            toFa(currentExpandNumber).replace(/\B(?=(\d{3})+(?!\d))/g, '٬');
 
         /* ========================================================================
            تعامل ۴: مقایسه اعداد
@@ -1146,42 +1360,43 @@
         let compareNum2 = 5691;
 
         function generateCompareNumbers() {
-            // تولید دو عدد تصادفی ۴ یا ۵ رقمی
             const digits = Math.random() > 0.5 ? 5 : 4;
             const min = Math.pow(10, digits - 1);
             const max = Math.pow(10, digits) - 1;
-            
+
             compareNum1 = Math.floor(min + Math.random() * (max - min));
             compareNum2 = Math.floor(min + Math.random() * (max - min));
-            
-            // اطمینان از اینکه اعداد یکسان نباشند
             if (compareNum1 === compareNum2) compareNum2 += 1;
 
-            document.getElementById('compare-num1').innerText = compareNum1.toLocaleString('fa-IR');
-            document.getElementById('compare-num2').innerText = compareNum2.toLocaleString('fa-IR');
+            document.getElementById('compare-num1').textContent =
+                toFa(compareNum1).replace(/\B(?=(\d{3})+(?!\d))/g, '٬');
+            document.getElementById('compare-num2').textContent =
+                toFa(compareNum2).replace(/\B(?=(\d{3})+(?!\d))/g, '٬');
             document.getElementById('compare-symbol').value = '';
-            document.getElementById('compare-feedback').innerText = '';
-            document.getElementById('compare-feedback').style.color = 'var(--text-body)';
+            document.getElementById('compare-feedback').textContent = '';
         }
 
         function checkCompare(selectedSymbol) {
+            ensureAudio();
             let correctSymbol;
             if (compareNum1 < compareNum2) correctSymbol = '<';
             else if (compareNum1 > compareNum2) correctSymbol = '>';
             else correctSymbol = '=';
 
-            const symbolInput = document.getElementById('compare-symbol');
-            symbolInput.value = selectedSymbol;
-            const feedbackEl = document.getElementById('compare-feedback');
+            document.getElementById('compare-symbol').value = selectedSymbol;
+            const fb = document.getElementById('compare-feedback');
+
+            const n1fa = toFa(compareNum1).replace(/\B(?=(\d{3})+(?!\d))/g, '٬');
+            const n2fa = toFa(compareNum2).replace(/\B(?=(\d{3})+(?!\d))/g, '٬');
 
             if (selectedSymbol === correctSymbol) {
-                feedbackEl.innerText = `✅ آفرین! ${compareNum1.toLocaleString('fa-IR')} ${correctSymbol} ${compareNum2.toLocaleString('fa-IR')} درست است.`;
-                feedbackEl.style.color = 'var(--success)';
+                fb.textContent = `✅ آفرین! ${n1fa} ${correctSymbol} ${n2fa} درست است.`;
+                fb.style.color = 'var(--success)';
                 playTone(600, 0.3);
                 confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
             } else {
-                feedbackEl.innerText = `❌ اشتباه! علامت درست «${correctSymbol}» است.`;
-                feedbackEl.style.color = 'var(--danger)';
+                fb.textContent = `❌ اشتباه! علامت درست «${correctSymbol}» است.`;
+                fb.style.color = 'var(--danger)';
                 playTone(300, 0.3);
             }
         }
@@ -1190,20 +1405,18 @@
         document.getElementById('btn-compare-equal').addEventListener('click', () => checkCompare('='));
         document.getElementById('btn-compare-greater').addEventListener('click', () => checkCompare('>'));
         document.getElementById('btn-new-compare').addEventListener('click', () => {
+            ensureAudio();
             playTone(440, 0.05);
             generateCompareNumbers();
         });
 
         generateCompareNumbers();
 
-        /* ========================================================================
-           مدیریت دکمه‌های شناور
-           ======================================================================== */
-        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('به بخش بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
-        });
-
+        /* ============ راه‌اندازی AudioCtx ============ */
+        document.body.addEventListener('click', function initAudioOnce() {
+            ensureAudio();
+            document.body.removeEventListener('click', initAudioOnce);
+        }, { once: true });
     </script>
 </body>
 </html>

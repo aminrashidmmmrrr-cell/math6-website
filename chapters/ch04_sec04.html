@@ -2,473 +2,442 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>فصل ۴ - بخش ۴: تقارن و مختصات | درسنامه تعاملی</title>
-    
-    <!-- قلم زیبای وزیرمتن -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 
-    <!-- انیمیشن کاغذ رنگی -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* ========================================================================
-           ۱. متغیرها و تم رنگی
-           ======================================================================== */
         :root {
             --lilac-bg: #f7f1fc;
             --lilac-soft: #f1e7fb;
             --lilac-border: #d8b4fe;
             --lilac-main: #9333ea;
             --lilac-dark: #6b21a8;
-            --lilac-glow: rgba(147, 51, 234, 0.15);
-            
             --blue-soft: #e0f2fe;
             --blue-main: #0284c7;
             --blue-dark: #0369a1;
-            
             --success: #16a34a;
             --success-bg: rgba(22, 163, 74, 0.1);
             --danger: #dc2626;
             --danger-bg: rgba(220, 38, 38, 0.1);
             --warning: #ca8a04;
-            --highlight: #fef08a;
             --purple-soft: #ede9fe;
             --purple-main: #8b5cf6;
             --purple-dark: #6d28d9;
-
-            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-bg: rgba(255, 255, 255, 0.9);
             --glass-border: rgba(255, 255, 255, 0.9);
-            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
-            --card-hover-bg: rgba(255, 255, 255, 0.95);
-            
+            --glass-shadow: 0 12px 36px rgba(107, 33, 168, 0.1);
             --text-title: #2e1065;
             --text-body: #475569;
             --text-muted: #64748b;
-            
             --radius-lg: 24px;
             --radius-md: 16px;
-            --radius-sm: 8px;
+            --radius-sm: 10px;
         }
 
-        /* ========================================================================
-           ۲. استایل‌های پایه
-           ======================================================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; -webkit-tap-highlight-color: transparent; }
+        html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
         body {
             background-color: var(--lilac-bg);
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
             background-attachment: fixed;
             color: var(--text-body);
             min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            line-height: 1.8;
+            padding: 16px;
+            display: flex; flex-direction: column;
+            overflow-x: hidden; line-height: 1.8;
         }
 
-        /* ========================================================================
-           ۳. نوار هدر
-           ======================================================================== */
+        /* ============ نمایش مختصات به صورت ستونی با کروشه ============ */
+        .coord-pair {
+            display: inline-flex;
+            align-items: stretch;
+            gap: 4px;
+            vertical-align: middle;
+            direction: ltr;
+            font-weight: 900;
+            line-height: 1;
+            padding: 3px 4px;
+            font-variant-numeric: tabular-nums;
+        }
+        .coord-pair .bracket-left,
+        .coord-pair .bracket-right {
+            width: 6px;
+            min-height: 34px;
+            border: 2.5px solid currentColor;
+            align-self: stretch;
+        }
+        .coord-pair .bracket-left {
+            border-right: none;
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+        .coord-pair .bracket-right {
+            border-left: none;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+        .coord-pair .coord-values {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 3px;
+            padding: 3px 8px;
+            min-height: 34px;
+        }
+        .coord-pair .coord-values > span {
+            line-height: 1.1;
+            display: block;
+            direction: ltr;
+            unicode-bidi: isolate;
+        }
+        .coord-pair.small .bracket-left,
+        .coord-pair.small .bracket-right { width: 5px; min-height: 28px; border-width: 2px; }
+        .coord-pair.small .coord-values { padding: 2px 6px; min-height: 28px; }
+        .coord-pair.small .coord-values > span { font-size: 0.9em; }
+
+        /* ============ هدر ============ */
         .lesson-top-nav {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto 20px;
-            padding: 14px 28px;
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px; padding: 14px 22px;
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
             box-shadow: var(--glass-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px; z-index: 100;
         }
-
         .go-back-link {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 800;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.2s, transform 0.2s;
+            text-decoration: none; color: var(--text-muted);
+            font-weight: 800; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 8px;
+            transition: color 0.2s, transform 0.2s; white-space: nowrap;
         }
-
-        .go-back-link:hover {
-            color: var(--purple-main);
-            transform: translateX(3px);
-        }
-
-        .header-lesson-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-        }
-
+        .go-back-link:hover { color: var(--purple-dark); transform: translateX(3px); }
+        .header-lesson-info { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 0; }
         .chapter-label-badge {
-            background: var(--purple-soft);
-            color: var(--purple-dark);
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 3px 10px;
+            background: var(--purple-soft); color: var(--purple-dark);
+            font-size: 0.72rem; font-weight: 800;
+            padding: 3px 10px; border-radius: 20px; white-space: nowrap;
+        }
+        .lesson-title-text { font-size: 1.05rem; font-weight: 900; color: var(--text-title); letter-spacing: -0.5px; }
+
+        /* ============ نوار موقعیت ============ */
+        .book-location-bar {
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px;
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 14px;
+            background: var(--glass-bg);
             border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(107, 33, 168, 0.06);
+            flex-wrap: wrap;
+            justify-content: center;
         }
-
-        .lesson-title-text {
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: var(--text-title);
+        .location-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--purple-soft); color: var(--purple-dark);
+            padding: 4px 12px; border-radius: 20px;
+            font-weight: 800; font-size: 0.82rem;
+            white-space: nowrap;
         }
+        .location-chip.blue { background: var(--blue-soft); color: var(--blue-dark); }
+        .location-chip.yellow { background: #fef9c3; color: #854d0e; }
+        .location-chip.green { background: #dcfce7; color: #166534; }
 
-        /* ========================================================================
-           ۴. کارت‌های آموزشی
-           ======================================================================== */
+        /* ============ کارت‌ها ============ */
         .main-lesson-wrapper {
-            max-width: 1100px;
-            width: 100%;
+            max-width: 1100px; width: 100%;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding-bottom: 80px;
+            display: flex; flex-direction: column;
+            gap: 20px; padding-bottom: 120px;
         }
-
         .step-teaching-card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
-            padding: 28px;
+            padding: 26px;
             box-shadow: var(--glass-shadow);
-            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
-
-        .step-teaching-card:hover {
-            background-color: var(--card-hover-bg);
-            transform: translateY(-5px);
-        }
-
         .step-number-badge {
-            display: inline-flex;
-            width: 32px;
-            height: 32px;
+            display: inline-flex; width: 34px; height: 34px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--purple-main), var(--purple-dark));
-            color: white;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 0.95rem;
-            margin-bottom: 16px;
+            color: white; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1rem;
+            margin-bottom: 14px;
             box-shadow: 0 4px 10px rgba(139, 92, 246, 0.25);
         }
-
         .step-teaching-card h2 {
-            font-size: 1.4rem;
-            color: var(--text-title);
-            margin-bottom: 12px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-size: 1.3rem; color: var(--text-title);
+            margin-bottom: 12px; font-weight: 900;
+            display: flex; align-items: center; gap: 10px;
+            letter-spacing: -0.8px; line-height: 1.6; flex-wrap: wrap;
+        }
+        .step-teaching-card p { font-size: 1rem; line-height: 2; color: var(--text-body); margin-bottom: 14px; }
+        .step-teaching-card ul, .step-teaching-card ol {
+            margin-right: 22px; color: var(--text-body);
+            font-weight: 600; line-height: 2.1; margin-bottom: 12px;
         }
 
-        .step-teaching-card p {
-            font-size: 1rem;
-            line-height: 1.9;
-            color: var(--text-body);
-            margin-bottom: 16px;
-        }
-
-        /* ========================================================================
-           ۵. المان‌های خاص
-           ======================================================================== */
+        /* ============ المان‌های خاص ============ */
         .teacher-speech-bubble {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.75);
             border-radius: var(--radius-md);
-            padding: 18px 22px;
+            padding: 16px 20px;
             border: 1px dashed var(--purple-main);
             color: var(--purple-dark);
-            margin: 16px 0;
-            position: relative;
-            font-style: italic;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
+            margin: 14px 0; font-style: italic;
+            display: flex; gap: 12px; align-items: flex-start;
+            font-size: 0.95rem; line-height: 1.9;
         }
-
-        .teacher-speech-bubble::before {
-            content: "🧑‍🏫";
-            font-size: 1.4rem;
-            font-style: normal;
-        }
+        .teacher-speech-bubble::before { content: "🧑‍🏫"; font-size: 1.4rem; font-style: normal; flex-shrink: 0; }
 
         .solved-example-box {
             background: var(--blue-soft);
             border: 1px solid rgba(2, 132, 199, 0.2);
             border-radius: var(--radius-md);
-            padding: 20px;
-            margin: 16px 0;
+            padding: 18px; margin: 14px 0;
+            word-break: break-word;
+            font-size: 1.05rem;
         }
-
         .example-header {
-            font-weight: 800;
-            color: var(--blue-dark);
-            font-size: 1rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-weight: 800; color: var(--blue-dark);
+            font-size: 1rem; margin-bottom: 8px;
+            display: flex; align-items: center; gap: 8px;
+            flex-wrap: wrap;
         }
+        .solved-example-box p { font-size: 1.05rem; line-height: 2.2; color: var(--blue-dark); margin-bottom: 8px; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 
         .key-tip-box {
             background: var(--success-bg);
             border: 1px solid var(--success);
             border-radius: var(--radius-md);
-            padding: 16px;
-            margin: 16px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--success);
-            font-weight: 700;
-            font-size: 0.9rem;
+            padding: 14px 16px; margin: 14px 0;
+            color: var(--success); font-weight: 700;
+            font-size: 0.95rem; line-height: 1.9;
         }
+        .key-tip-box strong { color: var(--success); }
+        .key-tip-box ul { margin-top: 8px; line-height: 2.1; }
+        .key-tip-box li { margin-bottom: 8px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
 
-        /* ========================================================================
-           ۶. بخش تعاملی ۱: قرینه نسبت به محورها
-           ======================================================================== */
-        .interactive-container {
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            margin-top: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            border: 1px solid var(--glass-border);
+        /* ============ فرمول قانون ============ */
+        .rule-formula {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            color: inherit;
+        }
+        .rule-arrow {
+            font-weight: 900;
+            color: inherit;
+            font-size: 1.1em;
         }
 
         .sim-title {
-            font-weight: 800;
-            font-size: 1.1rem;
+            font-weight: 800; font-size: 1.05rem;
             color: var(--purple-dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
+            display: flex; align-items: center; gap: 8px; line-height: 1.6;
+            flex-wrap: wrap;
         }
 
-        .reflection-axis-lab {
+        /* ============ آزمایشگاه‌ها ============ */
+        .lab-box {
             background: white;
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 20px;
             border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
+            display: flex; flex-direction: column;
+            gap: 16px; align-items: center;
         }
 
-        #reflection-axis-canvas {
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        .canvas-container canvas {
             border-radius: var(--radius-sm);
             border: 2px solid #e2e8f0;
             background: #fafafa;
+            display: block;
+            width: 100%;
+            max-width: 480px;
+            height: auto;
+            cursor: crosshair;
+            touch-action: manipulation;
         }
 
         .reflection-controls {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             flex-wrap: wrap;
             justify-content: center;
-            align-items: center;
+            width: 100%;
         }
-
         .reflection-controls button {
             background: white;
             border: 2px solid var(--purple-main);
-            border-radius: var(--radius-sm);
+            border-radius: 30px;
             padding: 10px 18px;
             font-weight: 800;
             font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.2s;
             color: var(--purple-dark);
+            font-family: 'Vazirmatn', sans-serif;
+            min-height: 44px;
         }
-
-        .reflection-controls button:hover:not(:disabled) {
+        .reflection-controls button:hover {
             background: var(--purple-soft);
             transform: translateY(-2px);
         }
         .reflection-controls button.active {
             background: var(--purple-main);
             color: white;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
         }
 
         .reflection-info {
             background: var(--purple-soft);
-            padding: 16px 24px;
+            padding: 14px 20px;
             border-radius: var(--radius-sm);
             font-weight: 700;
             color: var(--purple-dark);
             text-align: center;
-            font-size: 1.1rem;
-        }
-
-        /* ========================================================================
-           ۷. بخش تعاملی ۲: قرینه نسبت به مبدأ
-           ======================================================================== */
-        .reflection-origin-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .origin-display {
+            font-size: 1rem;
+            width: 100%;
+            line-height: 2.2;
             display: flex;
             align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
             justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        .origin-box {
-            background: var(--purple-soft);
-            padding: 16px 24px;
-            border-radius: var(--radius-sm);
-            font-size: 1.2rem;
-            font-weight: 900;
-            color: var(--purple-dark);
-            text-align: center;
-            min-width: 130px;
-            direction: ltr;
-        }
-
-        .origin-arrow {
-            font-size: 2rem;
-            color: var(--purple-main);
-        }
-
-        .origin-input-row {
+        /* ============ اسلایدر ============ */
+        .slider-row {
             display: flex;
+            align-items: center;
             gap: 12px;
+            padding: 12px 16px;
+            background: #fafafa;
+            border-radius: var(--radius-sm);
+            border: 1px solid #e2e8f0;
+            width: 100%;
+            max-width: 520px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .slider-row label {
+            font-weight: 800;
+            color: var(--purple-dark);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        .slider-row input[type="range"] {
+            flex: 1;
+            min-width: 120px;
+            accent-color: var(--purple-main);
+            height: 8px;
+            cursor: pointer;
+        }
+        .slider-value {
+            background: linear-gradient(135deg, var(--purple-main), var(--purple-dark));
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 900;
+            font-size: 0.9rem;
+            min-width: 70px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
+            font-variant-numeric: tabular-nums;
+            direction: ltr;
+            unicode-bidi: isolate;
+        }
+
+        /* ============ ورودی‌ها ============ */
+        .input-row {
+            display: flex;
+            gap: 10px;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
         }
-
-        .origin-input-row input {
+        .input-row label {
+            font-weight: 800;
+            color: var(--purple-dark);
+            font-size: 0.92rem;
+        }
+        .input-row input {
             width: 80px;
             padding: 10px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 900;
             text-align: center;
             border: 2px solid var(--purple-main);
-            border-radius: 8px;
+            border-radius: 10px;
             color: var(--purple-dark);
             background: #fafafa;
+            font-family: 'Vazirmatn', sans-serif;
+            direction: ltr;
         }
-        .origin-input-row input:focus { outline: none; border-color: var(--purple-main); }
+        .input-row input:focus {
+            outline: none;
+            border-color: var(--purple-dark);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+        }
 
-        /* ========================================================================
-           ۸. بخش تعاملی ۳: قرینه شکل روی مختصات
-           ======================================================================== */
-        .shape-reflection-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
+        /* گروه ورودی شکل مثلث */
+        .shape-inputs {
             display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        #shape-reflection-canvas {
-            border-radius: var(--radius-sm);
-            border: 2px solid #e2e8f0;
-            background: #fafafa;
-        }
-
-        .shape-coord-inputs {
-            display: flex;
-            gap: 12px;
+            gap: 14px;
             flex-wrap: wrap;
             justify-content: center;
-            align-items: center;
-            background: #fafafa;
-            padding: 16px;
-            border-radius: var(--radius-sm);
-            border: 1px solid #e2e8f0;
+            width: 100%;
         }
-
-        .shape-coord-inputs .coord-pair {
+        .shape-input-group {
             display: flex;
             gap: 4px;
             align-items: center;
+            background: #fafafa;
+            padding: 6px 10px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
         }
-
-        .shape-coord-inputs input {
-            width: 60px;
+        .shape-input-group .vertex-label {
+            font-weight: 900;
+            color: var(--purple-dark);
+            font-size: 1rem;
+            min-width: 18px;
+            text-align: center;
+        }
+        .shape-input-group input {
+            width: 56px;
             padding: 8px;
             font-size: 1rem;
-            font-weight: 900;
-            text-align: center;
-            border: 2px solid var(--purple-main);
-            border-radius: 8px;
-            color: var(--purple-dark);
-            background: white;
-        }
-        .shape-coord-inputs input:focus { outline: none; border-color: var(--purple-main); }
-
-        /* ========================================================================
-           ۹. بخش تعاملی ۴: تمرین تقارن و مختصات
-           ======================================================================== */
-        .practice-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
         }
 
+        /* ============ تمرین ============ */
         .practice-question {
             background: var(--purple-soft);
-            padding: 20px 32px;
+            padding: 16px 20px;
             border-radius: var(--radius-sm);
-            font-size: 1.2rem;
+            font-size: 1.05rem;
             font-weight: 900;
             color: var(--purple-dark);
             display: flex;
@@ -477,130 +446,122 @@
             flex-wrap: wrap;
             justify-content: center;
             text-align: center;
+            width: 100%;
+            line-height: 2.2;
         }
 
-        .practice-answer-row {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .practice-answer-row input {
-            width: 80px;
-            padding: 10px;
-            font-size: 1.2rem;
-            font-weight: 900;
-            text-align: center;
-            border: 2px solid var(--purple-main);
-            border-radius: 8px;
-            color: var(--purple-dark);
-            background: #fafafa;
-        }
-        .practice-answer-row input:focus { outline: none; border-color: var(--purple-main); }
-
-        /* ========================================================================
-           ۱۰. دکمه‌ها
-           ======================================================================== */
+        /* ============ دکمه‌ها ============ */
         .btn-ui {
             background: linear-gradient(135deg, var(--purple-main), var(--purple-dark));
-            color: white;
-            border: 2px solid white;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 1rem;
+            color: white; border: none;
+            padding: 12px 22px; border-radius: 30px;
+            font-weight: 800; font-size: 0.92rem;
             cursor: pointer;
             transition: transform 0.15s, box-shadow 0.15s;
             box-shadow: 0 6px 16px rgba(139, 92, 246, 0.25);
+            font-family: 'Vazirmatn', sans-serif;
+            min-height: 46px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .btn-ui:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.35);
-        }
+        .btn-ui:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(139, 92, 246, 0.35); }
         .btn-ui:active { transform: translateY(0); }
         .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
-
         .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
         .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
-
         .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
         .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
-
         .btn-ui.lilac { background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark)); box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25); }
-        .btn-ui.lilac:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
 
         .action-btns-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            display: flex; justify-content: center;
+            gap: 10px; flex-wrap: wrap;
         }
-
         .feedback-display {
-            font-weight: 800;
-            text-align: center;
-            min-height: 28px;
-            font-size: 1rem;
-            margin-top: 10px;
-            transition: color 0.2s;
-        }
-
-        /* ========================================================================
-           ۱۱. دکمه‌های شناور
-           ======================================================================== */
-        .floating-btns {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
+            font-weight: 800; text-align: center;
+            min-height: 28px; font-size: 0.98rem;
+            margin-top: 8px; transition: color 0.2s; line-height: 2.2;
+            word-break: break-word;
+            width: 100%;
             display: flex;
-            justify-content: space-between;
-            pointer-events: none;
-            z-index: 200;
-            max-width: 1100px;
-            margin: 0 auto;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
+        /* ============ دکمه‌های شناور ============ */
+        .floating-btns {
+            position: fixed; bottom: 16px;
+            left: 16px; right: 16px;
+            display: flex; justify-content: space-between;
+            align-items: center; gap: 10px;
+            pointer-events: none; z-index: 200;
+            max-width: 1100px; margin: 0 auto;
+        }
         .float-nav-btn {
             pointer-events: auto;
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 800;
-            color: var(--text-title);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 12px 20px; border-radius: 30px;
+            font-weight: 800; color: var(--text-title);
+            text-decoration: none; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
             transition: all 0.2s;
+            font-size: 0.9rem;
+            font-family: 'Vazirmatn', sans-serif;
+            position: relative;
         }
-
-        .float-nav-btn:hover {
-            background: var(--purple-main);
-            color: white;
+        .float-nav-btn:hover:not(.disabled) {
+            background: var(--purple-main); color: white;
             transform: translateY(-3px);
             box-shadow: 0 15px 35px rgba(139, 92, 246, 0.25);
         }
-
-        @media (max-width: 600px) {
-            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
-            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
-            .header-lesson-info { align-items: center; }
+        .float-nav-btn.disabled { opacity: 0.45; cursor: not-allowed; }
+        .float-nav-btn.disabled:hover { background: var(--glass-bg); color: var(--text-title); transform: none; }
+        .float-nav-btn.home-btn {
+            background: linear-gradient(135deg, var(--purple-main), var(--purple-dark));
+            color: white; border-color: transparent;
+            padding: 12px 16px;
         }
-
-        /* ========================================================================
-           ۱۲. انیمیشن
-           ======================================================================== */
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        .float-nav-btn.home-btn:hover {
+            background: linear-gradient(135deg, var(--purple-dark), var(--purple-main));
+            transform: translateY(-3px) scale(1.05);
         }
-        .pop-in { animation: popIn 0.3s ease-out forwards; }
+        .float-nav-btn .btn-tooltip {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            background: rgba(46, 16, 101, 0.95);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 8px;
+            white-space: nowrap;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .float-nav-btn:hover .btn-tooltip { opacity: 1; }
+        #prev-lesson-btn .btn-tooltip { right: 0; }
+        #next-lesson-btn .btn-tooltip { left: 0; }
+
+        /* ============ Toast ============ */
+        .toast-notification {
+            position: fixed; bottom: 100px; left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: rgba(46, 16, 101, 0.96);
+            color: white; padding: 14px 24px;
+            border-radius: 14px; font-weight: 700;
+            font-size: 0.92rem; z-index: 1000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            max-width: 90%; text-align: center;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+            line-height: 1.7;
+        }
+        .toast-notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
@@ -610,13 +571,75 @@
             80% { transform: translateX(4px); }
         }
         .shake-anim { animation: shake 0.4s ease-in-out; }
+
+        /* ============ ریسپانسیو ============ */
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .lesson-top-nav {
+                flex-direction: column; align-items: stretch;
+                text-align: center; padding: 14px 16px; gap: 10px;
+            }
+            .header-lesson-info { align-items: center; }
+            .go-back-link { justify-content: center; }
+            .lesson-title-text { text-align: center; }
+
+            .step-teaching-card { padding: 20px 16px; border-radius: 20px; }
+            .step-teaching-card h2 { font-size: 1.15rem; }
+            .step-teaching-card p { font-size: 0.95rem; }
+            .step-teaching-card ul, .step-teaching-card ol { margin-right: 18px; font-size: 0.95rem; }
+
+            .lab-box { padding: 14px 10px; }
+            .reflection-controls button { padding: 8px 14px; font-size: 0.82rem; }
+            .slider-row { padding: 10px 12px; gap: 8px; }
+
+            .action-btns-row { flex-direction: column; align-items: stretch; }
+            .action-btns-row .btn-ui { width: 100%; }
+
+            .float-nav-btn { padding: 11px 14px; font-size: 0.82rem; gap: 5px; }
+            .float-nav-btn .btn-label { display: none; }
+            .float-nav-btn.home-btn { padding: 11px 14px; }
+
+            .teacher-speech-bubble { padding: 12px 14px; font-size: 0.88rem; }
+            .key-tip-box { padding: 12px 12px; font-size: 0.88rem; }
+        }
+
+        @media (max-width: 480px) {
+            .input-row { flex-direction: column; align-items: stretch; gap: 8px; }
+            .input-row input { width: 100%; max-width: 180px; align-self: center; }
+
+            /* اسلایدر عمودی در موبایل */
+            .slider-row { flex-direction: column; align-items: stretch; }
+            .slider-row input[type="range"] { width: 100%; }
+
+            /* ورودی‌های شکل مثلث */
+            .shape-inputs { flex-direction: column; gap: 8px; }
+            .shape-input-group {
+                justify-content: center;
+                width: 100%;
+                max-width: 260px;
+                margin: 0 auto;
+            }
+            .shape-input-group input { width: 60px; }
+
+            /* مختصات در موبایل کوچک‌تر */
+            .coord-pair { padding: 2px 3px; gap: 3px; }
+            .coord-pair .bracket-left,
+            .coord-pair .bracket-right { width: 5px; min-height: 30px; border-width: 2px; }
+            .coord-pair .coord-values { padding: 2px 6px; min-height: 30px; }
+
+            .reflection-info { padding: 10px 12px; font-size: 0.92rem; gap: 6px; }
+        }
+
+        @media (max-width: 360px) {
+            .step-teaching-card { padding: 16px 12px; }
+            .step-teaching-card h2 { font-size: 1.05rem; }
+            .practice-question { font-size: 0.95rem; padding: 12px 14px; }
+            .btn-ui { padding: 10px 16px; font-size: 0.85rem; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ========================================================================
-         نوار ناوبری بالای درسنامه
-         ======================================================================== -->
     <header class="lesson-top-nav">
         <a href="../index.html" class="go-back-link">
             <span>← برگشت به کتاب اصلی</span>
@@ -627,550 +650,1086 @@
         </div>
     </header>
 
+    <div class="book-location-bar" id="book-location-bar"></div>
+
     <main class="main-lesson-wrapper">
 
-        <!-- ========================================================================
-           قدم ۱: ارتباط تقارن و مختصات
-           ======================================================================== -->
+        <!-- ============ قدم ۱ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۱</span>
             <h2>تقارن و مختصات: دنیای آینه‌ای!</h2>
             <p>
-                وقتی یک شکل را روی صفحه‌ی مختصات رسم می‌کنیم، می‌توانیم قرینه‌ی آن را 
-                نسبت به محورهای مختصات یا مبدأ پیدا کنیم. برای این کار، کافیست مختصات 
-                رأس‌های شکل را تغییر دهیم.
+                وقتی یک شکل را روی صفحه‌ی مختصات رسم می‌کنیم، می‌توانیم قرینه‌ی آن را
+                نسبت به محورهای مختصات، مبدأ یا هر خط دلخواهی پیدا کنیم.
+                برای این کار، کافیست مختصات رأس‌های شکل را بر اساس قانون تقارن تغییر دهیم.
             </p>
 
             <div class="key-tip-box">
-                <strong>📌 قوانین قرینه‌ی نقاط نسبت به محورها و مبدأ:</strong>
-                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.4;">
-                    <li><strong>قرینه نسبت به محور x (محور طول‌ها):</strong> (x, y) → (x, -y) — علامت y تغییر می‌کند.</li>
-                    <li><strong>قرینه نسبت به محور y (محور عرض‌ها):</strong> (x, y) → (-x, y) — علامت x تغییر می‌کند.</li>
-                    <li><strong>قرینه نسبت به مبدأ مختصات:</strong> (x, y) → (-x, -y) — علامت هر دو تغییر می‌کند.</li>
+                <strong>📌 قوانین قرینه‌ی نقاط:</strong>
+                <ul>
+                    <li>
+                        <strong>نسبت به محور x:</strong>
+                        <span class="rule-formula">
+                            <span class="coord-pair small" style="color: inherit;">
+                                <span class="bracket-left"></span>
+                                <span class="coord-values"><span>x</span><span>y</span></span>
+                                <span class="bracket-right"></span>
+                            </span>
+                            <span class="rule-arrow">←</span>
+                            <span class="coord-pair small" style="color: inherit;">
+                                <span class="bracket-left"></span>
+                                <span class="coord-values"><span>x</span><span>−y</span></span>
+                                <span class="bracket-right"></span>
+                            </span>
+                        </span>
+                        <span>— فقط عرض تغییر علامت می‌دهد.</span>
+                    </li>
+                    <li>
+                        <strong>نسبت به محور y:</strong>
+                        <span class="rule-formula">
+                            <span class="coord-pair small" style="color: inherit;">
+                                <span class="bracket-left"></span>
+                                <span class="coord-values"><span>x</span><span>y</span></span>
+                                <span class="bracket-right"></span>
+                            </span>
+                            <span class="rule-arrow">←</span>
+                            <span class="coord-pair small" style="color: inherit;">
+                                <span class="bracket-left"></span>
+                                <span class="coord-values"><span>−x</span><span>y</span></span>
+                                <span class="bracket-right"></span>
+                            </span>
+                        </span>
+                        <span>— فقط طول تغییر علامت می‌دهد.</span>
+                    </li>
+                    <li>
+                        <strong>نسبت به مبدأ مختصات:</strong>
+                        <span class="rule-formula">
+                            <span class="coord-pair small" style="color: inherit;">
+                                <span class="bracket-left"></span>
+                                <span class="coord-values"><span>x</span><span>y</span></span>
+                                <span class="bracket-right"></span>
+                            </span>
+                            <span class="rule-arrow">←</span>
+                            <span class="coord-pair small" style="color: inherit;">
+                                <span class="bracket-left"></span>
+                                <span class="coord-values"><span>−x</span><span>−y</span></span>
+                                <span class="bracket-right"></span>
+                            </span>
+                        </span>
+                        <span>— هر دو تغییر علامت می‌دهند.</span>
+                    </li>
                 </ul>
             </div>
 
             <div class="solved-example-box">
-                <div class="example-header">💡 مثال: نقطه (۳، ۲)</div>
-                <ul style="margin-right: 20px; color: #0369a1; font-weight: 600; line-height: 2.2;">
-                    <li>قرینه نسبت به محور x: (۳، ۲-)</li>
-                    <li>قرینه نسبت به محور y: (۳-، ۲)</li>
-                    <li>قرینه نسبت به مبدأ: (۳-، ۲-)</li>
-                </ul>
+                <div class="example-header">
+                    <span>💡 مثال: نقطه‌ی</span>
+                    <span class="coord-pair small" style="color: var(--blue-dark);">
+                        <span class="bracket-left"></span>
+                        <span class="coord-values"><span>۳</span><span>۲</span></span>
+                        <span class="bracket-right"></span>
+                    </span>
+                </div>
+                <p>
+                    <span>قرینه‌ی آن نسبت به محور x:</span>
+                    <span class="coord-pair small" style="color: var(--blue-dark);">
+                        <span class="bracket-left"></span>
+                        <span class="coord-values"><span>۳</span><span>−۲</span></span>
+                        <span class="bracket-right"></span>
+                    </span>
+                </p>
+                <p>
+                    <span>قرینه‌ی آن نسبت به محور y:</span>
+                    <span class="coord-pair small" style="color: var(--blue-dark);">
+                        <span class="bracket-left"></span>
+                        <span class="coord-values"><span>−۳</span><span>۲</span></span>
+                        <span class="bracket-right"></span>
+                    </span>
+                </p>
+                <p>
+                    <span>قرینه‌ی آن نسبت به مبدأ:</span>
+                    <span class="coord-pair small" style="color: var(--blue-dark);">
+                        <span class="bracket-left"></span>
+                        <span class="coord-values"><span>−۳</span><span>−۲</span></span>
+                        <span class="bracket-right"></span>
+                    </span>
+                </p>
             </div>
 
             <div class="teacher-speech-bubble">
-                «قرینه‌یابی روی مختصات مثل این است که شکل را در آینه ببینی! 
+                «قرینه‌یابی روی مختصات مثل این است که شکل را در آینه ببینی!
                 فقط کافیه علامت یکی از مختصات یا هر دو را عوض کنی.»
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۲: قرینه نسبت به محورها
-           ======================================================================== -->
+        <!-- ============ قدم ۲ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۲</span>
             <h2>قرینه نسبت به محورها: آینه‌ی افقی و عمودی</h2>
             <p>
-                یک نقطه را انتخاب کن و ببین قرینه‌ی آن نسبت به محور x و محور y کجاست.
+                یک نقطه روی صفحه انتخاب کن و ببین قرینه‌ی آن نسبت به محور x، محور y یا مبدأ کجاست.
+                روی صفحه کلیک کن تا نقطه‌ی مورد نظرت را تعیین کنی.
             </p>
 
-            <!-- ابزار تعاملی ۱: قرینه نسبت به محورها -->
-            <div class="reflection-axis-lab">
+            <div class="lab-box">
                 <div class="sim-title">🪞 آزمایشگاه قرینه نسبت به محورها</div>
-                
-                <canvas id="reflection-axis-canvas" width="450" height="450"></canvas>
 
-                <div class="reflection-controls">
-                    <button data-axis="x" class="active">نسبت به محور x</button>
-                    <button data-axis="y">نسبت به محور y</button>
-                    <button data-axis="origin">نسبت به مبدأ</button>
+                <div class="canvas-container">
+                    <canvas id="refl-axis-canvas"></canvas>
                 </div>
 
-                <div class="reflection-info" id="reflection-axis-info">
+                <div class="reflection-controls" id="axis-type-controls">
+                    <button data-axis="x" class="active">📏 نسبت به محور x</button>
+                    <button data-axis="y">📐 نسبت به محور y</button>
+                    <button data-axis="origin">🎯 نسبت به مبدأ</button>
+                </div>
+
+                <div class="reflection-info" id="refl-axis-info">
                     روی صفحه کلیک کن تا نقطه‌ای انتخاب کنی.
                 </div>
 
                 <div class="action-btns-row">
-                    <button class="btn-ui green" id="btn-apply-reflection">قرینه کن</button>
-                    <button class="btn-ui blue" id="btn-reset-reflection">بازنشانی</button>
+                    <button class="btn-ui green" id="btn-apply-refl">🪞 قرینه کن</button>
+                    <button class="btn-ui blue" id="btn-reset-refl">↩️ بازنشانی</button>
                 </div>
-                <p id="reflection-axis-feedback" class="feedback-display"></p>
+                <p id="refl-axis-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۳: قرینه نسبت به مبدأ
-           ======================================================================== -->
+        <!-- ============ قدم ۳: آزمایشگاه خط تقارن دلخواه ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۳</span>
-            <h2>قرینه نسبت به مبدأ: چرخش ۱۸۰ درجه!</h2>
+            <h2>خط تقارن دلخواه: خودت انتخاب کن!</h2>
             <p>
-                قرینه‌ی یک نقطه نسبت به مبدأ مختصات، همان دوران ۱۸۰ درجه‌ی آن نقطه 
-                حول مبدأ است. در این حالت، هم علامت x و هم علامت y تغییر می‌کند.
+                در این آزمایشگاه، یک خط تقارن دلخواه (افقی یا عمودی) انتخاب کن و موقعیت آن را
+                با اسلایدر تغییر بده. شکل به صورت زنده نسبت به این خط قرینه می‌شود.
             </p>
 
-            <!-- ابزار تعاملی ۲: قرینه نسبت به مبدأ -->
-            <div class="reflection-origin-lab">
-                <div class="sim-title">🔄 ماشین قرینه نسبت به مبدأ</div>
-                
-                <div class="origin-display">
-                    <div class="origin-box" id="origin-input-box">(۳ ، ۲)</div>
-                    <div class="origin-arrow">→</div>
-                    <div class="origin-box" id="origin-output-box" style="background: var(--blue-soft); color: var(--blue-dark);">
-                        (؟ ، ؟)
-                    </div>
+            <div class="lab-box">
+                <div class="sim-title">✨ آزمایشگاه خط تقارن دلخواه</div>
+
+                <div class="canvas-container">
+                    <canvas id="custom-line-canvas"></canvas>
                 </div>
 
-                <div class="origin-input-row">
-                    <span style="font-weight:800;">نقطه (x, y):</span>
-                    <input type="number" id="origin-x" value="3" min="-10" max="10">
-                    <input type="number" id="origin-y" value="2" min="-10" max="10">
-                    <button class="btn-ui green" id="btn-find-origin-reflection">قرینه نسبت به مبدأ</button>
+                <div class="reflection-controls" id="line-type-controls">
+                    <button data-linetype="vertical" class="active">📏 خط عمودی به شکل x = a</button>
+                    <button data-linetype="horizontal">📐 خط افقی به شکل y = b</button>
                 </div>
-                <p id="origin-reflection-feedback" class="feedback-display"></p>
+
+                <div class="slider-row">
+                    <label for="line-pos-slider">موقعیت خط تقارن:</label>
+                    <input type="range" id="line-pos-slider" min="-8" max="8" value="0" step="0.5">
+                    <div class="slider-value"><span id="line-pos-display">۰</span></div>
+                </div>
+
+                <div class="reflection-info" id="custom-line-info">
+                    با اسلایدر، موقعیت خط تقارن را تغییر بده.
+                </div>
+
+                <p id="custom-line-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۴: قرینه شکل روی مختصات
-           ======================================================================== -->
+        <!-- ============ قدم ۴: قرینه نسبت به مبدأ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۴</span>
+            <h2>قرینه نسبت به مبدأ: چرخش ۱۸۰ درجه!</h2>
+            <p>
+                قرینه‌ی یک نقطه نسبت به مبدأ مختصات، همان دوران ۱۸۰ درجه‌ی آن نقطه حول مبدأ است.
+                در این حالت، هم علامت x و هم علامت y تغییر می‌کند.
+            </p>
+
+            <div class="lab-box">
+                <div class="sim-title">🔄 ماشین قرینه نسبت به مبدأ</div>
+
+                <div class="reflection-info" id="origin-visual" style="gap: 20px;">
+                    <span>نقطه:</span>
+                    <span id="origin-input-visual"></span>
+                    <span style="font-size: 1.6rem;">←</span>
+                    <span>قرینه:</span>
+                    <span id="origin-output-visual"></span>
+                </div>
+
+                <div class="input-row">
+                    <label for="origin-x">x:</label>
+                    <input type="number" id="origin-x" value="3" min="-10" max="10" inputmode="numeric">
+                    <label for="origin-y">y:</label>
+                    <input type="number" id="origin-y" value="2" min="-10" max="10" inputmode="numeric">
+                    <button class="btn-ui green" id="btn-origin-refl">🔄 قرینه کن</button>
+                </div>
+                <p id="origin-refl-feedback" class="feedback-display"></p>
+            </div>
+        </section>
+
+        <!-- ============ قدم ۵ ============ -->
+        <section class="step-teaching-card">
+            <span class="step-number-badge">۵</span>
             <h2>قرینه شکل روی مختصات: کل شکل را آینه کن!</h2>
             <p>
-                مختصات رأس‌های یک مثلث را وارد کن و ببین قرینه‌ی آن نسبت به محور y 
+                مختصات رأس‌های یک مثلث را وارد کن و ببین قرینه‌ی آن نسبت به محور x، محور y یا مبدأ
                 چگونه رسم می‌شود.
             </p>
 
-            <!-- ابزار تعاملی ۳: قرینه شکل روی مختصات -->
-            <div class="shape-reflection-lab">
+            <div class="lab-box">
                 <div class="sim-title">🔺 قرینه‌ی شکل روی مختصات</div>
 
-                <canvas id="shape-reflection-canvas" width="500" height="450"></canvas>
-
-                <div class="shape-coord-inputs">
-                    <div class="coord-pair">
-                        <span style="font-weight:800; color: var(--purple-dark);">A</span>
-                        <input type="number" id="sax" value="-4" min="-10" max="10">
-                        <input type="number" id="say" value="1" min="-10" max="10">
-                    </div>
-                    <div class="coord-pair">
-                        <span style="font-weight:800; color: var(--purple-dark);">B</span>
-                        <input type="number" id="sbx" value="-1" min="-10" max="10">
-                        <input type="number" id="sby" value="4" min="-10" max="10">
-                    </div>
-                    <div class="coord-pair">
-                        <span style="font-weight:800; color: var(--purple-dark);">C</span>
-                        <input type="number" id="scx" value="-2" min="-10" max="10">
-                        <input type="number" id="scy" value="-2" min="-10" max="10">
-                    </div>
+                <div class="canvas-container">
+                    <canvas id="shape-refl-canvas"></canvas>
                 </div>
 
-                <div class="reflection-controls">
-                    <button data-shape-axis="x" class="active">قرینه نسبت به محور x</button>
-                    <button data-shape-axis="y">قرینه نسبت به محور y</button>
-                    <button data-shape-axis="origin">قرینه نسبت به مبدأ</button>
+                <div class="reflection-controls" id="shape-axis-controls">
+                    <button data-shape-axis="x">📏 نسبت به محور x</button>
+                    <button data-shape-axis="y" class="active">📐 نسبت به محور y</button>
+                    <button data-shape-axis="origin">🎯 نسبت به مبدأ</button>
+                </div>
+
+                <div class="shape-inputs">
+                    <div class="shape-input-group">
+                        <span class="vertex-label">A:</span>
+                        <input type="number" id="sax" value="-4" min="-10" max="10" inputmode="numeric">
+                        <input type="number" id="say" value="1" min="-10" max="10" inputmode="numeric">
+                    </div>
+                    <div class="shape-input-group">
+                        <span class="vertex-label">B:</span>
+                        <input type="number" id="sbx" value="-1" min="-10" max="10" inputmode="numeric">
+                        <input type="number" id="sby" value="4" min="-10" max="10" inputmode="numeric">
+                    </div>
+                    <div class="shape-input-group">
+                        <span class="vertex-label">C:</span>
+                        <input type="number" id="scx" value="-2" min="-10" max="10" inputmode="numeric">
+                        <input type="number" id="scy" value="-2" min="-10" max="10" inputmode="numeric">
+                    </div>
                 </div>
 
                 <div class="action-btns-row">
-                    <button class="btn-ui green" id="btn-draw-shape-reflection">رسم قرینه</button>
-                    <button class="btn-ui blue" id="btn-reset-shape-reflection">بازنشانی</button>
+                    <button class="btn-ui green" id="btn-draw-shape">📐 رسم قرینه</button>
+                    <button class="btn-ui blue" id="btn-reset-shape">↩️ بازنشانی</button>
                 </div>
-                <p id="shape-reflection-feedback" class="feedback-display"></p>
+                <p id="shape-refl-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۵: تمرین تقارن و مختصات
-           ======================================================================== -->
+        <!-- ============ قدم ۶ ============ -->
         <section class="step-teaching-card">
-            <span class="step-number-badge">۵</span>
-            <h2>تمرین تقارن و مختصات: مختصات قرینه را پیدا کن!</h2>
-            <p>
-                مختصات قرینه‌ی نقطه را با توجه به نوع تقارن خواسته شده بنویس.
-            </p>
+            <span class="step-number-badge">۶</span>
+            <h2>تمرین تقارن و مختصات</h2>
+            <p>قرینه‌ی نقطه را با توجه به نوع تقارن خواسته شده پیدا کن و مختصات آن را بنویس.</p>
 
-            <!-- ابزار تعاملی ۴: تمرین تقارن و مختصات -->
-            <div class="practice-lab">
-                <div class="sim-title">📝 تمرین تقارن و مختصات</div>
-                
-                <div class="practice-question" id="practice-question">
-                    <!-- سوال با JS ساخته می‌شود -->
-                </div>
+            <div class="lab-box">
+                <div class="sim-title">📝 تمرین تعاملی</div>
 
-                <div class="practice-answer-row">
-                    <span style="font-weight:800;">x:</span>
-                    <input type="number" id="practice-answer-x" placeholder="x">
-                    <span style="font-weight:800;">y:</span>
-                    <input type="number" id="practice-answer-y" placeholder="y">
-                    <button class="btn-ui green" id="btn-check-practice">بررسی</button>
+                <div class="practice-question" id="practice-question"></div>
+
+                <div class="input-row">
+                    <label for="prac-x">x:</label>
+                    <input type="number" id="prac-x" min="-20" max="20" inputmode="numeric" placeholder="x">
+                    <label for="prac-y">y:</label>
+                    <input type="number" id="prac-y" min="-20" max="20" inputmode="numeric" placeholder="y">
+                    <button class="btn-ui green" id="btn-check-practice">✓ بررسی</button>
                 </div>
 
                 <p id="practice-feedback" class="feedback-display"></p>
-                <button class="btn-ui blue" id="btn-new-practice">سوال جدید</button>
+                <button class="btn-ui blue" id="btn-new-practice">🎲 سوال جدید</button>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۶: جمع‌بندی
-           ======================================================================== -->
+        <!-- ============ قدم ۷ ============ -->
         <section class="step-teaching-card">
-            <span class="step-number-badge">۶</span>
+            <span class="step-number-badge">۷</span>
             <h2>جمع‌بندی و تمرین</h2>
             <p>در این بخش یاد گرفتیم:</p>
-            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
-                <li>✅ قرینه نسبت به محور x: (x, y) → (x, -y) — فقط عرض تغییر می‌کند.</li>
-                <li>✅ قرینه نسبت به محور y: (x, y) → (-x, y) — فقط طول تغییر می‌کند.</li>
-                <li>✅ قرینه نسبت به مبدأ: (x, y) → (-x, -y) — هر دو تغییر می‌کنند.</li>
-                <li>✅ قرینه‌ی شکل‌ها روی صفحه مختصات: با تغییر علامت مختصات رأس‌ها.</li>
+            <ul>
+                <li>
+                    ✅ قرینه نسبت به محور x:
+                    <span class="rule-formula">
+                        <span class="coord-pair small" style="color: inherit;">
+                            <span class="bracket-left"></span>
+                            <span class="coord-values"><span>x</span><span>y</span></span>
+                            <span class="bracket-right"></span>
+                        </span>
+                        <span class="rule-arrow">←</span>
+                        <span class="coord-pair small" style="color: inherit;">
+                            <span class="bracket-left"></span>
+                            <span class="coord-values"><span>x</span><span>−y</span></span>
+                            <span class="bracket-right"></span>
+                        </span>
+                    </span>
+                </li>
+                <li>
+                    ✅ قرینه نسبت به محور y:
+                    <span class="rule-formula">
+                        <span class="coord-pair small" style="color: inherit;">
+                            <span class="bracket-left"></span>
+                            <span class="coord-values"><span>x</span><span>y</span></span>
+                            <span class="bracket-right"></span>
+                        </span>
+                        <span class="rule-arrow">←</span>
+                        <span class="coord-pair small" style="color: inherit;">
+                            <span class="bracket-left"></span>
+                            <span class="coord-values"><span>−x</span><span>y</span></span>
+                            <span class="bracket-right"></span>
+                        </span>
+                    </span>
+                </li>
+                <li>
+                    ✅ قرینه نسبت به مبدأ:
+                    <span class="rule-formula">
+                        <span class="coord-pair small" style="color: inherit;">
+                            <span class="bracket-left"></span>
+                            <span class="coord-values"><span>x</span><span>y</span></span>
+                            <span class="bracket-right"></span>
+                        </span>
+                        <span class="rule-arrow">←</span>
+                        <span class="coord-pair small" style="color: inherit;">
+                            <span class="bracket-left"></span>
+                            <span class="coord-values"><span>−x</span><span>−y</span></span>
+                            <span class="bracket-right"></span>
+                        </span>
+                    </span>
+                </li>
+                <li>✅ قرینه نسبت به خط دلخواه افقی یا عمودی.</li>
+                <li>✅ قرینه‌ی شکل‌ها روی صفحه‌ی مختصات.</li>
                 <li>✅ کاربرد تقارن و مختصات در گرافیک، نقشه‌خوانی و طراحی.</li>
             </ul>
 
             <div class="teacher-speech-bubble">
-                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی. 
-                یادت باشه که تقارن و مختصات، پایه‌ی خیلی از مفاهیم ریاضی در سال‌های بعدی مثل تابع و هندسه تحلیلی هستند.»
+                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی.
+                یادت باشه که تقارن و مختصات، پایه‌ی خیلی از مفاهیم ریاضی در سال‌های بعدی هستند.»
             </div>
 
             <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
                 <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
-                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
-                    <li>قرینه‌ی نقطه (۵، ۳) را نسبت به محور x پیدا کنید.</li>
-                    <li>قرینه‌ی نقطه (۲-، ۴) را نسبت به محور y پیدا کنید.</li>
-                    <li>قرینه‌ی نقطه (۶، ۱-) را نسبت به مبدأ مختصات پیدا کنید.</li>
-                    <li>مثلثی با رأس‌های (۱، ۱)، (۴، ۱) و (۱، ۳) را روی صفحه رسم کنید و قرینه‌ی آن را نسبت به محور y پیدا کنید.</li>
+                <ol style="color: #92400e;">
+                    <li>
+                        <span>قرینه‌ی نقطه‌ی</span>
+                        <span class="coord-pair small" style="color: #92400e;"><span class="bracket-left"></span><span class="coord-values"><span>۵</span><span>۳</span></span><span class="bracket-right"></span></span>
+                        <span>را نسبت به محور x پیدا کنید.</span>
+                    </li>
+                    <li>
+                        <span>قرینه‌ی نقطه‌ی</span>
+                        <span class="coord-pair small" style="color: #92400e;"><span class="bracket-left"></span><span class="coord-values"><span>−۲</span><span>۴</span></span><span class="bracket-right"></span></span>
+                        <span>را نسبت به محور y پیدا کنید.</span>
+                    </li>
+                    <li>
+                        <span>قرینه‌ی نقطه‌ی</span>
+                        <span class="coord-pair small" style="color: #92400e;"><span class="bracket-left"></span><span class="coord-values"><span>۶</span><span>−۱</span></span><span class="bracket-right"></span></span>
+                        <span>را نسبت به مبدأ مختصات پیدا کنید.</span>
+                    </li>
+                    <li>
+                        <span>مثلثی با رأس‌های</span>
+                        <span class="coord-pair small" style="color: #92400e;"><span class="bracket-left"></span><span class="coord-values"><span>۱</span><span>۱</span></span><span class="bracket-right"></span></span>
+                        <span>و</span>
+                        <span class="coord-pair small" style="color: #92400e;"><span class="bracket-left"></span><span class="coord-values"><span>۴</span><span>۱</span></span><span class="bracket-right"></span></span>
+                        <span>و</span>
+                        <span class="coord-pair small" style="color: #92400e;"><span class="bracket-left"></span><span class="coord-values"><span>۱</span><span>۳</span></span><span class="bracket-right"></span></span>
+                        <span>را رسم کنید و قرینه‌ی آن را نسبت به محور y پیدا کنید.</span>
+                    </li>
                 </ol>
             </div>
         </section>
 
     </main>
 
-    <!-- ========================================================================
-         دکمه‌های شناور
-         ======================================================================== -->
     <div class="floating-btns">
-        <a href="chapter4_part3.html" class="float-nav-btn">→ بخش قبلی</a>
-        <a href="chapter5_part1.html" class="float-nav-btn" id="next-lesson-btn">فصل بعدی ←</a>
+        <a class="float-nav-btn" id="prev-lesson-btn" href="#">
+            <span>→</span>
+            <span class="btn-label">بخش قبلی</span>
+            <span class="btn-tooltip" id="prev-tooltip">بخش قبلی</span>
+        </a>
+        <a href="../index.html" class="float-nav-btn home-btn">
+            🏠<span class="btn-label" style="margin-right:4px;">خانه</span>
+        </a>
+        <a class="float-nav-btn" id="next-lesson-btn" href="#">
+            <span class="btn-label">بخش بعدی</span>
+            <span>←</span>
+            <span class="btn-tooltip" id="next-tooltip">بخش بعدی</span>
+        </a>
     </div>
 
+    <div class="toast-notification" id="toast"></div>
+
     <script>
-        /* ========================================================================
-           لاجیک صوتی
-           ======================================================================== */
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        /* ============ ترتیب فایل‌ها ============ */
+        const FILES_ORDER = [
+            'ch01_sec01.html', 'ch01_sec02.html', 'ch01_sec03.html', 'ch01_sec04.html',
+            'ch02_sec01.html', 'ch02_sec02.html', 'ch02_sec03.html', 'ch02_sec04.html',
+            'ch03_sec01.html', 'ch03_sec02.html', 'ch03_sec03.html', 'ch03_sec04.html',
+            'ch04_sec01.html', 'ch04_sec02.html', 'ch04_sec03.html', 'ch04_sec04.html',
+            'ch05_sec01.html', 'ch05_sec02.html', 'ch05_sec03.html', 'ch05_sec04.html',
+            'ch06_sec01.html', 'ch06_sec02.html', 'ch06_sec03.html', 'ch06_sec04.html',
+            'ch07_sec01.html', 'ch07_sec02.html'
+        ];
+
+        const chapterTitles = {
+            '01': 'عدد و الگوهای عددی',
+            '02': 'کسرها',
+            '03': 'اعداد اعشاری',
+            '04': 'تقارن و مختصات',
+            '05': 'اندازه‌گیری',
+            '06': 'آمار و احتمال',
+            '07': 'مرور و جمع‌بندی'
+        };
+
+        const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+        function toFa(str) { return String(str).replace(/\d/g, d => faDigits[+d]); }
+
+        // ✅ منفی همیشه سمت چپ عدد با علامت منفی استاندارد (−)
+        function toFaSigned(n) {
+            const num = Number(n);
+            if (num < 0) return '−' + toFa(Math.abs(num));
+            return toFa(num);
+        }
+
+        /* ============ ساخت HTML مختصات به صورت ستونی با کروشه ============ */
+        function coordHTML(x, y, size) {
+            const cls = size === 'small' ? 'coord-pair small' : 'coord-pair';
+            const xs = typeof x === 'string' ? x : toFaSigned(x);
+            const ys = typeof y === 'string' ? y : toFaSigned(y);
+            return `<span class="${cls}">
+                <span class="bracket-left"></span>
+                <span class="coord-values"><span>${xs}</span><span>${ys}</span></span>
+                <span class="bracket-right"></span>
+            </span>`;
+        }
+
+        function getCurrentFileName() {
+            const path = window.location.pathname;
+            let name = path.substring(path.lastIndexOf('/') + 1);
+            if (!name || name === '') name = 'ch04_sec04.html';
+            return name.toLowerCase();
+        }
+        function parseFileName(name) {
+            const match = name.match(/ch(\d+)_sec(\d+)\.html?$/i);
+            if (!match) return null;
+            return { chapter: parseInt(match[1], 10), section: parseInt(match[2], 10) };
+        }
+        function fileLabel(fileName) {
+            const info = parseFileName(fileName);
+            if (!info) return fileName;
+            return `فصل ${toFa(info.chapter)} - بخش ${toFa(info.section)}`;
+        }
+
+        const currentFile = getCurrentFileName();
+        const currentInfo = parseFileName(currentFile) || { chapter: 4, section: 4 };
+        const currentIdx = FILES_ORDER.indexOf(currentFile);
+
+        /* ============ نوار موقعیت ============ */
+        function renderLocationBar() {
+            const bar = document.getElementById('book-location-bar');
+            if (!bar) return;
+            const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+            let html = '';
+            html += `<span class="location-chip blue">📍 الان اینجایی: فصل ${toFa(currentInfo.chapter)} - بخش ${toFa(currentInfo.section)}</span>`;
+            const chKey = String(currentInfo.chapter).padStart(2, '0');
+            if (chapterTitles[chKey]) {
+                html += `<span class="location-chip">📖 ${chapterTitles[chKey]}</span>`;
+            }
+            if (nextFile) {
+                html += `<span class="location-chip yellow">⏭️ بعدی: ${fileLabel(nextFile)}</span>`;
+            } else {
+                html += `<span class="location-chip green">🎉 آخرین بخش کتاب</span>`;
+            }
+            bar.innerHTML = html;
+        }
+        renderLocationBar();
+
+        /* ============ دکمه‌های ناوبری ============ */
+        const prevBtn = document.getElementById('prev-lesson-btn');
+        const nextBtn = document.getElementById('next-lesson-btn');
+        const prevTooltip = document.getElementById('prev-tooltip');
+        const nextTooltip = document.getElementById('next-tooltip');
+
+        const prevFile = currentIdx > 0 ? FILES_ORDER[currentIdx - 1] : null;
+        const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+        if (prevFile) {
+            prevBtn.href = prevFile;
+            prevTooltip.textContent = `→ ${fileLabel(prevFile)}`;
+        } else {
+            prevBtn.removeAttribute('href');
+            prevBtn.classList.add('disabled');
+            prevTooltip.textContent = 'این اولین بخش کتاب است';
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('این اولین بخش کتاب است. 😊');
+                playTone(300, 0.15);
+            });
+        }
+
+        if (nextFile) {
+            nextBtn.href = nextFile;
+            nextTooltip.textContent = `${fileLabel(nextFile)} ←`;
+        } else {
+            nextBtn.removeAttribute('href');
+            nextBtn.classList.add('disabled');
+            nextTooltip.textContent = 'این آخرین بخش کتاب است';
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('🎉 تبریک! تمام فصل‌ها را کامل خواندی!');
+                playTone(700, 0.25);
+                confetti({ particleCount: 120, spread: 100, origin: { y: 0.6 } });
+            });
+        }
+
+        /* ============ صوت ============ */
+        let audioCtx;
+        function ensureAudio() {
+            if (!audioCtx) {
+                try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+                catch (e) { audioCtx = null; }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        }
         function playTone(freq, duration) {
+            if (!audioCtx) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
             gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
             osc.start(); osc.stop(audioCtx.currentTime + duration);
         }
 
-        /* ========================================================================
-           تعامل ۱: قرینه نسبت به محورها
-           ======================================================================== */
-        const reflAxisCanvas = document.getElementById('reflection-axis-canvas');
-        const reflAxisCtx = reflAxisCanvas.getContext('2d');
-        const REFL_AXIS_CENTER = { x: 225, y: 225 };
-        const REFL_AXIS_SCALE = 20;
-        let selectedReflectionPoint = null;
-        let currentAxisType = 'x';
+        /* ============ Toast ============ */
+        const toastEl = document.getElementById('toast');
+        let toastTimer;
+        function showToast(msg, duration = 3200) {
+            toastEl.textContent = msg;
+            toastEl.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
+        }
 
-        function drawReflectionAxisAxes() {
-            const w = reflAxisCanvas.width;
-            const h = reflAxisCanvas.height;
-            
-            reflAxisCtx.clearRect(0, 0, w, h);
+        /* ============ ابزار کنواس ============ */
+        function setupCanvas(canvas, logicalW, logicalH) {
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            canvas.width = logicalW * dpr;
+            canvas.height = logicalH * dpr;
+            canvas.style.aspectRatio = `${logicalW} / ${logicalH}`;
+            const ctx = canvas.getContext('2d');
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            // ✅ جهت متن روی کنواس به LTR تنظیم می‌شود تا علامت منفی سمت چپ عدد بماند
+            ctx.direction = 'ltr';
+            return { ctx, w: logicalW, h: logicalH };
+        }
+
+        function drawFullPlane(ctx, w, h, originX, originY, scale, maxVal) {
+            ctx.clearRect(0, 0, w, h);
+
+            // پس‌زمینه‌ی ربع‌ها
+            ctx.fillStyle = 'rgba(139, 92, 246, 0.05)';
+            ctx.fillRect(originX, 0, w - originX, originY);
+            ctx.fillStyle = 'rgba(2, 132, 199, 0.05)';
+            ctx.fillRect(0, 0, originX, originY);
+            ctx.fillStyle = 'rgba(22, 163, 74, 0.05)';
+            ctx.fillRect(0, originY, originX, h - originY);
+            ctx.fillStyle = 'rgba(245, 158, 11, 0.05)';
+            ctx.fillRect(originX, originY, w - originX, h - originY);
 
             // شبکه
-            reflAxisCtx.strokeStyle = '#f1f5f9';
-            reflAxisCtx.lineWidth = 1;
-            for (let i = 0; i <= w; i += REFL_AXIS_SCALE) {
-                reflAxisCtx.beginPath(); reflAxisCtx.moveTo(i, 0); reflAxisCtx.lineTo(i, h); reflAxisCtx.stroke();
-            }
-            for (let i = 0; i <= h; i += REFL_AXIS_SCALE) {
-                reflAxisCtx.beginPath(); reflAxisCtx.moveTo(0, i); reflAxisCtx.lineTo(w, i); reflAxisCtx.stroke();
+            ctx.strokeStyle = '#f1f5f9';
+            ctx.lineWidth = 1;
+            for (let i = -maxVal; i <= maxVal; i++) {
+                const x = originX + i * scale;
+                const y = originY + i * scale;
+                if (x >= 0 && x <= w) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+                if (y >= 0 && y <= h) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
             }
 
             // محورها
-            reflAxisCtx.strokeStyle = '#475569';
-            reflAxisCtx.lineWidth = 2;
-            reflAxisCtx.beginPath();
-            reflAxisCtx.moveTo(0, REFL_AXIS_CENTER.y);
-            reflAxisCtx.lineTo(w, REFL_AXIS_CENTER.y);
-            reflAxisCtx.stroke();
-            reflAxisCtx.beginPath();
-            reflAxisCtx.moveTo(REFL_AXIS_CENTER.x, 0);
-            reflAxisCtx.lineTo(REFL_AXIS_CENTER.x, h);
-            reflAxisCtx.stroke();
+            ctx.strokeStyle = '#475569';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath(); ctx.moveTo(0, originY); ctx.lineTo(w, originY); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(originX, 0); ctx.lineTo(originX, h); ctx.stroke();
 
-            // اعداد
-            reflAxisCtx.fillStyle = '#64748b';
-            reflAxisCtx.font = '10px Vazirmatn';
-            reflAxisCtx.textAlign = 'center';
-            reflAxisCtx.textBaseline = 'top';
-            for (let i = -10; i <= 10; i++) {
+            // فلش‌ها
+            ctx.fillStyle = '#475569';
+            ctx.beginPath();
+            ctx.moveTo(w - 5, originY);
+            ctx.lineTo(w - 15, originY - 6);
+            ctx.lineTo(w - 15, originY + 6);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(originX, 5);
+            ctx.lineTo(originX - 6, 15);
+            ctx.lineTo(originX + 6, 15);
+            ctx.fill();
+
+            // ✅ اعداد روی محور x (فارسی با منفی سمت چپ)
+            ctx.fillStyle = '#475569';
+            ctx.font = 'bold 11px Vazirmatn';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.direction = 'ltr';
+            for (let i = -maxVal; i <= maxVal; i++) {
                 if (i === 0) continue;
-                const x = REFL_AXIS_CENTER.x + i * REFL_AXIS_SCALE;
-                const y = REFL_AXIS_CENTER.y + i * REFL_AXIS_SCALE;
-                if (x >= 0 && x <= w) reflAxisCtx.fillText(i.toString(), x, REFL_AXIS_CENTER.y + 5);
-                if (y >= 0 && y <= h) {
-                    reflAxisCtx.textAlign = 'right';
-                    reflAxisCtx.textBaseline = 'middle';
-                    reflAxisCtx.fillText(i.toString(), REFL_AXIS_CENTER.x - 5, y);
-                    reflAxisCtx.textAlign = 'center';
-                    reflAxisCtx.textBaseline = 'top';
+                const x = originX + i * scale;
+                if (x >= 15 && x <= w - 15) {
+                    ctx.strokeStyle = '#94a3b8';
+                    ctx.lineWidth = 1.2;
+                    ctx.beginPath();
+                    ctx.moveTo(x, originY - 4);
+                    ctx.lineTo(x, originY + 4);
+                    ctx.stroke();
+                    ctx.fillText(toFaSigned(i), x, originY + 6);
                 }
+            }
+
+            // ✅ اعداد روی محور y (فارسی با منفی سمت چپ)
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            for (let i = -maxVal; i <= maxVal; i++) {
+                if (i === 0) continue;
+                const y = originY - i * scale;
+                if (y >= 15 && y <= h - 15) {
+                    ctx.strokeStyle = '#94a3b8';
+                    ctx.lineWidth = 1.2;
+                    ctx.beginPath();
+                    ctx.moveTo(originX - 4, y);
+                    ctx.lineTo(originX + 4, y);
+                    ctx.stroke();
+                    ctx.fillText(toFaSigned(i), originX - 7, y);
+                }
+            }
+
+            // مبدأ
+            ctx.fillStyle = '#dc2626';
+            ctx.font = 'bold 13px Vazirmatn';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'top';
+            ctx.fillText('O', originX - 4, originY + 4);
+
+            // برچسب محورها
+            ctx.fillStyle = '#475569';
+            ctx.font = 'bold 15px Vazirmatn';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('x', w - 22, originY - 18);
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText('y', originX + 20, 12);
+
+            // ✅ برچسب ربع‌ها (بدون پرانتز)
+            ctx.font = 'bold 12px Vazirmatn';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = 'rgba(2, 132, 199, 0.7)';
+            ctx.fillText('ربع دوم', originX / 2, originY / 2 - 8);
+            ctx.font = 'bold 10px Vazirmatn';
+            ctx.fillStyle = 'rgba(2, 132, 199, 0.5)';
+            ctx.fillText('x < ۰ و y > ۰', originX / 2, originY / 2 + 10);
+
+            ctx.font = 'bold 12px Vazirmatn';
+            ctx.fillStyle = 'rgba(139, 92, 246, 0.8)';
+            ctx.fillText('ربع اول', originX + (w - originX) / 2, originY / 2 - 8);
+            ctx.font = 'bold 10px Vazirmatn';
+            ctx.fillStyle = 'rgba(139, 92, 246, 0.6)';
+            ctx.fillText('x > ۰ و y > ۰', originX + (w - originX) / 2, originY / 2 + 10);
+
+            ctx.font = 'bold 12px Vazirmatn';
+            ctx.fillStyle = 'rgba(22, 163, 74, 0.8)';
+            ctx.fillText('ربع سوم', originX / 2, originY + (h - originY) / 2 - 8);
+            ctx.font = 'bold 10px Vazirmatn';
+            ctx.fillStyle = 'rgba(22, 163, 74, 0.6)';
+            ctx.fillText('x < ۰ و y < ۰', originX / 2, originY + (h - originY) / 2 + 10);
+
+            ctx.font = 'bold 12px Vazirmatn';
+            ctx.fillStyle = 'rgba(245, 158, 11, 0.85)';
+            ctx.fillText('ربع چهارم', originX + (w - originX) / 2, originY + (h - originY) / 2 - 8);
+            ctx.font = 'bold 10px Vazirmatn';
+            ctx.fillStyle = 'rgba(245, 158, 11, 0.65)';
+            ctx.fillText('x > ۰ و y < ۰', originX + (w - originX) / 2, originY + (h - originY) / 2 + 10);
+        }
+
+        // ✅ نقطه + حرف
+        function drawPointPx(ctx, x, y, color, letter, size) {
+            const r = size || 6;
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            if (letter) {
+                ctx.fillStyle = color;
+                ctx.font = 'bold 12px Vazirmatn';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                ctx.direction = 'ltr';
+                ctx.fillText(letter, x, y - r - 3);
             }
         }
 
-        function drawPointOnCanvas(ctx, x, y, color, label) {
-            const px = REFL_AXIS_CENTER.x + x * REFL_AXIS_SCALE;
-            const py = REFL_AXIS_CENTER.y - y * REFL_AXIS_SCALE;
-            
-            ctx.beginPath();
-            ctx.arc(px, py, 7, 0, Math.PI * 2);
-            ctx.fillStyle = color;
-            ctx.fill();
-            ctx.strokeStyle = '#fff';
+        // ✅ نمایش مختصات به صورت ستونی با کروشه روی canvas
+        function drawCanvasCoordLabel(ctx, anchorX, anchorY, cx, cy, color) {
+            const xs = toFaSigned(cx);
+            const ys = toFaSigned(cy);
+
+            ctx.save();
+            ctx.direction = 'ltr';
+            ctx.font = 'bold 12px Vazirmatn';
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'left';
+
+            const wX = ctx.measureText(xs).width;
+            const wY = ctx.measureText(ys).width;
+            const maxW = Math.max(wX, wY);
+            const rowH = 14;
+            const padding = 5;
+            const bracketW = 5;
+            const totalH = rowH * 2;
+
+            const startX = anchorX + 12;
+            const startY = anchorY - totalH / 2;
+
+            // براکت چپ
+            ctx.strokeStyle = color;
             ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(startX, startY + totalH);
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(startX + bracketW, startY);
+            ctx.moveTo(startX, startY + totalH);
+            ctx.lineTo(startX + bracketW, startY + totalH);
             ctx.stroke();
 
+            // متن
             ctx.fillStyle = color;
-            ctx.font = 'bold 11px Vazirmatn';
-            ctx.textAlign = 'left';
-            ctx.fillText(label, px + 10, py - 10);
+            ctx.fillText(xs, startX + bracketW + padding, startY + rowH / 2);
+            ctx.fillText(ys, startX + bracketW + padding, startY + rowH + rowH / 2);
+
+            // براکت راست
+            const rx = startX + bracketW + padding + maxW + padding;
+            ctx.strokeStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(rx, startY);
+            ctx.lineTo(rx, startY + totalH);
+            ctx.moveTo(rx, startY);
+            ctx.lineTo(rx - bracketW, startY);
+            ctx.moveTo(rx, startY + totalH);
+            ctx.lineTo(rx - bracketW, startY + totalH);
+            ctx.stroke();
+
+            ctx.restore();
         }
 
-        reflAxisCanvas.addEventListener('click', function(e) {
+        /* ============================================================
+           تعامل ۱: قرینه نسبت به محورها (قدم ۲)
+           ============================================================ */
+        const reflAxisCanvas = document.getElementById('refl-axis-canvas');
+        const reflAxisSetup = setupCanvas(reflAxisCanvas, 480, 480);
+        const reflAxisCtx = reflAxisSetup.ctx;
+
+        const RA_ORIGIN = { x: 240, y: 240 };
+        const RA_SCALE = 22;
+        const RA_MAX = 10;
+
+        let selectedPoint = null;
+        let currentAxisType = 'x';
+
+        function drawReflAxisScene() {
+            drawFullPlane(reflAxisCtx, reflAxisSetup.w, reflAxisSetup.h,
+                RA_ORIGIN.x, RA_ORIGIN.y, RA_SCALE, RA_MAX);
+
+            if (selectedPoint) {
+                const px = RA_ORIGIN.x + selectedPoint.x * RA_SCALE;
+                const py = RA_ORIGIN.y - selectedPoint.y * RA_SCALE;
+                drawPointPx(reflAxisCtx, px, py, '#dc2626', 'P', 7);
+                drawCanvasCoordLabel(reflAxisCtx, px, py, selectedPoint.x, selectedPoint.y, '#dc2626');
+            }
+        }
+
+        reflAxisCanvas.addEventListener('click', (e) => {
+            ensureAudio();
             const rect = reflAxisCanvas.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            const clickY = e.clientY - rect.top;
-            
-            const mathX = Math.round((clickX - REFL_AXIS_CENTER.x) / REFL_AXIS_SCALE);
-            const mathY = Math.round((REFL_AXIS_CENTER.y - clickY) / REFL_AXIS_SCALE);
+            const scaleX = reflAxisSetup.w / rect.width;
+            const scaleY = reflAxisSetup.h / rect.height;
+            const clickX = (e.clientX - rect.left) * scaleX;
+            const clickY = (e.clientY - rect.top) * scaleY;
 
-            if (mathX < -10 || mathX > 10 || mathY < -10 || mathY > 10) return;
+            const mx = Math.round((clickX - RA_ORIGIN.x) / RA_SCALE);
+            const my = Math.round((RA_ORIGIN.y - clickY) / RA_SCALE);
 
-            selectedReflectionPoint = { x: mathX, y: mathY };
-            drawReflectionAxisAxes();
-            drawPointOnCanvas(reflAxisCtx, mathX, mathY, '#dc2626', `(${mathX}،${mathY})`);
+            if (Math.abs(mx) > RA_MAX || Math.abs(my) > RA_MAX) return;
 
-            document.getElementById('reflection-axis-info').innerHTML = 
-                `نقطه انتخاب شده: <strong style="color: #dc2626;">(${mathX.toLocaleString('fa-IR')} ، ${mathY.toLocaleString('fa-IR')})</strong>`;
-            
+            selectedPoint = { x: mx, y: my };
+            drawReflAxisScene();
+
+            document.getElementById('refl-axis-info').innerHTML =
+                `نقطه انتخاب شده: ${coordHTML(mx, my, 'small')}`;
             playTone(550, 0.1);
         });
 
-        document.querySelectorAll('.reflection-controls button[data-axis]').forEach(btn => {
+        document.querySelectorAll('#axis-type-controls button').forEach(btn => {
             btn.addEventListener('click', function() {
-                document.querySelectorAll('.reflection-controls button[data-axis]').forEach(b => b.classList.remove('active'));
+                ensureAudio();
+                document.querySelectorAll('#axis-type-controls button').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 currentAxisType = this.dataset.axis;
                 playTone(440, 0.05);
             });
         });
 
-        document.getElementById('btn-apply-reflection').addEventListener('click', function() {
-            if (!selectedReflectionPoint) {
-                document.getElementById('reflection-axis-feedback').innerText = '❌ ابتدا روی صفحه کلیک کن تا نقطه‌ای انتخاب شود!';
-                document.getElementById('reflection-axis-feedback').style.color = 'var(--danger)';
+        document.getElementById('btn-apply-refl').addEventListener('click', function() {
+            ensureAudio();
+            if (!selectedPoint) {
+                const fb = document.getElementById('refl-axis-feedback');
+                fb.textContent = '❌ ابتدا روی صفحه کلیک کن تا نقطه‌ای انتخاب شود!';
+                fb.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
             }
 
-            const { x, y } = selectedReflectionPoint;
-            let newX, newY, axisLabel;
+            const { x, y } = selectedPoint;
+            let nx, ny, axisLabel;
 
-            if (currentAxisType === 'x') {
-                newX = x; newY = -y;
-                axisLabel = 'محور x';
-            } else if (currentAxisType === 'y') {
-                newX = -x; newY = y;
-                axisLabel = 'محور y';
-            } else {
-                newX = -x; newY = -y;
-                axisLabel = 'مبدأ مختصات';
-            }
+            if (currentAxisType === 'x') { nx = x; ny = -y; axisLabel = 'محور x'; }
+            else if (currentAxisType === 'y') { nx = -x; ny = y; axisLabel = 'محور y'; }
+            else { nx = -x; ny = -y; axisLabel = 'مبدأ مختصات'; }
 
-            drawReflectionAxisAxes();
-            drawPointOnCanvas(reflAxisCtx, x, y, '#dc2626', `(${x}،${y})`);
-            drawPointOnCanvas(reflAxisCtx, newX, newY, '#16a34a', `(${newX}،${newY})`);
+            drawReflAxisScene();
 
-            // خط اتصال
-            const px1 = REFL_AXIS_CENTER.x + x * REFL_AXIS_SCALE;
-            const py1 = REFL_AXIS_CENTER.y - y * REFL_AXIS_SCALE;
-            const px2 = REFL_AXIS_CENTER.x + newX * REFL_AXIS_SCALE;
-            const py2 = REFL_AXIS_CENTER.y - newY * REFL_AXIS_SCALE;
-            
-            reflAxisCtx.beginPath();
+            const px1 = RA_ORIGIN.x + x * RA_SCALE;
+            const py1 = RA_ORIGIN.y - y * RA_SCALE;
+            const px2 = RA_ORIGIN.x + nx * RA_SCALE;
+            const py2 = RA_ORIGIN.y - ny * RA_SCALE;
+
+            // خط نقطه‌چین اتصال
             reflAxisCtx.setLineDash([5, 5]);
             reflAxisCtx.strokeStyle = '#94a3b8';
-            reflAxisCtx.lineWidth = 2;
+            reflAxisCtx.lineWidth = 1.8;
+            reflAxisCtx.beginPath();
             reflAxisCtx.moveTo(px1, py1);
             reflAxisCtx.lineTo(px2, py2);
             reflAxisCtx.stroke();
             reflAxisCtx.setLineDash([]);
 
-            document.getElementById('reflection-axis-feedback').innerText = 
-                `✅ قرینه‌ی نقطه (${x.toLocaleString('fa-IR')} ، ${y.toLocaleString('fa-IR')}) نسبت به ${axisLabel} می‌شود (${newX.toLocaleString('fa-IR')} ، ${newY.toLocaleString('fa-IR')}).`;
-            document.getElementById('reflection-axis-feedback').style.color = 'var(--success)';
+            drawPointPx(reflAxisCtx, px2, py2, '#16a34a', "P'", 7);
+            drawCanvasCoordLabel(reflAxisCtx, px2, py2, nx, ny, '#16a34a');
 
+            const fb = document.getElementById('refl-axis-feedback');
+            fb.innerHTML = `✅ قرینه‌ی ${coordHTML(x, y, 'small')} نسبت به ${axisLabel} می‌شود ${coordHTML(nx, ny, 'small')}.`;
+            fb.style.color = 'var(--success)';
             playTone(600, 0.3);
             confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
         });
 
-        document.getElementById('btn-reset-reflection').addEventListener('click', function() {
-            selectedReflectionPoint = null;
-            drawReflectionAxisAxes();
-            document.getElementById('reflection-axis-info').innerText = 'روی صفحه کلیک کن تا نقطه‌ای انتخاب کنی.';
-            document.getElementById('reflection-axis-feedback').innerText = '';
+        document.getElementById('btn-reset-refl').addEventListener('click', function() {
+            ensureAudio();
+            selectedPoint = null;
+            drawReflAxisScene();
+            document.getElementById('refl-axis-info').textContent = 'روی صفحه کلیک کن تا نقطه‌ای انتخاب کنی.';
+            document.getElementById('refl-axis-feedback').textContent = '';
             playTone(440, 0.05);
         });
 
-        drawReflectionAxisAxes();
+        drawReflAxisScene();
 
-        /* ========================================================================
-           تعامل ۲: قرینه نسبت به مبدأ
-           ======================================================================== */
-        document.getElementById('btn-find-origin-reflection').addEventListener('click', function() {
-            const x = parseInt(document.getElementById('origin-x').value);
-            const y = parseInt(document.getElementById('origin-y').value);
-            const feedbackEl = document.getElementById('origin-reflection-feedback');
+        /* ============================================================
+           تعامل ۲: خط تقارن دلخواه (قدم ۳)
+           ============================================================ */
+        const customLineCanvas = document.getElementById('custom-line-canvas');
+        const customLineSetup = setupCanvas(customLineCanvas, 480, 480);
+        const customLineCtx = customLineSetup.ctx;
+
+        const CL_ORIGIN = { x: 240, y: 240 };
+        const CL_SCALE = 22;
+        const CL_MAX = 10;
+
+        let lineType = 'vertical';
+        let linePosition = 0;
+
+        const fixedShape = [
+            { x: 1, y: 1, label: 'A' },
+            { x: 4, y: 1, label: 'B' },
+            { x: 2, y: 4, label: 'C' }
+        ];
+
+        function drawCustomLineScene() {
+            drawFullPlane(customLineCtx, customLineSetup.w, customLineSetup.h,
+                CL_ORIGIN.x, CL_ORIGIN.y, CL_SCALE, CL_MAX);
+
+            // رسم خط تقارن
+            customLineCtx.strokeStyle = '#0284c7';
+            customLineCtx.lineWidth = 3;
+            customLineCtx.setLineDash([10, 6]);
+            customLineCtx.direction = 'ltr';
+
+            if (lineType === 'vertical') {
+                const lx = CL_ORIGIN.x + linePosition * CL_SCALE;
+                customLineCtx.beginPath();
+                customLineCtx.moveTo(lx, 10);
+                customLineCtx.lineTo(lx, customLineSetup.h - 10);
+                customLineCtx.stroke();
+
+                customLineCtx.setLineDash([]);
+                customLineCtx.fillStyle = '#0284c7';
+                customLineCtx.font = 'bold 13px Vazirmatn';
+                customLineCtx.textAlign = 'left';
+                customLineCtx.textBaseline = 'top';
+                customLineCtx.fillText(`x = ${toFaSigned(linePosition)}`, lx + 8, 20);
+            } else {
+                const ly = CL_ORIGIN.y - linePosition * CL_SCALE;
+                customLineCtx.beginPath();
+                customLineCtx.moveTo(10, ly);
+                customLineCtx.lineTo(customLineSetup.w - 10, ly);
+                customLineCtx.stroke();
+
+                customLineCtx.setLineDash([]);
+                customLineCtx.fillStyle = '#0284c7';
+                customLineCtx.font = 'bold 13px Vazirmatn';
+                customLineCtx.textAlign = 'left';
+                customLineCtx.textBaseline = 'bottom';
+                customLineCtx.fillText(`y = ${toFaSigned(linePosition)}`, 20, ly - 6);
+            }
+            customLineCtx.setLineDash([]);
+
+            // محاسبه نقاط قرینه
+            const reflectedPoints = fixedShape.map(p => {
+                if (lineType === 'vertical') {
+                    return { x: 2 * linePosition - p.x, y: p.y };
+                } else {
+                    return { x: p.x, y: 2 * linePosition - p.y };
+                }
+            });
+
+            const drawPoly = (points, fillColor, strokeColor) => {
+                customLineCtx.beginPath();
+                points.forEach((p, idx) => {
+                    const px = CL_ORIGIN.x + p.x * CL_SCALE;
+                    const py = CL_ORIGIN.y - p.y * CL_SCALE;
+                    if (idx === 0) customLineCtx.moveTo(px, py);
+                    else customLineCtx.lineTo(px, py);
+                });
+                customLineCtx.closePath();
+                customLineCtx.fillStyle = fillColor;
+                customLineCtx.fill();
+                customLineCtx.strokeStyle = strokeColor;
+                customLineCtx.lineWidth = 3;
+                customLineCtx.stroke();
+            };
+
+            drawPoly(fixedShape, 'rgba(139, 92, 246, 0.25)', '#6d28d9');
+            drawPoly(reflectedPoints, 'rgba(220, 38, 38, 0.25)', '#dc2626');
+
+            // نقاط و برچسب‌ها
+            fixedShape.forEach((p, i) => {
+                const px = CL_ORIGIN.x + p.x * CL_SCALE;
+                const py = CL_ORIGIN.y - p.y * CL_SCALE;
+                drawPointPx(customLineCtx, px, py, '#6d28d9', p.label, 6);
+
+                const rp = reflectedPoints[i];
+                const rpx = CL_ORIGIN.x + rp.x * CL_SCALE;
+                const rpy = CL_ORIGIN.y - rp.y * CL_SCALE;
+                drawPointPx(customLineCtx, rpx, rpy, '#dc2626', p.label + "'", 6);
+
+                // خط نقطه‌چین بین نقطه و قرینه‌اش
+                customLineCtx.setLineDash([3, 4]);
+                customLineCtx.strokeStyle = 'rgba(100, 116, 139, 0.5)';
+                customLineCtx.lineWidth = 1.2;
+                customLineCtx.beginPath();
+                customLineCtx.moveTo(px, py);
+                customLineCtx.lineTo(rpx, rpy);
+                customLineCtx.stroke();
+                customLineCtx.setLineDash([]);
+            });
+        }
+
+        document.querySelectorAll('#line-type-controls button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                ensureAudio();
+                document.querySelectorAll('#line-type-controls button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                lineType = this.dataset.linetype;
+                drawCustomLineScene();
+                playTone(500, 0.06);
+            });
+        });
+
+        const linePosSlider = document.getElementById('line-pos-slider');
+        const linePosDisplay = document.getElementById('line-pos-display');
+
+        linePosSlider.addEventListener('input', function() {
+            ensureAudio();
+            linePosition = parseFloat(this.value);
+            linePosDisplay.textContent = toFaSigned(linePosition);
+            drawCustomLineScene();
+        });
+
+        drawCustomLineScene();
+
+        /* ============================================================
+           تعامل ۳: قرینه نسبت به مبدأ (قدم ۴)
+           ============================================================ */
+        function updateOriginVisual(x, y) {
+            const nx = -x, ny = -y;
+            document.getElementById('origin-input-visual').innerHTML = coordHTML(x, y, 'small');
+            document.getElementById('origin-output-visual').innerHTML = coordHTML(nx, ny, 'small');
+            document.getElementById('origin-input-visual').style.color = 'var(--purple-dark)';
+            document.getElementById('origin-output-visual').style.color = 'var(--blue-dark)';
+        }
+        updateOriginVisual(3, 2);
+
+        document.getElementById('btn-origin-refl').addEventListener('click', function() {
+            ensureAudio();
+            const x = parseInt(document.getElementById('origin-x').value, 10);
+            const y = parseInt(document.getElementById('origin-y').value, 10);
+            const fb = document.getElementById('origin-refl-feedback');
 
             if (isNaN(x) || isNaN(y)) {
-                feedbackEl.innerText = '❌ لطفاً مختصات را درست وارد کن!';
-                feedbackEl.style.color = 'var(--danger)';
+                fb.textContent = '❌ لطفاً مختصات را درست وارد کن!';
+                fb.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
             }
 
-            const newX = -x;
-            const newY = -y;
+            const nx = -x, ny = -y;
+            updateOriginVisual(x, y);
 
-            document.getElementById('origin-input-box').innerText = `(${x.toLocaleString('fa-IR')} ، ${y.toLocaleString('fa-IR')})`;
-            document.getElementById('origin-output-box').innerText = `(${newX.toLocaleString('fa-IR')} ، ${newY.toLocaleString('fa-IR')})`;
-
-            feedbackEl.innerText = `✅ قرینه‌ی نقطه (${x.toLocaleString('fa-IR')} ، ${y.toLocaleString('fa-IR')}) نسبت به مبدأ می‌شود (${newX.toLocaleString('fa-IR')} ، ${newY.toLocaleString('fa-IR')}).`;
-            feedbackEl.style.color = 'var(--success)';
-
+            fb.innerHTML = `✅ قرینه‌ی ${coordHTML(x, y, 'small')} نسبت به مبدأ می‌شود ${coordHTML(nx, ny, 'small')}.`;
+            fb.style.color = 'var(--success)';
             playTone(600, 0.3);
             confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
         });
 
-        /* ========================================================================
-           تعامل ۳: قرینه شکل روی مختصات
-           ======================================================================== */
-        const shapeReflCanvas = document.getElementById('shape-reflection-canvas');
-        const shapeReflCtx = shapeReflCanvas.getContext('2d');
-        const SHAPE_REFL_CENTER = { x: 250, y: 225 };
-        const SHAPE_REFL_SCALE = 20;
-        let currentShapeReflAxis = 'y';
+        /* ============================================================
+           تعامل ۴: قرینه شکل روی مختصات (قدم ۵)
+           ============================================================ */
+        const shapeReflCanvas = document.getElementById('shape-refl-canvas');
+        const shapeReflSetup = setupCanvas(shapeReflCanvas, 480, 480);
+        const shapeReflCtx = shapeReflSetup.ctx;
 
-        function drawShapeReflectionAxes() {
-            const w = shapeReflCanvas.width;
-            const h = shapeReflCanvas.height;
-            
-            shapeReflCtx.clearRect(0, 0, w, h);
+        const SR_ORIGIN = { x: 240, y: 240 };
+        const SR_SCALE = 22;
+        const SR_MAX = 10;
 
-            // شبکه
-            shapeReflCtx.strokeStyle = '#f1f5f9';
-            shapeReflCtx.lineWidth = 1;
-            for (let i = 0; i <= w; i += SHAPE_REFL_SCALE) {
-                shapeReflCtx.beginPath(); shapeReflCtx.moveTo(i, 0); shapeReflCtx.lineTo(i, h); shapeReflCtx.stroke();
-            }
-            for (let i = 0; i <= h; i += SHAPE_REFL_SCALE) {
-                shapeReflCtx.beginPath(); shapeReflCtx.moveTo(0, i); shapeReflCtx.lineTo(w, i); shapeReflCtx.stroke();
-            }
+        let currentShapeAxis = 'y';
 
-            // محورها
-            shapeReflCtx.strokeStyle = '#475569';
-            shapeReflCtx.lineWidth = 2;
+        function drawShapeReflScene(points) {
+            drawFullPlane(shapeReflCtx, shapeReflSetup.w, shapeReflSetup.h,
+                SR_ORIGIN.x, SR_ORIGIN.y, SR_SCALE, SR_MAX);
+
+            if (!points) return;
+
+            const px = (x) => SR_ORIGIN.x + x * SR_SCALE;
+            const py = (y) => SR_ORIGIN.y - y * SR_SCALE;
+
+            let reflected;
+            if (currentShapeAxis === 'x') reflected = points.map(p => ({ x: p.x, y: -p.y }));
+            else if (currentShapeAxis === 'y') reflected = points.map(p => ({ x: -p.x, y: p.y }));
+            else reflected = points.map(p => ({ x: -p.x, y: -p.y }));
+
+            // شکل اصلی
             shapeReflCtx.beginPath();
-            shapeReflCtx.moveTo(0, SHAPE_REFL_CENTER.y);
-            shapeReflCtx.lineTo(w, SHAPE_REFL_CENTER.y);
-            shapeReflCtx.stroke();
-            shapeReflCtx.beginPath();
-            shapeReflCtx.moveTo(SHAPE_REFL_CENTER.x, 0);
-            shapeReflCtx.lineTo(SHAPE_REFL_CENTER.x, h);
-            shapeReflCtx.stroke();
-
-            // اعداد
-            shapeReflCtx.fillStyle = '#64748b';
-            shapeReflCtx.font = '10px Vazirmatn';
-            shapeReflCtx.textAlign = 'center';
-            shapeReflCtx.textBaseline = 'top';
-            for (let i = -12; i <= 12; i++) {
-                if (i === 0) continue;
-                const x = SHAPE_REFL_CENTER.x + i * SHAPE_REFL_SCALE;
-                const y = SHAPE_REFL_CENTER.y + i * SHAPE_REFL_SCALE;
-                if (x >= 0 && x <= w) shapeReflCtx.fillText(i.toString(), x, SHAPE_REFL_CENTER.y + 5);
-                if (y >= 0 && y <= h) {
-                    shapeReflCtx.textAlign = 'right';
-                    shapeReflCtx.textBaseline = 'middle';
-                    shapeReflCtx.fillText(i.toString(), SHAPE_REFL_CENTER.x - 5, y);
-                    shapeReflCtx.textAlign = 'center';
-                    shapeReflCtx.textBaseline = 'top';
-                }
-            }
-        }
-
-        document.querySelectorAll('.reflection-controls button[data-shape-axis]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.reflection-controls button[data-shape-axis]').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                currentShapeReflAxis = this.dataset.shapeAxis;
-                playTone(440, 0.05);
-            });
-        });
-
-        document.getElementById('btn-draw-shape-reflection').addEventListener('click', function() {
-            const ax = parseInt(document.getElementById('sax').value);
-            const ay = parseInt(document.getElementById('say').value);
-            const bx = parseInt(document.getElementById('sbx').value);
-            const by = parseInt(document.getElementById('sby').value);
-            const cx = parseInt(document.getElementById('scx').value);
-            const cy = parseInt(document.getElementById('scy').value);
-            const feedbackEl = document.getElementById('shape-reflection-feedback');
-
-            if ([ax, ay, bx, by, cx, cy].some(v => isNaN(v))) {
-                feedbackEl.innerText = '❌ لطفاً همه‌ی مختصات را وارد کن!';
-                feedbackEl.style.color = 'var(--danger)';
-                playTone(200, 0.2);
-                return;
-            }
-
-            drawShapeReflectionAxes();
-
-            const originalPoints = [
-                { x: ax, y: ay, label: 'A' },
-                { x: bx, y: by, label: 'B' },
-                { x: cx, y: cy, label: 'C' }
-            ];
-
-            // محاسبه قرینه
-            let reflectedPoints, axisLabel;
-            if (currentShapeReflAxis === 'x') {
-                reflectedPoints = originalPoints.map(p => ({ x: p.x, y: -p.y }));
-                axisLabel = 'محور x';
-            } else if (currentShapeReflAxis === 'y') {
-                reflectedPoints = originalPoints.map(p => ({ x: -p.x, y: p.y }));
-                axisLabel = 'محور y';
-            } else {
-                reflectedPoints = originalPoints.map(p => ({ x: -p.x, y: -p.y }));
-                axisLabel = 'مبدأ مختصات';
-            }
-
-            // رسم مثلث اصلی
-            shapeReflCtx.beginPath();
-            originalPoints.forEach((pt, idx) => {
-                const px = SHAPE_REFL_CENTER.x + pt.x * SHAPE_REFL_SCALE;
-                const py = SHAPE_REFL_CENTER.y - pt.y * SHAPE_REFL_SCALE;
-                if (idx === 0) shapeReflCtx.moveTo(px, py);
-                else shapeReflCtx.lineTo(px, py);
+            points.forEach((p, i) => {
+                if (i === 0) shapeReflCtx.moveTo(px(p.x), py(p.y));
+                else shapeReflCtx.lineTo(px(p.x), py(p.y));
             });
             shapeReflCtx.closePath();
             shapeReflCtx.fillStyle = 'rgba(220, 38, 38, 0.25)';
@@ -1179,27 +1738,15 @@
             shapeReflCtx.lineWidth = 3;
             shapeReflCtx.stroke();
 
-            // رسم نقاط اصلی
-            originalPoints.forEach(pt => {
-                const px = SHAPE_REFL_CENTER.x + pt.x * SHAPE_REFL_SCALE;
-                const py = SHAPE_REFL_CENTER.y - pt.y * SHAPE_REFL_SCALE;
-                shapeReflCtx.beginPath();
-                shapeReflCtx.arc(px, py, 5, 0, Math.PI * 2);
-                shapeReflCtx.fillStyle = '#dc2626';
-                shapeReflCtx.fill();
-                shapeReflCtx.fillStyle = '#dc2626';
-                shapeReflCtx.font = 'bold 12px Vazirmatn';
-                shapeReflCtx.textAlign = 'left';
-                shapeReflCtx.fillText(pt.label, px + 8, py - 8);
+            points.forEach((p, i) => {
+                drawPointPx(shapeReflCtx, px(p.x), py(p.y), '#dc2626', String.fromCharCode(65 + i), 6);
             });
 
-            // رسم مثلث قرینه
+            // شکل قرینه
             shapeReflCtx.beginPath();
-            reflectedPoints.forEach((pt, idx) => {
-                const px = SHAPE_REFL_CENTER.x + pt.x * SHAPE_REFL_SCALE;
-                const py = SHAPE_REFL_CENTER.y - pt.y * SHAPE_REFL_SCALE;
-                if (idx === 0) shapeReflCtx.moveTo(px, py);
-                else shapeReflCtx.lineTo(px, py);
+            reflected.forEach((p, i) => {
+                if (i === 0) shapeReflCtx.moveTo(px(p.x), py(p.y));
+                else shapeReflCtx.lineTo(px(p.x), py(p.y));
             });
             shapeReflCtx.closePath();
             shapeReflCtx.fillStyle = 'rgba(22, 163, 74, 0.25)';
@@ -1208,122 +1755,133 @@
             shapeReflCtx.lineWidth = 3;
             shapeReflCtx.stroke();
 
-            // رسم نقاط قرینه
-            reflectedPoints.forEach((pt, idx) => {
-                const px = SHAPE_REFL_CENTER.x + pt.x * SHAPE_REFL_SCALE;
-                const py = SHAPE_REFL_CENTER.y - pt.y * SHAPE_REFL_SCALE;
-                shapeReflCtx.beginPath();
-                shapeReflCtx.arc(px, py, 5, 0, Math.PI * 2);
-                shapeReflCtx.fillStyle = '#16a34a';
-                shapeReflCtx.fill();
-                shapeReflCtx.fillStyle = '#16a34a';
-                shapeReflCtx.font = 'bold 12px Vazirmatn';
-                shapeReflCtx.textAlign = 'left';
-                shapeReflCtx.fillText(originalPoints[idx].label + "'", px + 8, py - 8);
+            reflected.forEach((p, i) => {
+                drawPointPx(shapeReflCtx, px(p.x), py(p.y), '#16a34a', String.fromCharCode(65 + i) + "'", 6);
             });
+        }
 
-            feedbackEl.innerText = `✅ قرینه‌ی مثلث نسبت به ${axisLabel} رسم شد.`;
-            feedbackEl.style.color = 'var(--success)';
+        document.querySelectorAll('#shape-axis-controls button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                ensureAudio();
+                document.querySelectorAll('#shape-axis-controls button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentShapeAxis = this.dataset.shapeAxis;
+                playTone(440, 0.05);
+                document.getElementById('btn-draw-shape').click();
+            });
+        });
+
+        document.getElementById('btn-draw-shape').addEventListener('click', function() {
+            ensureAudio();
+            const ax = parseInt(document.getElementById('sax').value, 10);
+            const ay = parseInt(document.getElementById('say').value, 10);
+            const bx = parseInt(document.getElementById('sbx').value, 10);
+            const by = parseInt(document.getElementById('sby').value, 10);
+            const cx = parseInt(document.getElementById('scx').value, 10);
+            const cy = parseInt(document.getElementById('scy').value, 10);
+            const fb = document.getElementById('shape-refl-feedback');
+
+            if ([ax, ay, bx, by, cx, cy].some(v => isNaN(v) || Math.abs(v) > SR_MAX)) {
+                fb.textContent = `❌ لطفاً همه‌ی مختصات را بین −۱۰ تا ۱۰ وارد کن!`;
+                fb.style.color = 'var(--danger)';
+                playTone(200, 0.2);
+                return;
+            }
+
+            const points = [{x: ax, y: ay}, {x: bx, y: by}, {x: cx, y: cy}];
+            drawShapeReflScene(points);
+
+            const axisText = currentShapeAxis === 'x' ? 'محور x' : (currentShapeAxis === 'y' ? 'محور y' : 'مبدأ مختصات');
+            fb.innerHTML = `✅ قرینه‌ی مثلث نسبت به <strong>${axisText}</strong> رسم شد.`;
+            fb.style.color = 'var(--success)';
             playTone(600, 0.3);
             confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
         });
 
-        document.getElementById('btn-reset-shape-reflection').addEventListener('click', function() {
+        document.getElementById('btn-reset-shape').addEventListener('click', function() {
+            ensureAudio();
             document.getElementById('sax').value = -4;
             document.getElementById('say').value = 1;
             document.getElementById('sbx').value = -1;
             document.getElementById('sby').value = 4;
             document.getElementById('scx').value = -2;
             document.getElementById('scy').value = -2;
-            drawShapeReflectionAxes();
-            document.getElementById('shape-reflection-feedback').innerText = '';
+            drawShapeReflScene();
+            document.getElementById('shape-refl-feedback').textContent = '';
             playTone(440, 0.05);
         });
 
-        drawShapeReflectionAxes();
+        drawShapeReflScene();
 
-        /* ========================================================================
-           تعامل ۴: تمرین تقارن و مختصات
-           ======================================================================== */
-        let practiceCorrectX, practiceCorrectY;
-        let practiceType;
+        /* ============================================================
+           تعامل ۵: تمرین (قدم ۶)
+           ============================================================ */
+        let pracCorrectX, pracCorrectY, pracType;
 
-        function generatePracticeQuestion() {
-            const x = Math.floor(Math.random() * 10) + 1;
-            const y = Math.floor(Math.random() * 10) + 1;
-            const signX = Math.random() > 0.5 ? 1 : -1;
-            const signY = Math.random() > 0.5 ? 1 : -1;
-            const px = x * signX;
-            const py = y * signY;
+        function generatePractice() {
+            let x = Math.floor(Math.random() * 8) + 1;
+            let y = Math.floor(Math.random() * 8) + 1;
+            if (Math.random() > 0.5) x = -x;
+            if (Math.random() > 0.5) y = -y;
 
             const types = ['x', 'y', 'origin'];
-            practiceType = types[Math.floor(Math.random() * types.length)];
+            pracType = types[Math.floor(Math.random() * types.length)];
 
-            if (practiceType === 'x') {
-                practiceCorrectX = px;
-                practiceCorrectY = -py;
-            } else if (practiceType === 'y') {
-                practiceCorrectX = -px;
-                practiceCorrectY = py;
-            } else {
-                practiceCorrectX = -px;
-                practiceCorrectY = -py;
-            }
+            if (pracType === 'x') { pracCorrectX = x; pracCorrectY = -y; }
+            else if (pracType === 'y') { pracCorrectX = -x; pracCorrectY = y; }
+            else { pracCorrectX = -x; pracCorrectY = -y; }
 
-            let typeText;
-            if (practiceType === 'x') typeText = 'محور x';
-            else if (practiceType === 'y') typeText = 'محور y';
-            else typeText = 'مبدأ مختصات';
+            const typeText = pracType === 'x' ? 'محور x' : (pracType === 'y' ? 'محور y' : 'مبدأ مختصات');
 
-            document.getElementById('practice-question').innerHTML = 
-                `قرینه‌ی نقطه‌ی (<strong style="color: var(--purple-main);">${px.toLocaleString('fa-IR')} ، ${py.toLocaleString('fa-IR')}</strong>) را نسبت به <strong>${typeText}</strong> پیدا کن.`;
+            document.getElementById('practice-question').innerHTML =
+                `<span>قرینه‌ی</span> ${coordHTML(x, y, 'small')} <span>را نسبت به <strong>${typeText}</strong> پیدا کن.</span>`;
 
-            document.getElementById('practice-answer-x').value = '';
-            document.getElementById('practice-answer-y').value = '';
-            document.getElementById('practice-feedback').innerText = '';
+            document.getElementById('prac-x').value = '';
+            document.getElementById('prac-y').value = '';
+            document.getElementById('practice-feedback').textContent = '';
         }
 
         document.getElementById('btn-check-practice').addEventListener('click', function() {
-            const userX = parseInt(document.getElementById('practice-answer-x').value);
-            const userY = parseInt(document.getElementById('practice-answer-y').value);
-            const feedbackEl = document.getElementById('practice-feedback');
+            ensureAudio();
+            const ux = parseInt(document.getElementById('prac-x').value, 10);
+            const uy = parseInt(document.getElementById('prac-y').value, 10);
+            const fb = document.getElementById('practice-feedback');
 
-            if (isNaN(userX) || isNaN(userY)) {
-                feedbackEl.innerText = '❌ لطفاً هر دو مختصات x و y را وارد کن!';
-                feedbackEl.style.color = 'var(--danger)';
+            if (isNaN(ux) || isNaN(uy)) {
+                fb.textContent = '❌ لطفاً هر دو مختصات x و y را وارد کن!';
+                fb.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
             }
 
-            if (userX === practiceCorrectX && userY === practiceCorrectY) {
-                feedbackEl.innerText = `✅ آفرین! پاسخ درست (${practiceCorrectX.toLocaleString('fa-IR')} ، ${practiceCorrectY.toLocaleString('fa-IR')}) است.`;
-                feedbackEl.style.color = 'var(--success)';
+            if (ux === pracCorrectX && uy === pracCorrectY) {
+                fb.innerHTML = `✅ آفرین! پاسخ درست ${coordHTML(pracCorrectX, pracCorrectY, 'small')} است.`;
+                fb.style.color = 'var(--success)';
                 playTone(600, 0.3);
                 confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
             } else {
-                feedbackEl.innerText = `❌ اشتباه! پاسخ درست (${practiceCorrectX.toLocaleString('fa-IR')} ، ${practiceCorrectY.toLocaleString('fa-IR')}) است.`;
-                feedbackEl.style.color = 'var(--danger)';
+                fb.innerHTML = `❌ اشتباه! پاسخ درست ${coordHTML(pracCorrectX, pracCorrectY, 'small')} است.`;
+                fb.style.color = 'var(--danger)';
                 playTone(300, 0.3);
-                document.getElementById('practice-question').classList.add('shake-anim');
-                setTimeout(() => document.getElementById('practice-question').classList.remove('shake-anim'), 500);
+                const q = document.getElementById('practice-question');
+                q.classList.add('shake-anim');
+                setTimeout(() => q.classList.remove('shake-anim'), 500);
             }
         });
 
         document.getElementById('btn-new-practice').addEventListener('click', () => {
+            ensureAudio();
             playTone(440, 0.05);
-            generatePracticeQuestion();
+            generatePractice();
         });
 
-        generatePracticeQuestion();
+        generatePractice();
 
-        /* ========================================================================
-           مدیریت دکمه‌های شناور
-           ======================================================================== */
-        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('به فصل بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
-        });
-
+        /* ============ راه‌اندازی AudioCtx ============ */
+        document.body.addEventListener('click', function initAudioOnce() {
+            ensureAudio();
+            document.body.removeEventListener('click', initAudioOnce);
+        }, { once: true });
     </script>
 </body>
 </html>

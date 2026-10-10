@@ -2,472 +2,396 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>فصل ۳ - بخش ۴: تقسیم یک عدد بر عدد اعشاری | درسنامه تعاملی</title>
-    
-    <!-- قلم زیبای وزیرمتن -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 
-    <!-- انیمیشن کاغذ رنگی -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* ========================================================================
-           ۱. متغیرها و تم رنگی
-           ======================================================================== */
         :root {
             --lilac-bg: #f7f1fc;
             --lilac-soft: #f1e7fb;
             --lilac-border: #d8b4fe;
             --lilac-main: #9333ea;
             --lilac-dark: #6b21a8;
-            --lilac-glow: rgba(147, 51, 234, 0.15);
-            
             --blue-soft: #e0f2fe;
             --blue-main: #0284c7;
             --blue-dark: #0369a1;
-            
             --success: #16a34a;
             --success-bg: rgba(22, 163, 74, 0.1);
             --danger: #dc2626;
-            --danger-bg: rgba(220, 38, 38, 0.1);
             --warning: #ca8a04;
             --highlight: #fef08a;
             --teal-soft: #ccfbf1;
             --teal-main: #14b8a6;
+            --teal-dark: #0f766e;
 
-            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-bg: rgba(255, 255, 255, 0.9);
             --glass-border: rgba(255, 255, 255, 0.9);
-            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
-            --card-hover-bg: rgba(255, 255, 255, 0.95);
-            
+            --glass-shadow: 0 12px 36px rgba(107, 33, 168, 0.1);
             --text-title: #2e1065;
             --text-body: #475569;
             --text-muted: #64748b;
-            
             --radius-lg: 24px;
             --radius-md: 16px;
-            --radius-sm: 8px;
+            --radius-sm: 10px;
         }
 
-        /* ========================================================================
-           ۲. استایل‌های پایه
-           ======================================================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; -webkit-tap-highlight-color: transparent; }
+        html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
         body {
             background-color: var(--lilac-bg);
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
             background-attachment: fixed;
             color: var(--text-body);
             min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            line-height: 1.8;
+            padding: 16px;
+            display: flex; flex-direction: column;
+            overflow-x: hidden; line-height: 1.8;
         }
 
-        /* ========================================================================
-           ۳. نوار هدر
-           ======================================================================== */
+        .math-ltr {
+            direction: ltr;
+            unicode-bidi: isolate;
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            vertical-align: middle;
+            margin: 0 4px;
+            font-weight: 800;
+            line-height: 1.15;
+            text-align: center;
+            direction: ltr;
+            unicode-bidi: isolate;
+        }
+        .fraction .numerator {
+            padding: 1px 8px 2px;
+            border-bottom: 2px solid currentColor;
+            white-space: nowrap;
+        }
+        .fraction .denominator {
+            padding: 2px 8px 1px;
+            white-space: nowrap;
+        }
+
         .lesson-top-nav {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto 20px;
-            padding: 14px 28px;
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px; padding: 14px 22px;
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
             box-shadow: var(--glass-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px; z-index: 100;
         }
-
         .go-back-link {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 800;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.2s, transform 0.2s;
+            text-decoration: none; color: var(--text-muted);
+            font-weight: 800; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 8px;
+            transition: color 0.2s, transform 0.2s; white-space: nowrap;
         }
-
-        .go-back-link:hover {
-            color: var(--teal-main);
-            transform: translateX(3px);
-        }
-
-        .header-lesson-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-        }
-
+        .go-back-link:hover { color: var(--teal-dark); transform: translateX(3px); }
+        .header-lesson-info { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 0; }
         .chapter-label-badge {
-            background: var(--teal-soft);
-            color: #0f766e;
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 3px 10px;
+            background: var(--teal-soft); color: var(--teal-dark);
+            font-size: 0.72rem; font-weight: 800;
+            padding: 3px 10px; border-radius: 20px; white-space: nowrap;
+        }
+        .lesson-title-text { font-size: 1.05rem; font-weight: 900; color: var(--text-title); letter-spacing: -0.5px; }
+
+        .book-location-bar {
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px;
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 14px;
+            background: var(--glass-bg);
             border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(107, 33, 168, 0.06);
+            flex-wrap: wrap;
+            justify-content: center;
         }
-
-        .lesson-title-text {
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: var(--text-title);
+        .location-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--teal-soft); color: var(--teal-dark);
+            padding: 4px 12px; border-radius: 20px;
+            font-weight: 800; font-size: 0.82rem;
+            white-space: nowrap;
         }
+        .location-chip.blue { background: var(--blue-soft); color: var(--blue-dark); }
+        .location-chip.yellow { background: #fef9c3; color: #854d0e; }
+        .location-chip.green { background: #dcfce7; color: #166534; }
 
-        /* ========================================================================
-           ۴. کارت‌های آموزشی
-           ======================================================================== */
         .main-lesson-wrapper {
-            max-width: 1100px;
-            width: 100%;
+            max-width: 1100px; width: 100%;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding-bottom: 80px;
+            display: flex; flex-direction: column;
+            gap: 20px; padding-bottom: 120px;
         }
-
         .step-teaching-card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
-            padding: 28px;
+            padding: 26px;
             box-shadow: var(--glass-shadow);
-            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
-
-        .step-teaching-card:hover {
-            background-color: var(--card-hover-bg);
-            transform: translateY(-5px);
-        }
-
         .step-number-badge {
-            display: inline-flex;
-            width: 32px;
-            height: 32px;
+            display: inline-flex; width: 34px; height: 34px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--teal-main), #0f766e);
-            color: white;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 0.95rem;
-            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--teal-main), var(--teal-dark));
+            color: white; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1rem;
+            margin-bottom: 14px;
             box-shadow: 0 4px 10px rgba(20, 184, 166, 0.25);
         }
-
         .step-teaching-card h2 {
-            font-size: 1.4rem;
-            color: var(--text-title);
-            margin-bottom: 12px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-size: 1.3rem; color: var(--text-title);
+            margin-bottom: 12px; font-weight: 900;
+            display: flex; align-items: center; gap: 10px;
+            letter-spacing: -0.8px; line-height: 1.6; flex-wrap: wrap;
+        }
+        .step-teaching-card p { font-size: 1rem; line-height: 2; color: var(--text-body); margin-bottom: 14px; }
+        .step-teaching-card ul, .step-teaching-card ol {
+            margin-right: 22px; color: var(--text-body);
+            font-weight: 600; line-height: 2.1; margin-bottom: 12px;
         }
 
-        .step-teaching-card p {
-            font-size: 1rem;
-            line-height: 1.9;
-            color: var(--text-body);
-            margin-bottom: 16px;
-        }
-
-        /* ========================================================================
-           ۵. المان‌های خاص
-           ======================================================================== */
         .teacher-speech-bubble {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.75);
             border-radius: var(--radius-md);
-            padding: 18px 22px;
+            padding: 16px 20px;
             border: 1px dashed var(--teal-main);
-            color: #0f766e;
-            margin: 16px 0;
-            position: relative;
-            font-style: italic;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
+            color: var(--teal-dark);
+            margin: 14px 0; font-style: italic;
+            display: flex; gap: 12px; align-items: flex-start;
+            font-size: 0.95rem; line-height: 1.9;
         }
-
-        .teacher-speech-bubble::before {
-            content: "🧑‍🏫";
-            font-size: 1.4rem;
-            font-style: normal;
-        }
+        .teacher-speech-bubble::before { content: "🧑‍🏫"; font-size: 1.4rem; font-style: normal; flex-shrink: 0; }
 
         .solved-example-box {
             background: var(--blue-soft);
             border: 1px solid rgba(2, 132, 199, 0.2);
             border-radius: var(--radius-md);
-            padding: 20px;
-            margin: 16px 0;
+            padding: 18px; margin: 14px 0;
+            word-break: break-word;
+            font-size: 1.05rem;
         }
-
         .example-header {
-            font-weight: 800;
+            font-weight: 800; color: var(--blue-dark);
+            font-size: 1rem; margin-bottom: 8px;
+            display: flex; align-items: center; gap: 8px;
+            flex-wrap: wrap;
+        }
+        .solved-example-box p {
+            font-size: 1.05rem;
+            line-height: 2.2;
             color: var(--blue-dark);
-            font-size: 1rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            margin-bottom: 6px;
         }
 
         .key-tip-box {
             background: var(--success-bg);
             border: 1px solid var(--success);
             border-radius: var(--radius-md);
-            padding: 16px;
-            margin: 16px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--success);
-            font-weight: 700;
-            font-size: 0.9rem;
+            padding: 14px 16px; margin: 14px 0;
+            color: var(--success); font-weight: 700;
+            font-size: 0.95rem; line-height: 1.9;
         }
-
-        /* ========================================================================
-           ۶. بخش تعاملی ۱: تقسیم بر عدد اعشاری
-           ======================================================================== */
-        .interactive-container {
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            margin-top: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            border: 1px solid var(--glass-border);
-        }
+        .key-tip-box strong { color: var(--success); }
 
         .sim-title {
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #0f766e;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
+            font-weight: 800; font-size: 1.05rem;
+            color: var(--teal-dark);
+            display: flex; align-items: center; gap: 8px; line-height: 1.6;
+            flex-wrap: wrap;
         }
 
-        .division-lab {
+        .decimal-lab {
             background: white;
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 20px;
             border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
+            display: flex; flex-direction: column; gap: 16px;
         }
 
-        .division-input-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
+        .decimal-lab .input-row {
+            display: flex; gap: 10px;
+            flex-wrap: wrap; justify-content: center;
             align-items: center;
+            padding: 12px;
+            background: var(--teal-soft);
+            border-radius: var(--radius-sm);
+            direction: ltr;
+            unicode-bidi: isolate;
         }
-
-        .division-input-row input {
+        .decimal-lab .input-row input {
             width: 130px;
             padding: 10px;
-            font-size: 1.3rem;
+            font-size: 1.15rem;
             font-weight: 900;
             text-align: center;
             border: 2px solid var(--teal-main);
             border-radius: 10px;
-            color: #0f766e;
-            background: #fafafa;
+            color: var(--teal-dark);
+            background: white;
+            font-family: 'Vazirmatn', sans-serif;
+            direction: ltr;
+            font-variant-numeric: tabular-nums;
         }
-        .division-input-row input:focus { outline: none; border-color: var(--teal-main); box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.15); }
-
-        .division-display {
-            background: var(--teal-soft);
-            padding: 20px 32px;
-            border-radius: var(--radius-sm);
+        .decimal-lab .input-row input:focus {
+            outline: none;
+            border-color: var(--teal-dark);
+            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.15);
+        }
+        .decimal-lab .op-sym {
             font-size: 1.5rem;
             font-weight: 900;
-            color: #0f766e;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            direction: ltr;
-            min-height: 80px;
-        }
-
-        .division-steps {
-            background: #fafafa;
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            border: 1px solid #e2e8f0;
-            font-weight: 700;
-            color: var(--text-body);
-            line-height: 2.2;
-            min-height: 80px;
-            width: 100%;
-        }
-
-        .division-step-item {
-            padding: 8px 0;
-            border-bottom: 1px dashed #e2e8f0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .division-step-item:last-child { border-bottom: none; }
-
-        .division-step-item .step-label {
-            color: #0f766e;
-            font-weight: 800;
-            min-width: 110px;
-        }
-
-        /* ========================================================================
-           ۷. بخش تعاملی ۲: جابه‌جایی ممیز (تبدیل به عدد طبیعی)
-           ======================================================================== */
-        .shift-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .shift-display-row {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            direction: ltr;
-        }
-
-        .shift-box {
-            background: var(--lilac-soft);
-            padding: 16px 24px;
-            border-radius: var(--radius-sm);
-            font-size: 1.4rem;
-            font-weight: 900;
-            color: var(--lilac-dark);
-            min-width: 120px;
-            text-align: center;
-            direction: ltr;
-        }
-
-        .shift-arrow {
-            font-size: 2rem;
             color: var(--teal-main);
+            padding: 0 4px;
+        }
+        .decimal-lab .input-row .btn-ui {
+            direction: rtl;
+            unicode-bidi: isolate;
         }
 
-        .shift-steps {
+        .result-display {
+            background: var(--teal-soft);
+            padding: 16px 20px;
+            border-radius: var(--radius-sm);
+            font-size: clamp(1.05rem, 3.5vw, 1.3rem);
+            font-weight: 900;
+            color: var(--teal-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            direction: ltr;
+            unicode-bidi: isolate;
+            border: 1px solid var(--teal-main);
+            min-height: 70px;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+            word-break: break-word;
+        }
+        .result-display .result-num {
+            color: var(--teal-dark);
+            font-size: 1.25em;
+            padding: 0 4px;
+            font-weight: 900;
+        }
+        .result-display .eq-sign {
+            color: var(--text-muted);
+            font-weight: 900;
+            padding: 0 4px;
+        }
+        .result-display .op-num {
+            color: var(--text-body);
+            font-weight: 800;
+        }
+        .result-display .op-sym-inline {
+            color: var(--teal-main);
+            font-weight: 900;
+        }
+        .result-display .hint-text {
+            direction: rtl;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
+        .steps-box {
             background: #fafafa;
             border-radius: var(--radius-sm);
-            padding: 20px;
+            padding: 14px 16px;
             border: 1px solid #e2e8f0;
             font-weight: 700;
             color: var(--text-body);
-            line-height: 2.2;
-            min-height: 80px;
+            line-height: 2;
+            min-height: 70px;
             width: 100%;
+            font-size: 0.95rem;
         }
-
-        .shift-step-item {
+        .steps-box .step-item {
             padding: 8px 0;
             border-bottom: 1px dashed #e2e8f0;
+            word-break: break-word;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
         }
-        .shift-step-item:last-child { border-bottom: none; }
-
-        .shift-step-item .step-label {
-            color: #0f766e;
+        .steps-box .step-item:last-child { border-bottom: none; }
+        .steps-box .step-label {
+            color: var(--teal-dark);
             font-weight: 800;
-            margin-left: 8px;
+            flex-shrink: 0;
         }
 
-        /* ========================================================================
-           ۸. بخش تعاملی ۳: حل مسئله کلامی
-           ======================================================================== */
         .word-problem-lab {
             background: white;
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 20px;
             border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            display: flex; flex-direction: column; gap: 16px;
         }
-
         .problem-card {
             background: var(--blue-soft);
             border-radius: var(--radius-sm);
-            padding: 20px;
+            padding: 18px;
             border-right: 4px solid var(--blue-main);
         }
-
         .problem-card .problem-text {
             font-weight: 700;
             color: var(--blue-dark);
-            font-size: 1.05rem;
-            line-height: 2;
-            margin-bottom: 16px;
+            font-size: 1rem;
+            line-height: 2.2;
+            margin-bottom: 14px;
         }
-
         .problem-card .problem-steps {
             background: #fafafa;
-            padding: 16px;
+            padding: 14px;
             border-radius: var(--radius-sm);
             border: 1px solid #e2e8f0;
             font-weight: 700;
             color: var(--text-body);
-            line-height: 2.2;
-            margin-bottom: 16px;
+            line-height: 2.4;
+            margin-bottom: 14px;
+            font-size: 0.95rem;
+            word-break: break-word;
         }
-
+        .problem-card .problem-steps > div {
+            padding: 4px 0;
+        }
         .problem-card .problem-answer-row {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
             align-items: center;
         }
-
+        .problem-card .problem-answer-row > span:first-child {
+            font-weight: 800;
+            color: var(--text-title);
+        }
         .problem-card .problem-answer-row input {
             width: 120px;
             padding: 10px;
@@ -478,160 +402,176 @@
             border-radius: 8px;
             color: var(--blue-dark);
             background: #fafafa;
+            font-family: 'Vazirmatn', sans-serif;
+            direction: ltr;
         }
-        .problem-card .problem-answer-row input:focus { outline: none; border-color: var(--blue-main); }
+        .problem-card .problem-answer-row input:focus { outline: none; border-color: var(--blue-dark); }
 
-        /* ========================================================================
-           ۹. بخش تعاملی ۴: تمرین تقسیم بر اعشاری
-           ======================================================================== */
         .practice-lab {
             background: white;
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 20px;
             border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
+            display: flex; flex-direction: column;
+            gap: 16px; align-items: center;
         }
-
         .practice-question {
             background: var(--teal-soft);
-            padding: 20px 32px;
+            padding: 16px 20px;
             border-radius: var(--radius-sm);
-            font-size: 1.5rem;
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
             font-weight: 900;
-            color: #0f766e;
+            color: var(--teal-dark);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             direction: ltr;
+            unicode-bidi: isolate;
             flex-wrap: wrap;
             justify-content: center;
+            width: 100%;
+            border: 1px solid var(--teal-main);
+            min-height: 70px;
+            font-variant-numeric: tabular-nums;
         }
-
+        .practice-question .q-sign {
+            color: var(--text-muted);
+            font-weight: 900;
+            padding: 0 4px;
+        }
+        .practice-question .q-mark {
+            color: var(--teal-main);
+            font-weight: 900;
+            padding: 0 6px;
+            font-size: 1.15em;
+        }
         .practice-answer-row {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
+            display: flex; gap: 10px;
+            align-items: center; flex-wrap: wrap;
             justify-content: center;
+            width: 100%;
         }
-
         .practice-answer-row input {
-            width: 130px;
+            width: 150px;
             padding: 10px;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 900;
             text-align: center;
             border: 2px solid var(--teal-main);
             border-radius: 10px;
-            color: #0f766e;
-            background: #fafafa;
+            color: var(--teal-dark);
+            background: white;
+            font-family: 'Vazirmatn', sans-serif;
+            direction: ltr;
         }
-        .practice-answer-row input:focus { outline: none; border-color: var(--teal-main); }
+        .practice-answer-row input:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.15);
+        }
 
-        /* ========================================================================
-           ۱۰. دکمه‌ها
-           ======================================================================== */
         .btn-ui {
-            background: linear-gradient(135deg, var(--teal-main), #0f766e);
-            color: white;
-            border: 2px solid white;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 1rem;
+            background: linear-gradient(135deg, var(--teal-main), var(--teal-dark));
+            color: white; border: none;
+            padding: 12px 22px; border-radius: 30px;
+            font-weight: 800; font-size: 0.92rem;
             cursor: pointer;
             transition: transform 0.15s, box-shadow 0.15s;
             box-shadow: 0 6px 16px rgba(20, 184, 166, 0.25);
+            font-family: 'Vazirmatn', sans-serif;
+            min-height: 46px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .btn-ui:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(20, 184, 166, 0.35);
-        }
+        .btn-ui:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(20, 184, 166, 0.35); }
         .btn-ui:active { transform: translateY(0); }
         .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
-
         .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
         .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
-
         .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
         .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
-
         .btn-ui.lilac { background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark)); box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25); }
-        .btn-ui.lilac:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
 
         .action-btns-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            display: flex; justify-content: center;
+            gap: 10px; flex-wrap: wrap;
         }
-
         .feedback-display {
-            font-weight: 800;
-            text-align: center;
-            min-height: 28px;
-            font-size: 1rem;
-            margin-top: 10px;
-            transition: color 0.2s;
+            font-weight: 800; text-align: center;
+            min-height: 28px; font-size: 0.98rem;
+            margin-top: 8px; transition: color 0.2s; line-height: 2;
+            word-break: break-word;
         }
 
-        /* ========================================================================
-           ۱۱. دکمه‌های شناور
-           ======================================================================== */
         .floating-btns {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none;
-            z-index: 200;
-            max-width: 1100px;
-            margin: 0 auto;
+            position: fixed; bottom: 16px;
+            left: 16px; right: 16px;
+            display: flex; justify-content: space-between;
+            align-items: center; gap: 10px;
+            pointer-events: none; z-index: 200;
+            max-width: 1100px; margin: 0 auto;
         }
-
         .float-nav-btn {
             pointer-events: auto;
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 800;
-            color: var(--text-title);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 12px 20px; border-radius: 30px;
+            font-weight: 800; color: var(--text-title);
+            text-decoration: none; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
             transition: all 0.2s;
+            font-size: 0.9rem;
+            font-family: 'Vazirmatn', sans-serif;
+            position: relative;
         }
-
-        .float-nav-btn:hover {
-            background: var(--teal-main);
-            color: white;
+        .float-nav-btn:hover:not(.disabled) {
+            background: var(--teal-main); color: white;
             transform: translateY(-3px);
             box-shadow: 0 15px 35px rgba(20, 184, 166, 0.25);
         }
-
-        @media (max-width: 600px) {
-            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
-            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
-            .header-lesson-info { align-items: center; }
+        .float-nav-btn.disabled { opacity: 0.45; cursor: not-allowed; }
+        .float-nav-btn.disabled:hover { background: var(--glass-bg); color: var(--text-title); transform: none; }
+        .float-nav-btn.home-btn {
+            background: linear-gradient(135deg, var(--teal-main), var(--teal-dark));
+            color: white; border-color: transparent;
+            padding: 12px 16px;
         }
-
-        /* ========================================================================
-           ۱۲. انیمیشن
-           ======================================================================== */
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        .float-nav-btn.home-btn:hover {
+            background: linear-gradient(135deg, var(--teal-dark), var(--teal-main));
+            transform: translateY(-3px) scale(1.05);
         }
-        .pop-in { animation: popIn 0.3s ease-out forwards; }
+        .float-nav-btn .btn-tooltip {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            background: rgba(46, 16, 101, 0.95);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 8px;
+            white-space: nowrap;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .float-nav-btn:hover .btn-tooltip { opacity: 1; }
+        #prev-lesson-btn .btn-tooltip { right: 0; }
+        #next-lesson-btn .btn-tooltip { left: 0; }
+
+        .toast-notification {
+            position: fixed; bottom: 100px; left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: rgba(46, 16, 101, 0.96);
+            color: white; padding: 14px 24px;
+            border-radius: 14px; font-weight: 700;
+            font-size: 0.92rem; z-index: 1000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            max-width: 90%; text-align: center;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+            line-height: 1.7;
+        }
+        .toast-notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
@@ -641,13 +581,57 @@
             80% { transform: translateX(4px); }
         }
         .shake-anim { animation: shake 0.4s ease-in-out; }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .lesson-top-nav {
+                flex-direction: column; align-items: stretch;
+                text-align: center; padding: 14px 16px; gap: 10px;
+            }
+            .header-lesson-info { align-items: center; }
+            .go-back-link { justify-content: center; }
+            .lesson-title-text { text-align: center; }
+
+            .step-teaching-card { padding: 20px 16px; border-radius: 20px; }
+            .step-teaching-card h2 { font-size: 1.15rem; }
+            .step-teaching-card p { font-size: 0.95rem; }
+            .step-teaching-card ul, .step-teaching-card ol { margin-right: 18px; font-size: 0.95rem; }
+
+            .decimal-lab, .practice-lab, .word-problem-lab { padding: 16px 12px; }
+            .decimal-lab .input-row input { width: 100px; font-size: 1.05rem; padding: 8px; }
+
+            .action-btns-row { flex-direction: column; align-items: stretch; }
+            .action-btns-row .btn-ui { width: 100%; }
+
+            .float-nav-btn { padding: 11px 14px; font-size: 0.82rem; gap: 5px; }
+            .float-nav-btn .btn-label { display: none; }
+            .float-nav-btn.home-btn { padding: 11px 14px; }
+
+            .teacher-speech-bubble { padding: 12px 14px; font-size: 0.88rem; }
+            .key-tip-box { padding: 12px 12px; font-size: 0.88rem; }
+
+            .fraction { margin: 0 3px; font-size: 0.98em; }
+            .fraction .numerator { padding: 1px 6px 2px; }
+            .fraction .denominator { padding: 2px 6px 1px; }
+        }
+
+        @media (max-width: 480px) {
+            .decimal-lab .input-row { flex-direction: column; gap: 8px; }
+            .decimal-lab .input-row input { width: 100%; max-width: 220px; }
+            .practice-answer-row input { width: 130px; font-size: 1.1rem; }
+            .result-display { font-size: 1rem; padding: 14px 12px; }
+            .problem-card .problem-answer-row input { width: 100px; }
+        }
+
+        @media (max-width: 380px) {
+            .fraction { margin: 0 2px; font-size: 0.92em; }
+            .fraction .numerator { padding: 1px 5px 2px; }
+            .fraction .denominator { padding: 2px 5px 1px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ========================================================================
-         نوار ناوبری بالای درسنامه
-         ======================================================================== -->
     <header class="lesson-top-nav">
         <a href="../index.html" class="go-back-link">
             <span>← برگشت به کتاب اصلی</span>
@@ -658,259 +642,470 @@
         </div>
     </header>
 
+    <div class="book-location-bar" id="book-location-bar"></div>
+
     <main class="main-lesson-wrapper">
 
-        <!-- ========================================================================
-           قدم ۱: مفهوم تقسیم بر عدد اعشاری
-           ======================================================================== -->
+        <!-- ============ قدم ۱ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۱</span>
             <h2>تقسیم بر عدد اعشاری: چند تا از این عدد داریم؟</h2>
             <p>
-                وقتی یک عدد را بر یک عدد اعشاری تقسیم می‌کنیم، در واقع می‌خواهیم بدانیم 
+                وقتی یک عدد را بر یک عدد اعشاری تقسیم می‌کنیم، در واقع می‌خواهیم بدانیم
                 «در عدد اول، چند بار عدد اعشاری دوم جا می‌شود؟»
-                مثلاً ۶ ÷ ۱/۵ یعنی: «در ۶، چند بار ۱/۵ وجود دارد؟»
             </p>
+            <p>مثلاً:</p>
+            <p style="text-align: center;">
+                <span class="math-ltr">
+                    <strong>۶ ÷ ۱٫۵ = ؟</strong>
+                </span>
+            </p>
+            <p style="text-align: center;">یعنی: «در ۶، چند بار ۱٫۵ وجود دارد؟»</p>
 
             <div class="key-tip-box">
                 <strong>📌 قانون طلایی تقسیم بر عدد اعشاری:</strong>
-                <p style="margin-top: 6px;">برای تقسیم بر عدد اعشاری، ابتدا مقسوم‌علیه را به عدد طبیعی تبدیل می‌کنیم 
-                (ممیز را جابه‌جا می‌کنیم). سپس مقسوم را هم به همان تعداد رقم، ممیز را جابه‌جا می‌کنیم. 
-                حالا تقسیم را مثل تقسیم معمولی انجام می‌دهیم.</p>
+                <p style="margin-top: 6px;">
+                    برای تقسیم بر عدد اعشاری، ابتدا مقسوم‌علیه را به عدد طبیعی تبدیل می‌کنیم
+                    (ممیز را جابه‌جا می‌کنیم). سپس مقسوم را هم به همان تعداد رقم، ممیز را جابه‌جا می‌کنیم.
+                    حالا تقسیم را مثل تقسیم معمولی انجام می‌دهیم.
+                </p>
             </div>
 
             <div class="solved-example-box">
-                <div class="example-header">💡 مثال: تقسیم ۶ ÷ ۱/۵</div>
-                <p>مرحله ۱: مقسوم‌علیه ۱/۵ است. برای تبدیل به عدد طبیعی، ممیز را ۱ رقم به راست می‌بریم: ۱۵</p>
-                <p>مرحله ۲: مقسوم ۶ را هم ۱ رقم به راست می‌بریم: ۶۰</p>
-                <p>مرحله ۳: حالا تقسیم صحیح: ۶۰ ÷ ۱۵ = ۴</p>
-                <p style="font-weight:800; color: var(--teal-main);">۶ ÷ ۱/۵ = ۴</p>
+                <div class="example-header">💡 مثال: تقسیم <span class="math-ltr">۶ ÷ ۱٫۵</span></div>
+                <p>مرحله ۱: مقسوم‌علیه <span class="math-ltr">۱٫۵</span> است. برای تبدیل به عدد طبیعی، ممیز را ۱ رقم به راست می‌بریم: <span class="math-ltr">۱۵</span></p>
+                <p>مرحله ۲: مقسوم <span class="math-ltr">۶</span> را هم ۱ رقم به راست می‌بریم: <span class="math-ltr">۶۰</span></p>
+                <p>مرحله ۳: حالا تقسیم صحیح: <span class="math-ltr">۶۰ ÷ ۱۵ = ۴</span></p>
+                <p style="font-weight:800; color: var(--teal-dark); text-align: center;">
+                    نتیجه: <span class="math-ltr">۶ ÷ ۱٫۵ = <strong>۴</strong></span>
+                </p>
             </div>
 
             <div class="teacher-speech-bubble">
-                «تقسیم بر عدد اعشاری شبیه به این است که بخواهی بدانی در ۶ متر، چند تا ۱/۵ متر وجود دارد. 
+                «تقسیم بر عدد اعشاری شبیه به این است که بخواهی بدانی در ۶ متر، چند تا ۱٫۵ متر وجود دارد.
                 برای راحتی، ممیزها رو جابه‌جا می‌کنیم تا با عددهای صحیح کار کنیم.»
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۲: آزمایشگاه تقسیم بر عدد اعشاری
-           ======================================================================== -->
+        <!-- ============ قدم ۲ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۲</span>
             <h2>آزمایشگاه تقسیم بر عدد اعشاری: گام‌به‌گام!</h2>
-            <p>
-                در این آزمایشگاه، دو عدد را وارد کن (یکی می‌تواند اعشاری باشد) و مراحل تقسیم را ببین.
-            </p>
+            <p>دو عدد را وارد کن (یکی می‌تواند اعشاری باشد) و مراحل تقسیم را ببین.</p>
 
-            <!-- ابزار تعاملی ۱: تقسیم بر عدد اعشاری -->
-            <div class="division-lab">
+            <div class="decimal-lab">
                 <div class="sim-title">➗ آزمایشگاه تقسیم بر عدد اعشاری</div>
-                
-                <div class="division-input-row">
-                    <input type="number" id="div-lab-input1" value="6" step="0.01">
-                    <span style="font-size:1.5rem; font-weight:900; color:var(--teal-main);">÷</span>
-                    <input type="number" id="div-lab-input2" value="1.5" step="0.01">
-                    <button class="btn-ui green" id="btn-calc-div-lab">محاسبه</button>
+
+                <div class="input-row">
+                    <input type="text" id="div-lab-input1" value="6" inputmode="decimal" autocomplete="off" placeholder="مقسوم">
+                    <span class="op-sym">÷</span>
+                    <input type="text" id="div-lab-input2" value="1.5" inputmode="decimal" autocomplete="off" placeholder="مقسوم‌علیه">
+                    <button class="btn-ui green" id="btn-calc-div-lab">🧮 محاسبه</button>
                 </div>
 
-                <div class="division-display" id="div-lab-display">
-                    نتیجه: ؟
+                <div class="result-display" id="div-lab-display">
+                    <span class="hint-text">نتیجه اینجا نمایش داده می‌شود</span>
                 </div>
 
-                <div class="division-steps" id="div-lab-steps">
-                    <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «محاسبه» را بزنید.</p>
+                <div class="steps-box" id="div-lab-steps">
+                    <p style="color: var(--text-muted); text-align: center;">برای دیدن مراحل، دکمه «محاسبه» را بزنید.</p>
                 </div>
                 <p id="div-lab-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۳: جابه‌جایی ممیز (تبدیل به عدد طبیعی)
-           ======================================================================== -->
+        <!-- ============ قدم ۳ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۳</span>
             <h2>جابه‌جایی ممیز: کلید تقسیم بر اعشاری!</h2>
             <p>
-                مهم‌ترین قدم در تقسیم بر عدد اعشاری، تبدیل مقسوم‌علیه به عدد طبیعی است. 
-                برای این کار، ممیز را به تعداد رقم‌های اعشاری، به سمت راست جابه‌جا می‌کنیم 
+                مهم‌ترین قدم در تقسیم بر عدد اعشاری، تبدیل مقسوم‌علیه به عدد طبیعی است.
+                برای این کار، ممیز را به تعداد رقم‌های اعشاری، به سمت راست جابه‌جا می‌کنیم
                 و همین کار را برای مقسوم هم انجام می‌دهیم.
             </p>
 
-            <!-- ابزار تعاملی ۲: جابه‌جایی ممیز -->
-            <div class="shift-lab">
+            <div class="decimal-lab">
                 <div class="sim-title">🔀 ماشین جابه‌جایی ممیز</div>
-                
-                <div class="shift-display-row">
-                    <div class="shift-box" id="shift-box1">۶</div>
-                    <div class="shift-arrow">÷</div>
-                    <div class="shift-box" id="shift-box2">۱/۵</div>
+
+                <div class="result-display" id="shift-display" style="flex-direction: column; padding: 20px; gap: 12px;">
+                    <div class="math-ltr" style="font-size: 1.4rem;">
+                        <span id="shift-box1">۶</span>
+                        <span class="op-sym-inline">÷</span>
+                        <span id="shift-box2">۱٫۵</span>
+                    </div>
                 </div>
 
                 <div class="action-btns-row">
-                    <button class="btn-ui green" id="btn-shift">جابه‌جایی ممیز</button>
-                    <button class="btn-ui blue" id="btn-reset-shift">بازنشانی</button>
+                    <button class="btn-ui green" id="btn-shift">🔄 جابه‌جایی ممیز</button>
+                    <button class="btn-ui blue" id="btn-reset-shift">↩️ بازنشانی</button>
                 </div>
 
-                <div class="shift-steps" id="shift-steps">
-                    <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «جابه‌جایی ممیز» را بزنید.</p>
+                <div class="steps-box" id="shift-steps">
+                    <p style="color: var(--text-muted); text-align: center;">برای دیدن مراحل، دکمه «جابه‌جایی ممیز» را بزنید.</p>
                 </div>
                 <p id="shift-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۴: حل مسئله کلامی
-           ======================================================================== -->
+        <!-- ============ قدم ۴ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۴</span>
             <h2>حل مسئله کلامی با تقسیم بر اعشاری</h2>
             <p>
-                بسیاری از مسائل زندگی روزمره با تقسیم بر عدد اعشاری حل می‌شوند. 
+                بسیاری از مسائل زندگی روزمره با تقسیم بر عدد اعشاری حل می‌شوند.
                 در این بخش، یک مسئله کلامی را با هم حل می‌کنیم.
             </p>
 
-            <!-- ابزار تعاملی ۳: حل مسئله کلامی -->
             <div class="word-problem-lab">
                 <div class="sim-title">📖 حل مسئله کلامی</div>
-                
-                <div class="problem-card" id="problem-card">
-                    <!-- مسئله با JS ساخته می‌شود -->
-                </div>
+
+                <div class="problem-card" id="problem-card"></div>
 
                 <div class="action-btns-row">
-                    <button class="btn-ui green" id="btn-check-problem">بررسی پاسخ</button>
-                    <button class="btn-ui blue" id="btn-new-problem">مسئله جدید</button>
+                    <button class="btn-ui green" id="btn-check-problem">✓ بررسی پاسخ</button>
+                    <button class="btn-ui blue" id="btn-new-problem">🎲 مسئله جدید</button>
                 </div>
                 <p id="problem-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۵: تمرین تقسیم بر اعشاری
-           ======================================================================== -->
+        <!-- ============ قدم ۵ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۵</span>
             <h2>تمرین تقسیم بر عدد اعشاری</h2>
-            <p>
-                حالا نوبت تمرین است! حاصل تقسیم را وارد کن.
-            </p>
+            <p>حالا نوبت تمرین است! حاصل تقسیم را وارد کن. پاسخ را تا ۳ رقم اعشار می‌توانی وارد کنی.</p>
 
-            <!-- ابزار تعاملی ۴: تمرین تقسیم بر اعشاری -->
             <div class="practice-lab">
                 <div class="sim-title">📝 تمرین تعاملی</div>
-                
-                <div class="practice-question" id="practice-question">
-                    <!-- سوال با JS ساخته می‌شود -->
-                </div>
+
+                <div class="practice-question" id="practice-question"></div>
 
                 <div class="practice-answer-row">
-                    <input type="number" id="practice-answer" step="0.001" placeholder="پاسخ">
-                    <button class="btn-ui green" id="btn-check-practice">بررسی</button>
+                    <input type="text" id="practice-answer" inputmode="decimal" autocomplete="off" placeholder="پاسخ">
+                    <button class="btn-ui green" id="btn-check-practice">✓ بررسی</button>
                 </div>
 
                 <p id="practice-feedback" class="feedback-display"></p>
-                <button class="btn-ui blue" id="btn-new-practice">سوال جدید</button>
+                <button class="btn-ui blue" id="btn-new-practice">🎲 سوال جدید</button>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۶: جمع‌بندی
-           ======================================================================== -->
+        <!-- ============ قدم ۶ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۶</span>
             <h2>جمع‌بندی و تمرین</h2>
             <p>در این بخش یاد گرفتیم:</p>
-            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
+            <ul>
                 <li>✅ تقسیم بر عدد اعشاری: مقسوم‌علیه را به عدد طبیعی تبدیل می‌کنیم.</li>
                 <li>✅ جابه‌جایی ممیز: ممیز مقسوم‌علیه را به تعداد رقم‌های اعشاری به راست می‌بریم و همین کار را برای مقسوم انجام می‌دهیم.</li>
                 <li>✅ پس از تبدیل، تقسیم را مثل تقسیم اعداد صحیح انجام می‌دهیم.</li>
-                <li>✅ حل مسائل کلامی با تقسیم بر اعشاری: مثلاً «چند بسته ۱/۵ کیلویی از ۶ کیلو می‌شود؟»</li>
+                <li>✅ حل مسائل کلامی با تقسیم بر اعشاری: مثلاً «چند بسته ۱٫۵ کیلویی از ۶ کیلو می‌شود؟»</li>
                 <li>✅ کاربرد این تقسیم در مسائل روزمره مثل تقسیم مواد، اندازه‌ها و هزینه‌ها.</li>
             </ul>
 
             <div class="teacher-speech-bubble">
-                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی. 
+                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی.
                 یادت باشه که تقسیم بر اعشاری، پایه‌ی خیلی از مفاهیم ریاضی در سال‌های بعدی مثل نسبت‌ها و درصدهاست.»
             </div>
 
             <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
                 <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
-                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
-                    <li>۹ ÷ ۰/۳ = ؟</li>
-                    <li>۱۲ ÷ ۲/۴ = ؟</li>
-                    <li>۷/۵ ÷ ۱/۵ = ؟</li>
-                    <li>۴/۸ ÷ ۰/۶ = ؟</li>
-                    <li>۶ کیلو چای را در بسته‌های ۱/۵ کیلویی بسته‌بندی می‌کنیم. چند بسته می‌شود؟</li>
+                <ol style="color: #92400e;">
+                    <li>حاصل تقسیم <span class="math-ltr">۹ ÷ ۰٫۳</span> را پیدا کنید.</li>
+                    <li>حاصل تقسیم <span class="math-ltr">۱۲ ÷ ۲٫۴</span> را پیدا کنید.</li>
+                    <li>حاصل تقسیم <span class="math-ltr">۷٫۵ ÷ ۱٫۵</span> را پیدا کنید.</li>
+                    <li>حاصل تقسیم <span class="math-ltr">۴٫۸ ÷ ۰٫۶</span> را پیدا کنید.</li>
+                    <li>۶ کیلو چای را در بسته‌های ۱٫۵ کیلویی بسته‌بندی می‌کنیم. چند بسته می‌شود؟</li>
                 </ol>
             </div>
         </section>
 
     </main>
 
-    <!-- ========================================================================
-         دکمه‌های شناور
-         ======================================================================== -->
     <div class="floating-btns">
-        <a href="chapter3_part3.html" class="float-nav-btn">→ بخش قبلی</a>
-        <a href="chapter4_part1.html" class="float-nav-btn" id="next-lesson-btn">فصل بعدی ←</a>
+        <a class="float-nav-btn" id="prev-lesson-btn" href="#">
+            <span>→</span>
+            <span class="btn-label">بخش قبلی</span>
+            <span class="btn-tooltip" id="prev-tooltip">بخش قبلی</span>
+        </a>
+        <a href="../index.html" class="float-nav-btn home-btn">
+            🏠<span class="btn-label" style="margin-right:4px;">خانه</span>
+        </a>
+        <a class="float-nav-btn" id="next-lesson-btn" href="#">
+            <span class="btn-label">بخش بعدی</span>
+            <span>←</span>
+            <span class="btn-tooltip" id="next-tooltip">بخش بعدی</span>
+        </a>
     </div>
 
+    <div class="toast-notification" id="toast"></div>
+
     <script>
-        /* ========================================================================
-           لاجیک صوتی
-           ======================================================================== */
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const FILES_ORDER = [
+            'ch01_sec01.html', 'ch01_sec02.html', 'ch01_sec03.html', 'ch01_sec04.html',
+            'ch02_sec01.html', 'ch02_sec02.html', 'ch02_sec03.html', 'ch02_sec04.html',
+            'ch03_sec01.html', 'ch03_sec02.html', 'ch03_sec03.html', 'ch03_sec04.html',
+            'ch04_sec01.html', 'ch04_sec02.html', 'ch04_sec03.html', 'ch04_sec04.html',
+            'ch05_sec01.html', 'ch05_sec02.html', 'ch05_sec03.html', 'ch05_sec04.html',
+            'ch06_sec01.html', 'ch06_sec02.html', 'ch06_sec03.html', 'ch06_sec04.html',
+            'ch07_sec01.html', 'ch07_sec02.html'
+        ];
+
+        const chapterTitles = {
+            '01': 'عدد و الگوهای عددی',
+            '02': 'کسرها',
+            '03': 'اعداد اعشاری',
+            '04': 'تقارن و مختصات',
+            '05': 'اندازه‌گیری',
+            '06': 'آمار و احتمال',
+            '07': 'مرور و جمع‌بندی'
+        };
+
+        const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+
+        function toFa(str) {
+            return String(str).replace(/\d/g, d => faDigits[+d]);
+        }
+
+        function formatStrNumber(str) {
+            if (!str && str !== 0) return '';
+            str = String(str);
+            const parts = str.split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '٬');
+            let result = parts.join('.');
+            result = result.replace(/\d/g, d => faDigits[+d]);
+            result = result.replace('.', '٫');
+            return result;
+        }
+
+        function formatNumber(num) {
+            if (typeof num !== 'number' || isNaN(num)) return '—';
+            let str = String(num);
+            if (/e/i.test(str)) {
+                str = num.toFixed(20).replace(/0+$/, '').replace(/\.$/, '');
+            }
+            return formatStrNumber(str);
+        }
+
+        function normalizeDecimalInput(str) {
+            return String(str)
+                .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+                .replace(/٫/g, '.')
+                .replace(/،/g, '')
+                .replace(/٬/g, '')
+                .replace(/[^\d.\-]/g, '');
+        }
+
+        function countDecimals(val) {
+            const str = String(val);
+            if (/e/i.test(str)) {
+                const fixed = parseFloat(str).toFixed(20).replace(/0+$/, '').replace(/\.$/, '');
+                const parts = fixed.split('.');
+                return parts[1] ? parts[1].length : 0;
+            }
+            const parts = str.split('.');
+            return parts[1] ? parts[1].length : 0;
+        }
+
+        function stripTrailingZeros(str) {
+            if (str.indexOf('.') === -1) return str;
+            return str.replace(/0+$/, '').replace(/\.$/, '');
+        }
+
+        function moveDecimal(str, places, direction) {
+            str = String(str);
+            if (/e/i.test(str)) {
+                str = parseFloat(str).toFixed(20).replace(/0+$/, '').replace(/\.$/, '');
+            }
+
+            let parts = str.split('.');
+            let intPart = parts[0];
+            let decPart = parts[1] || '';
+            const digits = intPart + decPart;
+            let dotPos = intPart.length;
+
+            if (direction === 'right') {
+                dotPos += places;
+            } else {
+                dotPos -= places;
+            }
+
+            if (dotPos <= 0) {
+                return stripTrailingZeros('0.' + '0'.repeat(-dotPos) + digits);
+            } else if (dotPos >= digits.length) {
+                return digits + '0'.repeat(dotPos - digits.length);
+            } else {
+                return stripTrailingZeros(digits.substring(0, dotPos) + '.' + digits.substring(dotPos));
+            }
+        }
+
+        function getCurrentFileName() {
+            const path = window.location.pathname;
+            let name = path.substring(path.lastIndexOf('/') + 1);
+            if (!name || name === '') name = 'ch03_sec04.html';
+            return name.toLowerCase();
+        }
+        function parseFileName(name) {
+            const match = name.match(/ch(\d+)_sec(\d+)\.html?$/i);
+            if (!match) return null;
+            return { chapter: parseInt(match[1], 10), section: parseInt(match[2], 10) };
+        }
+        function fileLabel(fileName) {
+            const info = parseFileName(fileName);
+            if (!info) return fileName;
+            return `فصل ${toFa(info.chapter)} - بخش ${toFa(info.section)}`;
+        }
+
+        const currentFile = getCurrentFileName();
+        const currentInfo = parseFileName(currentFile) || { chapter: 3, section: 4 };
+        const currentIdx = FILES_ORDER.indexOf(currentFile);
+
+        function renderLocationBar() {
+            const bar = document.getElementById('book-location-bar');
+            if (!bar) return;
+            const prevFile = currentIdx > 0 ? FILES_ORDER[currentIdx - 1] : null;
+            const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+            let html = '';
+            html += `<span class="location-chip blue">📍 الان اینجایی: فصل ${toFa(currentInfo.chapter)} - بخش ${toFa(currentInfo.section)}</span>`;
+            const chKey = String(currentInfo.chapter).padStart(2, '0');
+            if (chapterTitles[chKey]) {
+                html += `<span class="location-chip">📖 ${chapterTitles[chKey]}</span>`;
+            }
+            if (nextFile) {
+                html += `<span class="location-chip yellow">⏭️ بعدی: ${fileLabel(nextFile)}</span>`;
+            } else {
+                html += `<span class="location-chip green">🎉 آخرین بخش کتاب</span>`;
+            }
+            bar.innerHTML = html;
+        }
+        renderLocationBar();
+
+        const prevBtn = document.getElementById('prev-lesson-btn');
+        const nextBtn = document.getElementById('next-lesson-btn');
+        const prevTooltip = document.getElementById('prev-tooltip');
+        const nextTooltip = document.getElementById('next-tooltip');
+
+        const prevFile = currentIdx > 0 ? FILES_ORDER[currentIdx - 1] : null;
+        const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+        if (prevFile) {
+            prevBtn.href = prevFile;
+            prevTooltip.textContent = `→ ${fileLabel(prevFile)}`;
+        } else {
+            prevBtn.removeAttribute('href');
+            prevBtn.classList.add('disabled');
+            prevTooltip.textContent = 'این اولین بخش کتاب است';
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('این اولین بخش کتاب است. 😊');
+                playTone(300, 0.15);
+            });
+        }
+
+        if (nextFile) {
+            nextBtn.href = nextFile;
+            nextTooltip.textContent = `${fileLabel(nextFile)} ←`;
+        } else {
+            nextBtn.removeAttribute('href');
+            nextBtn.classList.add('disabled');
+            nextTooltip.textContent = 'این آخرین بخش کتاب است';
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('🎉 تبریک! تمام فصل‌ها را کامل خواندی!');
+                playTone(700, 0.25);
+                confetti({ particleCount: 120, spread: 100, origin: { y: 0.6 } });
+            });
+        }
+
+        let audioCtx;
+        function ensureAudio() {
+            if (!audioCtx) {
+                try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+                catch (e) { audioCtx = null; }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        }
         function playTone(freq, duration) {
+            if (!audioCtx) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
             gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
             osc.start(); osc.stop(audioCtx.currentTime + duration);
         }
 
+        const toastEl = document.getElementById('toast');
+        let toastTimer;
+        function showToast(msg, duration = 3200) {
+            toastEl.textContent = msg;
+            toastEl.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
+        }
+
         /* ========================================================================
            تعامل ۱: تقسیم بر عدد اعشاری
+           ✅ حاصل سمت راست تساوی: a ÷ b = result
            ======================================================================== */
         document.getElementById('btn-calc-div-lab').addEventListener('click', function() {
-            const input1 = document.getElementById('div-lab-input1');
-            const input2 = document.getElementById('div-lab-input2');
-            const val1 = parseFloat(input1.value);
-            const val2 = parseFloat(input2.value);
+            ensureAudio();
+            const raw1 = normalizeDecimalInput(document.getElementById('div-lab-input1').value);
+            const raw2 = normalizeDecimalInput(document.getElementById('div-lab-input2').value);
+            const dividend = parseFloat(raw1);
+            const divisor = parseFloat(raw2);
             const displayEl = document.getElementById('div-lab-display');
             const stepsEl = document.getElementById('div-lab-steps');
             const feedbackEl = document.getElementById('div-lab-feedback');
 
-            if (isNaN(val1) || isNaN(val2) || val2 === 0) {
-                feedbackEl.innerText = '❌ لطفاً دو عدد معتبر وارد کن (مقسوم‌علیه نباید صفر باشد).';
+            if (isNaN(dividend) || isNaN(divisor) || divisor === 0) {
+                feedbackEl.textContent = '❌ لطفاً دو عدد معتبر وارد کن (مقسوم‌علیه نباید صفر باشد).';
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
             }
 
-            // تعیین تعداد رقم اعشار مقسوم‌علیه
-            const str2 = val2.toString();
-            const dec2 = (str2.split('.')[1] || '').length;
-            const multiplier = Math.pow(10, dec2);
+            const dec2 = countDecimals(divisor);
 
-            const newVal1 = val1 * multiplier;
-            const newVal2 = val2 * multiplier;
+            const newDividendStr = moveDecimal(raw1, dec2, 'right');
+            const newDivisorStr = moveDecimal(raw2, dec2, 'right');
 
-            const result = val1 / val2;
+            const result = dividend / divisor;
+            const resultStr = stripTrailingZeros(result.toFixed(10));
 
-            let stepsHTML = `
-                <div class="division-step-item"><span class="step-label">مرحله ۱:</span> مقسوم‌علیه ${val2.toLocaleString('fa-IR')} دارای ${dec2.toLocaleString('fa-IR')} رقم اعشار است.</div>
-                <div class="division-step-item"><span class="step-label">مرحله ۲:</span> هر دو عدد را در ${multiplier.toLocaleString('fa-IR')} ضرب می‌کنیم: ${newVal1.toLocaleString('fa-IR')} ÷ ${newVal2.toLocaleString('fa-IR')}</div>
-                <div class="division-step-item"><span class="step-label">مرحله ۳:</span> تقسیم اعداد صحیح: ${newVal1.toLocaleString('fa-IR')} ÷ ${newVal2.toLocaleString('fa-IR')} = ${result.toLocaleString('fa-IR')}</div>
-                <div class="division-step-item"><span class="step-label">نتیجه:</span> <strong style="color: var(--teal-main); font-size: 1.2rem;">${val1.toLocaleString('fa-IR')} ÷ ${val2.toLocaleString('fa-IR')} = ${result.toLocaleString('fa-IR')}</strong></div>
+            let stepsHTML = '';
+            if (dec2 === 0) {
+                stepsHTML += `<div class="step-item"><span class="step-label">مقسوم‌علیه صحیح است:</span>
+                    <span>نیازی به جابه‌جایی ممیز نیست.</span>
+                </div>`;
+            } else {
+                stepsHTML += `<div class="step-item"><span class="step-label">مرحله ۱:</span>
+                    <span>مقسوم‌علیه <span class="math-ltr">${formatNumber(divisor)}</span> دارای <strong>${toFa(dec2)}</strong> رقم اعشار است.</span>
+                </div>`;
+                stepsHTML += `<div class="step-item"><span class="step-label">مرحله ۲:</span>
+                    <span>ممیز هر دو عدد را <strong>${toFa(dec2)}</strong> رقم به راست می‌بریم.</span>
+                </div>`;
+                stepsHTML += `<div class="step-item"><span class="step-label">مرحله ۳:</span>
+                    <span class="math-ltr">${formatNumber(dividend)} → ${formatStrNumber(newDividendStr)}</span> و <span class="math-ltr">${formatNumber(divisor)} → ${formatStrNumber(newDivisorStr)}</span>
+                </div>`;
+            }
+            stepsHTML += `<div class="step-item"><span class="step-label">نتیجه:</span>
+                <span class="math-ltr">${formatNumber(dividend)} ÷ ${formatNumber(divisor)} = <strong>${formatStrNumber(resultStr)}</strong></span>
+            </div>`;
+
+            // ✅ حاصل سمت راست تساوی
+            displayEl.innerHTML = `
+                <span class="op-num">${formatNumber(dividend)}</span>
+                <span class="op-sym-inline">÷</span>
+                <span class="op-num">${formatNumber(divisor)}</span>
+                <span class="eq-sign">=</span>
+                <span class="result-num">${formatStrNumber(resultStr)}</span>
             `;
-
-            displayEl.innerHTML = `${val1.toLocaleString('fa-IR')} ÷ ${val2.toLocaleString('fa-IR')} = <strong>${result.toLocaleString('fa-IR')}</strong>`;
             stepsEl.innerHTML = stepsHTML;
-            feedbackEl.innerText = '✅ تقسیم با موفقیت انجام شد.';
+            feedbackEl.textContent = '✅ تقسیم با موفقیت انجام شد.';
             feedbackEl.style.color = 'var(--success)';
 
             playTone(600, 0.3);
@@ -921,39 +1116,49 @@
            تعامل ۲: جابه‌جایی ممیز
            ======================================================================== */
         document.getElementById('btn-shift').addEventListener('click', function() {
-            const val1 = parseFloat(document.getElementById('div-lab-input1').value);
-            const val2 = parseFloat(document.getElementById('div-lab-input2').value);
+            ensureAudio();
+            const raw1 = normalizeDecimalInput(document.getElementById('div-lab-input1').value);
+            const raw2 = normalizeDecimalInput(document.getElementById('div-lab-input2').value);
+            const val1 = parseFloat(raw1);
+            const val2 = parseFloat(raw2);
             const stepsEl = document.getElementById('shift-steps');
             const feedbackEl = document.getElementById('shift-feedback');
             const box1 = document.getElementById('shift-box1');
             const box2 = document.getElementById('shift-box2');
 
             if (isNaN(val1) || isNaN(val2) || val2 === 0) {
-                feedbackEl.innerText = '❌ لطفاً دو عدد معتبر وارد کن!';
+                feedbackEl.textContent = '❌ لطفاً دو عدد معتبر وارد کن!';
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
             }
 
-            const str2 = val2.toString();
-            const dec2 = (str2.split('.')[1] || '').length;
-            const multiplier = Math.pow(10, dec2);
+            const dec2 = countDecimals(val2);
+            const newVal1Str = moveDecimal(raw1, dec2, 'right');
+            const newVal2Str = moveDecimal(raw2, dec2, 'right');
 
-            const newVal1 = val1 * multiplier;
-            const newVal2 = val2 * multiplier;
-
-            box1.innerText = newVal1.toLocaleString('fa-IR');
-            box2.innerText = newVal2.toLocaleString('fa-IR');
+            box1.textContent = formatStrNumber(newVal1Str);
+            box2.textContent = formatStrNumber(newVal2Str);
 
             stepsEl.innerHTML = `
-                <div class="shift-step-item"><span class="step-label">قدم ۱:</span> مقسوم‌علیه ${val2.toLocaleString('fa-IR')} دارای ${dec2.toLocaleString('fa-IR')} رقم اعشار است.</div>
-                <div class="shift-step-item"><span class="step-label">قدم ۲:</span> ممیز هر دو عدد را ${dec2.toLocaleString('fa-IR')} رقم به راست می‌بریم.</div>
-                <div class="shift-step-item"><span class="step-label">قدم ۳:</span> عدد اول: ${val1.toLocaleString('fa-IR')} → ${newVal1.toLocaleString('fa-IR')}</div>
-                <div class="shift-step-item"><span class="step-label">قدم ۴:</span> عدد دوم: ${val2.toLocaleString('fa-IR')} → ${newVal2.toLocaleString('fa-IR')}</div>
-                <div class="shift-step-item"><span class="step-label">نتیجه:</span> حالا تقسیم ${newVal1.toLocaleString('fa-IR')} ÷ ${newVal2.toLocaleString('fa-IR')} را انجام می‌دهیم.</div>
+                <div class="step-item"><span class="step-label">قدم ۱:</span>
+                    <span>مقسوم‌علیه <span class="math-ltr">${formatNumber(val2)}</span> دارای <strong>${toFa(dec2)}</strong> رقم اعشار است.</span>
+                </div>
+                <div class="step-item"><span class="step-label">قدم ۲:</span>
+                    <span>ممیز هر دو عدد را <strong>${toFa(dec2)}</strong> رقم به راست می‌بریم.</span>
+                </div>
+                <div class="step-item"><span class="step-label">قدم ۳ — مقسوم:</span>
+                    <span class="math-ltr">${formatNumber(val1)} → ${formatStrNumber(newVal1Str)}</span>
+                </div>
+                <div class="step-item"><span class="step-label">قدم ۴ — مقسوم‌علیه:</span>
+                    <span class="math-ltr">${formatNumber(val2)} → ${formatStrNumber(newVal2Str)}</span>
+                </div>
+                <div class="step-item"><span class="step-label">نتیجه:</span>
+                    <span>حالا تقسیم <span class="math-ltr">${formatStrNumber(newVal1Str)} ÷ ${formatStrNumber(newVal2Str)}</span> را انجام می‌دهیم.</span>
+                </div>
             `;
 
-            feedbackEl.innerText = '✅ ممیزها جابه‌جا شدند.';
+            feedbackEl.textContent = '✅ ممیزها جابه‌جا شدند.';
             feedbackEl.style.color = 'var(--success)';
 
             playTone(600, 0.3);
@@ -961,81 +1166,106 @@
         });
 
         document.getElementById('btn-reset-shift').addEventListener('click', function() {
-            const val1 = parseFloat(document.getElementById('div-lab-input1').value);
-            const val2 = parseFloat(document.getElementById('div-lab-input2').value);
-            document.getElementById('shift-box1').innerText = val1.toLocaleString('fa-IR');
-            document.getElementById('shift-box2').innerText = val2.toLocaleString('fa-IR');
-            document.getElementById('shift-steps').innerHTML = '<p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «جابه‌جایی ممیز» را بزنید.</p>';
-            document.getElementById('shift-feedback').innerText = '';
+            ensureAudio();
+            const raw1 = normalizeDecimalInput(document.getElementById('div-lab-input1').value);
+            const raw2 = normalizeDecimalInput(document.getElementById('div-lab-input2').value);
+            const val1 = parseFloat(raw1);
+            const val2 = parseFloat(raw2);
+
+            if (!isNaN(val1) && !isNaN(val2)) {
+                document.getElementById('shift-box1').textContent = formatNumber(val1);
+                document.getElementById('shift-box2').textContent = formatNumber(val2);
+            }
+            document.getElementById('shift-steps').innerHTML = '<p style="color: var(--text-muted); text-align: center;">برای دیدن مراحل، دکمه «جابه‌جایی ممیز» را بزنید.</p>';
+            document.getElementById('shift-feedback').textContent = '';
             playTone(440, 0.05);
         });
 
         /* ========================================================================
            تعامل ۳: حل مسئله کلامی
            ======================================================================== */
-        const wordProblems = [
+        const problems = [
             {
-                text: '۶ کیلو چای را در بسته‌های ۱/۵ کیلویی بسته‌بندی می‌کنیم. چند بسته می‌شود؟',
+                textHTML: `۶ کیلو چای را در بسته‌های <span class="math-ltr">۱٫۵</span> کیلویی بسته‌بندی می‌کنیم. چند بسته می‌شود؟`,
                 answer: 4,
-                steps: 'تقسیم: ۶ ÷ ۱/۵<br>ممیز مقسوم‌علیه ۱ رقم به راست: ۱۵<br>مقسوم هم ۱ رقم به راست: ۶۰<br>تقسیم: ۶۰ ÷ ۱۵ = ۴'
+                stepsHTML: `
+                    <div>تقسیم: <span class="math-ltr">۶ ÷ ۱٫۵ = ؟</span></div>
+                    <div>مقسوم‌علیه <span class="math-ltr">۱٫۵</span> یک رقم اعشار دارد، پس ممیز هر دو عدد را یک رقم به راست می‌بریم:</div>
+                    <div><span class="math-ltr">۶ → ۶۰</span> و <span class="math-ltr">۱٫۵ → ۱۵</span></div>
+                    <div>تقسیم صحیح: <span class="math-ltr">۶۰ ÷ ۱۵ = ۴</span></div>
+                `
             },
             {
-                text: '۹ متر پارچه را به قطعات ۰/۳ متری تقسیم می‌کنیم. چند قطعه می‌شود؟',
+                textHTML: `۹ متر پارچه را به قطعات <span class="math-ltr">۰٫۳</span> متری تقسیم می‌کنیم. چند قطعه می‌شود؟`,
                 answer: 30,
-                steps: 'تقسیم: ۹ ÷ ۰/۳<br>ممیز مقسوم‌علیه ۱ رقم به راست: ۳<br>مقسوم هم ۱ رقم به راست: ۹۰<br>تقسیم: ۹۰ ÷ ۳ = ۳۰'
+                stepsHTML: `
+                    <div>تقسیم: <span class="math-ltr">۹ ÷ ۰٫۳ = ؟</span></div>
+                    <div>مقسوم‌علیه <span class="math-ltr">۰٫۳</span> یک رقم اعشار دارد، پس ممیز هر دو عدد را یک رقم به راست می‌بریم:</div>
+                    <div><span class="math-ltr">۹ → ۹۰</span> و <span class="math-ltr">۰٫۳ → ۳</span></div>
+                    <div>تقسیم صحیح: <span class="math-ltr">۹۰ ÷ ۳ = ۳۰</span></div>
+                `
             },
             {
-                text: '۱۲ کیلو آرد را در کیسه‌های ۲/۴ کیلویی بسته‌بندی می‌کنیم. چند کیسه لازم است؟',
+                textHTML: `۱۲ کیلو آرد را در کیسه‌های <span class="math-ltr">۲٫۴</span> کیلویی بسته‌بندی می‌کنیم. چند کیسه لازم است؟`,
                 answer: 5,
-                steps: 'تقسیم: ۱۲ ÷ ۲/۴<br>ممیز مقسوم‌علیه ۱ رقم به راست: ۲۴<br>مقسوم هم ۱ رقم به راست: ۱۲۰<br>تقسیم: ۱۲۰ ÷ ۲۴ = ۵'
+                stepsHTML: `
+                    <div>تقسیم: <span class="math-ltr">۱۲ ÷ ۲٫۴ = ؟</span></div>
+                    <div>مقسوم‌علیه <span class="math-ltr">۲٫۴</span> یک رقم اعشار دارد، پس ممیز هر دو عدد را یک رقم به راست می‌بریم:</div>
+                    <div><span class="math-ltr">۱۲ → ۱۲۰</span> و <span class="math-ltr">۲٫۴ → ۲۴</span></div>
+                    <div>تقسیم صحیح: <span class="math-ltr">۱۲۰ ÷ ۲۴ = ۵</span></div>
+                `
             }
         ];
         let currentProblemIndex = 0;
 
         function loadNewProblem() {
-            currentProblemIndex = Math.floor(Math.random() * wordProblems.length);
-            const problem = wordProblems[currentProblemIndex];
-            
+            currentProblemIndex = Math.floor(Math.random() * problems.length);
+            const problem = problems[currentProblemIndex];
+
             const cardEl = document.getElementById('problem-card');
             cardEl.innerHTML = `
-                <div class="problem-text">${problem.text}</div>
-                <div class="problem-steps">${problem.steps}</div>
+                <div class="problem-text">${problem.textHTML}</div>
+                <div class="problem-steps">${problem.stepsHTML}</div>
                 <div class="problem-answer-row">
-                    <span style="font-weight:800;">پاسخ:</span>
-                    <input type="number" id="problem-answer" placeholder="عدد">
+                    <span>پاسخ:</span>
+                    <input type="text" id="problem-answer" inputmode="numeric" autocomplete="off" placeholder="عدد">
                 </div>
             `;
 
-            document.getElementById('problem-feedback').innerText = '';
+            document.getElementById('problem-feedback').textContent = '';
         }
 
         document.getElementById('btn-check-problem').addEventListener('click', function() {
-            const problem = wordProblems[currentProblemIndex];
-            const userAnswer = parseFloat(document.getElementById('problem-answer').value);
+            ensureAudio();
+            const problem = problems[currentProblemIndex];
+            const raw = normalizeDecimalInput(document.getElementById('problem-answer').value);
+            const userAnswer = parseFloat(raw);
             const feedbackEl = document.getElementById('problem-feedback');
 
             if (isNaN(userAnswer)) {
-                feedbackEl.innerText = '❌ لطفاً یک عدد وارد کن!';
+                feedbackEl.textContent = '❌ لطفاً یک عدد وارد کن!';
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
             }
 
             if (Math.abs(userAnswer - problem.answer) < 0.001) {
-                feedbackEl.innerText = `✅ آفرین! پاسخ درست ${problem.answer.toLocaleString('fa-IR')} است.`;
+                feedbackEl.innerHTML = `✅ آفرین! پاسخ درست ${formatNumber(problem.answer)} است.`;
                 feedbackEl.style.color = 'var(--success)';
                 playTone(600, 0.3);
                 confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
             } else {
-                feedbackEl.innerText = `❌ اشتباه! پاسخ درست ${problem.answer.toLocaleString('fa-IR')} است.`;
+                feedbackEl.innerHTML = `❌ اشتباه! پاسخ درست ${formatNumber(problem.answer)} است.`;
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(300, 0.3);
-                document.getElementById('problem-card').classList.add('shake-anim');
-                setTimeout(() => document.getElementById('problem-card').classList.remove('shake-anim'), 500);
+                const card = document.getElementById('problem-card');
+                card.classList.add('shake-anim');
+                setTimeout(() => card.classList.remove('shake-anim'), 500);
             }
         });
 
         document.getElementById('btn-new-problem').addEventListener('click', () => {
+            ensureAudio();
             playTone(440, 0.05);
             loadNewProblem();
         });
@@ -1044,66 +1274,88 @@
 
         /* ========================================================================
            تعامل ۴: تمرین تقسیم بر اعشاری
+           ✅ حاصل سمت راست تساوی: a ÷ b = ?
            ======================================================================== */
         let practiceVal1, practiceVal2, practiceResult;
 
         function generatePracticeQuestion() {
-            // تولید عدد اول (می‌تواند صحیح یا اعشاری باشد)
-            practiceVal1 = Math.round((Math.random() * 20 + 1) * 10) / 10;
-            // تولید عدد دوم اعشاری
-            practiceVal2 = Math.round((Math.random() * 3 + 0.2) * 10) / 10;
-
-            practiceResult = practiceVal1 / practiceVal2;
-            // گرد کردن به ۳ رقم اعشار
-            practiceResult = Math.round(practiceResult * 1000) / 1000;
+            const cases = [
+                [6, 1.5, 4],
+                [9, 0.3, 30],
+                [12, 2.4, 5],
+                [4.8, 0.6, 8],
+                [7.5, 1.5, 5],
+                [8.4, 2.1, 4],
+                [10, 0.5, 20],
+                [3.6, 1.2, 3],
+                [15, 2.5, 6],
+                [2.4, 0.8, 3]
+            ];
+            const chosen = cases[Math.floor(Math.random() * cases.length)];
+            practiceVal1 = chosen[0];
+            practiceVal2 = chosen[1];
+            practiceResult = chosen[2];
 
             const qEl = document.getElementById('practice-question');
-            qEl.innerHTML = `${practiceVal1.toLocaleString('fa-IR')} ÷ ${practiceVal2.toLocaleString('fa-IR')} = ؟`;
+            // ✅ حاصل سمت راست تساوی
+            qEl.innerHTML = `
+                <span>${formatNumber(practiceVal1)}</span>
+                <span class="q-sign">÷</span>
+                <span>${formatNumber(practiceVal2)}</span>
+                <span class="q-sign">=</span>
+                <span class="q-mark">؟</span>
+            `;
 
             document.getElementById('practice-answer').value = '';
-            document.getElementById('practice-feedback').innerText = '';
+            const fb = document.getElementById('practice-feedback');
+            fb.textContent = '';
+            fb.style.color = 'var(--text-body)';
         }
 
         document.getElementById('btn-check-practice').addEventListener('click', function() {
-            const userAnswer = parseFloat(document.getElementById('practice-answer').value);
+            ensureAudio();
+            const raw = normalizeDecimalInput(document.getElementById('practice-answer').value);
+            const userAnswer = parseFloat(raw);
             const feedbackEl = document.getElementById('practice-feedback');
 
             if (isNaN(userAnswer)) {
-                feedbackEl.innerText = '❌ لطفاً یک عدد وارد کن!';
+                feedbackEl.textContent = '❌ لطفاً یک عدد وارد کن!';
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
             }
 
-            if (Math.abs(userAnswer - practiceResult) < 0.001) {
-                feedbackEl.innerText = `✅ آفرین! پاسخ درست ${practiceResult.toLocaleString('fa-IR')} است.`;
+            if (Math.abs(userAnswer - practiceResult) < 0.005) {
+                feedbackEl.innerHTML = `✅ آفرین! پاسخ درست ${formatNumber(practiceResult)} است.`;
                 feedbackEl.style.color = 'var(--success)';
                 playTone(600, 0.3);
                 confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
             } else {
-                feedbackEl.innerText = `❌ اشتباه! پاسخ درست ${practiceResult.toLocaleString('fa-IR')} است.`;
+                feedbackEl.innerHTML = `❌ اشتباه! پاسخ درست ${formatNumber(practiceResult)} است.`;
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(300, 0.3);
-                document.getElementById('practice-question').classList.add('shake-anim');
-                setTimeout(() => document.getElementById('practice-question').classList.remove('shake-anim'), 500);
+                const q = document.getElementById('practice-question');
+                q.classList.add('shake-anim');
+                setTimeout(() => q.classList.remove('shake-anim'), 500);
             }
         });
 
         document.getElementById('btn-new-practice').addEventListener('click', () => {
+            ensureAudio();
             playTone(440, 0.05);
             generatePracticeQuestion();
         });
 
-        generatePracticeQuestion();
-
-        /* ========================================================================
-           مدیریت دکمه‌های شناور
-           ======================================================================== */
-        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('به فصل بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
+        document.getElementById('practice-answer').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') document.getElementById('btn-check-practice').click();
         });
 
+        generatePracticeQuestion();
+
+        document.body.addEventListener('click', function initAudioOnce() {
+            ensureAudio();
+            document.body.removeEventListener('click', initAudioOnce);
+        }, { once: true });
     </script>
 </body>
 </html>

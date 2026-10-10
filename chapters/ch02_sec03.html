@@ -2,19 +2,13 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>فصل ۲ - بخش ۳: تقسیم کسرها | درسنامه تعاملی</title>
-    
-    <!-- قلم زیبای وزیرمتن -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 
-    <!-- انیمیشن کاغذ رنگی -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* ========================================================================
-           ۱. متغیرها و تم رنگی
-           ======================================================================== */
         :root {
             --lilac-bg: #f7f1fc;
             --lilac-soft: #f1e7fb;
@@ -22,11 +16,9 @@
             --lilac-main: #9333ea;
             --lilac-dark: #6b21a8;
             --lilac-glow: rgba(147, 51, 234, 0.15);
-            
             --blue-soft: #e0f2fe;
             --blue-main: #0284c7;
             --blue-dark: #0369a1;
-            
             --success: #16a34a;
             --success-bg: rgba(22, 163, 74, 0.1);
             --danger: #dc2626;
@@ -35,608 +27,569 @@
             --highlight: #fef08a;
             --pink-soft: #fce7f3;
             --pink-main: #ec4899;
+            --pink-dark: #be185d;
+            --purple-main: #8b5cf6;
 
-            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-bg: rgba(255, 255, 255, 0.9);
             --glass-border: rgba(255, 255, 255, 0.9);
-            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
-            --card-hover-bg: rgba(255, 255, 255, 0.95);
-            
+            --glass-shadow: 0 12px 36px rgba(107, 33, 168, 0.1);
             --text-title: #2e1065;
             --text-body: #475569;
             --text-muted: #64748b;
-            
             --radius-lg: 24px;
             --radius-md: 16px;
-            --radius-sm: 8px;
+            --radius-sm: 10px;
         }
 
-        /* ========================================================================
-           ۲. استایل‌های پایه
-           ======================================================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; -webkit-tap-highlight-color: transparent; }
+        html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
         body {
             background-color: var(--lilac-bg);
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
             background-attachment: fixed;
             color: var(--text-body);
             min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            line-height: 1.8;
+            padding: 16px;
+            display: flex; flex-direction: column;
+            overflow-x: hidden; line-height: 1.8;
         }
 
-        /* ========================================================================
-           ۳. نوار هدر
-           ======================================================================== */
+        /* ============ کسر (نمایش) ============ */
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            vertical-align: middle;
+            margin: 0 4px;
+            font-weight: 800;
+            line-height: 1.15;
+            text-align: center;
+            direction: ltr;
+            unicode-bidi: isolate;
+        }
+        .fraction .numerator {
+            padding: 1px 8px 2px;
+            border-bottom: 2px solid currentColor;
+            white-space: nowrap;
+        }
+        .fraction .denominator {
+            padding: 2px 8px 1px;
+            white-space: nowrap;
+        }
+
+        /* ============ ورودی کسر (input) ============ */
+        .frac-input-group {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: stretch;
+            border: 2px solid var(--pink-main);
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+            direction: ltr;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+        .frac-input-group input {
+            width: 62px;
+            padding: 8px 6px;
+            border: none;
+            text-align: center;
+            font-weight: 900;
+            font-size: 1.1rem;
+            background: white;
+            color: var(--lilac-dark);
+            outline: none;
+            font-family: 'Vazirmatn', sans-serif;
+            direction: ltr;
+        }
+        .frac-input-group input.numerator-input {
+            border-bottom: 2px solid var(--pink-main);
+        }
+        .frac-input-group input::placeholder {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .formula-ltr {
+            direction: ltr;
+            unicode-bidi: isolate;
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        /* ============ هدر ============ */
         .lesson-top-nav {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto 20px;
-            padding: 14px 28px;
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px; padding: 14px 22px;
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
             box-shadow: var(--glass-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px; z-index: 100;
         }
-
         .go-back-link {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 800;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.2s, transform 0.2s;
+            text-decoration: none; color: var(--text-muted);
+            font-weight: 800; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 8px;
+            transition: color 0.2s, transform 0.2s; white-space: nowrap;
         }
-
-        .go-back-link:hover {
-            color: var(--pink-main);
-            transform: translateX(3px);
-        }
-
-        .header-lesson-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-        }
-
+        .go-back-link:hover { color: var(--pink-dark); transform: translateX(3px); }
+        .header-lesson-info { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 0; }
         .chapter-label-badge {
-            background: var(--pink-soft);
-            color: var(--pink-main);
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 3px 10px;
+            background: var(--pink-soft); color: var(--pink-dark);
+            font-size: 0.72rem; font-weight: 800;
+            padding: 3px 10px; border-radius: 20px; white-space: nowrap;
+        }
+        .lesson-title-text { font-size: 1.05rem; font-weight: 900; color: var(--text-title); letter-spacing: -0.5px; }
+
+        /* ============ نوار موقعیت ============ */
+        .book-location-bar {
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px;
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 14px;
+            background: var(--glass-bg);
             border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(107, 33, 168, 0.06);
+            flex-wrap: wrap;
+            justify-content: center;
         }
-
-        .lesson-title-text {
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: var(--text-title);
+        .location-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--pink-soft); color: var(--pink-dark);
+            padding: 4px 12px; border-radius: 20px;
+            font-weight: 800; font-size: 0.82rem;
+            white-space: nowrap;
         }
+        .location-chip.blue { background: var(--blue-soft); color: var(--blue-dark); }
+        .location-chip.yellow { background: #fef9c3; color: #854d0e; }
+        .location-chip.green { background: #dcfce7; color: #166534; }
 
-        /* ========================================================================
-           ۴. کارت‌های آموزشی
-           ======================================================================== */
+        /* ============ کارت‌ها ============ */
         .main-lesson-wrapper {
-            max-width: 1100px;
-            width: 100%;
+            max-width: 1100px; width: 100%;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding-bottom: 80px;
+            display: flex; flex-direction: column;
+            gap: 20px; padding-bottom: 120px;
         }
-
         .step-teaching-card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
-            padding: 28px;
+            padding: 26px;
             box-shadow: var(--glass-shadow);
-            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
-
-        .step-teaching-card:hover {
-            background-color: var(--card-hover-bg);
-            transform: translateY(-5px);
-        }
-
         .step-number-badge {
-            display: inline-flex;
-            width: 32px;
-            height: 32px;
+            display: inline-flex; width: 34px; height: 34px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--pink-main), #be185d);
-            color: white;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 0.95rem;
-            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
+            color: white; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1rem;
+            margin-bottom: 14px;
             box-shadow: 0 4px 10px rgba(236, 72, 153, 0.25);
         }
-
         .step-teaching-card h2 {
-            font-size: 1.4rem;
-            color: var(--text-title);
-            margin-bottom: 12px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-size: 1.3rem; color: var(--text-title);
+            margin-bottom: 12px; font-weight: 900;
+            display: flex; align-items: center; gap: 10px;
+            letter-spacing: -0.8px; line-height: 1.6; flex-wrap: wrap;
+        }
+        .step-teaching-card p { font-size: 1rem; line-height: 2; color: var(--text-body); margin-bottom: 14px; }
+        .step-teaching-card ul, .step-teaching-card ol {
+            margin-right: 22px; color: var(--text-body);
+            font-weight: 600; line-height: 2.1; margin-bottom: 12px;
         }
 
-        .step-teaching-card p {
-            font-size: 1rem;
-            line-height: 1.9;
-            color: var(--text-body);
-            margin-bottom: 16px;
-        }
-
-        /* ========================================================================
-           ۵. المان‌های خاص
-           ======================================================================== */
+        /* ============ المان‌های خاص ============ */
         .teacher-speech-bubble {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.75);
             border-radius: var(--radius-md);
-            padding: 18px 22px;
+            padding: 16px 20px;
             border: 1px dashed var(--pink-main);
-            color: var(--lilac-dark);
-            margin: 16px 0;
-            position: relative;
-            font-style: italic;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
+            color: var(--pink-dark);
+            margin: 14px 0; font-style: italic;
+            display: flex; gap: 12px; align-items: flex-start;
+            font-size: 0.95rem; line-height: 1.9;
         }
-
-        .teacher-speech-bubble::before {
-            content: "🧑‍🏫";
-            font-size: 1.4rem;
-            font-style: normal;
-        }
+        .teacher-speech-bubble::before { content: "🧑‍🏫"; font-size: 1.4rem; font-style: normal; flex-shrink: 0; }
 
         .solved-example-box {
             background: var(--blue-soft);
             border: 1px solid rgba(2, 132, 199, 0.2);
             border-radius: var(--radius-md);
-            padding: 20px;
-            margin: 16px 0;
+            padding: 18px; margin: 14px 0;
+            word-break: break-word;
+            font-size: 1.05rem;
         }
-
         .example-header {
-            font-weight: 800;
+            font-weight: 800; color: var(--blue-dark);
+            font-size: 1rem; margin-bottom: 8px;
+            display: flex; align-items: center; gap: 8px;
+            flex-wrap: wrap;
+        }
+        .solved-example-box p {
+            font-size: 1.05rem;
+            line-height: 2.2;
             color: var(--blue-dark);
-            font-size: 1rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            margin-bottom: 6px;
         }
 
         .key-tip-box {
             background: var(--success-bg);
             border: 1px solid var(--success);
             border-radius: var(--radius-md);
-            padding: 16px;
-            margin: 16px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--success);
-            font-weight: 700;
-            font-size: 0.9rem;
+            padding: 14px 16px; margin: 14px 0;
+            color: var(--success); font-weight: 700;
+            font-size: 0.95rem; line-height: 1.9;
         }
+        .key-tip-box strong { color: var(--success); }
 
-        /* کسرنویسی */
-        .fraction {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            vertical-align: middle;
-            margin: 0 4px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            line-height: 1.1;
-        }
-        .fraction .numerator { border-bottom: 2px solid currentColor; padding: 0 6px; }
-        .fraction .denominator { padding: 0 6px; }
-
-        /* ========================================================================
-           ۶. بخش تعاملی ۱: تقسیم کسرها با شکل
-           ======================================================================== */
-        .interactive-container {
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            margin-top: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            border: 1px solid var(--glass-border);
-        }
-
+        /* ============ بخش تعاملی ============ */
         .sim-title {
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: var(--pink-main);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
+            font-weight: 800; font-size: 1.05rem;
+            color: var(--pink-dark);
+            display: flex; align-items: center; gap: 8px; line-height: 1.6;
+            flex-wrap: wrap;
         }
 
+        /* ============ آزمایشگاه تقسیم ============ */
         .divide-viz-lab {
             background: white;
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 20px;
             border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            display: flex; flex-direction: column; gap: 18px;
         }
-
         .divide-controls {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: flex; gap: 10px;
+            flex-wrap: wrap; justify-content: center;
             align-items: center;
+            padding: 14px 10px;
+            background: var(--lilac-bg);
+            border-radius: var(--radius-sm);
+            direction: ltr;
         }
-
-        .divide-controls input {
-            width: 60px;
-            padding: 8px;
-            font-size: 1.2rem;
+        .divide-controls .ctrl-label {
+            font-weight: 800;
+            color: var(--text-title);
+            font-size: 0.9rem;
+            white-space: nowrap;
+            direction: rtl;
+            display: inline-block;
+        }
+        .divide-controls .op-sym {
+            font-size: 1.5rem;
             font-weight: 900;
-            text-align: center;
-            border: 2px solid var(--pink-main);
-            border-radius: 8px;
-            color: var(--lilac-dark);
-            background: #fafafa;
+            color: var(--pink-main);
+            padding: 0 4px;
         }
-        .divide-controls input:focus { outline: none; border-color: var(--pink-main); box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.15); }
 
         .divide-canvas-container {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
-            flex-wrap: wrap;
-            align-items: center;
+            display: flex; justify-content: center;
+            align-items: center; width: 100%;
         }
-
         #divide-canvas {
             border-radius: var(--radius-sm);
             border: 2px solid #e2e8f0;
             background: #fafafa;
+            display: block;
+            width: 100%;
+            max-width: 420px;
+            height: auto;
         }
 
         .divide-result-text {
             background: var(--pink-soft);
-            padding: 16px 24px;
+            padding: 14px 16px;
             border-radius: var(--radius-sm);
             text-align: center;
-            font-size: 1.2rem;
-            font-weight: 900;
-            color: var(--pink-main);
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--pink-dark);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             flex-wrap: wrap;
+            line-height: 2.2;
+            word-break: break-word;
+            direction: ltr;
+            border: 1px solid var(--pink-main);
+            min-height: 70px;
         }
 
-        /* ========================================================================
-           ۷. بخش تعاملی ۲: قانون تقسیم (ضرب در معکوس)
-           ======================================================================== */
+        .legend-row {
+            display: flex; gap: 10px;
+            flex-wrap: wrap; justify-content: center;
+            font-size: 0.82rem; font-weight: 800;
+        }
+        .legend-chip {
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: #fafafa;
+            border: 1px solid #e2e8f0;
+        }
+        .legend-swatch {
+            width: 14px; height: 14px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        /* ============ قانون تقسیم ============ */
         .rule-lab {
             background: white;
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 20px;
             border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
+            display: flex; flex-direction: column;
+            gap: 16px; align-items: center;
         }
-
         .rule-display {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
+            display: flex; align-items: center;
+            gap: 10px; flex-wrap: wrap;
             justify-content: center;
-            font-size: 1.3rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             font-weight: 900;
             direction: ltr;
+            padding: 14px;
+            background: var(--pink-soft);
+            border-radius: var(--radius-sm);
+            width: 100%;
+            border: 1px solid var(--pink-main);
         }
-
         .rule-steps {
             background: #fafafa;
             border-radius: var(--radius-sm);
-            padding: 20px;
+            padding: 16px;
             border: 1px solid #e2e8f0;
             font-weight: 700;
             color: var(--text-body);
             line-height: 2.2;
             min-height: 100px;
             width: 100%;
+            font-size: 0.95rem;
         }
-
         .rule-step-item {
-            padding: 8px 0;
+            padding: 10px 0;
             border-bottom: 1px dashed #e2e8f0;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
+            word-break: break-word;
         }
         .rule-step-item:last-child { border-bottom: none; }
-
         .rule-step-item .step-label {
-            color: var(--pink-main);
+            color: var(--pink-dark);
             font-weight: 800;
             min-width: 70px;
+            flex-shrink: 0;
         }
 
-        /* ========================================================================
-           ۸. بخش تعاملی ۳: ماشین تقسیم کسرها
-           ======================================================================== */
+        /* ============ ماشین تقسیم ============ */
         .divide-machine {
             background: white;
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 20px;
             border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
+            display: flex; flex-direction: column;
+            gap: 18px; align-items: center;
         }
-
         .divide-machine-inputs {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: flex; gap: 14px;
+            flex-wrap: wrap; justify-content: center;
             align-items: center;
-        }
-
-        .divide-machine-inputs .frac-input-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            background: #fafafa;
-            padding: 8px;
+            padding: 14px 10px;
+            background: var(--lilac-bg);
             border-radius: var(--radius-sm);
-            border: 2px solid var(--lilac-border);
+            width: 100%;
+            direction: ltr;
         }
-
-        .divide-machine-inputs .frac-input-group input {
-            width: 60px;
-            padding: 4px;
-            font-size: 1.1rem;
-            border-radius: 4px;
-            border: none;
-            text-align: center;
+        .divide-machine-op {
+            font-size: 1.8rem;
             font-weight: 900;
-            color: var(--lilac-dark);
-            background: transparent;
-        }
-        .divide-machine-inputs .frac-input-group input:focus { outline: none; }
-
-        .divide-machine-inputs .frac-input-group .numerator-input {
-            border-bottom: 2px solid var(--lilac-dark);
+            color: var(--pink-main);
+            padding: 0 4px;
         }
 
         .divide-machine-output {
             background: var(--pink-soft);
-            padding: 20px 32px;
+            padding: 14px 16px;
             border-radius: var(--radius-sm);
-            font-size: 1.5rem;
+            font-size: 1.05rem;
             font-weight: 900;
-            color: var(--pink-main);
+            color: var(--pink-dark);
             display: flex;
             align-items: center;
             gap: 8px;
             direction: ltr;
             flex-wrap: wrap;
             justify-content: center;
+            width: 100%;
+            line-height: 2.2;
+            word-break: break-word;
+            border: 1px solid var(--pink-main);
+            min-height: 70px;
         }
 
-        /* ========================================================================
-           ۹. بخش تعاملی ۴: تمرین تقسیم
-           ======================================================================== */
+        /* ============ تمرین ============ */
         .practice-lab {
             background: white;
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 20px;
             border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
+            display: flex; flex-direction: column;
+            gap: 16px; align-items: center;
         }
-
         .practice-question {
             background: var(--pink-soft);
-            padding: 20px 32px;
+            padding: 16px 20px;
             border-radius: var(--radius-sm);
-            font-size: 1.5rem;
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
             font-weight: 900;
-            color: var(--pink-main);
+            color: var(--pink-dark);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             direction: ltr;
             flex-wrap: wrap;
             justify-content: center;
+            width: 100%;
+            border: 1px solid var(--pink-main);
+            min-height: 80px;
         }
-
         .practice-answer-row {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
+            display: flex; gap: 12px;
+            align-items: center; flex-wrap: wrap;
             justify-content: center;
+            width: 100%;
         }
 
-        .practice-answer-row .fraction-input-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-        }
-
-        .practice-answer-row .fraction-input-group input {
-            width: 70px;
-            padding: 4px;
-            font-size: 1.1rem;
-            border-radius: 4px;
-            border: 2px solid var(--pink-main);
-            text-align: center;
-            font-weight: 900;
-            color: var(--lilac-dark);
-            background: #fafafa;
-        }
-        .practice-answer-row .fraction-input-group input:focus { outline: none; border-color: var(--pink-main); }
-
-        .practice-answer-row .fraction-input-group .numerator-input {
-            border-bottom: 3px solid var(--pink-main);
-        }
-
-        /* ========================================================================
-           ۱۰. دکمه‌ها
-           ======================================================================== */
+        /* ============ دکمه‌ها ============ */
         .btn-ui {
-            background: linear-gradient(135deg, var(--pink-main), #be185d);
-            color: white;
-            border: 2px solid white;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 1rem;
+            background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
+            color: white; border: none;
+            padding: 12px 22px; border-radius: 30px;
+            font-weight: 800; font-size: 0.92rem;
             cursor: pointer;
             transition: transform 0.15s, box-shadow 0.15s;
             box-shadow: 0 6px 16px rgba(236, 72, 153, 0.25);
+            font-family: 'Vazirmatn', sans-serif;
+            min-height: 46px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .btn-ui:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.35);
-        }
+        .btn-ui:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(236, 72, 153, 0.35); }
         .btn-ui:active { transform: translateY(0); }
         .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
-
         .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
         .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
-
         .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
         .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
-
         .btn-ui.lilac { background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark)); box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25); }
-        .btn-ui.lilac:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
 
         .action-btns-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            display: flex; justify-content: center;
+            gap: 10px; flex-wrap: wrap;
         }
-
         .feedback-display {
-            font-weight: 800;
-            text-align: center;
-            min-height: 28px;
-            font-size: 1rem;
-            margin-top: 10px;
-            transition: color 0.2s;
+            font-weight: 800; text-align: center;
+            min-height: 28px; font-size: 0.98rem;
+            margin-top: 8px; transition: color 0.2s; line-height: 2.2;
+            word-break: break-word;
         }
 
-        /* ========================================================================
-           ۱۱. دکمه‌های شناور
-           ======================================================================== */
+        /* ============ دکمه‌های شناور ============ */
         .floating-btns {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none;
-            z-index: 200;
-            max-width: 1100px;
-            margin: 0 auto;
+            position: fixed; bottom: 16px;
+            left: 16px; right: 16px;
+            display: flex; justify-content: space-between;
+            align-items: center; gap: 10px;
+            pointer-events: none; z-index: 200;
+            max-width: 1100px; margin: 0 auto;
         }
-
         .float-nav-btn {
             pointer-events: auto;
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 800;
-            color: var(--text-title);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 12px 20px; border-radius: 30px;
+            font-weight: 800; color: var(--text-title);
+            text-decoration: none; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
             transition: all 0.2s;
+            font-size: 0.9rem;
+            font-family: 'Vazirmatn', sans-serif;
+            position: relative;
         }
-
-        .float-nav-btn:hover {
-            background: var(--pink-main);
-            color: white;
+        .float-nav-btn:hover:not(.disabled) {
+            background: var(--pink-main); color: white;
             transform: translateY(-3px);
             box-shadow: 0 15px 35px rgba(236, 72, 153, 0.25);
         }
-
-        @media (max-width: 600px) {
-            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
-            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
-            .header-lesson-info { align-items: center; }
+        .float-nav-btn.disabled { opacity: 0.45; cursor: not-allowed; }
+        .float-nav-btn.disabled:hover { background: var(--glass-bg); color: var(--text-title); transform: none; }
+        .float-nav-btn.home-btn {
+            background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
+            color: white; border-color: transparent;
+            padding: 12px 16px;
         }
-
-        /* ========================================================================
-           ۱۲. انیمیشن
-           ======================================================================== */
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        .float-nav-btn.home-btn:hover {
+            background: linear-gradient(135deg, var(--pink-dark), var(--pink-main));
+            transform: translateY(-3px) scale(1.05);
         }
-        .pop-in { animation: popIn 0.3s ease-out forwards; }
+        .float-nav-btn .btn-tooltip {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            background: rgba(46, 16, 101, 0.95);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 8px;
+            white-space: nowrap;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .float-nav-btn:hover .btn-tooltip { opacity: 1; }
+        #prev-lesson-btn .btn-tooltip { right: 0; }
+        #next-lesson-btn .btn-tooltip { left: 0; }
 
+        /* ============ Toast ============ */
+        .toast-notification {
+            position: fixed; bottom: 100px; left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: rgba(46, 16, 101, 0.96);
+            color: white; padding: 14px 24px;
+            border-radius: 14px; font-weight: 700;
+            font-size: 0.92rem; z-index: 1000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            max-width: 90%; text-align: center;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+            line-height: 1.7;
+        }
+        .toast-notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ============ انیمیشن ============ */
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             20% { transform: translateX(-6px); }
@@ -645,13 +598,69 @@
             80% { transform: translateX(4px); }
         }
         .shake-anim { animation: shake 0.4s ease-in-out; }
+
+        /* ============ ریسپانسیو ============ */
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .lesson-top-nav {
+                flex-direction: column; align-items: stretch;
+                text-align: center; padding: 14px 16px; gap: 10px;
+            }
+            .header-lesson-info { align-items: center; }
+            .go-back-link { justify-content: center; }
+            .lesson-title-text { text-align: center; }
+
+            .step-teaching-card { padding: 20px 16px; border-radius: 20px; }
+            .step-teaching-card h2 { font-size: 1.15rem; }
+            .step-teaching-card p { font-size: 0.95rem; }
+            .step-teaching-card ul, .step-teaching-card ol { margin-right: 18px; font-size: 0.95rem; }
+
+            .divide-viz-lab, .rule-lab,
+            .divide-machine, .practice-lab { padding: 16px 12px; }
+
+            .action-btns-row { flex-direction: column; align-items: stretch; }
+            .action-btns-row .btn-ui { width: 100%; }
+
+            .float-nav-btn { padding: 11px 14px; font-size: 0.82rem; gap: 5px; }
+            .float-nav-btn .btn-label { display: none; }
+            .float-nav-btn.home-btn { padding: 11px 14px; }
+
+            .teacher-speech-bubble { padding: 12px 14px; font-size: 0.88rem; }
+            .key-tip-box { padding: 12px 12px; font-size: 0.88rem; }
+
+            .fraction { margin: 0 3px; font-size: 0.98em; }
+            .fraction .numerator { padding: 1px 6px 2px; }
+            .fraction .denominator { padding: 2px 6px 1px; }
+
+            .frac-input-group input { width: 54px; font-size: 1rem; padding: 6px; }
+
+            #divide-canvas { max-width: 340px; }
+        }
+
+        @media (max-width: 480px) {
+            .frac-input-group input { width: 48px; font-size: 0.95rem; padding: 6px 4px; }
+            .divide-controls { gap: 6px; padding: 12px 6px; }
+            .divide-controls .op-sym { font-size: 1.2rem; }
+            #divide-canvas { max-width: 280px; }
+            .divide-result-text { font-size: 0.92rem; padding: 10px 8px; }
+            .divide-machine-op { font-size: 1.4rem; }
+            .divide-machine-inputs { gap: 8px; padding: 10px 8px; }
+            .rule-display { font-size: 0.95rem; padding: 10px 8px; }
+            .rule-step-item .step-label { min-width: 60px; font-size: 0.88rem; }
+        }
+
+        @media (max-width: 380px) {
+            .fraction { margin: 0 2px; font-size: 0.92em; }
+            .fraction .numerator { padding: 1px 5px 2px; }
+            .fraction .denominator { padding: 2px 5px 1px; }
+            #divide-canvas { max-width: 240px; }
+            .practice-question { padding: 12px 10px; gap: 5px; }
+            .frac-input-group input { width: 42px; font-size: 0.9rem; padding: 5px 3px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ========================================================================
-         نوار ناوبری بالای درسنامه
-         ======================================================================== -->
     <header class="lesson-top-nav">
         <a href="../index.html" class="go-back-link">
             <span>← برگشت به کتاب اصلی</span>
@@ -662,34 +671,69 @@
         </div>
     </header>
 
+    <div class="book-location-bar" id="book-location-bar"></div>
+
     <main class="main-lesson-wrapper">
 
-        <!-- ========================================================================
-           قدم ۱: مفهوم تقسیم کسرها
-           ======================================================================== -->
+        <!-- ============ قدم ۱ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۱</span>
             <h2>تقسیم کسرها: تقسیم کردن یک بخش!</h2>
             <p>
                 تقسیم کسرها یعنی می‌خواهیم ببینیم یک کسر (یا عدد) چند بار در کسر دیگر (یا عدد) جا می‌شود.
-                مثلاً <span class="fraction"><span class="numerator">۱</span><span class="denominator">۲</span></span> ÷ <span class="fraction"><span class="numerator">۱</span><span class="denominator">۴</span></span> یعنی: «یک‌دوم چند بار در یک‌چهارم جا می‌شود؟»
+                مثلاً:
             </p>
+            <p style="text-align: center;">
+                <span class="formula-ltr">
+                    <span class="fraction"><span class="numerator">۱</span><span class="denominator">۲</span></span>
+                    <span>÷</span>
+                    <span class="fraction"><span class="numerator">۱</span><span class="denominator">۴</span></span>
+                </span>
+            </p>
+            <p style="text-align: center;">یعنی: «یک‌دوم چند بار در یک‌چهارم جا می‌شود؟»</p>
 
             <div class="key-tip-box">
                 <strong>📌 قانون طلایی تقسیم کسرها:</strong>
-                <p style="margin-top: 6px; font-size: 1.1rem;">
-                    <span class="fraction"><span class="numerator">a</span><span class="denominator">b</span></span> ÷ 
-                    <span class="fraction"><span class="numerator">c</span><span class="denominator">d</span></span> = 
-                    <span class="fraction"><span class="numerator">a</span><span class="denominator">b</span></span> × 
-                    <span class="fraction"><span class="numerator">d</span><span class="denominator">c</span></span>
-                </p>
+                <div style="text-align: center; margin-top: 10px;">
+                    <span class="formula-ltr">
+                        <span class="fraction"><span class="numerator">a</span><span class="denominator">b</span></span>
+                        <span>÷</span>
+                        <span class="fraction"><span class="numerator">c</span><span class="denominator">d</span></span>
+                        <span>=</span>
+                        <span class="fraction"><span class="numerator">a</span><span class="denominator">b</span></span>
+                        <span>×</span>
+                        <span class="fraction"><span class="numerator">d</span><span class="denominator">c</span></span>
+                    </span>
+                </div>
                 <p>یعنی: «تقسیم بر یک کسر، برابر است با ضرب در معکوس آن کسر.»</p>
             </div>
 
             <div class="solved-example-box">
-                <div class="example-header">💡 مثال: تقسیم ۱/۲ ÷ ۱/۴</div>
-                <p>معکوس <span class="fraction"><span class="numerator">۱</span><span class="denominator">۴</span></span> می‌شود <span class="fraction"><span class="numerator">۴</span><span class="denominator">۱</span></span> = ۴</p>
-                <p>پس: <span class="fraction"><span class="numerator">۱</span><span class="denominator">۲</span></span> × ۴ = ۲</p>
+                <div class="example-header">💡 مثال:
+                    <span class="formula-ltr" style="color: var(--blue-dark);">
+                        <span class="fraction"><span class="numerator">۱</span><span class="denominator">۲</span></span>
+                        <span>÷</span>
+                        <span class="fraction"><span class="numerator">۱</span><span class="denominator">۴</span></span>
+                    </span>
+                </div>
+                <p>
+                    معکوس
+                    <span class="formula-ltr">
+                        <span class="fraction"><span class="numerator">۱</span><span class="denominator">۴</span></span>
+                    </span>
+                    می‌شود
+                    <span class="formula-ltr">
+                        <span class="fraction"><span class="numerator">۴</span><span class="denominator">۱</span></span>
+                    </span>
+                    که برابر ۴ است.
+                </p>
+                <p>پس:</p>
+                <p style="text-align: center;">
+                    <span class="formula-ltr">
+                        <span class="fraction"><span class="numerator">۱</span><span class="denominator">۲</span></span>
+                        <span>× ۴ = ۲</span>
+                    </span>
+                </p>
                 <p>یعنی یک‌دوم، دو بار در یک‌چهارم جا می‌شود!</p>
             </div>
 
@@ -698,9 +742,7 @@
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۲: تقسیم کسرها با شکل
-           ======================================================================== -->
+        <!-- ============ قدم ۲ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۲</span>
             <h2>تقسیم کسرها با شکل: ببین چه اتفاقی می‌افتد!</h2>
@@ -709,24 +751,43 @@
                 مستطیل بزرگ را به عنوان «کل» در نظر می‌گیریم و تقسیم را به صورت بصری نشان می‌دهیم.
             </p>
 
-            <!-- ابزار تعاملی ۱: تقسیم کسرها با شکل -->
             <div class="divide-viz-lab">
                 <div class="sim-title">🎨 آزمایشگاه تقسیم کسر: شکل را ببین!</div>
-                
+
+                <!-- کنترل‌ها: کسرها به صورت ورودی کسر (صورت بالا، خط، مخرج پایین) -->
                 <div class="divide-controls">
-                    <span style="font-weight:800;">کسر اول:</span>
-                    <input type="number" id="div-f1-num" value="1" min="1" max="5">
-                    <span>/</span>
-                    <input type="number" id="div-f1-den" value="2" min="1" max="6">
-                    <span style="font-size:1.5rem; font-weight:900; color:var(--pink-main);">÷</span>
-                    <span style="font-weight:800;">کسر دوم:</span>
-                    <input type="number" id="div-f2-num" value="1" min="1" max="5">
-                    <span>/</span>
-                    <input type="number" id="div-f2-den" value="4" min="1" max="6">
+                    <span class="ctrl-label">کسر اول:</span>
+                    <div class="frac-input-group">
+                        <input type="number" id="div-f1-num" class="numerator-input" value="1" min="1" max="5" inputmode="numeric">
+                        <input type="number" id="div-f1-den" value="2" min="1" max="6" inputmode="numeric">
+                    </div>
+
+                    <span class="op-sym">÷</span>
+
+                    <span class="ctrl-label">کسر دوم:</span>
+                    <div class="frac-input-group">
+                        <input type="number" id="div-f2-num" class="numerator-input" value="1" min="1" max="5" inputmode="numeric">
+                        <input type="number" id="div-f2-den" value="4" min="1" max="6" inputmode="numeric">
+                    </div>
                 </div>
 
                 <div class="divide-canvas-container">
-                    <canvas id="divide-canvas" width="400" height="300"></canvas>
+                    <canvas id="divide-canvas"></canvas>
+                </div>
+
+                <div class="legend-row">
+                    <span class="legend-chip">
+                        <span class="legend-swatch" style="background: #ec4899;"></span>
+                        هر دو کسر
+                    </span>
+                    <span class="legend-chip">
+                        <span class="legend-swatch" style="background: rgba(236, 72, 153, 0.35);"></span>
+                        فقط کسر اول
+                    </span>
+                    <span class="legend-chip">
+                        <span class="legend-swatch" style="background: rgba(139, 92, 246, 0.35);"></span>
+                        فقط کسر دوم
+                    </span>
                 </div>
 
                 <div class="divide-result-text" id="divide-result-text">
@@ -734,15 +795,13 @@
                 </div>
 
                 <div class="action-btns-row">
-                    <button class="btn-ui" id="btn-calc-divide">محاسبه تقسیم</button>
+                    <button class="btn-ui" id="btn-calc-divide">🧮 محاسبه تقسیم</button>
                 </div>
                 <p id="divide-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۳: قانون تقسیم (ضرب در معکوس)
-           ======================================================================== -->
+        <!-- ============ قدم ۳ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۳</span>
             <h2>قانون تقسیم: ضرب در معکوس!</h2>
@@ -751,53 +810,45 @@
                 در این بخش، مراحل این کار را به صورت گام‌به‌گام می‌بینیم.
             </p>
 
-            <!-- ابزار تعاملی ۲: قانون تقسیم -->
             <div class="rule-lab">
                 <div class="sim-title">📐 مراحل تقسیم کسرها</div>
-                
-                <div class="rule-display" id="rule-display">
-                    <span class="fraction"><span class="numerator">۱</span><span class="denominator">۲</span></span>
-                    <span style="color: var(--pink-main);">÷</span>
-                    <span class="fraction"><span class="numerator">۱</span><span class="denominator">۴</span></span>
-                </div>
+
+                <div class="rule-display" id="rule-display"></div>
 
                 <div class="rule-steps" id="rule-steps-output">
                     <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «نمایش مراحل» را بزنید.</p>
                 </div>
 
                 <div class="action-btns-row">
-                    <button class="btn-ui green" id="btn-show-rule-steps">نمایش مراحل</button>
-                    <button class="btn-ui blue" id="btn-new-rule">مثال جدید</button>
+                    <button class="btn-ui green" id="btn-show-rule-steps">📖 نمایش مراحل</button>
+                    <button class="btn-ui blue" id="btn-new-rule">🎲 مثال جدید</button>
                 </div>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۴: ماشین تقسیم کسرها
-           ======================================================================== -->
+        <!-- ============ قدم ۴ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۴</span>
             <h2>ماشین تقسیم کسرها: خودت حساب کن!</h2>
             <p>
-                در این ماشین، دو کسر را وارد کن و نتیجه‌ی تقسیم را ببین. 
-                می‌توانی کسرها را به صورت کسر معمولی یا عدد صحیح وارد کنی.
+                در این ماشین، دو کسر را وارد کن و نتیجه‌ی تقسیم را ببین.
+                صورت و مخرج هر کسر را در جای مخصوص خودش وارد کن.
             </p>
 
-            <!-- ابزار تعاملی ۳: ماشین تقسیم کسرها -->
             <div class="divide-machine">
                 <div class="sim-title">⚙️ ماشین تقسیم کسرها</div>
-                
+
                 <div class="divide-machine-inputs">
                     <div class="frac-input-group">
-                        <input type="number" class="numerator-input" id="machine-f1-num" value="1" min="1" max="10">
-                        <input type="number" id="machine-f1-den" value="2" min="1" max="10">
+                        <input type="number" class="numerator-input" id="machine-f1-num" value="1" min="1" max="10" inputmode="numeric">
+                        <input type="number" id="machine-f1-den" value="2" min="1" max="10" inputmode="numeric">
                     </div>
-                    <span style="font-size:2rem; font-weight:900; color:var(--pink-main);">÷</span>
+                    <span class="divide-machine-op">÷</span>
                     <div class="frac-input-group">
-                        <input type="number" class="numerator-input" id="machine-f2-num" value="1" min="1" max="10">
-                        <input type="number" id="machine-f2-den" value="4" min="1" max="10">
+                        <input type="number" class="numerator-input" id="machine-f2-num" value="1" min="1" max="10" inputmode="numeric">
+                        <input type="number" id="machine-f2-den" value="4" min="1" max="10" inputmode="numeric">
                     </div>
-                    <button class="btn-ui green" id="btn-calc-machine">محاسبه</button>
+                    <button class="btn-ui green" id="btn-calc-machine">🧮 محاسبه</button>
                 </div>
 
                 <div class="divide-machine-output" id="machine-output">
@@ -807,53 +858,41 @@
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۵: تمرین تقسیم کسرها
-           ======================================================================== -->
+        <!-- ============ قدم ۵ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۵</span>
             <h2>تمرین تقسیم کسرها</h2>
-            <p>
-                حالا نوبت تمرین است! حاصل تقسیم را به صورت کسر ساده‌شده وارد کن.
-            </p>
+            <p>حالا نوبت تمرین است! حاصل تقسیم را به صورت کسر ساده‌شده وارد کن.</p>
 
-            <!-- ابزار تعاملی ۴: تمرین تقسیم -->
             <div class="practice-lab">
                 <div class="sim-title">📝 تمرین تعاملی تقسیم</div>
-                
-                <div class="practice-question" id="practice-question">
-                    <!-- سوال با JS ساخته می‌شود -->
-                </div>
+
+                <div class="practice-question" id="practice-question"></div>
 
                 <div class="practice-answer-row">
-                    <div class="fraction-input-group">
-                        <input type="number" class="numerator-input" id="practice-num" placeholder="صورت">
+                    <div class="frac-input-group">
+                        <input type="number" class="numerator-input" id="practice-num" placeholder="صورت" inputmode="numeric">
+                        <input type="number" id="practice-den" placeholder="مخرج" inputmode="numeric">
                     </div>
-                    <span style="font-size:1.5rem; font-weight:900;">/</span>
-                    <div class="fraction-input-group">
-                        <input type="number" id="practice-den" placeholder="مخرج">
-                    </div>
-                    <button class="btn-ui green" id="btn-check-practice">بررسی</button>
+                    <button class="btn-ui green" id="btn-check-practice">✓ بررسی</button>
                 </div>
 
                 <p id="practice-feedback" class="feedback-display"></p>
-                <button class="btn-ui blue" id="btn-new-practice">سوال جدید</button>
+                <button class="btn-ui blue" id="btn-new-practice">🎲 سوال جدید</button>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۶: جمع‌بندی
-           ======================================================================== -->
+        <!-- ============ قدم ۶ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۶</span>
             <h2>جمع‌بندی و تمرین</h2>
             <p>در این بخش یاد گرفتیم:</p>
-            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
+            <ul>
                 <li>✅ تقسیم کسر بر کسر: کسر اول × معکوس کسر دوم</li>
                 <li>✅ تقسیم کسر بر عدد صحیح: عدد صحیح را به کسر با مخرج ۱ تبدیل می‌کنیم.</li>
                 <li>✅ تقسیم عدد صحیح بر کسر: عدد صحیح را به کسر با مخرج ۱ تبدیل می‌کنیم.</li>
                 <li>✅ ساده کردن قبل از ضرب: محاسبات را راحت‌تر می‌کند.</li>
-                <li>✅ حل مسئله با تقسیم کسرها: مثلاً «چند بسته‌ی ۱/۴ کیلویی از ۳ کیلو چای می‌شود؟»</li>
+                <li>✅ حل مسئله با تقسیم کسرها.</li>
             </ul>
 
             <div class="teacher-speech-bubble">
@@ -862,55 +901,234 @@
 
             <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
                 <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
-                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
-                    <li><span class="fraction"><span class="numerator">۳</span><span class="denominator">۴</span></span> ÷ <span class="fraction"><span class="numerator">۱</span><span class="denominator">۲</span></span> = ؟</li>
-                    <li><span class="fraction"><span class="numerator">۵</span><span class="denominator">۶</span></span> ÷ ۲ = ؟</li>
-                    <li>۳ ÷ <span class="fraction"><span class="numerator">۱</span><span class="denominator">۴</span></span> = ؟</li>
-                    <li>۴ کیلو چای را در بسته‌های ۱/۲ کیلویی بسته‌بندی می‌کنیم. چند بسته می‌شود؟</li>
+                <ol style="color: #92400e;">
+                    <li>
+                        <span class="formula-ltr">
+                            <span class="fraction"><span class="numerator">۳</span><span class="denominator">۴</span></span>
+                            <span>÷</span>
+                            <span class="fraction"><span class="numerator">۱</span><span class="denominator">۲</span></span>
+                            <span>= ؟</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="formula-ltr">
+                            <span class="fraction"><span class="numerator">۵</span><span class="denominator">۶</span></span>
+                            <span>÷ ۲ = ؟</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="formula-ltr">
+                            <span>۳ ÷</span>
+                            <span class="fraction"><span class="numerator">۱</span><span class="denominator">۴</span></span>
+                            <span>= ؟</span>
+                        </span>
+                    </li>
+                    <li>
+                        ۴ کیلو چای را در بسته‌های
+                        <span class="fraction"><span class="numerator">۱</span><span class="denominator">۲</span></span>
+                        کیلویی بسته‌بندی می‌کنیم. چند بسته می‌شود؟
+                    </li>
                 </ol>
             </div>
         </section>
 
     </main>
 
-    <!-- ========================================================================
-         دکمه‌های شناور
-         ======================================================================== -->
     <div class="floating-btns">
-        <a href="chapter2_part2.html" class="float-nav-btn">→ بخش قبلی</a>
-        <a href="chapter2_part4.html" class="float-nav-btn" id="next-lesson-btn">بخش بعدی ←</a>
+        <a class="float-nav-btn" id="prev-lesson-btn" href="#">
+            <span>→</span>
+            <span class="btn-label">بخش قبلی</span>
+            <span class="btn-tooltip" id="prev-tooltip">بخش قبلی</span>
+        </a>
+        <a href="../index.html" class="float-nav-btn home-btn">
+            🏠<span class="btn-label" style="margin-right:4px;">خانه</span>
+        </a>
+        <a class="float-nav-btn" id="next-lesson-btn" href="#">
+            <span class="btn-label">بخش بعدی</span>
+            <span>←</span>
+            <span class="btn-tooltip" id="next-tooltip">بخش بعدی</span>
+        </a>
     </div>
 
+    <div class="toast-notification" id="toast"></div>
+
     <script>
-        /* ========================================================================
-           لاجیک صوتی
-           ======================================================================== */
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        /* ============ ترتیب فایل‌ها ============ */
+        const FILES_ORDER = [
+            'ch01_sec01.html', 'ch01_sec02.html', 'ch01_sec03.html', 'ch01_sec04.html',
+            'ch02_sec01.html', 'ch02_sec02.html', 'ch02_sec03.html', 'ch02_sec04.html',
+            'ch03_sec01.html', 'ch03_sec02.html', 'ch03_sec03.html', 'ch03_sec04.html',
+            'ch04_sec01.html', 'ch04_sec02.html', 'ch04_sec03.html', 'ch04_sec04.html',
+            'ch05_sec01.html', 'ch05_sec02.html', 'ch05_sec03.html', 'ch05_sec04.html',
+            'ch06_sec01.html', 'ch06_sec02.html', 'ch06_sec03.html', 'ch06_sec04.html',
+            'ch07_sec01.html', 'ch07_sec02.html'
+        ];
+
+        const chapterTitles = {
+            '01': 'عدد و الگوهای عددی',
+            '02': 'کسرها',
+            '03': 'اعداد اعشاری',
+            '04': 'تقارن و مختصات',
+            '05': 'اندازه‌گیری',
+            '06': 'آمار و احتمال',
+            '07': 'مرور و جمع‌بندی'
+        };
+
+        /* ============ اعداد فارسی ============ */
+        const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+        function toFa(num) { return String(num).replace(/\d/g, d => faDigits[+d]); }
+        function formatFa(num) { return toFa(num).replace(/\B(?=(\d{3})+(?!\d))/g, '٬'); }
+
+        /* ============ ساخت HTML کسر (بدون /) ============ */
+        function fracHTML(n, d, extraClass = '') {
+            const cls = extraClass ? `fraction ${extraClass}` : 'fraction';
+            return `<span class="${cls}"><span class="numerator">${toFa(n)}</span><span class="denominator">${toFa(d)}</span></span>`;
+        }
+
+        /* ============ تشخیص فایل جاری ============ */
+        function getCurrentFileName() {
+            const path = window.location.pathname;
+            let name = path.substring(path.lastIndexOf('/') + 1);
+            if (!name || name === '') name = 'ch02_sec03.html';
+            return name.toLowerCase();
+        }
+        function parseFileName(name) {
+            const match = name.match(/ch(\d+)_sec(\d+)\.html?$/i);
+            if (!match) return null;
+            return { chapter: parseInt(match[1], 10), section: parseInt(match[2], 10) };
+        }
+        function fileLabel(fileName) {
+            const info = parseFileName(fileName);
+            if (!info) return fileName;
+            return `فصل ${toFa(info.chapter)} - بخش ${toFa(info.section)}`;
+        }
+
+        const currentFile = getCurrentFileName();
+        const currentInfo = parseFileName(currentFile) || { chapter: 2, section: 3 };
+        const currentIdx = FILES_ORDER.indexOf(currentFile);
+
+        /* ============ نوار موقعیت ============ */
+        function renderLocationBar() {
+            const bar = document.getElementById('book-location-bar');
+            if (!bar) return;
+            const prevFile = currentIdx > 0 ? FILES_ORDER[currentIdx - 1] : null;
+            const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+            let html = '';
+            html += `<span class="location-chip blue">📍 الان اینجایی: فصل ${toFa(currentInfo.chapter)} - بخش ${toFa(currentInfo.section)}</span>`;
+            const chKey = String(currentInfo.chapter).padStart(2, '0');
+            if (chapterTitles[chKey]) {
+                html += `<span class="location-chip">📖 ${chapterTitles[chKey]}</span>`;
+            }
+            if (nextFile) {
+                html += `<span class="location-chip yellow">⏭️ بعدی: ${fileLabel(nextFile)}</span>`;
+            } else {
+                html += `<span class="location-chip green">🎉 آخرین بخش کتاب</span>`;
+            }
+            bar.innerHTML = html;
+        }
+        renderLocationBar();
+
+        /* ============ دکمه‌های ناوبری ============ */
+        const prevBtn = document.getElementById('prev-lesson-btn');
+        const nextBtn = document.getElementById('next-lesson-btn');
+        const prevTooltip = document.getElementById('prev-tooltip');
+        const nextTooltip = document.getElementById('next-tooltip');
+
+        const prevFile = currentIdx > 0 ? FILES_ORDER[currentIdx - 1] : null;
+        const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+        if (prevFile) {
+            prevBtn.href = prevFile;
+            prevTooltip.textContent = `→ ${fileLabel(prevFile)}`;
+        } else {
+            prevBtn.removeAttribute('href');
+            prevBtn.classList.add('disabled');
+            prevTooltip.textContent = 'این اولین بخش کتاب است';
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('این اولین بخش کتاب است. 😊');
+                playTone(300, 0.15);
+            });
+        }
+
+        if (nextFile) {
+            nextBtn.href = nextFile;
+            nextTooltip.textContent = `${fileLabel(nextFile)} ←`;
+        } else {
+            nextBtn.removeAttribute('href');
+            nextBtn.classList.add('disabled');
+            nextTooltip.textContent = 'این آخرین بخش کتاب است';
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('🎉 تبریک! تمام فصل‌ها را کامل خواندی!');
+                playTone(700, 0.25);
+                confetti({ particleCount: 120, spread: 100, origin: { y: 0.6 } });
+            });
+        }
+
+        /* ============ صوت ============ */
+        let audioCtx;
+        function ensureAudio() {
+            if (!audioCtx) {
+                try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+                catch (e) { audioCtx = null; }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        }
         function playTone(freq, duration) {
+            if (!audioCtx) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
             gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
             osc.start(); osc.stop(audioCtx.currentTime + duration);
         }
 
-        /* ========================================================================
-           تعامل ۱: تقسیم کسرها با شکل
-           ======================================================================== */
-        function drawDivideGrid() {
-            const f1n = parseInt(document.getElementById('div-f1-num').value) || 1;
-            const f1d = parseInt(document.getElementById('div-f1-den').value) || 1;
-            const f2n = parseInt(document.getElementById('div-f2-num').value) || 1;
-            const f2d = parseInt(document.getElementById('div-f2-den').value) || 1;
+        /* ============ Toast ============ */
+        const toastEl = document.getElementById('toast');
+        let toastTimer;
+        function showToast(msg, duration = 3200) {
+            toastEl.textContent = msg;
+            toastEl.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
+        }
+
+        /* ============ ابزار ریاضی ============ */
+        function gcd(a, b) {
+            a = Math.abs(a); b = Math.abs(b);
+            while (b) { [a, b] = [b, a % b]; }
+            return a || 1;
+        }
+
+        /* ============ تعامل ۱: تقسیم کسرها با شکل ============ */
+        function drawDivideGrid(silent = false) {
+            const f1n = Math.max(1, parseInt(document.getElementById('div-f1-num').value, 10) || 1);
+            const f1d = Math.max(1, parseInt(document.getElementById('div-f1-den').value, 10) || 1);
+            const f2n = Math.max(1, parseInt(document.getElementById('div-f2-num').value, 10) || 1);
+            const f2d = Math.max(1, parseInt(document.getElementById('div-f2-den').value, 10) || 1);
+
+            const safeF1n = Math.min(f1n, f1d);
+            const safeF2n = Math.min(f2n, f2d);
 
             const canvas = document.getElementById('divide-canvas');
+            const logicalW = 420, logicalH = 320;
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+            if (canvas.width !== logicalW * dpr) {
+                canvas.width = logicalW * dpr;
+                canvas.height = logicalH * dpr;
+                canvas.style.aspectRatio = `${logicalW} / ${logicalH}`;
+            }
             const ctx = canvas.getContext('2d');
-            const w = canvas.width;
-            const h = canvas.height;
-            const padding = 40;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            const w = logicalW, h = logicalH;
+            const padding = 30;
             const gridW = w - 2 * padding;
             const gridH = h - 2 * padding;
             const startX = padding;
@@ -918,26 +1136,25 @@
 
             ctx.clearRect(0, 0, w, h);
 
-            const cellW = gridW / f1d;
-            const cellH = gridH / f2d;
+            const rows = f1d;
+            const cols = f2d;
+            const cellW = gridW / cols;
+            const cellH = gridH / rows;
 
-            // رسم شبکه بر اساس کسر اول (تعداد بخش‌ها)
-            for (let row = 0; row < f2d; row++) {
-                for (let col = 0; col < f1d; col++) {
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
                     const x = startX + col * cellW;
                     const y = startY + row * cellH;
 
-                    // رنگ‌آمیزی کسر اول
-                    const inFirst = col < f1n;
-                    // بخش‌هایی که کسر دوم در آن‌ها جا می‌گیرد
-                    const inSecond = row < f2n;
+                    const inFirst = row < safeF1n;
+                    const inSecond = col < safeF2n;
 
                     if (inFirst && inSecond) {
-                        ctx.fillStyle = '#ec4899'; // هر دو
+                        ctx.fillStyle = '#ec4899';
                     } else if (inFirst) {
-                        ctx.fillStyle = 'rgba(236, 72, 153, 0.3)'; // فقط اول
+                        ctx.fillStyle = 'rgba(236, 72, 153, 0.3)';
                     } else if (inSecond) {
-                        ctx.fillStyle = 'rgba(139, 92, 246, 0.3)'; // فقط دوم
+                        ctx.fillStyle = 'rgba(139, 92, 246, 0.3)';
                     } else {
                         ctx.fillStyle = '#f8fafc';
                     }
@@ -949,82 +1166,110 @@
                 }
             }
 
-            // قاب دور
             ctx.strokeStyle = '#475569';
             ctx.lineWidth = 2.5;
             ctx.strokeRect(startX, startY, gridW, gridH);
 
-            // محاسبه نتیجه: تقسیم = ضرب در معکوس
             const resultNum = f1n * f2d;
             const resultDen = f1d * f2n;
-            const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
-            const g = gcd(resultNum, resultDen) || 1;
+            const g = gcd(resultNum, resultDen);
             const simpleNum = resultNum / g;
             const simpleDen = resultDen / g;
 
-            // نمایش نتیجه
             const resultEl = document.getElementById('divide-result-text');
-            let resultHTML = `<span class="fraction"><span class="numerator">${f1n.toLocaleString('fa-IR')}</span><span class="denominator">${f1d.toLocaleString('fa-IR')}</span></span> ÷ <span class="fraction"><span class="numerator">${f2n.toLocaleString('fa-IR')}</span><span class="denominator">${f2d.toLocaleString('fa-IR')}</span></span> = <span class="fraction"><span class="numerator">${resultNum.toLocaleString('fa-IR')}</span><span class="denominator">${resultDen.toLocaleString('fa-IR')}</span></span>`;
+            let html = fracHTML(f1n, f1d);
+            html += `<span>÷</span>`;
+            html += fracHTML(f2n, f2d);
+            html += `<span>=</span>`;
+            html += fracHTML(resultNum, resultDen);
             if (g > 1) {
-                resultHTML += ` = <span class="fraction"><span class="numerator">${simpleNum.toLocaleString('fa-IR')}</span><span class="denominator">${simpleDen.toLocaleString('fa-IR')}</span></span>`;
+                html += `<span>=</span>`;
+                html += fracHTML(simpleNum, simpleDen);
             }
-            resultEl.innerHTML = resultHTML;
+            resultEl.innerHTML = html;
 
-            document.getElementById('divide-feedback').innerText = '✅ بخش صورتی پررنگ، نشان‌دهنده‌ی تقسیم است.';
-            document.getElementById('divide-feedback').style.color = 'var(--success)';
+            const fb = document.getElementById('divide-feedback');
+            fb.innerHTML = '✅ ناحیه‌ی صورتی پررنگ، نشان‌دهنده‌ی تقسیم است.';
+            fb.style.color = 'var(--success)';
+
+            if (!silent) playTone(550, 0.1);
         }
 
-        document.getElementById('btn-calc-divide').addEventListener('click', function() {
-            playTone(550, 0.1);
+        document.getElementById('btn-calc-divide').addEventListener('click', () => {
+            ensureAudio();
             drawDivideGrid();
         });
 
-        drawDivideGrid();
+        ['div-f1-num', 'div-f1-den', 'div-f2-num', 'div-f2-den'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => drawDivideGrid(true));
+        });
 
-        /* ========================================================================
-           تعامل ۲: قانون تقسیم (ضرب در معکوس)
-           ======================================================================== */
+        drawDivideGrid(true);
+
+        /* ============ تعامل ۲: قانون تقسیم ============ */
         let ruleData = { f1n: 1, f1d: 2, f2n: 1, f2d: 4 };
 
         function updateRuleDisplay() {
             document.getElementById('rule-display').innerHTML = `
-                <span class="fraction"><span class="numerator">${ruleData.f1n.toLocaleString('fa-IR')}</span><span class="denominator">${ruleData.f1d.toLocaleString('fa-IR')}</span></span>
-                <span style="color: var(--pink-main);">÷</span>
-                <span class="fraction"><span class="numerator">${ruleData.f2n.toLocaleString('fa-IR')}</span><span class="denominator">${ruleData.f2d.toLocaleString('fa-IR')}</span></span>
+                ${fracHTML(ruleData.f1n, ruleData.f1d)}
+                <span>÷</span>
+                ${fracHTML(ruleData.f2n, ruleData.f2d)}
             `;
-            document.getElementById('rule-steps-output').innerHTML = '<p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «نمایش مراحل» را بزنید.</p>';
+            document.getElementById('rule-steps-output').innerHTML =
+                '<p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «نمایش مراحل» را بزنید.</p>';
         }
 
         document.getElementById('btn-show-rule-steps').addEventListener('click', function() {
+            ensureAudio();
             playTone(550, 0.1);
+
             const stepsEl = document.getElementById('rule-steps-output');
-            
             const { f1n, f1d, f2n, f2d } = ruleData;
 
-            // مرحله ۱: نوشتن تقسیم
-            let stepsHTML = `<div class="rule-step-item"><span class="step-label">مرحله ۱:</span> تقسیم را می‌نویسیم: <span class="fraction"><span class="numerator">${f1n.toLocaleString('fa-IR')}</span><span class="denominator">${f1d.toLocaleString('fa-IR')}</span></span> ÷ <span class="fraction"><span class="numerator">${f2n.toLocaleString('fa-IR')}</span><span class="denominator">${f2d.toLocaleString('fa-IR')}</span></span></div>`;
+            let stepsHTML = `<div class="rule-step-item"><span class="step-label">مرحله ۱:</span> <span>تقسیم را می‌نویسیم:</span>
+                <span class="formula-ltr">
+                    ${fracHTML(f1n, f1d)}
+                    <span>÷</span>
+                    ${fracHTML(f2n, f2d)}
+                </span>
+            </div>`;
 
-            // مرحله ۲: معکوس کسر دوم
-            stepsHTML += `<div class="rule-step-item"><span class="step-label">مرحله ۲:</span> معکوس کسر دوم: <span class="fraction"><span class="numerator">${f2d.toLocaleString('fa-IR')}</span><span class="denominator">${f2n.toLocaleString('fa-IR')}</span></span></div>`;
+            stepsHTML += `<div class="rule-step-item"><span class="step-label">مرحله ۲:</span> <span>معکوس کسر دوم:</span>
+                <span class="formula-ltr">
+                    ${fracHTML(f2d, f2n)}
+                </span>
+            </div>`;
 
-            // مرحله ۳: تبدیل به ضرب
-            stepsHTML += `<div class="rule-step-item"><span class="step-label">مرحله ۳:</span> تقسیم را به ضرب تبدیل می‌کنیم: <span class="fraction"><span class="numerator">${f1n.toLocaleString('fa-IR')}</span><span class="denominator">${f1d.toLocaleString('fa-IR')}</span></span> × <span class="fraction"><span class="numerator">${f2d.toLocaleString('fa-IR')}</span><span class="denominator">${f2n.toLocaleString('fa-IR')}</span></span></div>`;
+            stepsHTML += `<div class="rule-step-item"><span class="step-label">مرحله ۳:</span> <span>تقسیم را به ضرب تبدیل می‌کنیم:</span>
+                <span class="formula-ltr">
+                    ${fracHTML(f1n, f1d)}
+                    <span>×</span>
+                    ${fracHTML(f2d, f2n)}
+                </span>
+            </div>`;
 
-            // مرحله ۴: ضرب
             let resultNum = f1n * f2d;
             let resultDen = f1d * f2n;
-            const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
-            const g = gcd(resultNum, resultDen) || 1;
+            const g = gcd(resultNum, resultDen);
 
-            stepsHTML += `<div class="rule-step-item"><span class="step-label">مرحله ۴:</span> ضرب صورت‌ها و مخرج‌ها: <span class="fraction"><span class="numerator">${resultNum.toLocaleString('fa-IR')}</span><span class="denominator">${resultDen.toLocaleString('fa-IR')}</span></span></div>`;
+            stepsHTML += `<div class="rule-step-item"><span class="step-label">مرحله ۴:</span> <span>ضرب صورت‌ها و مخرج‌ها:</span>
+                <span class="formula-ltr">
+                    ${fracHTML(resultNum, resultDen)}
+                </span>
+            </div>`;
 
-            // مرحله ۵: ساده کردن
             if (g > 1) {
                 const simpleNum = resultNum / g;
                 const simpleDen = resultDen / g;
-                stepsHTML += `<div class="rule-step-item"><span class="step-label">مرحله ۵:</span> ساده کردن: <span class="fraction"><span class="numerator">${resultNum.toLocaleString('fa-IR')}</span><span class="denominator">${resultDen.toLocaleString('fa-IR')}</span></span> = <span class="fraction"><span class="numerator">${simpleNum.toLocaleString('fa-IR')}</span><span class="denominator">${simpleDen.toLocaleString('fa-IR')}</span></span></div>`;
+                stepsHTML += `<div class="rule-step-item"><span class="step-label">مرحله ۵:</span> <span>ساده کردن:</span>
+                    <span class="formula-ltr">
+                        ${fracHTML(resultNum, resultDen)}
+                        <span>=</span>
+                        ${fracHTML(simpleNum, simpleDen)}
+                    </span>
+                </div>`;
             } else {
-                stepsHTML += `<div class="rule-step-item"><span class="step-label">مرحله ۵:</span> کسر ساده‌شده است.</div>`;
+                stepsHTML += `<div class="rule-step-item"><span class="step-label">مرحله ۵:</span> <span>کسر ساده‌شده است.</span></div>`;
             }
 
             stepsEl.innerHTML = stepsHTML;
@@ -1033,6 +1278,7 @@
         });
 
         document.getElementById('btn-new-rule').addEventListener('click', function() {
+            ensureAudio();
             playTone(440, 0.05);
             const examples = [
                 { f1n: 1, f1d: 2, f2n: 1, f2d: 4 },
@@ -1047,48 +1293,46 @@
 
         updateRuleDisplay();
 
-        /* ========================================================================
-           تعامل ۳: ماشین تقسیم کسرها
-           ======================================================================== */
+        /* ============ تعامل ۳: ماشین تقسیم ============ */
         document.getElementById('btn-calc-machine').addEventListener('click', function() {
-            const f1n = parseInt(document.getElementById('machine-f1-num').value) || 1;
-            const f1d = parseInt(document.getElementById('machine-f1-den').value) || 1;
-            const f2n = parseInt(document.getElementById('machine-f2-num').value) || 1;
-            const f2d = parseInt(document.getElementById('machine-f2-den').value) || 1;
+            ensureAudio();
+            const f1n = Math.max(1, parseInt(document.getElementById('machine-f1-num').value, 10) || 1);
+            const f1d = Math.max(1, parseInt(document.getElementById('machine-f1-den').value, 10) || 1);
+            const f2n = Math.max(1, parseInt(document.getElementById('machine-f2-num').value, 10) || 1);
+            const f2d = Math.max(1, parseInt(document.getElementById('machine-f2-den').value, 10) || 1);
             const outputEl = document.getElementById('machine-output');
             const feedbackEl = document.getElementById('machine-feedback');
 
-            if (f1d === 0 || f2d === 0 || f2n === 0) {
-                feedbackEl.innerText = '❌ مخرج‌ها و صورت کسر دوم نباید صفر باشند!';
-                feedbackEl.style.color = 'var(--danger)';
-                playTone(200, 0.2);
-                return;
-            }
-
-            // محاسبه: f1/f2 = f1 * (1/f2)
             const resultNum = f1n * f2d;
             const resultDen = f1d * f2n;
-
-            const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
-            const g = gcd(resultNum, resultDen) || 1;
+            const g = gcd(resultNum, resultDen);
             const simpleNum = resultNum / g;
             const simpleDen = resultDen / g;
 
-            let outputHTML = `<span class="fraction"><span class="numerator">${f1n.toLocaleString('fa-IR')}</span><span class="denominator">${f1d.toLocaleString('fa-IR')}</span></span> ÷ <span class="fraction"><span class="numerator">${f2n.toLocaleString('fa-IR')}</span><span class="denominator">${f2d.toLocaleString('fa-IR')}</span></span> = <span class="fraction"><span class="numerator">${resultNum.toLocaleString('fa-IR')}</span><span class="denominator">${resultDen.toLocaleString('fa-IR')}</span></span>`;
+            let outputHTML = fracHTML(f1n, f1d);
+            outputHTML += `<span>÷</span>`;
+            outputHTML += fracHTML(f2n, f2d);
+            outputHTML += `<span>=</span>`;
+            outputHTML += fracHTML(resultNum, resultDen);
             if (g > 1) {
-                outputHTML += ` = <span class="fraction"><span class="numerator">${simpleNum.toLocaleString('fa-IR')}</span><span class="denominator">${simpleDen.toLocaleString('fa-IR')}</span></span>`;
+                outputHTML += `<span>=</span>`;
+                outputHTML += fracHTML(simpleNum, simpleDen);
             }
             outputEl.innerHTML = outputHTML;
 
-            feedbackEl.innerText = '✅ تقسیم با موفقیت انجام شد.';
+            feedbackEl.innerHTML = '✅ تقسیم با موفقیت انجام شد.';
             feedbackEl.style.color = 'var(--success)';
             playTone(600, 0.3);
             confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
         });
 
-        /* ========================================================================
-           تعامل ۴: تمرین تقسیم
-           ======================================================================== */
+        ['machine-f1-num', 'machine-f1-den', 'machine-f2-num', 'machine-f2-den'].forEach(id => {
+            document.getElementById(id).addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') document.getElementById('btn-calc-machine').click();
+            });
+        });
+
+        /* ============ تعامل ۴: تمرین تقسیم ============ */
         let practiceF1n, practiceF1d, practiceF2n, practiceF2d, practiceResultNum, practiceResultDen;
 
         function generatePracticeQuestion() {
@@ -1102,68 +1346,79 @@
 
             const qEl = document.getElementById('practice-question');
             qEl.innerHTML = `
-                <span class="fraction"><span class="numerator">${practiceF1n.toLocaleString('fa-IR')}</span><span class="denominator">${practiceF1d.toLocaleString('fa-IR')}</span></span>
-                <span style="color: var(--pink-main);">÷</span>
-                <span class="fraction"><span class="numerator">${practiceF2n.toLocaleString('fa-IR')}</span><span class="denominator">${practiceF2d.toLocaleString('fa-IR')}</span></span>
-                <span style="color: var(--pink-main);">=</span>
+                ${fracHTML(practiceF1n, practiceF1d)}
+                <span style="color: var(--pink-dark);">÷</span>
+                ${fracHTML(practiceF2n, practiceF2d)}
+                <span style="color: var(--pink-dark);">=</span>
                 <span style="color: var(--text-muted);">؟</span>
             `;
 
             document.getElementById('practice-num').value = '';
             document.getElementById('practice-den').value = '';
-            document.getElementById('practice-feedback').innerText = '';
+            const fb = document.getElementById('practice-feedback');
+            fb.innerHTML = '';
+            fb.style.color = 'var(--text-body)';
         }
 
         document.getElementById('btn-check-practice').addEventListener('click', function() {
-            const userNum = parseInt(document.getElementById('practice-num').value);
-            const userDen = parseInt(document.getElementById('practice-den').value);
+            ensureAudio();
+            const userNum = parseInt(document.getElementById('practice-num').value, 10);
+            const userDen = parseInt(document.getElementById('practice-den').value, 10);
             const feedbackEl = document.getElementById('practice-feedback');
 
-            if (isNaN(userNum) || isNaN(userDen)) {
-                feedbackEl.innerText = '❌ لطفاً صورت و مخرج را وارد کن!';
+            if (isNaN(userNum) || isNaN(userDen) || userDen === 0) {
+                feedbackEl.innerHTML = '❌ لطفاً صورت و مخرج را وارد کن (مخرج نباید صفر باشد)!';
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
             }
 
-            const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
-            const g = gcd(practiceResultNum, practiceResultDen) || 1;
+            const g = gcd(practiceResultNum, practiceResultDen);
             const correctNum = practiceResultNum / g;
             const correctDen = practiceResultDen / g;
 
-            const userG = gcd(Math.abs(userNum), userDen) || 1;
+            const userG = gcd(Math.abs(userNum), userDen);
             const userSimpleNum = userNum / userG;
             const userSimpleDen = userDen / userG;
 
-            if (userSimpleNum === correctNum && userSimpleDen === correctDen) {
-                feedbackEl.innerText = `✅ آفرین! پاسخ درست ${correctNum.toLocaleString('fa-IR')}/${correctDen.toLocaleString('fa-IR')} است.`;
+            const isCorrect = (userSimpleNum === correctNum && userSimpleDen === correctDen) ||
+                             (userNum === practiceResultNum && userDen === practiceResultDen);
+
+            if (isCorrect) {
+                feedbackEl.innerHTML = `✅ آفرین! پاسخ درست ${fracHTML(correctNum, correctDen)} است.`;
                 feedbackEl.style.color = 'var(--success)';
                 playTone(600, 0.3);
                 confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
             } else {
-                feedbackEl.innerText = `❌ اشتباه! پاسخ درست ${correctNum.toLocaleString('fa-IR')}/${correctDen.toLocaleString('fa-IR')} است.`;
+                feedbackEl.innerHTML = `❌ اشتباه! پاسخ درست ${fracHTML(correctNum, correctDen)} است.`;
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(300, 0.3);
-                document.getElementById('practice-question').classList.add('shake-anim');
-                setTimeout(() => document.getElementById('practice-question').classList.remove('shake-anim'), 500);
+                const q = document.getElementById('practice-question');
+                q.classList.add('shake-anim');
+                setTimeout(() => q.classList.remove('shake-anim'), 500);
             }
         });
 
         document.getElementById('btn-new-practice').addEventListener('click', () => {
+            ensureAudio();
             playTone(440, 0.05);
             generatePracticeQuestion();
         });
 
-        generatePracticeQuestion();
-
-        /* ========================================================================
-           مدیریت دکمه‌های شناور
-           ======================================================================== */
-        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('به بخش بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
+        document.getElementById('practice-num').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') document.getElementById('practice-den').focus();
+        });
+        document.getElementById('practice-den').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') document.getElementById('btn-check-practice').click();
         });
 
+        generatePracticeQuestion();
+
+        /* ============ راه‌اندازی AudioCtx ============ */
+        document.body.addEventListener('click', function initAudioOnce() {
+            ensureAudio();
+            document.body.removeEventListener('click', initAudioOnce);
+        }, { once: true });
     </script>
 </body>
 </html>
