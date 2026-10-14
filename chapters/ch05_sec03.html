@@ -2,577 +2,547 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>فصل ۵ - بخش ۳: مساحت دایره | درسنامه تعاملی</title>
-    
-    <!-- قلم زیبای وزیرمتن -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 
-    <!-- انیمیشن کاغذ رنگی -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* ========================================================================
-           ۱. متغیرها و تم رنگی
-           ======================================================================== */
         :root {
             --lilac-bg: #f7f1fc;
             --lilac-soft: #f1e7fb;
             --lilac-border: #d8b4fe;
             --lilac-main: #9333ea;
             --lilac-dark: #6b21a8;
-            --lilac-glow: rgba(147, 51, 234, 0.15);
-            
             --blue-soft: #e0f2fe;
             --blue-main: #0284c7;
             --blue-dark: #0369a1;
-            
             --success: #16a34a;
             --success-bg: rgba(22, 163, 74, 0.1);
             --danger: #dc2626;
-            --danger-bg: rgba(220, 38, 38, 0.1);
             --warning: #ca8a04;
             --highlight: #fef08a;
-            --rose-soft: #ffe4e6;
-            --rose-main: #f43f5e;
-            --rose-dark: #be123c;
+            --orange-soft: #ffedd5;
+            --orange-main: #f97316;
+            --orange-dark: #c2410c;
 
-            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-bg: rgba(255, 255, 255, 0.9);
             --glass-border: rgba(255, 255, 255, 0.9);
-            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
-            --card-hover-bg: rgba(255, 255, 255, 0.95);
-            
+            --glass-shadow: 0 12px 36px rgba(107, 33, 168, 0.1);
             --text-title: #2e1065;
             --text-body: #475569;
             --text-muted: #64748b;
-            
             --radius-lg: 24px;
             --radius-md: 16px;
-            --radius-sm: 8px;
+            --radius-sm: 10px;
         }
 
-        /* ========================================================================
-           ۲. استایل‌های پایه
-           ======================================================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; -webkit-tap-highlight-color: transparent; }
+        html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
         body {
             background-color: var(--lilac-bg);
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
             background-attachment: fixed;
             color: var(--text-body);
             min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            line-height: 1.8;
+            padding: 16px;
+            display: flex; flex-direction: column;
+            overflow-x: hidden; line-height: 1.8;
         }
 
-        /* ========================================================================
-           ۳. نوار هدر
-           ======================================================================== */
-        .lesson-top-nav {
-            max-width: 1100px;
+        /* =========================================================
+           ✅ کلاس فرمول: Flexbox با LTR
+           تضمین می‌کند که اولین فرزند همیشه سمت چپ بماند.
+           ========================================================= */
+        .formula-line {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            direction: ltr;
+            font-variant-numeric: tabular-nums;
+            line-height: 2;
+            font-weight: 800;
+            padding: 4px 0;
             width: 100%;
-            margin: 0 auto 20px;
-            padding: 14px 28px;
+        }
+        .formula-line .op {
+            color: var(--text-muted);
+            font-weight: 900;
+            padding: 0 2px;
+        }
+        /* ✅ ترکیب واحد + عدد: واحد اول، عدد دوم (واحد سمت چپ عدد) */
+        .unit-num {
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+            direction: ltr;
+        }
+        .formula-line.is-inline { display: inline-flex; width: auto; }
+
+        /* ============ هدر ============ */
+        .lesson-top-nav {
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px; padding: 14px 22px;
             background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
             box-shadow: var(--glass-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px; z-index: 100;
         }
-
         .go-back-link {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 800;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.2s, transform 0.2s;
+            text-decoration: none; color: var(--text-muted);
+            font-weight: 800; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 8px;
+            transition: color 0.2s, transform 0.2s; white-space: nowrap;
         }
-
-        .go-back-link:hover {
-            color: var(--rose-main);
-            transform: translateX(3px);
-        }
-
-        .header-lesson-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-        }
-
+        .go-back-link:hover { color: var(--orange-dark); transform: translateX(3px); }
+        .header-lesson-info { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 0; }
         .chapter-label-badge {
-            background: var(--rose-soft);
-            color: var(--rose-dark);
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 3px 10px;
+            background: var(--orange-soft); color: var(--orange-dark);
+            font-size: 0.72rem; font-weight: 800;
+            padding: 3px 10px; border-radius: 20px; white-space: nowrap;
+        }
+        .lesson-title-text { font-size: 1.05rem; font-weight: 900; color: var(--text-title); letter-spacing: -0.5px; }
+
+        /* ============ نوار موقعیت ============ */
+        .book-location-bar {
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px;
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 14px;
+            background: var(--glass-bg);
             border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(107, 33, 168, 0.06);
+            flex-wrap: wrap; justify-content: center;
         }
-
-        .lesson-title-text {
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: var(--text-title);
+        .location-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--orange-soft); color: var(--orange-dark);
+            padding: 4px 12px; border-radius: 20px;
+            font-weight: 800; font-size: 0.82rem;
+            white-space: nowrap;
         }
+        .location-chip.blue { background: var(--blue-soft); color: var(--blue-dark); }
+        .location-chip.yellow { background: #fef9c3; color: #854d0e; }
+        .location-chip.green { background: #dcfce7; color: #166534; }
 
-        /* ========================================================================
-           ۴. کارت‌های آموزشی
-           ======================================================================== */
+        /* ============ کارت‌ها ============ */
         .main-lesson-wrapper {
-            max-width: 1100px;
-            width: 100%;
+            max-width: 1100px; width: 100%;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding-bottom: 80px;
+            display: flex; flex-direction: column;
+            gap: 20px; padding-bottom: 120px;
         }
-
         .step-teaching-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
-            padding: 28px;
+            padding: 26px;
             box-shadow: var(--glass-shadow);
-            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
-
-        .step-teaching-card:hover {
-            background-color: var(--card-hover-bg);
-            transform: translateY(-5px);
-        }
-
         .step-number-badge {
-            display: inline-flex;
-            width: 32px;
-            height: 32px;
+            display: inline-flex; width: 34px; height: 34px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--rose-main), var(--rose-dark));
-            color: white;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 0.95rem;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 10px rgba(244, 63, 94, 0.25);
+            background: linear-gradient(135deg, var(--orange-main), var(--orange-dark));
+            color: white; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1rem;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 10px rgba(249, 115, 22, 0.25);
         }
-
         .step-teaching-card h2 {
-            font-size: 1.4rem;
-            color: var(--text-title);
-            margin-bottom: 12px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-size: 1.3rem; color: var(--text-title);
+            margin-bottom: 12px; font-weight: 900;
+            display: flex; align-items: center; gap: 10px;
+            letter-spacing: -0.8px; line-height: 1.6; flex-wrap: wrap;
+        }
+        .step-teaching-card p { font-size: 1rem; line-height: 2; color: var(--text-body); margin-bottom: 14px; }
+        .step-teaching-card ul, .step-teaching-card ol {
+            margin-right: 22px; color: var(--text-body);
+            font-weight: 600; line-height: 2.1; margin-bottom: 12px;
         }
 
-        .step-teaching-card p {
-            font-size: 1rem;
-            line-height: 1.9;
-            color: var(--text-body);
-            margin-bottom: 16px;
-        }
-
-        /* ========================================================================
-           ۵. المان‌های خاص
-           ======================================================================== */
+        /* ============ المان‌های خاص ============ */
         .teacher-speech-bubble {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.75);
             border-radius: var(--radius-md);
-            padding: 18px 22px;
-            border: 1px dashed var(--rose-main);
-            color: var(--rose-dark);
-            margin: 16px 0;
-            position: relative;
-            font-style: italic;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
+            padding: 16px 20px;
+            border: 1px dashed var(--orange-main);
+            color: var(--orange-dark);
+            margin: 14px 0; font-style: italic;
+            display: flex; gap: 12px; align-items: flex-start;
+            font-size: 0.95rem; line-height: 1.9;
         }
-
-        .teacher-speech-bubble::before {
-            content: "🧑‍🏫";
-            font-size: 1.4rem;
-            font-style: normal;
-        }
+        .teacher-speech-bubble::before { content: "🧑‍🏫"; font-size: 1.4rem; font-style: normal; flex-shrink: 0; }
 
         .solved-example-box {
             background: var(--blue-soft);
             border: 1px solid rgba(2, 132, 199, 0.2);
             border-radius: var(--radius-md);
-            padding: 20px;
-            margin: 16px 0;
+            padding: 18px; margin: 14px 0;
+            word-break: break-word;
+            font-size: 1.05rem;
         }
-
         .example-header {
-            font-weight: 800;
-            color: var(--blue-dark);
-            font-size: 1rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-weight: 800; color: var(--blue-dark);
+            font-size: 1rem; margin-bottom: 8px;
+            display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
         }
+        .solved-example-box p { font-size: 1.05rem; line-height: 2.2; color: var(--blue-dark); margin-bottom: 8px; }
 
         .key-tip-box {
             background: var(--success-bg);
             border: 1px solid var(--success);
             border-radius: var(--radius-md);
-            padding: 16px;
-            margin: 16px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--success);
-            font-weight: 700;
-            font-size: 0.9rem;
+            padding: 14px 16px; margin: 14px 0;
+            color: var(--success); font-weight: 700;
+            font-size: 0.95rem; line-height: 1.9;
         }
-
-        /* ========================================================================
-           ۶. بخش تعاملی ۱: آزمایشگاه دایره
-           ======================================================================== */
-        .interactive-container {
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            margin-top: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            border: 1px solid var(--glass-border);
-        }
+        .key-tip-box strong { color: var(--success); }
+        .key-tip-box ul { margin-top: 8px; line-height: 2.1; }
 
         .sim-title {
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: var(--rose-dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
+            font-weight: 800; font-size: 1.05rem;
+            color: var(--orange-dark);
+            display: flex; align-items: center; gap: 8px; line-height: 1.6;
+            flex-wrap: wrap;
         }
 
-        .circle-lab {
+        /* ============ آزمایشگاه‌ها ============ */
+        .lab-box {
             background: white;
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 20px;
             border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
+            display: flex; flex-direction: column;
+            gap: 16px; align-items: center;
         }
 
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
         #circle-canvas {
             border-radius: var(--radius-sm);
             border: 2px solid #e2e8f0;
-            background: #fafafa;
+            background: linear-gradient(135deg, #fff7ed, #fef3c7);
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
         }
 
-        .circle-controls {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
+        .input-row {
+            display: flex; gap: 10px;
+            flex-wrap: wrap; justify-content: center;
             align-items: center;
+            padding: 12px;
+            background: #fafafa;
+            border-radius: var(--radius-sm);
+            border: 1px solid #e2e8f0;
+            width: 100%;
         }
-
-        .circle-controls input {
+        .input-row label {
+            font-weight: 800;
+            color: var(--orange-dark);
+            font-size: 0.92rem;
+            white-space: nowrap;
+        }
+        .input-row input {
             width: 100px;
             padding: 10px;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 900;
             text-align: center;
-            border: 2px solid var(--rose-main);
-            border-radius: 8px;
-            color: var(--rose-dark);
-            background: #fafafa;
+            border: 2px solid var(--orange-main);
+            border-radius: 10px;
+            color: var(--orange-dark);
+            background: white;
+            font-family: 'Vazirmatn', sans-serif;
+            direction: ltr;
         }
-        .circle-controls input:focus { outline: none; border-color: var(--rose-main); }
+        .input-row input:focus { outline: none; border-color: var(--orange-dark); box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15); }
 
-        .circle-info-display {
-            background: var(--rose-soft);
-            padding: 16px 24px;
-            border-radius: var(--radius-sm);
-            font-weight: 700;
-            color: var(--rose-dark);
-            text-align: center;
-            font-size: 1.1rem;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 8px;
+        /* ============ کارت اطلاعات دایره ============ */
+        .circle-info-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
             width: 100%;
         }
-
-        /* ========================================================================
-           ۷. بخش تعاملی ۲: محاسبه محیط دایره
-           ======================================================================== */
-        .perimeter-lab {
-            background: white;
+        .circle-info-card {
             border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
+            padding: 14px 12px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
             align-items: center;
+            gap: 4px;
+            text-align: center;
+            transition: transform 0.2s;
         }
-
-        .perimeter-output {
-            background: var(--blue-soft);
-            padding: 20px 32px;
-            border-radius: var(--radius-sm);
-            font-size: 1.3rem;
-            font-weight: 900;
+        .circle-info-card.perimeter {
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+            border: 2px solid var(--blue-main);
             color: var(--blue-dark);
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        }
+        .circle-info-card.area {
+            background: linear-gradient(135deg, #ffedd5, #fed7aa);
+            border: 2px solid var(--orange-main);
+            color: var(--orange-dark);
+        }
+        .circle-info-card:hover { transform: translateY(-3px); }
+        .circle-info-card .info-icon { font-size: 1.5rem; }
+        .circle-info-card .info-label {
+            font-size: 0.78rem;
+            font-weight: 800;
+            opacity: 0.85;
+        }
+        .circle-info-card .info-value-row {
+            display: inline-flex;
+            flex-direction: row;
+            align-items: baseline;
+            gap: 6px;
+            direction: ltr; /* ✅ واحد سمت چپ عدد */
             flex-wrap: wrap;
             justify-content: center;
-            text-align: center;
-            min-height: 80px;
-            width: 100%;
         }
-
-        .perimeter-steps {
-            background: #fafafa;
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            border: 1px solid #e2e8f0;
-            font-weight: 700;
-            color: var(--text-body);
-            line-height: 2.2;
-            width: 100%;
-        }
-
-        /* ========================================================================
-           ۸. بخش تعاملی ۳: محاسبه مساحت دایره
-           ======================================================================== */
-        .area-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .area-output {
-            background: var(--rose-soft);
-            padding: 20px 32px;
-            border-radius: var(--radius-sm);
-            font-size: 1.3rem;
+        .circle-info-card .info-value {
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
             font-weight: 900;
-            color: var(--rose-dark);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            text-align: center;
-            min-height: 80px;
-            width: 100%;
+            font-variant-numeric: tabular-nums;
+        }
+        .circle-info-card .info-unit {
+            font-size: 0.75rem;
+            font-weight: 800;
+            opacity: 0.85;
         }
 
-        .area-steps {
-            background: #fafafa;
+        /* =========================================
+           نمایش نتیجه‌ی محاسبه در یک خط
+           ========================================= */
+        .one-line-result {
+            background: var(--orange-soft);
+            padding: 16px 18px;
             border-radius: var(--radius-sm);
-            padding: 20px;
-            border: 1px solid #e2e8f0;
-            font-weight: 700;
-            color: var(--text-body);
-            line-height: 2.2;
-            width: 100%;
-        }
-
-        /* ========================================================================
-           ۹. بخش تعاملی ۴: تمرین مساحت دایره
-           ======================================================================== */
-        .practice-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
+            font-size: clamp(0.95rem, 3.2vw, 1.15rem);
+            font-weight: 800;
+            color: var(--orange-dark);
             display: flex;
-            flex-direction: column;
-            gap: 20px;
+            flex-direction: row;
+            flex-wrap: wrap;
             align-items: center;
+            justify-content: center;
+            gap: 6px;
+            direction: ltr;   /* ✅ LTR برای تضمین چیدمان چپ به راست */
+            border: 1px solid var(--orange-main);
+            min-height: 60px;
+            width: 100%;
+            line-height: 2.2;
+            word-break: break-word;
+        }
+        .one-line-result.blue-theme {
+            background: var(--blue-soft);
+            border-color: var(--blue-main);
+            color: var(--blue-dark);
+        }
+        .one-line-result .formula-part {
+            font-weight: 900;
+            font-size: 1.05em;
+            color: inherit;
+        }
+        .one-line-result .result-highlight {
+            background: white;
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-weight: 900;
+            color: var(--orange-dark);
+            font-variant-numeric: tabular-nums;
+            border: 1px solid currentColor;
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+        }
+        .one-line-result.blue-theme .result-highlight {
+            color: var(--blue-dark);
+        }
+        .one-line-result .eq-sym {
+            color: var(--text-muted);
+            font-weight: 900;
+            padding: 0 2px;
+        }
+        .one-line-result .hint-text {
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.9em;
         }
 
+        /* ============ تمرین ============ */
         .practice-question {
-            background: var(--rose-soft);
-            padding: 20px 32px;
+            background: var(--orange-soft);
+            padding: 16px 20px;
             border-radius: var(--radius-sm);
-            font-size: 1.2rem;
+            font-size: 1.05rem;
             font-weight: 900;
-            color: var(--rose-dark);
+            color: var(--orange-dark);
             display: flex;
             align-items: center;
             gap: 10px;
             flex-wrap: wrap;
             justify-content: center;
             text-align: center;
+            width: 100%;
+            line-height: 2.2;
         }
-
         .practice-answer-row {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
+            display: flex; gap: 10px;
+            align-items: center; flex-wrap: wrap;
             justify-content: center;
+            width: 100%;
         }
-
         .practice-answer-row input {
             width: 130px;
             padding: 10px;
             font-size: 1.2rem;
             font-weight: 900;
             text-align: center;
-            border: 2px solid var(--rose-main);
-            border-radius: 8px;
-            color: var(--rose-dark);
-            background: #fafafa;
+            border: 2px solid var(--orange-main);
+            border-radius: 10px;
+            color: var(--orange-dark);
+            background: white;
+            font-family: 'Vazirmatn', sans-serif;
+            direction: ltr;
         }
-        .practice-answer-row input:focus { outline: none; border-color: var(--rose-main); }
-
-        /* ========================================================================
-           ۱۰. دکمه‌ها
-           ======================================================================== */
-        .btn-ui {
-            background: linear-gradient(135deg, var(--rose-main), var(--rose-dark));
-            color: white;
-            border: 2px solid white;
-            padding: 12px 28px;
-            border-radius: 30px;
+        .practice-answer-row input:focus { outline: none; box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15); }
+        .practice-answer-row .answer-unit {
             font-weight: 800;
-            font-size: 1rem;
+            color: var(--orange-dark);
+            font-size: 0.95rem;
+            padding: 8px 14px;
+            background: var(--orange-soft);
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+
+        /* ============ دکمه‌ها ============ */
+        .btn-ui {
+            background: linear-gradient(135deg, var(--orange-main), var(--orange-dark));
+            color: white; border: none;
+            padding: 12px 22px; border-radius: 30px;
+            font-weight: 800; font-size: 0.92rem;
             cursor: pointer;
             transition: transform 0.15s, box-shadow 0.15s;
-            box-shadow: 0 6px 16px rgba(244, 63, 94, 0.25);
+            box-shadow: 0 6px 16px rgba(249, 115, 22, 0.25);
+            font-family: 'Vazirmatn', sans-serif;
+            min-height: 46px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .btn-ui:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(244, 63, 94, 0.35);
-        }
+        .btn-ui:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(249, 115, 22, 0.35); }
         .btn-ui:active { transform: translateY(0); }
         .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
-
         .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
         .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
-
         .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
         .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
-
         .btn-ui.lilac { background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark)); box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25); }
-        .btn-ui.lilac:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
 
         .action-btns-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            display: flex; justify-content: center;
+            gap: 10px; flex-wrap: wrap;
         }
-
         .feedback-display {
-            font-weight: 800;
-            text-align: center;
-            min-height: 28px;
-            font-size: 1rem;
-            margin-top: 10px;
-            transition: color 0.2s;
+            font-weight: 800; text-align: center;
+            min-height: 28px; font-size: 0.98rem;
+            margin-top: 8px; transition: color 0.2s; line-height: 2;
+            word-break: break-word;
+            width: 100%;
         }
 
-        /* ========================================================================
-           ۱۱. دکمه‌های شناور
-           ======================================================================== */
+        /* ============ دکمه‌های شناور ============ */
         .floating-btns {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none;
-            z-index: 200;
-            max-width: 1100px;
-            margin: 0 auto;
+            position: fixed; bottom: 16px;
+            left: 16px; right: 16px;
+            display: flex; justify-content: space-between;
+            align-items: center; gap: 10px;
+            pointer-events: none; z-index: 200;
+            max-width: 1100px; margin: 0 auto;
         }
-
         .float-nav-btn {
             pointer-events: auto;
             background: var(--glass-bg);
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 800;
-            color: var(--text-title);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 12px 20px; border-radius: 30px;
+            font-weight: 800; color: var(--text-title);
+            text-decoration: none; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
             transition: all 0.2s;
+            font-size: 0.9rem;
+            font-family: 'Vazirmatn', sans-serif;
+            position: relative;
         }
-
-        .float-nav-btn:hover {
-            background: var(--rose-main);
-            color: white;
+        .float-nav-btn:hover:not(.disabled) {
+            background: var(--orange-main); color: white;
             transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(244, 63, 94, 0.25);
+            box-shadow: 0 15px 35px rgba(249, 115, 22, 0.25);
         }
+        .float-nav-btn.disabled { opacity: 0.45; cursor: not-allowed; }
+        .float-nav-btn.disabled:hover { background: var(--glass-bg); color: var(--text-title); transform: none; }
+        .float-nav-btn.home-btn {
+            background: linear-gradient(135deg, var(--orange-main), var(--orange-dark));
+            color: white; border-color: transparent;
+            padding: 12px 16px;
+        }
+        .float-nav-btn.home-btn:hover {
+            background: linear-gradient(135deg, var(--orange-dark), var(--orange-main));
+            transform: translateY(-3px) scale(1.05);
+        }
+        .float-nav-btn .btn-tooltip {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            background: rgba(46, 16, 101, 0.95);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 8px;
+            white-space: nowrap;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .float-nav-btn:hover .btn-tooltip { opacity: 1; }
+        #prev-lesson-btn .btn-tooltip { right: 0; }
+        #next-lesson-btn .btn-tooltip { left: 0; }
 
-        @media (max-width: 600px) {
-            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
-            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
-            .header-lesson-info { align-items: center; }
+        /* ============ Toast ============ */
+        .toast-notification {
+            position: fixed; bottom: 100px; left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: rgba(46, 16, 101, 0.96);
+            color: white; padding: 14px 24px;
+            border-radius: 14px; font-weight: 700;
+            font-size: 0.92rem; z-index: 1000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            max-width: 90%; text-align: center;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+            line-height: 1.7;
         }
-
-        /* ========================================================================
-           ۱۲. انیمیشن
-           ======================================================================== */
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .pop-in { animation: popIn 0.3s ease-out forwards; }
+        .toast-notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
@@ -582,13 +552,51 @@
             80% { transform: translateX(4px); }
         }
         .shake-anim { animation: shake 0.4s ease-in-out; }
+
+        /* ============ ریسپانسیو ============ */
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .lesson-top-nav {
+                flex-direction: column; align-items: stretch;
+                text-align: center; padding: 14px 16px; gap: 10px;
+            }
+            .header-lesson-info { align-items: center; }
+            .go-back-link { justify-content: center; }
+            .lesson-title-text { text-align: center; }
+
+            .step-teaching-card { padding: 20px 16px; border-radius: 20px; }
+            .step-teaching-card h2 { font-size: 1.15rem; }
+            .step-teaching-card p { font-size: 0.95rem; }
+            .step-teaching-card ul, .step-teaching-card ol { margin-right: 18px; font-size: 0.95rem; }
+
+            .lab-box { padding: 14px 10px; }
+            .input-row input { width: 90px; font-size: 1rem; padding: 8px; }
+
+            .circle-info-cards { grid-template-columns: 1fr; }
+
+            .action-btns-row { flex-direction: column; align-items: stretch; }
+            .action-btns-row .btn-ui { width: 100%; }
+
+            .float-nav-btn { padding: 11px 14px; font-size: 0.82rem; gap: 5px; }
+            .float-nav-btn .btn-label { display: none; }
+            .float-nav-btn.home-btn { padding: 11px 14px; }
+
+            .teacher-speech-bubble { padding: 12px 14px; font-size: 0.88rem; }
+            .key-tip-box { padding: 12px 12px; font-size: 0.88rem; }
+
+            .formula-line { font-size: 0.95rem; gap: 4px; }
+        }
+
+        @media (max-width: 480px) {
+            .input-row { flex-direction: column; gap: 8px; }
+            .input-row input { width: 100%; max-width: 180px; }
+            .practice-answer-row input { width: 110px; font-size: 1rem; }
+            .formula-line { font-size: 0.88rem; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ========================================================================
-         نوار ناوبری بالای درسنامه
-         ======================================================================== -->
     <header class="lesson-top-nav">
         <a href="../index.html" class="go-back-link">
             <span>← برگشت به کتاب اصلی</span>
@@ -599,25 +607,29 @@
         </div>
     </header>
 
+    <div class="book-location-bar" id="book-location-bar"></div>
+
     <main class="main-lesson-wrapper">
 
-        <!-- ========================================================================
-           قدم ۱: یادآوری دایره و اجزای آن
-           ======================================================================== -->
+        <!-- ============ قدم ۱ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۱</span>
             <h2>دایره: شکل کامل و گرد!</h2>
             <p>
-                دایره مجموعه‌ای از نقاط است که همه‌ی آن‌ها از یک نقطه‌ی ثابت به نام 
+                دایره مجموعه‌ای از نقاط است که همه‌ی آن‌ها از یک نقطه‌ی ثابت به نام
                 <strong>مرکز</strong> به یک فاصله هستند. این فاصله را <strong>شعاع</strong> می‌نامیم.
             </p>
 
             <div class="key-tip-box">
                 <strong>📌 اجزای دایره:</strong>
-                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.4;">
+                <ul>
                     <li><strong>مرکز:</strong> نقطه‌ی وسط دایره.</li>
                     <li><strong>شعاع (r):</strong> فاصله از مرکز تا هر نقطه روی دایره.</li>
-                    <li><strong>قطر (d):</strong> پاره‌خطی که از مرکز می‌گذرد و دو نقطه از دایره را به هم وصل می‌کند. قطر = ۲ × شعاع.</li>
+                    <li><strong>قطر (d):</strong> پاره‌خطی که از مرکز می‌گذرد و دو نقطه از دایره را به هم وصل می‌کند.
+                        <span class="formula-line is-inline" style="vertical-align: middle;">
+                            <span>قطر</span><span class="op">=</span><span>۲ × شعاع</span>
+                        </span>
+                    </li>
                     <li><strong>محیط:</strong> فاصله‌ی دور تا دور دایره.</li>
                     <li><strong>مساحت:</strong> اندازه‌ی سطح داخل دایره.</li>
                 </ul>
@@ -625,188 +637,220 @@
 
             <div class="solved-example-box">
                 <div class="example-header">💡 عدد پی (π)</div>
-                <p>عدد پی یک عدد ثابت ریاضی است که تقریباً برابر با <strong>۳/۱۴</strong> است. 
+                <p>عدد پی یک عدد ثابت ریاضی است که تقریباً برابر با <strong>۳٫۱۴</strong> است.
                 این عدد نسبت محیط دایره به قطر آن را نشان می‌دهد.</p>
             </div>
 
             <div class="teacher-speech-bubble">
-                «دایره یک شکل جادویی است! عدد پی (π) راز محاسبه‌ی محیط و مساحت آن را برای ما باز می‌کند. 
-                یادت باشه که π ≈ ۳/۱۴.»
+                «دایره یک شکل جادویی است! عدد پی (π) راز محاسبه‌ی محیط و مساحت آن را برای ما باز می‌کند.
+                یادت باشه که π ≈ ۳٫۱۴.»
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۲: آزمایشگاه دایره
-           ======================================================================== -->
+        <!-- ============ قدم ۲ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۲</span>
             <h2>آزمایشگاه دایره: شعاع را تغییر بده!</h2>
             <p>
                 شعاع دایره را تغییر بده و ببین محیط و مساحت آن چگونه تغییر می‌کند.
+                شعاع و قطر روی شکل نمایش داده می‌شوند و مقادیر محیط و مساحت به صورت زنده به‌روزرسانی می‌شوند.
             </p>
 
-            <!-- ابزار تعاملی ۱: آزمایشگاه دایره -->
-            <div class="circle-lab">
+            <div class="lab-box">
                 <div class="sim-title">⭕ آزمایشگاه دایره</div>
 
-                <canvas id="circle-canvas" width="400" height="400"></canvas>
-
-                <div class="circle-controls">
-                    <span style="font-weight:800;">شعاع (r):</span>
-                    <input type="number" id="circle-radius" value="5" min="1" max="15" step="0.5">
-                    <span style="font-weight:800;">سانتی‌متر</span>
+                <div class="canvas-container">
+                    <canvas id="circle-canvas"></canvas>
                 </div>
 
-                <div class="circle-info-display" id="circle-info">
-                    دایره‌ای با شعاع ۵ سانتی‌متر
+                <div class="input-row">
+                    <label for="circle-radius">شعاع (r):</label>
+                    <input type="text" id="circle-radius" value="5" inputmode="decimal" autocomplete="off">
+                    <span style="font-weight:800; color: var(--orange-dark);">سانتی‌متر</span>
+                </div>
+
+                <div class="circle-info-cards">
+                    <div class="circle-info-card perimeter">
+                        <span class="info-icon">📏</span>
+                        <span class="info-label">محیط</span>
+                        <span class="info-value-row">
+                            <span class="info-unit">سانتی‌متر</span>
+                            <span class="info-value" id="info-perimeter">۳۱٫۴</span>
+                        </span>
+                    </div>
+                    <div class="circle-info-card area">
+                        <span class="info-icon">🔴</span>
+                        <span class="info-label">مساحت</span>
+                        <span class="info-value-row">
+                            <span class="info-unit">سانتی‌متر مربع</span>
+                            <span class="info-value" id="info-area">۷۸٫۵</span>
+                        </span>
+                    </div>
                 </div>
                 <p id="circle-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۳: محاسبه محیط دایره
-           ======================================================================== -->
+        <!-- ============ قدم ۳ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۳</span>
             <h2>محیط دایره: دور تا دورش چقدره؟</h2>
-            <p>
-                محیط دایره از فرمول زیر به دست می‌آید:
-            </p>
+            <p>محیط دایره از فرمول زیر به دست می‌آید:</p>
 
             <div class="key-tip-box">
                 <strong>📌 فرمول محیط دایره:</strong>
-                <p style="margin-top: 6px; font-size: 1.1rem; text-align: center;">
-                    محیط = ۲ × π × شعاع = π × قطر
-                </p>
-                <p style="text-align: center;">که π ≈ ۳/۱۴</p>
+                <!-- ✅ محیط در سمت چپ -->
+                <div class="formula-line" style="margin-top: 8px; font-size: 1.1rem; color: var(--success);">
+                    <span>محیط</span>
+                    <span class="op">=</span>
+                    <span>۲ × π × شعاع</span>
+                    <span class="op">=</span>
+                    <span>π × قطر</span>
+                </div>
+                <p style="text-align: center; margin-top: 6px;">که π ≈ ۳٫۱۴</p>
             </div>
 
             <div class="solved-example-box">
                 <div class="example-header">💡 مثال: دایره‌ای با شعاع ۵ سانتی‌متر</div>
-                <p>محیط = ۲ × ۳/۱۴ × ۵ = ۳۱/۴ سانتی‌متر</p>
+                <!-- ✅ محیط در سمت چپ، واحد سمت چپ عدد -->
+                <div class="formula-line" style="color: var(--blue-dark);">
+                    <span>محیط</span>
+                    <span class="op">=</span>
+                    <span>۲ × ۳٫۱۴ × ۵</span>
+                    <span class="op">=</span>
+                    <span class="unit-num"><span>سانتی‌متر</span><span>۳۱٫۴</span></span>
+                </div>
             </div>
 
-            <!-- ابزار تعاملی ۲: محاسبه محیط دایره -->
-            <div class="perimeter-lab">
+            <div class="lab-box">
                 <div class="sim-title">📏 ماشین محاسبه محیط دایره</div>
 
-                <div class="circle-controls">
-                    <span style="font-weight:800;">شعاع:</span>
-                    <input type="number" id="peri-radius" value="5" min="0.1" step="0.1">
-                    <span style="font-weight:800;">سانتی‌متر</span>
-                    <button class="btn-ui blue" id="btn-calc-perimeter">محاسبه محیط</button>
+                <div class="input-row">
+                    <label for="peri-radius">شعاع:</label>
+                    <input type="text" id="peri-radius" value="5" inputmode="decimal" autocomplete="off">
+                    <span style="font-weight:800; color: var(--orange-dark);">سانتی‌متر</span>
+                    <button class="btn-ui blue" id="btn-calc-perimeter">🧮 محاسبه محیط</button>
                 </div>
 
-                <div class="perimeter-output" id="perimeter-output">
-                    نتیجه: ؟
+                <div class="one-line-result blue-theme" id="perimeter-output">
+                    <span class="hint-text">نتیجه اینجا نمایش داده می‌شود</span>
                 </div>
 
-                <div class="perimeter-steps" id="perimeter-steps">
-                    <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «محاسبه محیط» را بزنید.</p>
-                </div>
                 <p id="perimeter-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۴: محاسبه مساحت دایره
-           ======================================================================== -->
+        <!-- ============ قدم ۴ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۴</span>
             <h2>مساحت دایره: سطح داخلش چقدره؟</h2>
-            <p>
-                مساحت دایره از فرمول زیر به دست می‌آید:
-            </p>
+            <p>مساحت دایره از فرمول زیر به دست می‌آید:</p>
 
             <div class="key-tip-box">
                 <strong>📌 فرمول مساحت دایره:</strong>
-                <p style="margin-top: 6px; font-size: 1.1rem; text-align: center;">
-                    مساحت = π × شعاع × شعاع = π × r²
-                </p>
-                <p style="text-align: center;">که π ≈ ۳/۱۴</p>
+                <!-- ✅ مساحت در سمت چپ -->
+                <div class="formula-line" style="margin-top: 8px; font-size: 1.1rem; color: var(--success);">
+                    <span>مساحت</span>
+                    <span class="op">=</span>
+                    <span>π × شعاع × شعاع</span>
+                    <span class="op">=</span>
+                    <span>π × r²</span>
+                </div>
+                <p style="text-align: center; margin-top: 6px;">که π ≈ ۳٫۱۴</p>
             </div>
 
             <div class="solved-example-box">
                 <div class="example-header">💡 مثال: دایره‌ای با شعاع ۵ سانتی‌متر</div>
-                <p>مساحت = ۳/۱۴ × ۵ × ۵ = ۳/۱۴ × ۲۵ = ۷۸/۵ سانتی‌متر مربع</p>
+                <!-- ✅ مساحت در سمت چپ، واحد سمت چپ عدد -->
+                <div class="formula-line" style="color: var(--blue-dark);">
+                    <span>مساحت</span>
+                    <span class="op">=</span>
+                    <span>۳٫۱۴ × ۵ × ۵</span>
+                    <span class="op">=</span>
+                    <span>۳٫۱۴ × ۲۵</span>
+                    <span class="op">=</span>
+                    <span class="unit-num"><span>سانتی‌متر مربع</span><span>۷۸٫۵</span></span>
+                </div>
             </div>
 
-            <!-- ابزار تعاملی ۳: محاسبه مساحت دایره -->
-            <div class="area-lab">
+            <div class="lab-box">
                 <div class="sim-title">🔴 ماشین محاسبه مساحت دایره</div>
 
-                <div class="circle-controls">
-                    <span style="font-weight:800;">شعاع:</span>
-                    <input type="number" id="area-radius" value="5" min="0.1" step="0.1">
-                    <span style="font-weight:800;">سانتی‌متر</span>
-                    <button class="btn-ui green" id="btn-calc-area">محاسبه مساحت</button>
+                <div class="input-row">
+                    <label for="area-radius">شعاع:</label>
+                    <input type="text" id="area-radius" value="5" inputmode="decimal" autocomplete="off">
+                    <span style="font-weight:800; color: var(--orange-dark);">سانتی‌متر</span>
+                    <button class="btn-ui green" id="btn-calc-area">🧮 محاسبه مساحت</button>
                 </div>
 
-                <div class="area-output" id="area-output">
-                    نتیجه: ؟
+                <div class="one-line-result" id="area-output">
+                    <span class="hint-text">نتیجه اینجا نمایش داده می‌شود</span>
                 </div>
 
-                <div class="area-steps" id="area-steps">
-                    <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «محاسبه مساحت» را بزنید.</p>
-                </div>
                 <p id="area-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۵: تمرین مساحت دایره
-           ======================================================================== -->
+        <!-- ============ قدم ۵ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۵</span>
             <h2>تمرین مساحت دایره</h2>
-            <p>
-                حالا نوبت تمرین است! به سوالات پاسخ بده.
-            </p>
+            <p>حالا نوبت تمرین است! به سوالات پاسخ بده.</p>
 
-            <!-- ابزار تعاملی ۴: تمرین مساحت دایره -->
-            <div class="practice-lab">
+            <div class="lab-box">
                 <div class="sim-title">📝 تمرین تعاملی</div>
-                
-                <div class="practice-question" id="practice-question">
-                    <!-- سوال با JS ساخته می‌شود -->
-                </div>
+
+                <div class="practice-question" id="practice-question"></div>
 
                 <div class="practice-answer-row">
-                    <input type="number" id="practice-answer" step="0.001" placeholder="پاسخ">
-                    <span id="practice-unit" style="font-weight:800; color:var(--rose-dark);">واحد</span>
-                    <button class="btn-ui green" id="btn-check-practice">بررسی</button>
+                    <input type="text" id="practice-answer" inputmode="decimal" autocomplete="off" placeholder="پاسخ">
+                    <span class="answer-unit" id="practice-unit">واحد</span>
+                    <button class="btn-ui green" id="btn-check-practice">✓ بررسی</button>
                 </div>
 
                 <p id="practice-feedback" class="feedback-display"></p>
-                <button class="btn-ui blue" id="btn-new-practice">سوال جدید</button>
+                <button class="btn-ui blue" id="btn-new-practice">🎲 سوال جدید</button>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۶: جمع‌بندی
-           ======================================================================== -->
+        <!-- ============ قدم ۶ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۶</span>
             <h2>جمع‌بندی و تمرین</h2>
             <p>در این بخش یاد گرفتیم:</p>
-            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
+            <ul>
                 <li>✅ دایره و اجزای آن: مرکز، شعاع، قطر، محیط، مساحت.</li>
-                <li>✅ عدد پی (π) ≈ ۳/۱۴: نسبت محیط دایره به قطر آن.</li>
-                <li>✅ محیط دایره = ۲ × π × شعاع = π × قطر.</li>
-                <li>✅ مساحت دایره = π × شعاع × شعاع = π × r².</li>
+                <li>✅ عدد پی (π) ≈ ۳٫۱۴: نسبت محیط دایره به قطر آن.</li>
+                <li>✅
+                    <span class="formula-line is-inline" style="vertical-align: middle;">
+                        <span>محیط دایره</span>
+                        <span class="op">=</span>
+                        <span>۲ × π × شعاع</span>
+                        <span class="op">=</span>
+                        <span>π × قطر</span>
+                    </span>
+                </li>
+                <li>✅
+                    <span class="formula-line is-inline" style="vertical-align: middle;">
+                        <span>مساحت دایره</span>
+                        <span class="op">=</span>
+                        <span>π × شعاع × شعاع</span>
+                        <span class="op">=</span>
+                        <span>π × r²</span>
+                    </span>
+                </li>
                 <li>✅ کاربرد دایره در زندگی روزمره: چرخ‌ها، بشقاب، سکه، ساعت و... .</li>
             </ul>
 
             <div class="teacher-speech-bubble">
-                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی. 
+                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی.
                 یادت باشه که دایره و عدد پی، یکی از زیباترین مفاهیم ریاضی هستند که در همه‌جای طبیعت دیده می‌شوند.»
             </div>
 
             <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
                 <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
-                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
-                    <li>محیط دایره‌ای با شعاع ۷ سانتی‌متر را حساب کنید. (π ≈ ۳/۱۴)</li>
+                <ol style="color: #92400e;">
+                    <li>محیط دایره‌ای با شعاع ۷ سانتی‌متر را حساب کنید. (π ≈ ۳٫۱۴)</li>
                     <li>مساحت دایره‌ای با شعاع ۱۰ سانتی‌متر را پیدا کنید.</li>
                     <li>مساحت دایره‌ای با قطر ۱۲ متر چقدر است؟ (اول شعاع را پیدا کنید)</li>
                     <li>یک بشقاب دایره‌ای شکل با قطر ۲۰ سانتی‌متر داریم. محیط آن چقدر است؟</li>
@@ -816,76 +860,273 @@
 
     </main>
 
-    <!-- ========================================================================
-         دکمه‌های شناور
-         ======================================================================== -->
     <div class="floating-btns">
-        <a href="chapter5_part2.html" class="float-nav-btn">→ بخش قبلی</a>
-        <a href="chapter5_part4.html" class="float-nav-btn" id="next-lesson-btn">بخش بعدی ←</a>
+        <a class="float-nav-btn" id="prev-lesson-btn" href="#">
+            <span>→</span>
+            <span class="btn-label">بخش قبلی</span>
+            <span class="btn-tooltip" id="prev-tooltip">بخش قبلی</span>
+        </a>
+        <a href="../index.html" class="float-nav-btn home-btn">
+            🏠<span class="btn-label" style="margin-right:4px;">خانه</span>
+        </a>
+        <a class="float-nav-btn" id="next-lesson-btn" href="#">
+            <span class="btn-label">بخش بعدی</span>
+            <span>←</span>
+            <span class="btn-tooltip" id="next-tooltip">بخش بعدی</span>
+        </a>
     </div>
 
+    <div class="toast-notification" id="toast"></div>
+
     <script>
-        /* ========================================================================
-           لاجیک صوتی
-           ======================================================================== */
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        /* ============ ترتیب فایل‌ها ============ */
+        const FILES_ORDER = [
+            'ch01_sec01.html', 'ch01_sec02.html', 'ch01_sec03.html', 'ch01_sec04.html',
+            'ch02_sec01.html', 'ch02_sec02.html', 'ch02_sec03.html', 'ch02_sec04.html',
+            'ch03_sec01.html', 'ch03_sec02.html', 'ch03_sec03.html', 'ch03_sec04.html',
+            'ch04_sec01.html', 'ch04_sec02.html', 'ch04_sec03.html', 'ch04_sec04.html',
+            'ch05_sec01.html', 'ch05_sec02.html', 'ch05_sec03.html', 'ch05_sec04.html',
+            'ch06_sec01.html', 'ch06_sec02.html', 'ch06_sec03.html', 'ch06_sec04.html',
+            'ch07_sec01.html', 'ch07_sec02.html'
+        ];
+
+        const chapterTitles = {
+            '01': 'عدد و الگوهای عددی',
+            '02': 'کسرها',
+            '03': 'اعداد اعشاری',
+            '04': 'تقارن و مختصات',
+            '05': 'اندازه‌گیری',
+            '06': 'آمار و احتمال',
+            '07': 'مرور و جمع‌بندی'
+        };
+
+        const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+        function toFa(str) { return String(str).replace(/\d/g, d => faDigits[+d]); }
+        function toFaSigned(n) { return n < 0 ? '−' + toFa(Math.abs(n)) : toFa(n); }
+
+        function roundFloat(num, decimals = 6) {
+            if (typeof num !== 'number' || isNaN(num)) return num;
+            const factor = Math.pow(10, decimals);
+            return Math.round(num * factor) / factor;
+        }
+
+        function formatNumber(num) {
+            if (typeof num !== 'number' || isNaN(num)) return '—';
+            let rounded = roundFloat(num, 6);
+            let str = String(rounded);
+            if (/e/i.test(str)) {
+                str = rounded.toFixed(10).replace(/0+$/, '').replace(/\.$/, '');
+            }
+            if (str.indexOf('.') !== -1) {
+                str = str.replace(/0+$/, '').replace(/\.$/, '');
+            }
+            const parts = str.split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '٬');
+            let result = parts.join('.');
+            result = result.replace(/\d/g, d => faDigits[+d]);
+            result = result.replace('.', '٫');
+            return result;
+        }
+
+        function normalizeDecimalInput(str) {
+            return String(str)
+                .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+                .replace(/٫/g, '.')
+                .replace(/،/g, '')
+                .replace(/٬/g, '')
+                .replace(/[^\d.\-]/g, '');
+        }
+
+        function getCurrentFileName() {
+            const path = window.location.pathname;
+            let name = path.substring(path.lastIndexOf('/') + 1);
+            if (!name || name === '') name = 'ch05_sec03.html';
+            return name.toLowerCase();
+        }
+        function parseFileName(name) {
+            const match = name.match(/ch(\d+)_sec(\d+)\.html?$/i);
+            if (!match) return null;
+            return { chapter: parseInt(match[1], 10), section: parseInt(match[2], 10) };
+        }
+        function fileLabel(fileName) {
+            const info = parseFileName(fileName);
+            if (!info) return fileName;
+            return `فصل ${toFa(info.chapter)} - بخش ${toFa(info.section)}`;
+        }
+
+        const currentFile = getCurrentFileName();
+        const currentInfo = parseFileName(currentFile) || { chapter: 5, section: 3 };
+        const currentIdx = FILES_ORDER.indexOf(currentFile);
+
+        /* ============ نوار موقعیت ============ */
+        function renderLocationBar() {
+            const bar = document.getElementById('book-location-bar');
+            if (!bar) return;
+            const prevFile = currentIdx > 0 ? FILES_ORDER[currentIdx - 1] : null;
+            const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+            let html = '';
+            html += `<span class="location-chip blue">📍 الان اینجایی: فصل ${toFa(currentInfo.chapter)} - بخش ${toFa(currentInfo.section)}</span>`;
+            const chKey = String(currentInfo.chapter).padStart(2, '0');
+            if (chapterTitles[chKey]) {
+                html += `<span class="location-chip">📖 ${chapterTitles[chKey]}</span>`;
+            }
+            if (nextFile) {
+                html += `<span class="location-chip yellow">⏭️ بعدی: ${fileLabel(nextFile)}</span>`;
+            } else {
+                html += `<span class="location-chip green">🎉 آخرین بخش کتاب</span>`;
+            }
+            bar.innerHTML = html;
+        }
+        renderLocationBar();
+
+        /* ============ دکمه‌های ناوبری ============ */
+        const prevBtn = document.getElementById('prev-lesson-btn');
+        const nextBtn = document.getElementById('next-lesson-btn');
+        const prevTooltip = document.getElementById('prev-tooltip');
+        const nextTooltip = document.getElementById('next-tooltip');
+
+        const prevFile = currentIdx > 0 ? FILES_ORDER[currentIdx - 1] : null;
+        const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+        if (prevFile) {
+            prevBtn.href = prevFile;
+            prevTooltip.textContent = `→ ${fileLabel(prevFile)}`;
+        } else {
+            prevBtn.removeAttribute('href');
+            prevBtn.classList.add('disabled');
+            prevTooltip.textContent = 'این اولین بخش کتاب است';
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('این اولین بخش کتاب است. 😊');
+                playTone(300, 0.15);
+            });
+        }
+
+        if (nextFile) {
+            nextBtn.href = nextFile;
+            nextTooltip.textContent = `${fileLabel(nextFile)} ←`;
+        } else {
+            nextBtn.removeAttribute('href');
+            nextBtn.classList.add('disabled');
+            nextTooltip.textContent = 'این آخرین بخش کتاب است';
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('🎉 تبریک! تمام فصل‌ها را کامل خواندی!');
+                playTone(700, 0.25);
+                confetti({ particleCount: 120, spread: 100, origin: { y: 0.6 } });
+            });
+        }
+
+        /* ============ صوت ============ */
+        let audioCtx;
+        function ensureAudio() {
+            if (!audioCtx) {
+                try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+                catch (e) { audioCtx = null; }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        }
         function playTone(freq, duration) {
+            if (!audioCtx) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
             gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
             osc.start(); osc.stop(audioCtx.currentTime + duration);
         }
 
+        /* ============ Toast ============ */
+        const toastEl = document.getElementById('toast');
+        let toastTimer;
+        function showToast(msg, duration = 3200) {
+            toastEl.textContent = msg;
+            toastEl.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
+        }
+
         const PI = 3.14;
 
-        /* ========================================================================
+        /* ============================================================
            تعامل ۱: آزمایشگاه دایره
-           ======================================================================== */
+           ============================================================ */
         const circleCanvas = document.getElementById('circle-canvas');
-        const circleCtx = circleCanvas.getContext('2d');
-        let currentCircleRadius = 5;
+        let circleCtx, circleSetup;
 
-        function drawCircle(radius) {
-            const w = circleCanvas.width;
-            const h = circleCanvas.height;
+        function setupCircleCanvas() {
+            const logicalW = 400;
+            const logicalH = 400;
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            circleCanvas.width = logicalW * dpr;
+            circleCanvas.height = logicalH * dpr;
+            circleCanvas.style.aspectRatio = `${logicalW} / ${logicalH}`;
+            circleCtx = circleCanvas.getContext('2d');
+            circleCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            return { w: logicalW, h: logicalH };
+        }
+        circleSetup = setupCircleCanvas();
+
+        function drawBeautifulCircle(radius) {
+            const w = circleSetup.w;
+            const h = circleSetup.h;
             const cx = w / 2;
             const cy = h / 2;
             const maxRadius = 15;
-            const scale = 150 / maxRadius;
+            const scale = 140 / maxRadius;
             const pixelRadius = radius * scale;
 
             circleCtx.clearRect(0, 0, w, h);
 
-            // رسم شبکه
-            circleCtx.strokeStyle = '#f1f5f9';
-            circleCtx.lineWidth = 1;
-            for (let i = 0; i <= w; i += 25) {
-                circleCtx.beginPath(); circleCtx.moveTo(i, 0); circleCtx.lineTo(i, h); circleCtx.stroke();
-            }
-            for (let i = 0; i <= h; i += 25) {
-                circleCtx.beginPath(); circleCtx.moveTo(0, i); circleCtx.lineTo(w, i); circleCtx.stroke();
+            const bgGradient = circleCtx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) / 1.5);
+            bgGradient.addColorStop(0, '#fff7ed');
+            bgGradient.addColorStop(1, '#fef3c7');
+            circleCtx.fillStyle = bgGradient;
+            circleCtx.fillRect(0, 0, w, h);
+
+            circleCtx.fillStyle = 'rgba(194, 65, 12, 0.06)';
+            for (let x = 0; x < w; x += 20) {
+                for (let y = 0; y < h; y += 20) {
+                    circleCtx.beginPath();
+                    circleCtx.arc(x, y, 1.2, 0, Math.PI * 2);
+                    circleCtx.fill();
+                }
             }
 
-            // رسم دایره
+            circleCtx.beginPath();
+            circleCtx.arc(cx, cy + 4, pixelRadius, 0, Math.PI * 2);
+            circleCtx.fillStyle = 'rgba(194, 65, 12, 0.08)';
+            circleCtx.fill();
+
+            const circleGradient = circleCtx.createRadialGradient(
+                cx - pixelRadius / 3, cy - pixelRadius / 3, 0,
+                cx, cy, pixelRadius
+            );
+            circleGradient.addColorStop(0, 'rgba(255, 237, 213, 0.95)');
+            circleGradient.addColorStop(0.6, 'rgba(254, 215, 170, 0.85)');
+            circleGradient.addColorStop(1, 'rgba(251, 146, 60, 0.7)');
+
             circleCtx.beginPath();
             circleCtx.arc(cx, cy, pixelRadius, 0, Math.PI * 2);
-            circleCtx.fillStyle = 'rgba(244, 63, 94, 0.2)';
+            circleCtx.fillStyle = circleGradient;
             circleCtx.fill();
-            circleCtx.strokeStyle = '#be123c';
+
+            circleCtx.strokeStyle = '#c2410c';
             circleCtx.lineWidth = 3;
             circleCtx.stroke();
 
-            // رسم مرکز
             circleCtx.beginPath();
-            circleCtx.arc(cx, cy, 5, 0, Math.PI * 2);
-            circleCtx.fillStyle = '#be123c';
-            circleCtx.fill();
+            circleCtx.setLineDash([6, 5]);
+            circleCtx.moveTo(cx - pixelRadius, cy);
+            circleCtx.lineTo(cx + pixelRadius, cy);
+            circleCtx.strokeStyle = 'rgba(2, 132, 199, 0.5)';
+            circleCtx.lineWidth = 2;
+            circleCtx.stroke();
+            circleCtx.setLineDash([]);
 
-            // رسم شعاع
             circleCtx.beginPath();
             circleCtx.moveTo(cx, cy);
             circleCtx.lineTo(cx + pixelRadius, cy);
@@ -893,179 +1134,226 @@
             circleCtx.lineWidth = 3;
             circleCtx.stroke();
 
-            // برچسب شعاع
+            circleCtx.beginPath();
+            circleCtx.moveTo(cx + pixelRadius - 5, cy);
+            circleCtx.lineTo(cx + pixelRadius - 12, cy - 5);
+            circleCtx.lineTo(cx + pixelRadius - 12, cy + 5);
+            circleCtx.closePath();
             circleCtx.fillStyle = '#0284c7';
+            circleCtx.fill();
+
             circleCtx.font = 'bold 13px Vazirmatn';
             circleCtx.textAlign = 'center';
-            circleCtx.fillText(`r = ${radius}`, cx + pixelRadius / 2, cy - 10);
+            circleCtx.textBaseline = 'bottom';
+            const rText = `r = ${formatNumber(radius)}`;
+            const rTextWidth = circleCtx.measureText(rText).width + 12;
+            circleCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            circleCtx.fillRect(cx + pixelRadius / 2 - rTextWidth / 2, cy - 26, rTextWidth, 20);
+            circleCtx.fillStyle = '#0284c7';
+            circleCtx.fillText(rText, cx + pixelRadius / 2, cy - 10);
 
-            // برچسب مرکز
-            circleCtx.fillStyle = '#be123c';
+            const dText = `d = ${formatNumber(radius * 2)}`;
+            const dTextWidth = circleCtx.measureText(dText).width + 12;
+            circleCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            circleCtx.fillRect(cx - dTextWidth / 2, cy + 8, dTextWidth, 20);
+            circleCtx.fillStyle = '#0284c7';
+            circleCtx.textBaseline = 'top';
+            circleCtx.fillText(dText, cx, cy + 12);
+
+            circleCtx.beginPath();
+            circleCtx.arc(cx, cy, 7, 0, Math.PI * 2);
+            circleCtx.fillStyle = '#c2410c';
+            circleCtx.fill();
+            circleCtx.strokeStyle = '#ffffff';
+            circleCtx.lineWidth = 2.5;
+            circleCtx.stroke();
+
             circleCtx.font = 'bold 12px Vazirmatn';
-            circleCtx.fillText('مرکز', cx, cy + 20);
+            circleCtx.textAlign = 'right';
+            circleCtx.textBaseline = 'top';
+            circleCtx.fillStyle = '#c2410c';
+            circleCtx.fillText('مرکز', cx - 10, cy + 10);
+        }
+
+        function updateCircleDisplay(radius) {
+            const perimeter = roundFloat(2 * PI * radius, 4);
+            const area = roundFloat(PI * radius * radius, 4);
+
+            document.getElementById('info-perimeter').textContent = formatNumber(perimeter);
+            document.getElementById('info-area').textContent = formatNumber(area);
+            document.getElementById('circle-feedback').textContent = '';
         }
 
         document.getElementById('circle-radius').addEventListener('input', function() {
-            currentCircleRadius = parseFloat(this.value) || 5;
-            drawCircle(currentCircleRadius);
-            
-            const perimeter = 2 * PI * currentCircleRadius;
-            const area = PI * currentCircleRadius * currentCircleRadius;
-            
-            document.getElementById('circle-info').innerHTML = `
-                دایره‌ای با شعاع <strong>${currentCircleRadius.toLocaleString('fa-IR')}</strong> سانتی‌متر<br>
-                <span style="color: var(--blue-dark);">محیط = ${perimeter.toLocaleString('fa-IR')} سانتی‌متر</span> | 
-                <span style="color: var(--rose-dark);">مساحت = ${area.toLocaleString('fa-IR')} سانتی‌متر مربع</span>
-            `;
-            playTone(400 + currentCircleRadius * 30, 0.05);
+            ensureAudio();
+            const raw = normalizeDecimalInput(this.value);
+            const radius = parseFloat(raw) || 5;
+            if (radius <= 0 || radius > 15) return;
+            drawBeautifulCircle(radius);
+            updateCircleDisplay(radius);
+            playTone(400 + radius * 30, 0.05);
         });
 
-        drawCircle(5);
+        drawBeautifulCircle(5);
+        updateCircleDisplay(5);
 
-        /* ========================================================================
-           تعامل ۲: محاسبه محیط دایره
-           ======================================================================== */
+        /* ============================================================
+           تعامل ۲: محیط دایره — محیط در سمت چپ، واحد سمت چپ عدد
+           ============================================================ */
         document.getElementById('btn-calc-perimeter').addEventListener('click', function() {
-            const radius = parseFloat(document.getElementById('peri-radius').value);
+            ensureAudio();
+            const raw = normalizeDecimalInput(document.getElementById('peri-radius').value);
+            const radius = parseFloat(raw);
             const outputEl = document.getElementById('perimeter-output');
-            const stepsEl = document.getElementById('perimeter-steps');
             const feedbackEl = document.getElementById('perimeter-feedback');
 
             if (isNaN(radius) || radius <= 0) {
-                feedbackEl.innerText = '❌ لطفاً یک شعاع معتبر وارد کن!';
+                feedbackEl.textContent = '❌ لطفاً یک شعاع معتبر وارد کن!';
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
             }
 
-            const perimeter = 2 * PI * radius;
+            const perimeter = roundFloat(2 * PI * radius, 4);
 
-            outputEl.innerHTML = `محیط = ۲ × π × ${radius.toLocaleString('fa-IR')} = <strong>${perimeter.toLocaleString('fa-IR')} سانتی‌متر</strong>`;
-
-            stepsEl.innerHTML = `
-                <div style="padding: 6px 0;"><strong style="color: var(--blue-dark);">فرمول:</strong> محیط = ۲ × π × شعاع</div>
-                <div style="padding: 6px 0;"><strong style="color: var(--blue-dark);">جایگذاری:</strong> ۲ × ۳/۱۴ × ${radius.toLocaleString('fa-IR')}</div>
-                <div style="padding: 6px 0;"><strong style="color: var(--blue-dark);">نتیجه:</strong> محیط = ${perimeter.toLocaleString('fa-IR')} سانتی‌متر</div>
+            // ✅ چیدمان LTR: محیط چپ، بعد =، بعد فرمول، بعد =، بعد نتیجه
+            outputEl.innerHTML = `
+                <span class="formula-part">محیط</span>
+                <span class="eq-sym">=</span>
+                <span class="formula-part">۲ × π × شعاع</span>
+                <span class="eq-sym">=</span>
+                <span class="formula-part">۲ × ۳٫۱۴ × ${formatNumber(radius)}</span>
+                <span class="eq-sym">=</span>
+                <span class="result-highlight"><span>سانتی‌متر</span><span>${formatNumber(perimeter)}</span></span>
             `;
 
-            feedbackEl.innerText = '✅ محیط با موفقیت محاسبه شد.';
+            feedbackEl.textContent = '✅ محیط با موفقیت محاسبه شد.';
             feedbackEl.style.color = 'var(--success)';
             playTone(600, 0.3);
             confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
         });
 
-        /* ========================================================================
-           تعامل ۳: محاسبه مساحت دایره
-           ======================================================================== */
+        /* ============================================================
+           تعامل ۳: مساحت دایره — مساحت در سمت چپ، واحد سمت چپ عدد
+           ============================================================ */
         document.getElementById('btn-calc-area').addEventListener('click', function() {
-            const radius = parseFloat(document.getElementById('area-radius').value);
+            ensureAudio();
+            const raw = normalizeDecimalInput(document.getElementById('area-radius').value);
+            const radius = parseFloat(raw);
             const outputEl = document.getElementById('area-output');
-            const stepsEl = document.getElementById('area-steps');
             const feedbackEl = document.getElementById('area-feedback');
 
             if (isNaN(radius) || radius <= 0) {
-                feedbackEl.innerText = '❌ لطفاً یک شعاع معتبر وارد کن!';
+                feedbackEl.textContent = '❌ لطفاً یک شعاع معتبر وارد کن!';
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
             }
 
-            const area = PI * radius * radius;
+            const area = roundFloat(PI * radius * radius, 4);
 
-            outputEl.innerHTML = `مساحت = π × ${radius.toLocaleString('fa-IR')} × ${radius.toLocaleString('fa-IR')} = <strong>${area.toLocaleString('fa-IR')} سانتی‌متر مربع</strong>`;
-
-            stepsEl.innerHTML = `
-                <div style="padding: 6px 0;"><strong style="color: var(--rose-dark);">فرمول:</strong> مساحت = π × شعاع × شعاع</div>
-                <div style="padding: 6px 0;"><strong style="color: var(--rose-dark);">جایگذاری:</strong> ۳/۱۴ × ${radius.toLocaleString('fa-IR')} × ${radius.toLocaleString('fa-IR')}</div>
-                <div style="padding: 6px 0;"><strong style="color: var(--rose-dark);">نتیجه:</strong> مساحت = ${area.toLocaleString('fa-IR')} سانتی‌متر مربع</div>
+            // ✅ چیدمان LTR: مساحت چپ، بعد =، بعد فرمول، بعد =، بعد نتیجه
+            outputEl.innerHTML = `
+                <span class="formula-part">مساحت</span>
+                <span class="eq-sym">=</span>
+                <span class="formula-part">π × شعاع × شعاع</span>
+                <span class="eq-sym">=</span>
+                <span class="formula-part">۳٫۱۴ × ${formatNumber(radius)} × ${formatNumber(radius)}</span>
+                <span class="eq-sym">=</span>
+                <span class="result-highlight"><span>سانتی‌متر مربع</span><span>${formatNumber(area)}</span></span>
             `;
 
-            feedbackEl.innerText = '✅ مساحت با موفقیت محاسبه شد.';
+            feedbackEl.textContent = '✅ مساحت با موفقیت محاسبه شد.';
             feedbackEl.style.color = 'var(--success)';
             playTone(600, 0.3);
             confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
         });
 
-        /* ========================================================================
-           تعامل ۴: تمرین مساحت دایره
-           ======================================================================== */
-        let practiceAnswer, practiceUnit, practiceType;
+        /* ============================================================
+           تعامل ۴: تمرین
+           ============================================================ */
+        let practiceAnswer, practiceUnit;
 
         function generatePracticeQuestion() {
             const types = ['perimeter', 'area', 'area-diameter', 'perimeter-diameter'];
-            practiceType = types[Math.floor(Math.random() * types.length)];
+            const practiceType = types[Math.floor(Math.random() * types.length)];
 
             const qEl = document.getElementById('practice-question');
             const unitEl = document.getElementById('practice-unit');
 
             if (practiceType === 'perimeter') {
                 const radius = Math.floor(Math.random() * 10 + 2);
-                practiceAnswer = Math.round(2 * PI * radius * 100) / 100;
+                practiceAnswer = roundFloat(2 * PI * radius, 2);
                 practiceUnit = 'سانتی‌متر';
-                qEl.innerHTML = `محیط دایره‌ای با شعاع <strong>${radius.toLocaleString('fa-IR')}</strong> سانتی‌متر چقدر است؟ (π ≈ ۳/۱۴)`;
+                qEl.innerHTML = `محیط دایره‌ای با شعاع <strong>${formatNumber(radius)}</strong> سانتی‌متر چقدر است؟ (π ≈ ۳٫۱۴)`;
             } else if (practiceType === 'area') {
                 const radius = Math.floor(Math.random() * 10 + 2);
-                practiceAnswer = Math.round(PI * radius * radius * 100) / 100;
+                practiceAnswer = roundFloat(PI * radius * radius, 2);
                 practiceUnit = 'سانتی‌متر مربع';
-                qEl.innerHTML = `مساحت دایره‌ای با شعاع <strong>${radius.toLocaleString('fa-IR')}</strong> سانتی‌متر چقدر است؟ (π ≈ ۳/۱۴)`;
+                qEl.innerHTML = `مساحت دایره‌ای با شعاع <strong>${formatNumber(radius)}</strong> سانتی‌متر چقدر است؟ (π ≈ ۳٫۱۴)`;
             } else if (practiceType === 'area-diameter') {
                 const diameter = Math.floor(Math.random() * 10 + 2) * 2;
                 const radius = diameter / 2;
-                practiceAnswer = Math.round(PI * radius * radius * 100) / 100;
+                practiceAnswer = roundFloat(PI * radius * radius, 2);
                 practiceUnit = 'سانتی‌متر مربع';
-                qEl.innerHTML = `مساحت دایره‌ای با قطر <strong>${diameter.toLocaleString('fa-IR')}</strong> سانتی‌متر چقدر است؟ (π ≈ ۳/۱۴)`;
+                qEl.innerHTML = `مساحت دایره‌ای با قطر <strong>${formatNumber(diameter)}</strong> سانتی‌متر چقدر است؟ (π ≈ ۳٫۱۴)`;
             } else {
                 const diameter = Math.floor(Math.random() * 10 + 2) * 2;
-                practiceAnswer = Math.round(PI * diameter * 100) / 100;
+                practiceAnswer = roundFloat(PI * diameter, 2);
                 practiceUnit = 'سانتی‌متر';
-                qEl.innerHTML = `محیط دایره‌ای با قطر <strong>${diameter.toLocaleString('fa-IR')}</strong> سانتی‌متر چقدر است؟ (π ≈ ۳/۱۴)`;
+                qEl.innerHTML = `محیط دایره‌ای با قطر <strong>${formatNumber(diameter)}</strong> سانتی‌متر چقدر است؟ (π ≈ ۳٫۱۴)`;
             }
 
-            unitEl.innerText = practiceUnit;
+            unitEl.textContent = practiceUnit;
             document.getElementById('practice-answer').value = '';
-            document.getElementById('practice-feedback').innerText = '';
+            document.getElementById('practice-feedback').textContent = '';
         }
 
         document.getElementById('btn-check-practice').addEventListener('click', function() {
-            const userAnswer = parseFloat(document.getElementById('practice-answer').value);
+            ensureAudio();
+            const raw = normalizeDecimalInput(document.getElementById('practice-answer').value);
+            const userAnswer = parseFloat(raw);
             const feedbackEl = document.getElementById('practice-feedback');
 
             if (isNaN(userAnswer)) {
-                feedbackEl.innerText = '❌ لطفاً یک عدد وارد کن!';
+                feedbackEl.textContent = '❌ لطفاً یک عدد وارد کن!';
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
             }
 
             if (Math.abs(userAnswer - practiceAnswer) < 0.5) {
-                feedbackEl.innerText = `✅ آفرین! پاسخ درست ${practiceAnswer.toLocaleString('fa-IR')} ${practiceUnit} است.`;
+                feedbackEl.textContent = `✅ آفرین! پاسخ درست ${formatNumber(practiceAnswer)} ${practiceUnit} است.`;
                 feedbackEl.style.color = 'var(--success)';
                 playTone(600, 0.3);
                 confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
             } else {
-                feedbackEl.innerText = `❌ اشتباه! پاسخ درست ${practiceAnswer.toLocaleString('fa-IR')} ${practiceUnit} است.`;
+                feedbackEl.textContent = `❌ اشتباه! پاسخ درست ${formatNumber(practiceAnswer)} ${practiceUnit} است.`;
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(300, 0.3);
-                document.getElementById('practice-question').classList.add('shake-anim');
-                setTimeout(() => document.getElementById('practice-question').classList.remove('shake-anim'), 500);
+                const q = document.getElementById('practice-question');
+                q.classList.add('shake-anim');
+                setTimeout(() => q.classList.remove('shake-anim'), 500);
             }
         });
 
         document.getElementById('btn-new-practice').addEventListener('click', () => {
+            ensureAudio();
             playTone(440, 0.05);
             generatePracticeQuestion();
         });
 
-        generatePracticeQuestion();
-
-        /* ========================================================================
-           مدیریت دکمه‌های شناور
-           ======================================================================== */
-        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('به بخش بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
+        document.getElementById('practice-answer').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') document.getElementById('btn-check-practice').click();
         });
 
+        generatePracticeQuestion();
+
+        /* ============ راه‌اندازی AudioCtx ============ */
+        document.body.addEventListener('click', function initAudioOnce() {
+            ensureAudio();
+            document.body.removeEventListener('click', initAudioOnce);
+        }, { once: true });
     </script>
 </body>
 </html>

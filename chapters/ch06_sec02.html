@@ -1,1190 +1,1086 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فصل ۶ - بخش ۲: درصد | درسنامه تعاملی</title>
-    
-    <!-- قلم زیبای وزیرمتن -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>فصل ۶ - بخش ۲: درصد | درسنامه تعاملی</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+:root {
+  --lilac-bg: #f7f1fc;
+  --lilac-soft: #f1e7fb;
+  --lilac-border: #d8b4fe;
+  --lilac-main: #9333ea;
+  --lilac-dark: #6b21a8;
 
-    <!-- انیمیشن کاغذ رنگی -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  --emerald-soft: #d1fae5;
+  --emerald-main: #10b981;
+  --emerald-dark: #059669;
+  --emerald-deep: #065f46;
 
-    <style>
-        /* ========================================================================
-           ۱. متغیرها و تم رنگی
-           ======================================================================== */
-        :root {
-            --lilac-bg: #f7f1fc;
-            --lilac-soft: #f1e7fb;
-            --lilac-border: #d8b4fe;
-            --lilac-main: #9333ea;
-            --lilac-dark: #6b21a8;
-            --lilac-glow: rgba(147, 51, 234, 0.15);
-            
-            --blue-soft: #e0f2fe;
-            --blue-main: #0284c7;
-            --blue-dark: #0369a1;
-            
-            --success: #16a34a;
-            --success-bg: rgba(22, 163, 74, 0.1);
-            --danger: #dc2626;
-            --danger-bg: rgba(220, 38, 38, 0.1);
-            --warning: #ca8a04;
-            --highlight: #fef08a;
-            --amber-soft: #fef3c7;
-            --amber-main: #f59e0b;
-            --amber-dark: #b45309;
+  --blue-soft: #e0f2fe;
+  --blue-main: #0284c7;
+  --blue-dark: #0369a1;
 
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.9);
-            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
-            --card-hover-bg: rgba(255, 255, 255, 0.95);
-            
-            --text-title: #2e1065;
-            --text-body: #475569;
-            --text-muted: #64748b;
-            
-            --radius-lg: 24px;
-            --radius-md: 16px;
-            --radius-sm: 8px;
-        }
+  --success: #16a34a;
+  --success-bg: rgba(22, 163, 74, 0.1);
+  --danger: #dc2626;
+  --warning: #ca8a04;
 
-        /* ========================================================================
-           ۲. استایل‌های پایه
-           ======================================================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.9);
+  --glass-shadow: 0 12px 36px rgba(107, 33, 168, 0.1);
+  --text-title: #2e1065;
+  --text-body: #475569;
+  --text-muted: #64748b;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; -webkit-tap-highlight-color: transparent; }
+html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  background-color: var(--lilac-bg);
+  background-image:
+    radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: var(--text-body);
+  min-height: 100vh;
+  padding: 16px;
+  display: flex; flex-direction: column;
+  overflow-x: hidden; line-height: 1.8;
+}
 
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
+.formula-line {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  direction: ltr;
+  font-variant-numeric: tabular-nums;
+  line-height: 2;
+  font-weight: 800;
+  padding: 4px 0;
+  width: 100%;
+}
+.formula-line.is-inline { display: inline-flex; width: auto; vertical-align: middle; }
+.formula-line .op { color: var(--text-muted); font-weight: 900; padding: 0 3px; }
 
-        body {
-            background-color: var(--lilac-bg);
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
-            background-attachment: fixed;
-            color: var(--text-body);
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            line-height: 1.8;
-        }
+.num-pct {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  direction: ltr;
+  unicode-bidi: isolate;
+  gap: 1px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.num-pct .pct-sign { font-weight: 900; }
 
-        /* ========================================================================
-           ۳. نوار هدر
-           ======================================================================== */
-        .lesson-top-nav {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto 20px;
-            padding: 14px 28px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--glass-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            z-index: 100;
-        }
+.fraction {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  margin: 0 6px;
+  font-weight: 800;
+  font-size: 1.05em;
+  line-height: 1.15;
+}
+.fraction .numerator { border-bottom: 2.5px solid currentColor; padding: 0 10px 3px; min-width: 22px; text-align: center; }
+.fraction .denominator { padding: 3px 10px 0; min-width: 22px; text-align: center; }
 
-        .go-back-link {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 800;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.2s, transform 0.2s;
-        }
+.fraction-input {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 6px;
+  vertical-align: middle;
+}
+.fraction-input input {
+  width: 90px; padding: 8px; font-size: 1.15rem; font-weight: 900;
+  text-align: center; border: 2px solid var(--emerald-main);
+  color: var(--emerald-deep); background: white;
+  font-family: 'Vazirmatn', sans-serif; direction: ltr;
+}
+.fraction-input input.top { border-radius: 10px 10px 0 0; border-bottom: none; }
+.fraction-input input.bottom { border-radius: 0 0 10px 10px; border-top: none; }
+.fraction-input .frac-bar { width: 90px; height: 3px; background: var(--emerald-main); display: block; }
+.fraction-input input:focus { outline: none; background: #ecfdf5; border-color: var(--emerald-dark); }
 
-        .go-back-link:hover {
-            color: var(--amber-main);
-            transform: translateX(3px);
-        }
+.lesson-top-nav {
+  max-width: 1100px; width: 100%;
+  margin: 0 auto 20px; padding: 14px 22px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; z-index: 100;
+}
+.go-back-link { text-decoration: none; color: var(--text-muted); font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; transition: color 0.2s, transform 0.2s; white-space: nowrap; }
+.go-back-link:hover { color: var(--emerald-dark); transform: translateX(3px); }
+.header-lesson-info { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 0; }
+.chapter-label-badge { background: var(--emerald-soft); color: var(--emerald-deep); font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.lesson-title-text { font-size: 1.05rem; font-weight: 900; color: var(--text-title); letter-spacing: -0.5px; }
 
-        .header-lesson-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-        }
+.book-location-bar {
+  max-width: 1100px; width: 100%;
+  margin: 0 auto 20px; display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  background: var(--glass-bg); border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 12px rgba(107, 33, 168, 0.06);
+  flex-wrap: wrap; justify-content: center;
+}
+.location-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--emerald-soft); color: var(--emerald-deep); padding: 4px 12px; border-radius: 20px; font-weight: 800; font-size: 0.82rem; white-space: nowrap; }
+.location-chip.blue { background: var(--blue-soft); color: var(--blue-dark); }
+.location-chip.yellow { background: #fef9c3; color: #854d0e; }
+.location-chip.green { background: #dcfce7; color: #166534; }
 
-        .chapter-label-badge {
-            background: var(--amber-soft);
-            color: var(--amber-dark);
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 20px;
-        }
+.main-lesson-wrapper { max-width: 1100px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; padding-bottom: 120px; }
+.step-teaching-card { background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 26px; box-shadow: var(--glass-shadow); position: relative; overflow: hidden; }
+.step-number-badge { display: inline-flex; width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--emerald-main), var(--emerald-dark)); color: white; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; margin-bottom: 14px; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); }
+.step-teaching-card h2 { font-size: 1.3rem; color: var(--text-title); margin-bottom: 12px; font-weight: 900; display: flex; align-items: center; gap: 10px; letter-spacing: -0.8px; line-height: 1.6; flex-wrap: wrap; }
+.step-teaching-card p { font-size: 1rem; line-height: 2; color: var(--text-body); margin-bottom: 14px; }
+.step-teaching-card ul, .step-teaching-card ol { margin-right: 22px; color: var(--text-body); font-weight: 600; line-height: 2.1; margin-bottom: 12px; }
 
-        .lesson-title-text {
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: var(--text-title);
-        }
+.teacher-speech-bubble { background: rgba(255, 255, 255, 0.75); border-radius: var(--radius-md); padding: 16px 20px; border: 1px dashed var(--emerald-main); color: var(--emerald-deep); margin: 14px 0; font-style: italic; display: flex; gap: 12px; align-items: flex-start; font-size: 0.95rem; line-height: 1.9; }
+.teacher-speech-bubble::before { content: "🧑‍🏫"; font-size: 1.4rem; font-style: normal; flex-shrink: 0; }
+.solved-example-box { background: var(--blue-soft); border: 1px solid rgba(2, 132, 199, 0.2); border-radius: var(--radius-md); padding: 18px; margin: 14px 0; word-break: break-word; font-size: 1.05rem; }
+.example-header { font-weight: 800; color: var(--blue-dark); font-size: 1rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.solved-example-box p { font-size: 1.05rem; line-height: 2.2; color: var(--blue-dark); margin-bottom: 8px; }
+.key-tip-box { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--emerald-main); border-radius: var(--radius-md); padding: 14px 16px; margin: 14px 0; color: var(--emerald-deep); font-weight: 700; font-size: 0.95rem; line-height: 1.9; }
+.key-tip-box strong { color: var(--emerald-dark); }
+.key-tip-box ul { margin-top: 8px; line-height: 2.1; }
+.sim-title { font-weight: 800; font-size: 1.05rem; color: var(--emerald-deep); display: flex; align-items: center; gap: 8px; line-height: 1.6; flex-wrap: wrap; }
 
-        /* ========================================================================
-           ۴. کارت‌های آموزشی
-           ======================================================================== */
-        .main-lesson-wrapper {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding-bottom: 80px;
-        }
+.percent-visual-lab, .conversion-lab, .percent-calc-lab, .practice-lab {
+  background: white; border-radius: var(--radius-md); padding: 20px;
+  border: 1px solid var(--glass-border);
+  display: flex; flex-direction: column; gap: 16px; align-items: center;
+  width: 100%;
+}
 
-        .step-teaching-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            padding: 28px;
-            box-shadow: var(--glass-shadow);
-            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
-            position: relative;
-            overflow: hidden;
-        }
+.percent-grid-container {
+  display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px;
+  background: #f1f5f9; padding: 10px; border-radius: var(--radius-sm);
+  width: fit-content; max-width: 100%;
+}
+.percent-cell {
+  width: 32px; height: 32px; background: white;
+  border-radius: 4px; border: 1px solid #e2e8f0;
+  cursor: pointer; transition: all 0.15s;
+}
+.percent-cell:hover { border-color: var(--emerald-main); transform: scale(1.08); }
+.percent-cell.colored { background: var(--emerald-main); border-color: var(--emerald-dark); }
 
-        .step-teaching-card:hover {
-            background-color: var(--card-hover-bg);
-            transform: translateY(-5px);
-        }
+.percent-controls { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; align-items: center; padding: 12px; background: #fafafa; border-radius: var(--radius-sm); border: 1px solid #e2e8f0; width: 100%; }
+.percent-controls label, .percent-controls span { font-weight: 800; color: var(--emerald-deep); font-size: 0.92rem; white-space: nowrap; }
+.percent-controls input[type="range"] { width: 200px; accent-color: var(--emerald-main); }
+.percent-controls input[type="number"], .percent-controls input[type="text"] {
+  width: 90px; padding: 10px; font-size: 1.1rem; font-weight: 900;
+  text-align: center; border: 2px solid var(--emerald-main); border-radius: 10px;
+  color: var(--emerald-deep); background: white;
+  font-family: 'Vazirmatn', sans-serif; direction: ltr;
+}
+.percent-controls input:focus { outline: none; border-color: var(--emerald-dark); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); }
 
-        .step-number-badge {
-            display: inline-flex;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--amber-main), var(--amber-dark));
-            color: white;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 0.95rem;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.25);
-        }
+.percent-output {
+  background: var(--emerald-soft); padding: 14px 20px; border-radius: var(--radius-sm);
+  font-size: 1.1rem; font-weight: 900; color: var(--emerald-deep);
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  justify-content: center; text-align: center;
+  width: 100%; border: 1px solid var(--emerald-main);
+  min-height: 56px; line-height: 2.2;
+}
 
-        .step-teaching-card h2 {
-            font-size: 1.4rem;
-            color: var(--text-title);
-            margin-bottom: 12px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+.conv-tabs { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; width: 100%; }
+.conv-tab {
+  padding: 10px 20px; border-radius: 20px; border: 2px solid var(--emerald-main);
+  background: white; color: var(--emerald-deep); font-weight: 800;
+  font-family: 'Vazirmatn', sans-serif; font-size: 0.9rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.conv-tab:hover { background: var(--emerald-soft); }
+.conv-tab.active { background: var(--emerald-main); color: white; }
 
-        .step-teaching-card p {
-            font-size: 1rem;
-            line-height: 1.9;
-            color: var(--text-body);
-            margin-bottom: 16px;
-        }
+.conv-input-area {
+  display: flex; justify-content: center; align-items: center;
+  min-height: 110px; width: 100%;
+  padding: 12px; background: #fafafa; border-radius: var(--radius-sm);
+  border: 1px solid #e2e8f0;
+}
+.conv-input-panel { display: none; align-items: center; gap: 8px; }
+.conv-input-panel.active { display: inline-flex; }
+.conv-input-panel > input {
+  width: 120px; padding: 10px; font-size: 1.2rem; font-weight: 900;
+  text-align: center; border: 2px solid var(--emerald-main); border-radius: 10px;
+  color: var(--emerald-deep); background: white;
+  font-family: 'Vazirmatn', sans-serif; direction: ltr;
+}
+.conv-input-panel > input:focus { outline: none; border-color: var(--emerald-dark); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); }
+.conv-input-panel .pct-sign-inline { font-weight: 900; color: var(--emerald-deep); font-size: 1.2rem; }
 
-        /* ========================================================================
-           ۵. المان‌های خاص
-           ======================================================================== */
-        .teacher-speech-bubble {
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: var(--radius-md);
-            padding: 18px 22px;
-            border: 1px dashed var(--amber-main);
-            color: var(--amber-dark);
-            margin: 16px 0;
-            position: relative;
-            font-style: italic;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-        }
+.conv-results {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px; width: 100%;
+}
+.conv-result-item {
+  background: var(--blue-soft); border: 2px solid var(--blue-main);
+  border-radius: var(--radius-sm); padding: 14px 10px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--blue-dark);
+}
+.conv-result-item .conv-label {
+  font-size: 0.8rem; font-weight: 800; opacity: 0.85;
+}
+.conv-result-item .conv-value {
+  font-size: 1.15rem; font-weight: 900;
+  min-height: 36px; display: flex; align-items: center; justify-content: center;
+  font-variant-numeric: tabular-nums; direction: ltr;
+}
 
-        .teacher-speech-bubble::before {
-            content: "🧑‍🏫";
-            font-size: 1.4rem;
-            font-style: normal;
-        }
+.percent-calc-lab .calc-inputs {
+  display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+  align-items: center; padding: 12px; background: #fafafa;
+  border-radius: var(--radius-sm); border: 1px solid #e2e8f0; width: 100%;
+}
+.percent-calc-lab .calc-inputs label { font-weight: 800; color: var(--emerald-deep); font-size: 0.9rem; }
+.percent-calc-lab .calc-inputs input {
+  width: 100px; padding: 10px; font-size: 1.15rem; font-weight: 900;
+  text-align: center; border: 2px solid var(--emerald-main); border-radius: 10px;
+  color: var(--emerald-deep); background: white;
+  font-family: 'Vazirmatn', sans-serif; direction: ltr;
+}
+.percent-calc-lab .calc-inputs input:focus { outline: none; border-color: var(--emerald-dark); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); }
 
-        .solved-example-box {
-            background: var(--blue-soft);
-            border: 1px solid rgba(2, 132, 199, 0.2);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            margin: 16px 0;
-        }
+.calc-output {
+  background: rgba(16, 185, 129, 0.1); padding: 14px 20px;
+  border-radius: var(--radius-sm); font-size: 1.1rem; font-weight: 900;
+  color: var(--emerald-deep); display: flex; align-items: center;
+  gap: 8px; flex-wrap: wrap; justify-content: center;
+  text-align: center; min-height: 56px; width: 100%;
+  border: 1px solid var(--emerald-main); line-height: 2.2;
+}
 
-        .example-header {
-            font-weight: 800;
-            color: var(--blue-dark);
-            font-size: 1rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+.practice-question {
+  background: var(--emerald-soft); padding: 16px 20px; border-radius: var(--radius-sm);
+  font-size: 1.05rem; font-weight: 900; color: var(--emerald-deep);
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  justify-content: center; text-align: center; width: 100%; line-height: 2.2;
+}
+.practice-answer-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center; width: 100%; }
+.practice-answer-row input {
+  width: 140px; padding: 10px; font-size: 1.15rem; font-weight: 900;
+  text-align: center; border: 2px solid var(--emerald-main); border-radius: 10px;
+  color: var(--emerald-deep); background: white;
+  font-family: 'Vazirmatn', sans-serif; direction: ltr;
+}
+.practice-answer-row input:focus { outline: none; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); }
+.practice-answer-row .answer-unit {
+  font-weight: 800; color: var(--emerald-deep); font-size: 0.95rem;
+  padding: 8px 14px; background: var(--emerald-soft); border-radius: 10px;
+  white-space: nowrap;
+}
 
-        .key-tip-box {
-            background: var(--success-bg);
-            border: 1px solid var(--success);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            margin: 16px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--success);
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
+.btn-ui {
+  background: linear-gradient(135deg, var(--emerald-main), var(--emerald-dark));
+  color: white; border: none;
+  padding: 12px 22px; border-radius: 30px;
+  font-weight: 800; font-size: 0.92rem;
+  cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+  font-family: 'Vazirmatn', sans-serif; min-height: 46px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+}
+.btn-ui:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4); }
+.btn-ui:active { transform: translateY(0); }
+.btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
+.btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
+.btn-ui.green { background: linear-gradient(135deg, var(--emerald-main), var(--emerald-dark)); }
+.action-btns-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.feedback-display { font-weight: 800; text-align: center; min-height: 28px; font-size: 0.98rem; margin-top: 8px; transition: color 0.2s; line-height: 2; word-break: break-word; width: 100%; }
 
-        /* کسرنویسی */
-        .fraction {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            vertical-align: middle;
-            margin: 0 4px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            line-height: 1.1;
-        }
-        .fraction .numerator { border-bottom: 2px solid currentColor; padding: 0 6px; }
-        .fraction .denominator { padding: 0 6px; }
+.floating-btns { position: fixed; bottom: 16px; left: 16px; right: 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px; pointer-events: none; z-index: 200; max-width: 1100px; margin: 0 auto; }
+.float-nav-btn { pointer-events: auto; background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--glass-border); padding: 12px 20px; border-radius: 30px; font-weight: 800; color: var(--text-title); text-decoration: none; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); transition: all 0.2s; font-size: 0.9rem; font-family: 'Vazirmatn', sans-serif; position: relative; }
+.float-nav-btn:hover:not(.disabled) { background: var(--emerald-main); color: white; transform: translateY(-3px); box-shadow: 0 15px 35px rgba(16, 185, 129, 0.25); }
+.float-nav-btn.disabled { opacity: 0.45; cursor: not-allowed; }
+.float-nav-btn.disabled:hover { background: var(--glass-bg); color: var(--text-title); transform: none; }
+.float-nav-btn.home-btn { background: linear-gradient(135deg, var(--emerald-main), var(--emerald-dark)); color: white; border-color: transparent; padding: 12px 16px; }
+.float-nav-btn.home-btn:hover { background: linear-gradient(135deg, var(--emerald-dark), var(--emerald-main)); transform: translateY(-3px) scale(1.05); }
+.float-nav-btn .btn-tooltip { position: absolute; bottom: calc(100% + 8px); background: rgba(46, 16, 101, 0.95); color: white; font-size: 0.72rem; font-weight: 700; padding: 5px 10px; border-radius: 8px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+.float-nav-btn:hover .btn-tooltip { opacity: 1; }
+#prev-lesson-btn .btn-tooltip { right: 0; }
+#next-lesson-btn .btn-tooltip { left: 0; }
 
-        /* ========================================================================
-           ۶. بخش تعاملی ۱: درصدساز تصویری
-           ======================================================================== */
-        .interactive-container {
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            margin-top: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            border: 1px solid var(--glass-border);
-        }
+.toast-notification { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(30px); background: rgba(46, 16, 101, 0.96); color: white; padding: 14px 24px; border-radius: 14px; font-weight: 700; font-size: 0.92rem; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease; max-width: 90%; text-align: center; box-shadow: 0 12px 36px rgba(0,0,0,0.3); line-height: 1.7; }
+.toast-notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-        .sim-title {
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: var(--amber-dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
+.shake-anim { animation: shake 0.4s ease-in-out; }
 
-        .percent-visual-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .percent-grid-container {
-            display: grid;
-            grid-template-columns: repeat(10, 1fr);
-            gap: 3px;
-            background: #f1f5f9;
-            padding: 10px;
-            border-radius: var(--radius-sm);
-            width: fit-content;
-        }
-
-        .percent-cell {
-            width: 35px;
-            height: 35px;
-            background: white;
-            border-radius: 4px;
-            border: 1px solid #e2e8f0;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-
-        .percent-cell:hover {
-            border-color: var(--amber-main);
-            transform: scale(1.05);
-        }
-
-        .percent-cell.colored {
-            background: var(--amber-main);
-            border-color: var(--amber-dark);
-        }
-
-        .percent-controls {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .percent-controls input[type="range"] {
-            width: 250px;
-            accent-color: var(--amber-main);
-        }
-
-        .percent-controls input[type="number"] {
-            width: 90px;
-            padding: 10px;
-            font-size: 1.2rem;
-            font-weight: 900;
-            text-align: center;
-            border: 2px solid var(--amber-main);
-            border-radius: 8px;
-            color: var(--amber-dark);
-            background: #fafafa;
-        }
-        .percent-controls input[type="number"]:focus { outline: none; border-color: var(--amber-main); }
-
-        .percent-output {
-            background: var(--amber-soft);
-            padding: 16px 32px;
-            border-radius: var(--radius-sm);
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--amber-dark);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            text-align: center;
-            width: 100%;
-        }
-
-        /* ========================================================================
-           ۷. بخش تعاملی ۲: تبدیل کسر، اعشار و درصد
-           ======================================================================== */
-        .conversion-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .conversion-display {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-            justify-content: center;
-            width: 100%;
-        }
-
-        .conversion-box {
-            background: var(--amber-soft);
-            padding: 20px 24px;
-            border-radius: var(--radius-sm);
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: var(--amber-dark);
-            min-width: 130px;
-            text-align: center;
-        }
-
-        .conversion-arrow {
-            font-size: 2rem;
-            color: var(--amber-main);
-        }
-
-        .conversion-input-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .conversion-input-row input {
-            width: 100px;
-            padding: 10px;
-            font-size: 1.2rem;
-            font-weight: 900;
-            text-align: center;
-            border: 2px solid var(--amber-main);
-            border-radius: 8px;
-            color: var(--amber-dark);
-            background: #fafafa;
-        }
-        .conversion-input-row input:focus { outline: none; border-color: var(--amber-main); }
-
-        .conversion-output {
-            background: var(--blue-soft);
-            padding: 20px 32px;
-            border-radius: var(--radius-sm);
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: var(--blue-dark);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            text-align: center;
-            min-height: 80px;
-            width: 100%;
-        }
-
-        /* ========================================================================
-           ۸. بخش تعاملی ۳: محاسبه درصد از عدد
-           ======================================================================== */
-        .percent-calc-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .calc-output {
-            background: var(--success-bg);
-            padding: 20px 32px;
-            border-radius: var(--radius-sm);
-            font-size: 1.4rem;
-            font-weight: 900;
-            color: var(--success);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            text-align: center;
-            min-height: 80px;
-            width: 100%;
-        }
-
-        .calc-steps {
-            background: #fafafa;
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            border: 1px solid #e2e8f0;
-            font-weight: 700;
-            color: var(--text-body);
-            line-height: 2.2;
-            width: 100%;
-        }
-
-        /* ========================================================================
-           ۹. بخش تعاملی ۴: تمرین درصد
-           ======================================================================== */
-        .practice-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .practice-question {
-            background: var(--amber-soft);
-            padding: 20px 32px;
-            border-radius: var(--radius-sm);
-            font-size: 1.2rem;
-            font-weight: 900;
-            color: var(--amber-dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .practice-answer-row {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .practice-answer-row input {
-            width: 130px;
-            padding: 10px;
-            font-size: 1.2rem;
-            font-weight: 900;
-            text-align: center;
-            border: 2px solid var(--amber-main);
-            border-radius: 8px;
-            color: var(--amber-dark);
-            background: #fafafa;
-        }
-        .practice-answer-row input:focus { outline: none; border-color: var(--amber-main); }
-
-        /* ========================================================================
-           ۱۰. دکمه‌ها
-           ======================================================================== */
-        .btn-ui {
-            background: linear-gradient(135deg, var(--amber-main), var(--amber-dark));
-            color: white;
-            border: 2px solid white;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: transform 0.15s, box-shadow 0.15s;
-            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.25);
-        }
-        .btn-ui:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.35);
-        }
-        .btn-ui:active { transform: translateY(0); }
-        .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
-        .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
-
-        .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
-        .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
-
-        .btn-ui.lilac { background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark)); box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25); }
-        .btn-ui.lilac:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
-
-        .action-btns-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .feedback-display {
-            font-weight: 800;
-            text-align: center;
-            min-height: 28px;
-            font-size: 1rem;
-            margin-top: 10px;
-            transition: color 0.2s;
-        }
-
-        /* ========================================================================
-           ۱۱. دکمه‌های شناور
-           ======================================================================== */
-        .floating-btns {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none;
-            z-index: 200;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .float-nav-btn {
-            pointer-events: auto;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 800;
-            color: var(--text-title);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.2s;
-        }
-
-        .float-nav-btn:hover {
-            background: var(--amber-main);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(245, 158, 11, 0.25);
-        }
-
-        @media (max-width: 600px) {
-            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
-            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
-            .header-lesson-info { align-items: center; }
-            .percent-cell { width: 28px; height: 28px; }
-        }
-
-        /* ========================================================================
-           ۱۲. انیمیشن
-           ======================================================================== */
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .pop-in { animation: popIn 0.3s ease-out forwards; }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-6px); }
-            40% { transform: translateX(6px); }
-            60% { transform: translateX(-4px); }
-            80% { transform: translateX(4px); }
-        }
-        .shake-anim { animation: shake 0.4s ease-in-out; }
-    </style>
+@media (max-width: 768px) {
+  body { padding: 12px; }
+  .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; padding: 14px 16px; gap: 10px; }
+  .header-lesson-info { align-items: center; }
+  .go-back-link { justify-content: center; }
+  .lesson-title-text { text-align: center; }
+  .step-teaching-card { padding: 20px 16px; border-radius: 20px; }
+  .step-teaching-card h2 { font-size: 1.15rem; }
+  .step-teaching-card p { font-size: 0.95rem; }
+  .step-teaching-card ul, .step-teaching-card ol { margin-right: 18px; font-size: 0.95rem; }
+  .percent-visual-lab, .conversion-lab, .percent-calc-lab, .practice-lab { padding: 14px 10px; }
+  .percent-cell { width: 26px; height: 26px; }
+  .percent-controls input[type="range"] { width: 150px; }
+  .conv-results { grid-template-columns: 1fr; }
+  .float-nav-btn { padding: 11px 14px; font-size: 0.82rem; gap: 5px; }
+  .float-nav-btn .btn-label { display: none; }
+  .float-nav-btn.home-btn { padding: 11px 14px; }
+  .teacher-speech-bubble { padding: 12px 14px; font-size: 0.88rem; }
+  .key-tip-box { padding: 12px 12px; font-size: 0.88rem; }
+  .formula-line { font-size: 0.95rem; gap: 4px; }
+  .fraction-input input { width: 70px; font-size: 1rem; padding: 6px; }
+  .fraction-input .frac-bar { width: 70px; }
+}
+@media (max-width: 480px) {
+  .percent-cell { width: 22px; height: 22px; }
+  .percent-grid-container { gap: 2px; padding: 6px; }
+  .percent-controls { flex-direction: column; gap: 8px; }
+  .percent-controls input[type="range"] { width: 100%; max-width: 200px; }
+  .conv-input-panel > input { width: 100px; }
+  .practice-answer-row input { width: 110px; }
+  .formula-line { font-size: 0.88rem; }
+}
+</style>
 </head>
 <body>
 
-    <!-- ========================================================================
-         نوار ناوبری بالای درسنامه
-         ======================================================================== -->
-    <header class="lesson-top-nav">
-        <a href="../index.html" class="go-back-link">
-            <span>← برگشت به کتاب اصلی</span>
-        </a>
-        <div class="header-lesson-info">
-            <span class="chapter-label-badge">فصل ششم: تناسب و درصد</span>
-            <span class="lesson-title-text">بخش ۲: درصد</span>
-        </div>
-    </header>
+<header class="lesson-top-nav">
+  <a href="../index.html" class="go-back-link">
+    <span>← برگشت به کتاب اصلی</span>
+  </a>
+  <div class="header-lesson-info">
+    <span class="chapter-label-badge">فصل ششم: تناسب و درصد</span>
+    <span class="lesson-title-text">بخش ۲: درصد</span>
+  </div>
+</header>
 
-    <main class="main-lesson-wrapper">
+<div class="book-location-bar" id="book-location-bar"></div>
 
-        <!-- ========================================================================
-           قدم ۱: آشنایی با درصد
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۱</span>
-            <h2>درصد: از هر صد تا!</h2>
-            <p>
-                <strong>درصد</strong> یعنی «از هر صد». وقتی می‌گوییم ۲۵ درصد، یعنی ۲۵ تا از 
-                هر ۱۰۰ تا. درصد را با علامت <strong>%</strong> نشان می‌دهیم.
-            </p>
+<main class="main-lesson-wrapper">
 
-            <div class="key-tip-box">
-                <strong>📌 نکات مهم درباره‌ی درصد:</strong>
-                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.4;">
-                    <li>درصد یعنی کسری با مخرج ۱۰۰. مثلاً ۲۵% = <span class="fraction"><span class="numerator">۲۵</span><span class="denominator">۱۰۰</span></span> = ۰/۲۵</li>
-                    <li>۱۰۰% یعنی کل مقدار (۱ واحد کامل).</li>
-                    <li>۵۰% یعنی نصف (۰/۵).</li>
-                    <li>۲۵% یعنی یک‌چهارم (۰/۲۵).</li>
-                    <li>۲۰% یعنی یک‌پنجم (۰/۲).</li>
-                </ul>
-            </div>
+  <!-- ============ قدم ۱ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۱</span>
+    <h2>درصد: از هر صد تا!</h2>
+    <p>
+      <strong>درصد</strong> یعنی «از هر صد». وقتی می‌گوییم <span class="num-pct"><span>۲۵</span><span class="pct-sign">%</span></span>،
+      یعنی ۲۵ تا از هر ۱۰۰ تا. درصد را با علامت <strong>%</strong> نشان می‌دهیم.
+    </p>
 
-            <div class="solved-example-box">
-                <div class="example-header">💡 مثال: تبدیل‌های رایج</div>
-                <ul style="margin-right: 20px; color: #0369a1; font-weight: 600; line-height: 2.2;">
-                    <li>۵۰% = <span class="fraction"><span class="numerator">۱</span><span class="denominator">۲</span></span> = ۰/۵</li>
-                    <li>۲۵% = <span class="fraction"><span class="numerator">۱</span><span class="denominator">۴</span></span> = ۰/۲۵</li>
-                    <li>۷۵% = <span class="fraction"><span class="numerator">۳</span><span class="denominator">۴</span></span> = ۰/۷۵</li>
-                    <li>۱۰% = <span class="fraction"><span class="numerator">۱</span><span class="denominator">۱۰</span></span> = ۰/۱</li>
-                </ul>
-            </div>
-
-            <div class="teacher-speech-bubble">
-                «درصد مثل این است که یک کیک را به ۱۰۰ قسمت مساوی تقسیم کنی و بگی چند تکه از آن را برداشتی. 
-                مثلاً ۲۵ درصد یعنی ۲۵ تکه از ۱۰۰ تکه!»
-            </div>
-        </section>
-
-        <!-- ========================================================================
-           قدم ۲: درصدساز تصویری
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۲</span>
-            <h2>درصدساز تصویری: ببین چند درصده!</h2>
-            <p>
-                با کلیک روی خانه‌های جدول یا تغییر اسلایدر، درصد را به صورت بصری ببین.
-            </p>
-
-            <!-- ابزار تعاملی ۱: درصدساز تصویری -->
-            <div class="percent-visual-lab">
-                <div class="sim-title">🎨 درصدساز تصویری</div>
-
-                <div class="percent-grid-container" id="percent-grid-container">
-                    <!-- 100 خانه با JS ساخته می‌شوند -->
-                </div>
-
-                <div class="percent-controls">
-                    <span style="font-weight:800;">درصد:</span>
-                    <input type="range" id="percent-slider" min="0" max="100" value="25">
-                    <input type="number" id="percent-number" value="25" min="0" max="100">
-                    <span style="font-weight:800;">%</span>
-                    <button class="btn-ui blue" id="btn-clear-percent">پاک کردن</button>
-                </div>
-
-                <div class="percent-output" id="percent-output">
-                    ۲۵% = ۲۵ خانه از ۱۰۰ خانه
-                </div>
-                <p id="percent-feedback" class="feedback-display"></p>
-            </div>
-        </section>
-
-        <!-- ========================================================================
-           قدم ۳: تبدیل کسر، اعشار و درصد
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۳</span>
-            <h2>تبدیل کسر، اعشار و درصد: زبان‌های مختلف یک عدد!</h2>
-            <p>
-                یک مقدار را می‌توان به سه شکل کسر، اعشار و درصد نوشت. 
-                در این بخش تبدیل‌ها را یاد می‌گیریم.
-            </p>
-
-            <div class="key-tip-box">
-                <strong>📌 روش‌های تبدیل:</strong>
-                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.4;">
-                    <li><strong>کسر به درصد:</strong> کسر را در ۱۰۰ ضرب کن و علامت % بگذار. مثلاً <span class="fraction"><span class="numerator">۳</span><span class="denominator">۴</span></span> × ۱۰۰ = ۷۵%</li>
-                    <li><strong>اعشار به درصد:</strong> عدد اعشاری را در ۱۰۰ ضرب کن. مثلاً ۰/۷۵ × ۱۰۰ = ۷۵%</li>
-                    <li><strong>درصد به کسر:</strong> درصد را به کسر با مخرج ۱۰۰ بنویس و ساده کن. مثلاً ۷۵% = <span class="fraction"><span class="numerator">۷۵</span><span class="denominator">۱۰۰</span></span> = <span class="fraction"><span class="numerator">۳</span><span class="denominator">۴</span></span></li>
-                    <li><strong>درصد به اعشار:</strong> درصد را بر ۱۰۰ تقسیم کن. مثلاً ۷۵% = ۰/۷۵</li>
-                </ul>
-            </div>
-
-            <!-- ابزار تعاملی ۲: تبدیل کسر، اعشار و درصد -->
-            <div class="conversion-lab">
-                <div class="sim-title">🔄 ماشین تبدیل کسر، اعشار و درصد</div>
-
-                <div class="conversion-input-row">
-                    <input type="number" id="conv-value" value="0.75" step="0.01" min="0" max="1">
-                    <select id="conv-from" style="padding:10px; border-radius:8px; border:2px solid var(--amber-main); font-weight:700; color:var(--amber-dark); background:#fafafa; cursor:pointer;">
-                        <option value="decimal" selected>اعشار</option>
-                        <option value="percent">درصد</option>
-                        <option value="fraction">کسر (صورت/مخرج)</option>
-                    </select>
-                    <button class="btn-ui green" id="btn-convert">تبدیل کن</button>
-                </div>
-
-                <div class="conversion-display">
-                    <div class="conversion-box" id="conv-box-original">۰/۷۵</div>
-                    <div class="conversion-arrow">→</div>
-                    <div class="conversion-box" style="background: var(--blue-soft); color: var(--blue-dark);" id="conv-box-result">؟</div>
-                </div>
-
-                <div class="conversion-output" id="conv-output">
-                    نتیجه: ؟
-                </div>
-                <p id="conv-feedback" class="feedback-display"></p>
-            </div>
-        </section>
-
-        <!-- ========================================================================
-           قدم ۴: محاسبه درصد از یک عدد
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۴</span>
-            <h2>محاسبه درصد از یک عدد: چند تا از این عدد؟</h2>
-            <p>
-                برای محاسبه‌ی درصدی از یک عدد، درصد را به کسر یا اعشار تبدیل کرده و 
-                در آن عدد ضرب می‌کنیم.
-            </p>
-
-            <div class="key-tip-box">
-                <strong>📌 فرمول محاسبه درصد:</strong>
-                <p style="margin-top: 6px; text-align: center; font-size: 1.1rem;">
-                    مقدار = (درصد ÷ ۱۰۰) × عدد
-                </p>
-            </div>
-
-            <div class="solved-example-box">
-                <div class="example-header">💡 مثال: ۲۰% از ۵۰۰</div>
-                <p>۲۰ ÷ ۱۰۰ = ۰/۲</p>
-                <p>۰/۲ × ۵۰۰ = ۱۰۰</p>
-                <p>پس ۲۰% از ۵۰۰ برابر ۱۰۰ است.</p>
-            </div>
-
-            <!-- ابزار تعاملی ۳: محاسبه درصد از عدد -->
-            <div class="percent-calc-lab">
-                <div class="sim-title">🧮 ماشین محاسبه درصد از عدد</div>
-
-                <div class="conversion-input-row">
-                    <span style="font-weight:800;">درصد:</span>
-                    <input type="number" id="calc-percent" value="20" min="0" max="200">
-                    <span style="font-weight:800;">% از عدد:</span>
-                    <input type="number" id="calc-number" value="500" min="0" step="1">
-                    <button class="btn-ui green" id="btn-calc-percent">محاسبه</button>
-                </div>
-
-                <div class="calc-output" id="calc-output">
-                    نتیجه: ؟
-                </div>
-
-                <div class="calc-steps" id="calc-steps">
-                    <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «محاسبه» را بزنید.</p>
-                </div>
-                <p id="calc-feedback" class="feedback-display"></p>
-            </div>
-        </section>
-
-        <!-- ========================================================================
-           قدم ۵: تمرین درصد
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۵</span>
-            <h2>تمرین درصد</h2>
-            <p>
-                حالا نوبت تمرین است! به سوالات پاسخ بده.
-            </p>
-
-            <!-- ابزار تعاملی ۴: تمرین درصد -->
-            <div class="practice-lab">
-                <div class="sim-title">📝 تمرین تعاملی</div>
-                
-                <div class="practice-question" id="practice-question">
-                    <!-- سوال با JS ساخته می‌شود -->
-                </div>
-
-                <div class="practice-answer-row">
-                    <input type="number" id="practice-answer" step="0.001" placeholder="پاسخ">
-                    <span id="practice-unit" style="font-weight:800; color:var(--amber-dark);">واحد</span>
-                    <button class="btn-ui green" id="btn-check-practice">بررسی</button>
-                </div>
-
-                <p id="practice-feedback" class="feedback-display"></p>
-                <button class="btn-ui blue" id="btn-new-practice">سوال جدید</button>
-            </div>
-        </section>
-
-        <!-- ========================================================================
-           قدم ۶: جمع‌بندی
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۶</span>
-            <h2>جمع‌بندی و تمرین</h2>
-            <p>در این بخش یاد گرفتیم:</p>
-            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
-                <li>✅ درصد: یعنی از هر ۱۰۰. با علامت % نشان داده می‌شود.</li>
-                <li>✅ تبدیل کسر به درصد: ضرب در ۱۰۰.</li>
-                <li>✅ تبدیل اعشار به درصد: ضرب در ۱۰۰.</li>
-                <li>✅ تبدیل درصد به کسر: نوشتن به صورت کسر با مخرج ۱۰۰ و ساده کردن.</li>
-                <li>✅ تبدیل درصد به اعشار: تقسیم بر ۱۰۰.</li>
-                <li>✅ محاسبه درصد از عدد: (درصد ÷ ۱۰۰) × عدد.</li>
-                <li>✅ کاربرد درصد در زندگی روزمره: تخفیف، مالیات، سود بانکی، آمار و... .</li>
-            </ul>
-
-            <div class="teacher-speech-bubble">
-                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی. 
-                یادت باشه که درصد، یکی از پرکاربردترین مفاهیم ریاضی در زندگی روزمره است.»
-            </div>
-
-            <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
-                <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
-                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
-                    <li>کسر <span class="fraction"><span class="numerator">۳</span><span class="denominator">۵</span></span> را به درصد تبدیل کنید.</li>
-                    <li>۴۵% را به کسر و اعشار تبدیل کنید.</li>
-                    <li>۳۰% از ۲۵۰ چقدر است؟</li>
-                    <li>اگر قیمت یک کتاب ۲۰۰۰۰ تومان باشد و ۱۵% تخفیف بگیرد، چقدر باید پرداخت کنیم؟</li>
-                </ol>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- ========================================================================
-         دکمه‌های شناور
-         ======================================================================== -->
-    <div class="floating-btns">
-        <a href="chapter6_part1.html" class="float-nav-btn">→ بخش قبلی</a>
-        <a href="chapter6_part3.html" class="float-nav-btn" id="next-lesson-btn">بخش بعدی ←</a>
+    <div class="key-tip-box">
+      <strong>📌 نکات مهم درباره‌ی درصد:</strong>
+      <ul>
+        <li>درصد یعنی کسری با مخرج ۱۰۰. مثلاً:
+          <div class="formula-line is-inline" style="vertical-align: middle;">
+            <span class="num-pct"><span>۲۵</span><span class="pct-sign">%</span></span>
+            <span class="op">=</span>
+            <span class="fraction"><span class="numerator">۲۵</span><span class="denominator">۱۰۰</span></span>
+            <span class="op">=</span>
+            <span>۰٫۲۵</span>
+          </div>
+        </li>
+        <li><span class="num-pct"><span>۱۰۰</span><span class="pct-sign">%</span></span> یعنی کل مقدار (۱ واحد کامل).</li>
+        <li><span class="num-pct"><span>۵۰</span><span class="pct-sign">%</span></span> یعنی نصف (۰٫۵).</li>
+        <li><span class="num-pct"><span>۲۵</span><span class="pct-sign">%</span></span> یعنی یک‌چهارم (۰٫۲۵).</li>
+        <li><span class="num-pct"><span>۲۰</span><span class="pct-sign">%</span></span> یعنی یک‌پنجم (۰٫۲).</li>
+      </ul>
     </div>
 
-    <script>
-        /* ========================================================================
-           لاجیک صوتی
-           ======================================================================== */
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function playTone(freq, duration) {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-            osc.start(); osc.stop(audioCtx.currentTime + duration);
-        }
+    <div class="solved-example-box">
+      <div class="example-header">💡 مثال: تبدیل‌های رایج</div>
+      <div class="formula-line" style="color: var(--blue-dark);">
+        <span class="num-pct"><span>۵۰</span><span class="pct-sign">%</span></span>
+        <span class="op">=</span>
+        <span class="fraction"><span class="numerator">۱</span><span class="denominator">۲</span></span>
+        <span class="op">=</span>
+        <span>۰٫۵</span>
+      </div>
+      <div class="formula-line" style="color: var(--blue-dark);">
+        <span class="num-pct"><span>۲۵</span><span class="pct-sign">%</span></span>
+        <span class="op">=</span>
+        <span class="fraction"><span class="numerator">۱</span><span class="denominator">۴</span></span>
+        <span class="op">=</span>
+        <span>۰٫۲۵</span>
+      </div>
+      <div class="formula-line" style="color: var(--blue-dark);">
+        <span class="num-pct"><span>۷۵</span><span class="pct-sign">%</span></span>
+        <span class="op">=</span>
+        <span class="fraction"><span class="numerator">۳</span><span class="denominator">۴</span></span>
+        <span class="op">=</span>
+        <span>۰٫۷۵</span>
+      </div>
+      <div class="formula-line" style="color: var(--blue-dark);">
+        <span class="num-pct"><span>۱۰</span><span class="pct-sign">%</span></span>
+        <span class="op">=</span>
+        <span class="fraction"><span class="numerator">۱</span><span class="denominator">۱۰</span></span>
+        <span class="op">=</span>
+        <span>۰٫۱</span>
+      </div>
+    </div>
 
-        /* ========================================================================
-           تعامل ۱: درصدساز تصویری
-           ======================================================================== */
-        const percentGridContainer = document.getElementById('percent-grid-container');
-        const percentCells = [];
+    <div class="teacher-speech-bubble">
+      «درصد مثل این است که یک کیک را به ۱۰۰ قسمت مساوی تقسیم کنی و بگی چند تکه از آن را برداشتی.
+      مثلاً ۲۵ درصد یعنی ۲۵ تکه از ۱۰۰ تکه!»
+    </div>
+  </section>
 
-        function buildPercentGrid() {
-            percentGridContainer.innerHTML = '';
-            for (let i = 0; i < 100; i++) {
-                const cell = document.createElement('div');
-                cell.className = 'percent-cell';
-                cell.dataset.index = i;
-                cell.addEventListener('click', function() {
-                    this.classList.toggle('colored');
-                    updatePercentFromGrid();
-                    playTone(500 + i * 2, 0.02);
-                });
-                percentGridContainer.appendChild(cell);
-                percentCells.push(cell);
-            }
-        }
+  <!-- ============ قدم ۲ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۲</span>
+    <h2>درصدساز تصویری: ببین چند درصده!</h2>
+    <p>با کلیک روی خانه‌های جدول یا تغییر اسلایدر، درصد را به صورت بصری ببین.</p>
 
-        function updatePercentFromGrid() {
-            const coloredCount = document.querySelectorAll('.percent-cell.colored').length;
-            document.getElementById('percent-slider').value = coloredCount;
-            document.getElementById('percent-number').value = coloredCount;
-            document.getElementById('percent-output').innerHTML = 
-                `<strong>${coloredCount.toLocaleString('fa-IR')}%</strong> = ${coloredCount.toLocaleString('fa-IR')} خانه از ۱۰۰ خانه = <span style="color: var(--blue-dark);">${(coloredCount/100).toLocaleString('fa-IR')}</span> (اعشار)`;
-        }
+    <div class="percent-visual-lab">
+      <div class="sim-title">🎨 درصدساز تصویری</div>
 
-        function setPercentFromControls(percent) {
-            const count = Math.round(percent);
-            percentCells.forEach((cell, idx) => {
-                if (idx < count) cell.classList.add('colored');
-                else cell.classList.remove('colored');
-            });
-            updatePercentFromGrid();
-        }
+      <div class="percent-grid-container" id="percent-grid-container"></div>
 
-        document.getElementById('percent-slider').addEventListener('input', function() {
-            setPercentFromControls(parseInt(this.value));
-            playTone(400 + parseInt(this.value) * 3, 0.03);
-        });
+      <div class="percent-controls">
+        <label for="percent-slider">درصد:</label>
+        <input type="range" id="percent-slider" min="0" max="100" value="25">
+        <input type="number" id="percent-number" value="25" min="0" max="100">
+        <span>%</span>
+        <button class="btn-ui blue" id="btn-clear-percent">پاک کردن</button>
+      </div>
 
-        document.getElementById('percent-number').addEventListener('input', function() {
-            let val = parseInt(this.value) || 0;
-            if (val < 0) val = 0;
-            if (val > 100) val = 100;
-            document.getElementById('percent-slider').value = val;
-            setPercentFromControls(val);
-        });
+      <div class="percent-output" id="percent-output">—</div>
+      <p id="percent-feedback" class="feedback-display"></p>
+    </div>
+  </section>
 
-        document.getElementById('btn-clear-percent').addEventListener('click', function() {
-            percentCells.forEach(cell => cell.classList.remove('colored'));
-            document.getElementById('percent-slider').value = 0;
-            document.getElementById('percent-number').value = 0;
-            updatePercentFromGrid();
-            playTone(440, 0.05);
-        });
+  <!-- ============ قدم ۳ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۳</span>
+    <h2>تبدیل کسر، اعشار و درصد: زبان‌های مختلف یک عدد!</h2>
+    <p>یک مقدار را می‌توان به سه شکل کسر، اعشار و درصد نوشت.</p>
 
-        buildPercentGrid();
-        setPercentFromControls(25);
+    <div class="key-tip-box">
+      <strong>📌 روش‌های تبدیل:</strong>
+      <ul>
+        <li><strong>کسر به درصد:</strong> کسر را در ۱۰۰ ضرب کن.</li>
+        <li><strong>اعشار به درصد:</strong> عدد اعشاری را در ۱۰۰ ضرب کن.</li>
+        <li><strong>درصد به کسر:</strong> درصد را به کسر با مخرج ۱۰۰ بنویس و ساده کن.</li>
+        <li><strong>درصد به اعشار:</strong> درصد را بر ۱۰۰ تقسیم کن.</li>
+      </ul>
+    </div>
 
-        /* ========================================================================
-           تعامل ۲: تبدیل کسر، اعشار و درصد
-           ======================================================================== */
-        document.getElementById('btn-convert').addEventListener('click', function() {
-            const value = parseFloat(document.getElementById('conv-value').value);
-            const fromType = document.getElementById('conv-from').value;
-            const resultBox = document.getElementById('conv-box-result');
-            const outputEl = document.getElementById('conv-output');
-            const feedbackEl = document.getElementById('conv-feedback');
+    <div class="conversion-lab">
+      <div class="sim-title">🔄 ماشین تبدیل</div>
 
-            if (isNaN(value)) {
-                feedbackEl.innerText = '❌ لطفاً یک مقدار معتبر وارد کن!';
-                feedbackEl.style.color = 'var(--danger)';
-                playTone(200, 0.2);
-                return;
-            }
+      <div class="conv-tabs">
+        <button class="conv-tab active" data-type="fraction">کسر</button>
+        <button class="conv-tab" data-type="decimal">اعشار</button>
+        <button class="conv-tab" data-type="percent">درصد</button>
+      </div>
 
-            let decimalValue, percentValue, fractionValue;
+      <div class="conv-input-area">
+        <div class="conv-input-panel active" id="conv-panel-fraction">
+          <div class="fraction-input">
+            <input type="text" id="conv-num" class="top" placeholder="صورت" inputmode="numeric">
+            <span class="frac-bar"></span>
+            <input type="text" id="conv-den" class="bottom" placeholder="مخرج" inputmode="numeric">
+          </div>
+        </div>
+        <div class="conv-input-panel" id="conv-panel-decimal">
+          <input type="text" id="conv-dec" placeholder="۰٫۵" inputmode="decimal">
+        </div>
+        <div class="conv-input-panel" id="conv-panel-percent">
+          <input type="text" id="conv-pct" placeholder="۵۰" inputmode="decimal">
+          <span class="pct-sign-inline">%</span>
+        </div>
+      </div>
 
-            if (fromType === 'decimal') {
-                decimalValue = value;
-                percentValue = value * 100;
-                fractionValue = simplifyFraction(value * 100, 100);
-            } else if (fromType === 'percent') {
-                percentValue = value;
-                decimalValue = value / 100;
-                fractionValue = simplifyFraction(value, 100);
-            } else {
-                // کسر
-                // اینجا value را به عنوان صورت در نظر می‌گیریم و مخرج را جدا می‌پرسیم
-                // برای سادگی، فرض می‌کنیم مخرج ۱۰۰ است یا از کاربر می‌پرسیم
-                // در این نسخه، مخرج را از یک اینپوت جدا می‌گیریم؟ 
-                // برای سادگی، اگر کاربر کسر وارد کرد، آن را به صورت "صورت/مخرج" در نظر می‌گیریم
-                // اما اینپوت ما عددی است. پس اجازه می‌دهیم کاربر کسر را به صورت اعشار وارد کند.
-                // یا یک راه ساده‌تر: کسر را به صورت اعشار وارد کن
-                feedbackEl.innerText = '❌ برای کسر، لطفاً مقدار را به صورت اعشار وارد کنید یا از گزینه‌های دیگر استفاده کنید.';
-                feedbackEl.style.color = 'var(--warning)';
-                playTone(300, 0.2);
-                return;
-            }
+      <button class="btn-ui green" id="btn-convert">تبدیل کن</button>
 
-            // نمایش نتیجه
-            const originalStr = fromType === 'decimal' ? decimalValue.toLocaleString('fa-IR') : 
-                               fromType === 'percent' ? percentValue.toLocaleString('fa-IR') + '%' : 
-                               value.toLocaleString('fa-IR');
-            
-            document.getElementById('conv-box-original').innerText = originalStr;
-            
-            let resultHTML = '';
-            if (fromType === 'decimal') {
-                resultHTML = `<strong>${percentValue.toLocaleString('fa-IR')}%</strong> = <span class="fraction"><span class="numerator">${fractionValue.num}</span><span class="denominator">${fractionValue.den}</span></span>`;
-            } else if (fromType === 'percent') {
-                resultHTML = `<strong>${decimalValue.toLocaleString('fa-IR')}</strong> (اعشار) = <span class="fraction"><span class="numerator">${fractionValue.num}</span><span class="denominator">${fractionValue.den}</span></span>`;
-            }
+      <div class="conv-results">
+        <div class="conv-result-item">
+          <span class="conv-label">کسر</span>
+          <span class="conv-value" id="res-fraction">—</span>
+        </div>
+        <div class="conv-result-item">
+          <span class="conv-label">اعشار</span>
+          <span class="conv-value" id="res-decimal">—</span>
+        </div>
+        <div class="conv-result-item">
+          <span class="conv-label">درصد</span>
+          <span class="conv-value" id="res-percent">—</span>
+        </div>
+      </div>
 
-            resultBox.innerHTML = resultHTML;
-            outputEl.innerHTML = `نتیجه: ${resultHTML}`;
-            feedbackEl.innerText = '✅ تبدیل با موفقیت انجام شد.';
-            feedbackEl.style.color = 'var(--success)';
-            playTone(600, 0.3);
-            confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
-        });
+      <p id="conv-feedback" class="feedback-display"></p>
+    </div>
+  </section>
 
-        function simplifyFraction(num, den) {
-            const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
-            const g = gcd(num, den) || 1;
-            return { num: num / g, den: den / g };
-        }
+  <!-- ============ قدم ۴ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۴</span>
+    <h2>محاسبه درصد از یک عدد: چند تا از این عدد؟</h2>
+    <p>برای محاسبه‌ی درصدی از یک عدد، درصد را در عدد ضرب کرده و سپس بر ۱۰۰ تقسیم می‌کنیم.</p>
 
-        /* ========================================================================
-           تعامل ۳: محاسبه درصد از عدد
-           ======================================================================== */
-        document.getElementById('btn-calc-percent').addEventListener('click', function() {
-            const percent = parseFloat(document.getElementById('calc-percent').value);
-            const number = parseFloat(document.getElementById('calc-number').value);
-            const outputEl = document.getElementById('calc-output');
-            const stepsEl = document.getElementById('calc-steps');
-            const feedbackEl = document.getElementById('calc-feedback');
+    <div class="key-tip-box">
+      <strong>📌 فرمول محاسبه درصد:</strong>
+      <div class="formula-line" style="margin-top: 8px; font-size: 1.05rem;">
+        <span>مقدار</span>
+        <span class="op">=</span>
+        <span>(درصد × عدد)</span>
+        <span class="op">÷</span>
+        <span>۱۰۰</span>
+      </div>
+    </div>
 
-            if (isNaN(percent) || isNaN(number)) {
-                feedbackEl.innerText = '❌ لطفاً مقادیر را درست وارد کن!';
-                feedbackEl.style.color = 'var(--danger)';
-                playTone(200, 0.2);
-                return;
-            }
+    <div class="solved-example-box">
+      <div class="example-header">💡 مثال: ۲۰ درصد از ۵۰۰</div>
 
-            const result = (percent / 100) * number;
+      <div class="formula-line" style="color: var(--blue-dark);">
+        <span>۲۰ × ۵۰۰</span>
+        <span class="op">=</span>
+        <span>۱۰۰۰۰</span>
+      </div>
+      <div class="formula-line" style="color: var(--blue-dark);">
+        <span>۱۰۰۰۰ ÷ ۱۰۰</span>
+        <span class="op">=</span>
+        <span>۱۰۰</span>
+      </div>
+      <p style="margin-top: 8px;">پس ۲۰ درصد از ۵۰۰ برابر ۱۰۰ است.</p>
+    </div>
 
-            outputEl.innerHTML = `${percent.toLocaleString('fa-IR')}% از ${number.toLocaleString('fa-IR')} = <strong>${result.toLocaleString('fa-IR')}</strong>`;
+    <div class="percent-calc-lab">
+      <div class="sim-title">🧮 ماشین محاسبه درصد از عدد</div>
 
-            stepsEl.innerHTML = `
-                <div style="padding: 6px 0;"><strong style="color: var(--success);">مرحله ۱:</strong> تبدیل درصد به اعشار: ${percent.toLocaleString('fa-IR')} ÷ ۱۰۰ = ${(percent/100).toLocaleString('fa-IR')}</div>
-                <div style="padding: 6px 0;"><strong style="color: var(--success);">مرحله ۲:</strong> ضرب در عدد: ${(percent/100).toLocaleString('fa-IR')} × ${number.toLocaleString('fa-IR')} = ${result.toLocaleString('fa-IR')}</div>
-                <div style="padding: 6px 0;"><strong style="color: var(--success);">نتیجه:</strong> ${percent.toLocaleString('fa-IR')}% از ${number.toLocaleString('fa-IR')} برابر است با ${result.toLocaleString('fa-IR')}</div>
-            `;
+      <div class="calc-inputs">
+        <label for="calc-percent">درصد:</label>
+        <input type="text" id="calc-percent" value="20" inputmode="decimal">
+        <span style="font-weight:800; color: var(--emerald-deep);">%</span>
+        <label for="calc-number">از عدد:</label>
+        <input type="text" id="calc-number" value="500" inputmode="decimal">
+        <button class="btn-ui green" id="btn-calc-percent">محاسبه</button>
+      </div>
 
-            feedbackEl.innerText = '✅ محاسبه با موفقیت انجام شد.';
-            feedbackEl.style.color = 'var(--success)';
-            playTone(600, 0.3);
-            confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
-        });
+      <div class="calc-output" id="calc-output">نتیجه = ؟</div>
 
-        /* ========================================================================
-           تعامل ۴: تمرین درصد
-           ======================================================================== */
-        let practiceAnswer, practiceUnit, practiceType;
+      <p id="calc-feedback" class="feedback-display"></p>
+    </div>
+  </section>
 
-        function generatePracticeQuestion() {
-            const types = ['percent-of-number', 'convert-to-percent', 'convert-to-decimal', 'discount'];
-            practiceType = types[Math.floor(Math.random() * types.length)];
+  <!-- ============ قدم ۵ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۵</span>
+    <h2>تمرین درصد</h2>
+    <p>حالا نوبت تمرین است! به سوالات پاسخ بده.</p>
 
-            const qEl = document.getElementById('practice-question');
-            const unitEl = document.getElementById('practice-unit');
+    <div class="practice-lab">
+      <div class="sim-title">📝 تمرین تعاملی</div>
 
-            if (practiceType === 'percent-of-number') {
-                const percent = Math.floor(Math.random() * 80 + 10);
-                const number = Math.floor(Math.random() * 20 + 5) * 10;
-                practiceAnswer = (percent / 100) * number;
-                practiceUnit = '';
-                qEl.innerHTML = `${percent.toLocaleString('fa-IR')}% از ${number.toLocaleString('fa-IR')} چقدر است؟`;
-                unitEl.innerText = '';
-            } else if (practiceType === 'convert-to-percent') {
-                const decimals = [0.1, 0.2, 0.25, 0.5, 0.75, 0.4, 0.6, 0.8, 0.15];
-                const dec = decimals[Math.floor(Math.random() * decimals.length)];
-                practiceAnswer = dec * 100;
-                practiceUnit = '%';
-                qEl.innerHTML = `عدد اعشاری <strong>${dec.toLocaleString('fa-IR')}</strong> را به درصد تبدیل کنید.`;
-                unitEl.innerText = '%';
-            } else if (practiceType === 'convert-to-decimal') {
-                const percents = [10, 20, 25, 50, 75, 40, 60, 80, 15];
-                const pct = percents[Math.floor(Math.random() * percents.length)];
-                practiceAnswer = pct / 100;
-                practiceUnit = '';
-                qEl.innerHTML = `<strong>${pct.toLocaleString('fa-IR')}%</strong> را به اعشار تبدیل کنید.`;
-                unitEl.innerText = '';
-            } else {
-                const price = Math.floor(Math.random() * 40 + 10) * 1000;
-                const discount = [10, 15, 20, 25, 30][Math.floor(Math.random() * 5)];
-                practiceAnswer = price - (price * discount / 100);
-                practiceUnit = 'تومان';
-                qEl.innerHTML = `قیمت یک کالا ${price.toLocaleString('fa-IR')} تومان است. با ${discount.toLocaleString('fa-IR')}% تخفیف، قیمت نهایی چقدر است؟`;
-                unitEl.innerText = 'تومان';
-            }
+      <div class="practice-question" id="practice-question"></div>
 
-            document.getElementById('practice-answer').value = '';
-            document.getElementById('practice-feedback').innerText = '';
-        }
+      <div class="practice-answer-row">
+        <input type="text" id="practice-answer" inputmode="decimal" autocomplete="off" placeholder="پاسخ">
+        <span class="answer-unit" id="practice-unit">—</span>
+        <button class="btn-ui green" id="btn-check-practice">✓ بررسی</button>
+      </div>
 
-        document.getElementById('btn-check-practice').addEventListener('click', function() {
-            const userAnswer = parseFloat(document.getElementById('practice-answer').value);
-            const feedbackEl = document.getElementById('practice-feedback');
+      <p id="practice-feedback" class="feedback-display"></p>
+      <button class="btn-ui blue" id="btn-new-practice">🎲 سوال جدید</button>
+    </div>
+  </section>
 
-            if (isNaN(userAnswer)) {
-                feedbackEl.innerText = '❌ لطفاً یک عدد وارد کن!';
-                feedbackEl.style.color = 'var(--danger)';
-                playTone(200, 0.2);
-                return;
-            }
+  <!-- ============ قدم ۶ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۶</span>
+    <h2>جمع‌بندی و تمرین</h2>
+    <p>در این بخش یاد گرفتیم:</p>
+    <ul>
+      <li>✅ درصد یعنی از هر ۱۰۰، با علامت % نشان داده می‌شود.</li>
+      <li>✅ تبدیل کسر به درصد: ضرب در ۱۰۰.</li>
+      <li>✅ تبدیل اعشار به درصد: ضرب در ۱۰۰.</li>
+      <li>✅ تبدیل درصد به کسر: نوشتن به صورت کسر با مخرج ۱۰۰ و ساده کردن.</li>
+      <li>✅ تبدیل درصد به اعشار: تقسیم بر ۱۰۰.</li>
+      <li>
+        ✅ محاسبه درصد از عدد:
+        <span class="formula-line is-inline" style="vertical-align: middle;">
+          <span>مقدار</span>
+          <span class="op">=</span>
+          <span>(درصد × عدد)</span>
+          <span class="op">÷</span>
+          <span>۱۰۰</span>
+        </span>
+      </li>
+      <li>✅ کاربرد درصد در زندگی روزمره: تخفیف، مالیات، سود بانکی، آمار و... .</li>
+    </ul>
 
-            if (Math.abs(userAnswer - practiceAnswer) < 0.01) {
-                feedbackEl.innerText = `✅ آفرین! پاسخ درست ${practiceAnswer.toLocaleString('fa-IR')} ${practiceUnit} است.`;
-                feedbackEl.style.color = 'var(--success)';
-                playTone(600, 0.3);
-                confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
-            } else {
-                feedbackEl.innerText = `❌ اشتباه! پاسخ درست ${practiceAnswer.toLocaleString('fa-IR')} ${practiceUnit} است.`;
-                feedbackEl.style.color = 'var(--danger)';
-                playTone(300, 0.3);
-                document.getElementById('practice-question').classList.add('shake-anim');
-                setTimeout(() => document.getElementById('practice-question').classList.remove('shake-anim'), 500);
-            }
-        });
+    <div class="teacher-speech-bubble">
+      «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی.
+      یادت باشه که درصد، یکی از پرکاربردترین مفاهیم ریاضی در زندگی روزمره است.»
+    </div>
 
-        document.getElementById('btn-new-practice').addEventListener('click', () => {
-            playTone(440, 0.05);
-            generatePracticeQuestion();
-        });
+    <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
+      <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
+      <ol style="color: #92400e;">
+        <li>
+          کسر
+          <span class="fraction"><span class="numerator">۳</span><span class="denominator">۵</span></span>
+          را به درصد تبدیل کنید.
+        </li>
+        <li>۴۵ درصد را به کسر و اعشار تبدیل کنید.</li>
+        <li>۳۰ درصد از ۲۵۰ چقدر است؟</li>
+        <li>اگر قیمت یک کتاب ۲۰۰۰۰ تومان باشد و ۱۵ درصد تخفیف بگیرد، چقدر باید پرداخت کنیم؟</li>
+      </ol>
+    </div>
+  </section>
 
-        generatePracticeQuestion();
+</main>
 
-        /* ========================================================================
-           مدیریت دکمه‌های شناور
-           ======================================================================== */
-        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('به بخش بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
-        });
+<div class="floating-btns">
+  <a class="float-nav-btn" id="prev-lesson-btn" href="#">
+    <span>→</span>
+    <span class="btn-label">بخش قبلی</span>
+    <span class="btn-tooltip" id="prev-tooltip">بخش قبلی</span>
+  </a>
+  <a href="../index.html" class="float-nav-btn home-btn">
+    🏠<span class="btn-label" style="margin-right:4px;">خانه</span>
+  </a>
+  <a class="float-nav-btn" id="next-lesson-btn" href="#">
+    <span class="btn-label">بخش بعدی</span>
+    <span>←</span>
+    <span class="btn-tooltip" id="next-tooltip">بخش بعدی</span>
+  </a>
+</div>
 
-    </script>
+<div class="toast-notification" id="toast"></div>
+
+<script>
+const FILES_ORDER = [
+  'ch01_sec01.html', 'ch01_sec02.html', 'ch01_sec03.html', 'ch01_sec04.html',
+  'ch02_sec01.html', 'ch02_sec02.html', 'ch02_sec03.html', 'ch02_sec04.html',
+  'ch03_sec01.html', 'ch03_sec02.html', 'ch03_sec03.html', 'ch03_sec04.html',
+  'ch04_sec01.html', 'ch04_sec02.html', 'ch04_sec03.html', 'ch04_sec04.html',
+  'ch05_sec01.html', 'ch05_sec02.html', 'ch05_sec03.html', 'ch05_sec04.html',
+  'ch06_sec01.html', 'ch06_sec02.html', 'ch06_sec03.html', 'ch06_sec04.html',
+  'ch07_sec01.html', 'ch07_sec02.html'
+];
+
+const chapterTitles = {
+  '01': 'عدد و الگوهای عددی',
+  '02': 'کسرها',
+  '03': 'اعداد اعشاری',
+  '04': 'تقارن و مختصات',
+  '05': 'اندازه‌گیری',
+  '06': 'تناسب و درصد',
+  '07': 'مرور و جمع‌بندی'
+};
+
+const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+function toFa(str) { return String(str).replace(/\d/g, d => faDigits[+d]); }
+
+function formatNumber(num) {
+  if (typeof num !== 'number' || isNaN(num)) return '—';
+  let rounded = Math.round(num * 1e6) / 1e6;
+  let str = String(rounded);
+  if (/e/i.test(str)) str = rounded.toFixed(10).replace(/0+$/, '').replace(/\.$/, '');
+  if (str.indexOf('.') !== -1) str = str.replace(/0+$/, '').replace(/\.$/, '');
+  const parts = str.split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '٬');
+  return parts.join('.').replace(/\d/g, d => faDigits[+d]).replace('.', '٫');
+}
+function normalizeDecimalInput(str) {
+  return String(str)
+    .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+    .replace(/٫/g, '.').replace(/،/g, '').replace(/٬/g, '')
+    .replace(/[^\d.\-]/g, '');
+}
+
+function getCurrentFileName() {
+  const path = window.location.pathname;
+  let name = path.substring(path.lastIndexOf('/') + 1);
+  if (!name || name === '') name = 'ch06_sec02.html';
+  return name.toLowerCase();
+}
+function parseFileName(name) {
+  const m = name.match(/ch(\d+)_sec(\d+)\.html?$/i);
+  if (!m) return null;
+  return { chapter: parseInt(m[1], 10), section: parseInt(m[2], 10) };
+}
+function fileLabel(fileName) {
+  const info = parseFileName(fileName);
+  if (!info) return fileName;
+  return `فصل ${toFa(info.chapter)} - بخش ${toFa(info.section)}`;
+}
+
+const currentFile = getCurrentFileName();
+const currentInfo = parseFileName(currentFile) || { chapter: 6, section: 2 };
+const currentIdx = FILES_ORDER.indexOf(currentFile);
+
+function renderLocationBar() {
+  const bar = document.getElementById('book-location-bar');
+  if (!bar) return;
+  const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+  let html = '';
+  html += `<span class="location-chip blue">📍 الان اینجایی: فصل ${toFa(currentInfo.chapter)} - بخش ${toFa(currentInfo.section)}</span>`;
+  const chKey = String(currentInfo.chapter).padStart(2, '0');
+  if (chapterTitles[chKey]) html += `<span class="location-chip">📖 ${chapterTitles[chKey]}</span>`;
+  if (nextFile) html += `<span class="location-chip yellow">⏭️ بعدی: ${fileLabel(nextFile)}</span>`;
+  else html += `<span class="location-chip green">🎉 آخرین بخش کتاب</span>`;
+  bar.innerHTML = html;
+}
+renderLocationBar();
+
+const prevBtn = document.getElementById('prev-lesson-btn');
+const nextBtn = document.getElementById('next-lesson-btn');
+const prevTooltip = document.getElementById('prev-tooltip');
+const nextTooltip = document.getElementById('next-tooltip');
+
+const prevFile = currentIdx > 0 ? FILES_ORDER[currentIdx - 1] : null;
+const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+if (prevFile) {
+  prevBtn.href = prevFile;
+  prevTooltip.textContent = `→ ${fileLabel(prevFile)}`;
+} else {
+  prevBtn.removeAttribute('href');
+  prevBtn.classList.add('disabled');
+  prevTooltip.textContent = 'این اولین بخش کتاب است';
+}
+if (nextFile) {
+  nextBtn.href = nextFile;
+  nextTooltip.textContent = `${fileLabel(nextFile)} ←`;
+} else {
+  nextBtn.removeAttribute('href');
+  nextBtn.classList.add('disabled');
+  nextTooltip.textContent = 'این آخرین بخش کتاب است';
+}
+
+let audioCtx;
+function ensureAudio() {
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { audioCtx = null; }
+  }
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+}
+function playTone(freq, duration) {
+  if (!audioCtx) return;
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain); gain.connect(audioCtx.destination);
+  osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+  gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+  gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+  osc.start(); osc.stop(audioCtx.currentTime + duration);
+}
+
+const toastEl = document.getElementById('toast');
+let toastTimer;
+function showToast(msg, duration = 3200) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
+}
+
+function pctHTML(num) {
+  const str = (typeof num === 'number') ? formatNumber(num) : num;
+  return `<span class="num-pct"><span>${str}</span><span class="pct-sign">%</span></span>`;
+}
+function fractionHTML(num, den) {
+  const nStr = (typeof num === 'number') ? formatNumber(num) : num;
+  const dStr = (typeof den === 'number') ? formatNumber(den) : den;
+  return `<span class="fraction"><span class="numerator">${nStr}</span><span class="denominator">${dStr}</span></span>`;
+}
+function gcdCalc(a, b) { return b === 0 ? a : gcdCalc(b, a % b); }
+
+/* ============ تعامل ۱: درصدساز ============ */
+const percentGridContainer = document.getElementById('percent-grid-container');
+const percentCells = [];
+
+function buildPercentGrid() {
+  percentGridContainer.innerHTML = '';
+  percentCells.length = 0;
+  for (let i = 0; i < 100; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'percent-cell';
+    cell.addEventListener('click', function() {
+      this.classList.toggle('colored');
+      updatePercentFromGrid();
+      playTone(500 + i * 2, 0.02);
+    });
+    percentGridContainer.appendChild(cell);
+    percentCells.push(cell);
+  }
+}
+
+function updatePercentFromGrid() {
+  const coloredCount = document.querySelectorAll('.percent-cell.colored').length;
+  document.getElementById('percent-slider').value = coloredCount;
+  document.getElementById('percent-number').value = coloredCount;
+  document.getElementById('percent-output').innerHTML = `
+    <span class="num-pct"><span>${formatNumber(coloredCount)}</span><span class="pct-sign">%</span></span>
+    <span class="op">=</span>
+    <span>${formatNumber(coloredCount)} خانه از ۱۰۰ خانه</span>
+    <span class="op">=</span>
+    <span>${formatNumber(coloredCount / 100)}</span>
+  `;
+}
+
+function setPercentFromControls(percent) {
+  const count = Math.round(percent);
+  percentCells.forEach((cell, idx) => {
+    if (idx < count) cell.classList.add('colored');
+    else cell.classList.remove('colored');
+  });
+  updatePercentFromGrid();
+}
+
+document.getElementById('percent-slider').addEventListener('input', function() {
+  setPercentFromControls(parseInt(this.value));
+  playTone(400 + parseInt(this.value) * 3, 0.03);
+});
+document.getElementById('percent-number').addEventListener('input', function() {
+  let val = parseInt(normalizeDecimalInput(this.value)) || 0;
+  if (val < 0) val = 0;
+  if (val > 100) val = 100;
+  document.getElementById('percent-slider').value = val;
+  setPercentFromControls(val);
+});
+document.getElementById('btn-clear-percent').addEventListener('click', function() {
+  ensureAudio();
+  percentCells.forEach(cell => cell.classList.remove('colored'));
+  document.getElementById('percent-slider').value = 0;
+  document.getElementById('percent-number').value = 0;
+  updatePercentFromGrid();
+  playTone(440, 0.05);
+});
+
+buildPercentGrid();
+setPercentFromControls(25);
+
+/* ============ تعامل ۲: تبدیل ============ */
+let currentConvType = 'fraction';
+
+document.querySelectorAll('.conv-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    ensureAudio();
+    document.querySelectorAll('.conv-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+    currentConvType = this.dataset.type;
+    document.querySelectorAll('.conv-input-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('conv-panel-' + currentConvType).classList.add('active');
+    document.getElementById('conv-feedback').textContent = '';
+    document.getElementById('res-fraction').innerHTML = '—';
+    document.getElementById('res-decimal').innerHTML = '—';
+    document.getElementById('res-percent').innerHTML = '—';
+    playTone(500, 0.08);
+  });
+});
+
+document.getElementById('btn-convert').addEventListener('click', function() {
+  ensureAudio();
+  const feedbackEl = document.getElementById('conv-feedback');
+  let num = null, den = null, dec = null, pct = null;
+
+  if (currentConvType === 'fraction') {
+    const n = parseInt(normalizeDecimalInput(document.getElementById('conv-num').value));
+    const d = parseInt(normalizeDecimalInput(document.getElementById('conv-den').value));
+    if (isNaN(n) || isNaN(d) || d === 0) {
+      feedbackEl.textContent = '❌ لطفاً صورت و مخرج معتبر وارد کن! (مخرج نباید صفر باشد)';
+      feedbackEl.style.color = 'var(--danger)';
+      playTone(200, 0.2);
+      return;
+    }
+    num = n; den = d;
+    dec = n / d;
+    pct = (n / d) * 100;
+  } else if (currentConvType === 'decimal') {
+    const v = parseFloat(normalizeDecimalInput(document.getElementById('conv-dec').value));
+    if (isNaN(v)) {
+      feedbackEl.textContent = '❌ لطفاً یک عدد اعشاری معتبر وارد کن!';
+      feedbackEl.style.color = 'var(--danger)';
+      playTone(200, 0.2);
+      return;
+    }
+    dec = v;
+    pct = v * 100;
+    const g = gcdCalc(Math.round(v * 10000), 10000) || 1;
+    num = Math.round(v * 10000) / g;
+    den = 10000 / g;
+  } else {
+    const v = parseFloat(normalizeDecimalInput(document.getElementById('conv-pct').value));
+    if (isNaN(v)) {
+      feedbackEl.textContent = '❌ لطفاً یک درصد معتبر وارد کن!';
+      feedbackEl.style.color = 'var(--danger)';
+      playTone(200, 0.2);
+      return;
+    }
+    pct = v;
+    dec = v / 100;
+    const g = gcdCalc(Math.round(v), 100) || 1;
+    num = Math.round(v) / g;
+    den = 100 / g;
+  }
+
+  const g = gcdCalc(num, den) || 1;
+  num = num / g;
+  den = den / g;
+
+  document.getElementById('res-fraction').innerHTML = fractionHTML(num, den);
+  document.getElementById('res-decimal').innerHTML = formatNumber(dec);
+  document.getElementById('res-percent').innerHTML = pctHTML(pct);
+
+  feedbackEl.textContent = '✅ تبدیل با موفقیت انجام شد.';
+  feedbackEl.style.color = 'var(--success)';
+  playTone(600, 0.3);
+  confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 }, colors: ['#10b981', '#34d399', '#6ee7b7'] });
+});
+
+/* ============ تعامل ۳: محاسبه درصد از عدد ============ */
+document.getElementById('btn-calc-percent').addEventListener('click', function() {
+  ensureAudio();
+  const pct = parseFloat(normalizeDecimalInput(document.getElementById('calc-percent').value));
+  const num = parseFloat(normalizeDecimalInput(document.getElementById('calc-number').value));
+  const outputEl = document.getElementById('calc-output');
+  const feedbackEl = document.getElementById('calc-feedback');
+
+  if (isNaN(pct) || isNaN(num)) {
+    feedbackEl.textContent = '❌ لطفاً مقادیر را درست وارد کن!';
+    feedbackEl.style.color = 'var(--danger)';
+    playTone(200, 0.2);
+    return;
+  }
+
+  const result = (pct * num) / 100;
+
+  outputEl.innerHTML = `
+    <span>${pctHTML(pct)} از ${formatNumber(num)}</span>
+    <span class="op">=</span>
+    <span>${formatNumber(result)}</span>
+  `;
+
+  feedbackEl.textContent = '✅ محاسبه با موفقیت انجام شد.';
+  feedbackEl.style.color = 'var(--success)';
+  playTone(600, 0.3);
+  confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 }, colors: ['#10b981', '#34d399', '#6ee7b7'] });
+});
+
+/* ============ تعامل ۴: تمرین ============ */
+let practiceAnswer, practiceUnit, practiceType;
+
+function generatePracticeQuestion() {
+  const types = ['percent-of-number', 'convert-to-percent', 'convert-to-decimal', 'discount'];
+  practiceType = types[Math.floor(Math.random() * types.length)];
+  const qEl = document.getElementById('practice-question');
+  const unitEl = document.getElementById('practice-unit');
+
+  if (practiceType === 'percent-of-number') {
+    const percent = Math.floor(Math.random() * 80 + 10);
+    const number = (Math.floor(Math.random() * 20) + 5) * 10;
+    practiceAnswer = (percent * number) / 100;
+    practiceUnit = '';
+    qEl.innerHTML = `${pctHTML(percent)} از ${formatNumber(number)} چقدر است؟`;
+    unitEl.textContent = '';
+  } else if (practiceType === 'convert-to-percent') {
+    const decimals = [0.1, 0.2, 0.25, 0.5, 0.75, 0.4, 0.6, 0.8, 0.15];
+    const dec = decimals[Math.floor(Math.random() * decimals.length)];
+    practiceAnswer = dec * 100;
+    practiceUnit = '%';
+    qEl.innerHTML = `عدد اعشاری <strong>${formatNumber(dec)}</strong> را به درصد تبدیل کن.`;
+    unitEl.textContent = '%';
+  } else if (practiceType === 'convert-to-decimal') {
+    const percents = [10, 20, 25, 50, 75, 40, 60, 80, 15];
+    const p = percents[Math.floor(Math.random() * percents.length)];
+    practiceAnswer = p / 100;
+    practiceUnit = '';
+    qEl.innerHTML = `درصد <strong>${pctHTML(p)}</strong> را به اعشار تبدیل کن.`;
+    unitEl.textContent = '';
+  } else {
+    const price = (Math.floor(Math.random() * 40) + 10) * 1000;
+    const discount = [10, 15, 20, 25, 30][Math.floor(Math.random() * 5)];
+    practiceAnswer = price - (price * discount / 100);
+    practiceUnit = 'تومان';
+    qEl.innerHTML = `قیمت یک کالا ${formatNumber(price)} تومان است. با ${pctHTML(discount)} تخفیف، قیمت نهایی چقدر است؟`;
+    unitEl.textContent = 'تومان';
+  }
+
+  document.getElementById('practice-answer').value = '';
+  document.getElementById('practice-feedback').textContent = '';
+}
+
+document.getElementById('btn-check-practice').addEventListener('click', function() {
+  ensureAudio();
+  const raw = normalizeDecimalInput(document.getElementById('practice-answer').value);
+  const userAnswer = parseFloat(raw);
+  const feedbackEl = document.getElementById('practice-feedback');
+
+  if (isNaN(userAnswer)) {
+    feedbackEl.textContent = '❌ لطفاً یک عدد وارد کن!';
+    feedbackEl.style.color = 'var(--danger)';
+    playTone(200, 0.2);
+    return;
+  }
+
+  if (Math.abs(userAnswer - practiceAnswer) < 0.01) {
+    feedbackEl.textContent = `✅ آفرین! پاسخ درست = ${formatNumber(practiceAnswer)} ${practiceUnit}`;
+    feedbackEl.style.color = 'var(--success)';
+    playTone(600, 0.3);
+    confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 }, colors: ['#10b981', '#34d399', '#6ee7b7'] });
+  } else {
+    feedbackEl.textContent = `❌ اشتباه! پاسخ درست = ${formatNumber(practiceAnswer)} ${practiceUnit}`;
+    feedbackEl.style.color = 'var(--danger)';
+    playTone(300, 0.3);
+    document.getElementById('practice-question').classList.add('shake-anim');
+    setTimeout(() => document.getElementById('practice-question').classList.remove('shake-anim'), 500);
+  }
+});
+
+document.getElementById('btn-new-practice').addEventListener('click', () => {
+  ensureAudio();
+  playTone(440, 0.05);
+  generatePracticeQuestion();
+});
+
+document.getElementById('practice-answer').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') document.getElementById('btn-check-practice').click();
+});
+
+generatePracticeQuestion();
+
+document.body.addEventListener('click', function initAudioOnce() {
+  ensureAudio();
+  document.body.removeEventListener('click', initAudioOnce);
+}, { once: true });
+
+prevBtn.addEventListener('click', (e) => {
+  if (prevBtn.classList.contains('disabled')) {
+    e.preventDefault();
+    showToast('این اولین بخش کتاب است. 😊');
+    playTone(300, 0.15);
+  }
+});
+nextBtn.addEventListener('click', (e) => {
+  if (nextBtn.classList.contains('disabled')) {
+    e.preventDefault();
+    showToast('🎉 تبریک! تمام فصل‌ها را کامل خواندی!');
+    playTone(700, 0.25);
+    confetti({ particleCount: 120, spread: 100, origin: { y: 0.6 }, colors: ['#10b981', '#34d399', '#6ee7b7'] });
+  }
+});
+</script>
 </body>
 </html>

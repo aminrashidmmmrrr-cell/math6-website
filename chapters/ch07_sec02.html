@@ -1,1242 +1,1130 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فصل ۷ - بخش ۲: اندازه‌گیری و محاسبات تقریبی | درسنامه تعاملی</title>
-    
-    <!-- قلم زیبای وزیرمتن -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
-
-    <!-- انیمیشن کاغذ رنگی -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-    <style>
-        /* ========================================================================
-           ۱. متغیرها و تم رنگی
-           ======================================================================== */
-        :root {
-            --lilac-bg: #f7f1fc;
-            --lilac-soft: #f1e7fb;
-            --lilac-border: #d8b4fe;
-            --lilac-main: #9333ea;
-            --lilac-dark: #6b21a8;
-            --lilac-glow: rgba(147, 51, 234, 0.15);
-            
-            --blue-soft: #e0f2fe;
-            --blue-main: #0284c7;
-            --blue-dark: #0369a1;
-            
-            --success: #16a34a;
-            --success-bg: rgba(22, 163, 74, 0.1);
-            --danger: #dc2626;
-            --danger-bg: rgba(220, 38, 38, 0.1);
-            --warning: #ca8a04;
-            --highlight: #fef08a;
-            --sky-soft: #e0f2fe;
-            --sky-main: #0ea5e9;
-            --sky-dark: #0369a1;
-
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.9);
-            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
-            --card-hover-bg: rgba(255, 255, 255, 0.95);
-            
-            --text-title: #2e1065;
-            --text-body: #475569;
-            --text-muted: #64748b;
-            
-            --radius-lg: 24px;
-            --radius-md: 16px;
-            --radius-sm: 8px;
-        }
-
-        /* ========================================================================
-           ۲. استایل‌های پایه
-           ======================================================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--lilac-bg);
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
-            background-attachment: fixed;
-            color: var(--text-body);
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            line-height: 1.8;
-        }
-
-        /* ========================================================================
-           ۳. نوار هدر
-           ======================================================================== */
-        .lesson-top-nav {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto 20px;
-            padding: 14px 28px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--glass-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            z-index: 100;
-        }
-
-        .go-back-link {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 800;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.2s, transform 0.2s;
-        }
-
-        .go-back-link:hover {
-            color: var(--sky-main);
-            transform: translateX(3px);
-        }
-
-        .header-lesson-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-        }
-
-        .chapter-label-badge {
-            background: var(--sky-soft);
-            color: var(--sky-dark);
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 20px;
-        }
-
-        .lesson-title-text {
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: var(--text-title);
-        }
-
-        /* ========================================================================
-           ۴. کارت‌های آموزشی
-           ======================================================================== */
-        .main-lesson-wrapper {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding-bottom: 80px;
-        }
-
-        .step-teaching-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            padding: 28px;
-            box-shadow: var(--glass-shadow);
-            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .step-teaching-card:hover {
-            background-color: var(--card-hover-bg);
-            transform: translateY(-5px);
-        }
-
-        .step-number-badge {
-            display: inline-flex;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--sky-main), var(--sky-dark));
-            color: white;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 0.95rem;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 10px rgba(14, 165, 233, 0.25);
-        }
-
-        .step-teaching-card h2 {
-            font-size: 1.4rem;
-            color: var(--text-title);
-            margin-bottom: 12px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .step-teaching-card p {
-            font-size: 1rem;
-            line-height: 1.9;
-            color: var(--text-body);
-            margin-bottom: 16px;
-        }
-
-        /* ========================================================================
-           ۵. المان‌های خاص
-           ======================================================================== */
-        .teacher-speech-bubble {
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: var(--radius-md);
-            padding: 18px 22px;
-            border: 1px dashed var(--sky-main);
-            color: var(--sky-dark);
-            margin: 16px 0;
-            position: relative;
-            font-style: italic;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-        }
-
-        .teacher-speech-bubble::before {
-            content: "🧑‍🏫";
-            font-size: 1.4rem;
-            font-style: normal;
-        }
-
-        .solved-example-box {
-            background: var(--blue-soft);
-            border: 1px solid rgba(2, 132, 199, 0.2);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            margin: 16px 0;
-        }
-
-        .example-header {
-            font-weight: 800;
-            color: var(--blue-dark);
-            font-size: 1rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .key-tip-box {
-            background: var(--success-bg);
-            border: 1px solid var(--success);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            margin: 16px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--success);
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-
-        /* ========================================================================
-           ۶. بخش تعاملی ۱: دقت اندازه‌گیری
-           ======================================================================== */
-        .interactive-container {
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            margin-top: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            border: 1px solid var(--glass-border);
-        }
-
-        .sim-title {
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: var(--sky-dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .precision-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .precision-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-            width: 100%;
-        }
-
-        .precision-card {
-            background: #fafafa;
-            border: 2px solid #e2e8f0;
-            border-radius: var(--radius-sm);
-            padding: 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .precision-card:hover {
-            border-color: var(--sky-main);
-            background: var(--sky-soft);
-            transform: translateY(-3px);
-        }
-
-        .precision-card.selected {
-            border-color: var(--sky-main);
-            background: var(--sky-soft);
-            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2);
-        }
-
-        .precision-card .precision-icon {
-            font-size: 2.5rem;
-            margin-bottom: 8px;
-        }
-
-        .precision-card .precision-name {
-            font-weight: 800;
-            font-size: 0.95rem;
-            color: var(--sky-dark);
-        }
-
-        .precision-card .precision-desc {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 6px;
-        }
-
-        .precision-output {
-            background: var(--sky-soft);
-            padding: 20px 32px;
-            border-radius: var(--radius-sm);
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--sky-dark);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            text-align: center;
-            min-height: 80px;
-            width: 100%;
-        }
-
-        /* ========================================================================
-           ۷. بخش تعاملی ۲: محاسبات تقریبی
-           ======================================================================== */
-        .approx-calc-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .approx-calc-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .approx-calc-row input {
-            width: 120px;
-            padding: 10px;
-            font-size: 1.1rem;
-            font-weight: 900;
-            text-align: center;
-            border: 2px solid var(--sky-main);
-            border-radius: 8px;
-            color: var(--sky-dark);
-            background: #fafafa;
-        }
-        .approx-calc-row input:focus { outline: none; border-color: var(--sky-main); }
-
-        .approx-calc-row select {
-            padding: 10px;
-            font-size: 1rem;
-            font-weight: 700;
-            border: 2px solid var(--sky-main);
-            border-radius: 8px;
-            color: var(--sky-dark);
-            background: #fafafa;
-            cursor: pointer;
-        }
-
-        .approx-calc-result {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            width: 100%;
-        }
-
-        .result-card {
-            background: var(--sky-soft);
-            padding: 20px;
-            border-radius: var(--radius-sm);
-            flex: 1;
-            min-width: 180px;
-            text-align: center;
-        }
-
-        .result-card .result-label {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--sky-dark);
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .result-card .result-value {
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: var(--text-title);
-            direction: ltr;
-        }
-
-        .result-card.highlight {
-            background: var(--success-bg);
-            border: 2px solid var(--success);
-        }
-
-        .result-card.highlight .result-value {
-            color: var(--success);
-        }
-
-        /* ========================================================================
-           ۸. بخش تعاملی ۳: خطای تقریب
-           ======================================================================== */
-        .error-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .error-display {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            justify-content: center;
-            width: 100%;
-        }
-
-        .error-box {
-            background: var(--sky-soft);
-            padding: 16px 24px;
-            border-radius: var(--radius-sm);
-            text-align: center;
-            flex: 1;
-            min-width: 150px;
-        }
-
-        .error-box .error-label {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--sky-dark);
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .error-box .error-value {
-            font-size: 1.4rem;
-            font-weight: 900;
-            color: var(--text-title);
-        }
-
-        .error-bar-container {
-            width: 100%;
-            height: 30px;
-            background: #f1f5f9;
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .error-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--success), var(--sky-main));
-            border-radius: 15px;
-            transition: width 0.5s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 800;
-            font-size: 0.85rem;
-        }
-
-        /* ========================================================================
-           ۹. بخش تعاملی ۴: تمرین محاسبات تقریبی
-           ======================================================================== */
-        .practice-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .practice-question {
-            background: var(--sky-soft);
-            padding: 20px 32px;
-            border-radius: var(--radius-sm);
-            font-size: 1.2rem;
-            font-weight: 900;
-            color: var(--sky-dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .practice-answer-row {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .practice-answer-row input {
-            width: 150px;
-            padding: 10px;
-            font-size: 1.2rem;
-            font-weight: 900;
-            text-align: center;
-            border: 2px solid var(--sky-main);
-            border-radius: 8px;
-            color: var(--sky-dark);
-            background: #fafafa;
-        }
-        .practice-answer-row input:focus { outline: none; border-color: var(--sky-main); }
-
-        /* ========================================================================
-           ۱۰. دکمه‌ها
-           ======================================================================== */
-        .btn-ui {
-            background: linear-gradient(135deg, var(--sky-main), var(--sky-dark));
-            color: white;
-            border: 2px solid white;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: transform 0.15s, box-shadow 0.15s;
-            box-shadow: 0 6px 16px rgba(14, 165, 233, 0.25);
-        }
-        .btn-ui:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.35);
-        }
-        .btn-ui:active { transform: translateY(0); }
-        .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
-        .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
-
-        .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
-        .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
-
-        .btn-ui.lilac { background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark)); box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25); }
-        .btn-ui.lilac:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
-
-        .action-btns-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .feedback-display {
-            font-weight: 800;
-            text-align: center;
-            min-height: 28px;
-            font-size: 1rem;
-            margin-top: 10px;
-            transition: color 0.2s;
-        }
-
-        /* ========================================================================
-           ۱۱. دکمه‌های شناور
-           ======================================================================== */
-        .floating-btns {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none;
-            z-index: 200;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .float-nav-btn {
-            pointer-events: auto;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 800;
-            color: var(--text-title);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.2s;
-        }
-
-        .float-nav-btn:hover {
-            background: var(--sky-main);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(14, 165, 233, 0.25);
-        }
-
-        @media (max-width: 600px) {
-            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
-            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
-            .header-lesson-info { align-items: center; }
-        }
-
-        /* ========================================================================
-           ۱۲. انیمیشن
-           ======================================================================== */
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .pop-in { animation: popIn 0.3s ease-out forwards; }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-6px); }
-            40% { transform: translateX(6px); }
-            60% { transform: translateX(-4px); }
-            80% { transform: translateX(4px); }
-        }
-        .shake-anim { animation: shake 0.4s ease-in-out; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>فصل ۷ - بخش ۲: اندازه‌گیری و محاسبات تقریبی | درسنامه تعاملی</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+:root {
+  --lilac-bg: #f7f1fc;
+  --lilac-soft: #f1e7fb;
+  --lilac-border: #d8b4fe;
+  --lilac-main: #9333ea;
+  --lilac-dark: #6b21a8;
+
+  /* ✅ رنگ اختصاصی فصل ۷: رزگلد */
+  --rg-soft: #fce7ea;
+  --rg-main: #b76e79;
+  --rg-dark: #8b4854;
+  --rg-deep: #5c2e36;
+  --rg-glow: rgba(183, 110, 121, 0.25);
+
+  --blue-soft: #e0f2fe;
+  --blue-main: #0284c7;
+  --blue-dark: #0369a1;
+
+  --success: #16a34a;
+  --success-bg: rgba(22, 163, 74, 0.1);
+  --danger: #dc2626;
+  --danger-bg: rgba(220, 38, 38, 0.1);
+  --warning: #ca8a04;
+  --highlight: #fef08a;
+
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.9);
+  --glass-shadow: 0 12px 36px rgba(107, 33, 168, 0.1);
+  --text-title: #2e1065;
+  --text-body: #475569;
+  --text-muted: #64748b;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; -webkit-tap-highlight-color: transparent; }
+html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  background-color: var(--lilac-bg);
+  background-image:
+    radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: var(--text-body);
+  min-height: 100vh;
+  padding: 16px;
+  display: flex; flex-direction: column;
+  overflow-x: hidden; line-height: 1.8;
+}
+
+/* ============ فرمول LTR ============ */
+.formula-line {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  direction: ltr;
+  font-variant-numeric: tabular-nums;
+  line-height: 2;
+  font-weight: 800;
+  padding: 4px 0;
+  width: 100%;
+}
+.formula-line.is-inline { display: inline-flex; width: auto; vertical-align: middle; }
+.formula-line .op { color: var(--text-muted); font-weight: 900; padding: 0 3px; }
+
+/* ✅ واحد سمت چپ عدد */
+.unit-num {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  direction: ltr;
+  unicode-bidi: isolate;
+  white-space: nowrap;
+}
+.unit-num .u-unit { font-weight: 800; opacity: 0.9; }
+.unit-num .u-val { font-weight: 900; font-variant-numeric: tabular-nums; }
+
+/* ✅ عدد فارسی با LTR */
+.num-fa {
+  display: inline-block;
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-variant-numeric: tabular-nums;
+  font-weight: 900;
+}
+
+/* ============ هدر ============ */
+.lesson-top-nav {
+  max-width: 1100px; width: 100%;
+  margin: 0 auto 20px; padding: 14px 22px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; z-index: 100;
+}
+.go-back-link { text-decoration: none; color: var(--text-muted); font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; transition: color 0.2s, transform 0.2s; white-space: nowrap; }
+.go-back-link:hover { color: var(--rg-dark); transform: translateX(3px); }
+.header-lesson-info { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 0; }
+.chapter-label-badge { background: var(--rg-soft); color: var(--rg-deep); font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.lesson-title-text { font-size: 1.05rem; font-weight: 900; color: var(--text-title); letter-spacing: -0.5px; }
+
+/* ============ نوار موقعیت ============ */
+.book-location-bar {
+  max-width: 1100px; width: 100%;
+  margin: 0 auto 20px; display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  background: var(--glass-bg); border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 12px rgba(107, 33, 168, 0.06);
+  flex-wrap: wrap; justify-content: center;
+}
+.location-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--rg-soft); color: var(--rg-deep); padding: 4px 12px; border-radius: 20px; font-weight: 800; font-size: 0.82rem; white-space: nowrap; }
+.location-chip.blue { background: var(--blue-soft); color: var(--blue-dark); }
+.location-chip.yellow { background: #fef9c3; color: #854d0e; }
+.location-chip.green { background: #dcfce7; color: #166534; }
+
+/* ============ کارت‌ها ============ */
+.main-lesson-wrapper { max-width: 1100px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; padding-bottom: 120px; }
+.step-teaching-card { background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 26px; box-shadow: var(--glass-shadow); position: relative; overflow: hidden; }
+.step-number-badge { display: inline-flex; width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--rg-main), var(--rg-dark)); color: white; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; margin-bottom: 14px; box-shadow: 0 4px 10px var(--rg-glow); }
+.step-teaching-card h2 { font-size: 1.3rem; color: var(--text-title); margin-bottom: 12px; font-weight: 900; display: flex; align-items: center; gap: 10px; letter-spacing: -0.8px; line-height: 1.6; flex-wrap: wrap; }
+.step-teaching-card p { font-size: 1rem; line-height: 2; color: var(--text-body); margin-bottom: 14px; }
+.step-teaching-card ul, .step-teaching-card ol { margin-right: 22px; color: var(--text-body); font-weight: 600; line-height: 2.1; margin-bottom: 12px; }
+
+/* ============ المان‌های خاص ============ */
+.teacher-speech-bubble { background: rgba(255, 255, 255, 0.75); border-radius: var(--radius-md); padding: 16px 20px; border: 1px dashed var(--rg-main); color: var(--rg-deep); margin: 14px 0; font-style: italic; display: flex; gap: 12px; align-items: flex-start; font-size: 0.95rem; line-height: 1.9; }
+.teacher-speech-bubble::before { content: "🧑‍🏫"; font-size: 1.4rem; font-style: normal; flex-shrink: 0; }
+.solved-example-box { background: var(--blue-soft); border: 1px solid rgba(2, 132, 199, 0.2); border-radius: var(--radius-md); padding: 18px; margin: 14px 0; word-break: break-word; font-size: 1.05rem; }
+.example-header { font-weight: 800; color: var(--blue-dark); font-size: 1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.solved-example-box p { font-size: 1.05rem; line-height: 2.2; color: var(--blue-dark); margin-bottom: 8px; }
+.key-tip-box { background: rgba(183, 110, 121, 0.1); border: 1px solid var(--rg-main); border-radius: var(--radius-md); padding: 14px 16px; margin: 14px 0; color: var(--rg-deep); font-weight: 700; font-size: 0.95rem; line-height: 1.9; }
+.key-tip-box strong { color: var(--rg-dark); }
+.key-tip-box ul { margin-top: 8px; line-height: 2.1; }
+.sim-title { font-weight: 800; font-size: 1.05rem; color: var(--rg-deep); display: flex; align-items: center; gap: 8px; line-height: 1.6; flex-wrap: wrap; }
+
+/* ============ آزمایشگاه‌ها ============ */
+.precision-lab, .approx-calc-lab, .error-lab, .practice-lab {
+  background: white; border-radius: var(--radius-md); padding: 20px;
+  border: 1px solid var(--glass-border);
+  display: flex; flex-direction: column; gap: 16px; align-items: center;
+  width: 100%;
+}
+
+/* ============ کارت‌های دقت ============ */
+.precision-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px; width: 100%;
+}
+.precision-card {
+  background: #fafafa; border: 2px solid #e2e8f0;
+  border-radius: var(--radius-sm); padding: 14px;
+  text-align: center; cursor: pointer; transition: all 0.2s;
+}
+.precision-card:hover {
+  border-color: var(--rg-main); background: var(--rg-soft);
+  transform: translateY(-3px);
+}
+.precision-card.selected {
+  border-color: var(--rg-main); background: var(--rg-soft);
+  box-shadow: 0 0 0 4px var(--rg-glow);
+}
+.precision-card .precision-icon { font-size: 2rem; margin-bottom: 6px; }
+.precision-card .precision-name { font-weight: 800; font-size: 0.9rem; color: var(--rg-deep); }
+.precision-card .precision-desc { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6; }
+
+/* ============ خروجی ============ */
+.precision-output, .error-result-box {
+  background: var(--rg-soft); padding: 14px 20px;
+  border-radius: var(--radius-sm); font-size: 1.05rem;
+  font-weight: 800; color: var(--rg-deep);
+  display: flex; align-items: center; gap: 8px;
+  flex-wrap: wrap; justify-content: center;
+  text-align: center; min-height: 56px;
+  width: 100%; border: 1px solid var(--rg-main);
+  line-height: 2.2;
+}
+
+/* ============ محاسبه تقریبی ============ */
+.approx-calc-row {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  justify-content: center; align-items: center;
+  padding: 12px; background: #fafafa;
+  border-radius: var(--radius-sm); border: 1px solid #e2e8f0; width: 100%;
+}
+.approx-calc-row label { font-weight: 800; color: var(--rg-deep); font-size: 0.9rem; white-space: nowrap; }
+.approx-calc-row input {
+  width: 100px; padding: 10px;
+  font-size: 1.1rem; font-weight: 900; text-align: center;
+  border: 2px solid var(--rg-main); border-radius: 10px;
+  color: var(--rg-deep); background: white;
+  font-family: 'Vazirmatn', sans-serif; direction: ltr;
+}
+.approx-calc-row input:focus { outline: none; border-color: var(--rg-dark); box-shadow: 0 0 0 4px var(--rg-glow); }
+.approx-calc-row select {
+  padding: 10px 12px; font-size: 0.9rem; font-weight: 800;
+  border: 2px solid var(--rg-main); border-radius: 10px;
+  color: var(--rg-deep); background: white;
+  cursor: pointer; font-family: 'Vazirmatn', sans-serif;
+}
+.approx-calc-row select:focus { outline: none; border-color: var(--rg-dark); }
+
+.approx-calc-result {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px; width: 100%;
+}
+.result-card {
+  background: var(--rg-soft); padding: 14px 10px;
+  border-radius: var(--radius-sm); text-align: center;
+  border: 2px solid var(--rg-main);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.result-card .result-label {
+  font-size: 0.78rem; font-weight: 800; color: var(--rg-deep);
+  line-height: 1.5;
+}
+.result-card .result-value {
+  font-size: clamp(1.05rem, 3.5vw, 1.3rem);
+  font-weight: 900; color: var(--text-title);
+  direction: ltr; font-variant-numeric: tabular-nums;
+  background: white; padding: 4px 10px;
+  border-radius: 6px; border: 1px solid var(--rg-main);
+}
+.result-card.highlight {
+  background: rgba(22, 163, 74, 0.1);
+  border-color: var(--success);
+}
+.result-card.highlight .result-value { color: var(--success); }
+
+/* ============ خطای تقریب ============ */
+.error-display {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px; width: 100%;
+}
+.error-box {
+  background: var(--rg-soft); padding: 12px 8px;
+  border-radius: var(--radius-sm); text-align: center;
+  border: 2px solid var(--rg-main);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.error-box .error-label {
+  font-size: 0.78rem; font-weight: 800; color: var(--rg-deep);
+}
+.error-box .error-value {
+  font-size: clamp(1rem, 3.5vw, 1.3rem);
+  font-weight: 900; color: var(--text-title);
+  direction: ltr; font-variant-numeric: tabular-nums;
+  background: white; padding: 4px 10px;
+  border-radius: 6px; border: 1px solid var(--rg-main);
+}
+.error-box.success { background: var(--success-bg); border-color: var(--success); }
+.error-box.success .error-value { color: var(--success); }
+
+.error-bar-container {
+  width: 100%; height: 28px;
+  background: #f1f5f9; border-radius: 14px;
+  overflow: hidden; position: relative;
+}
+.error-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--success), var(--rg-main));
+  border-radius: 14px;
+  transition: width 0.5s ease;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 800; font-size: 0.82rem;
+  white-space: nowrap; padding: 0 8px;
+  direction: ltr;
+}
+
+/* ============ تمرین ============ */
+.practice-question {
+  background: var(--rg-soft); padding: 16px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 1.05rem; font-weight: 900;
+  color: var(--rg-deep);
+  display: flex; align-items: center; gap: 10px;
+  flex-wrap: wrap; justify-content: center;
+  text-align: center; width: 100%; line-height: 2.2;
+}
+.practice-question .num-fa {
+  background: white; padding: 2px 10px;
+  border-radius: 6px; border: 1px solid var(--rg-main);
+}
+.practice-answer-row {
+  display: flex; gap: 10px; align-items: center;
+  flex-wrap: wrap; justify-content: center; width: 100%;
+}
+.practice-answer-row input {
+  width: 160px; padding: 10px;
+  font-size: 1.1rem; font-weight: 900; text-align: center;
+  border: 2px solid var(--rg-main); border-radius: 10px;
+  color: var(--rg-deep); background: white;
+  font-family: 'Vazirmatn', sans-serif; direction: ltr;
+}
+.practice-answer-row input:focus { outline: none; box-shadow: 0 0 0 4px var(--rg-glow); }
+
+/* ============ دکمه‌ها ============ */
+.btn-ui {
+  background: linear-gradient(135deg, var(--rg-main), var(--rg-dark));
+  color: white; border: none;
+  padding: 12px 22px; border-radius: 30px;
+  font-weight: 800; font-size: 0.92rem;
+  cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 6px 16px var(--rg-glow);
+  font-family: 'Vazirmatn', sans-serif; min-height: 46px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+}
+.btn-ui:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(183, 110, 121, 0.4); }
+.btn-ui:active { transform: translateY(0); }
+.btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
+.btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
+.btn-ui.green { background: linear-gradient(135deg, var(--rg-main), var(--rg-dark)); }
+.action-btns-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.feedback-display {
+  font-weight: 800; text-align: center;
+  min-height: 28px; font-size: 0.98rem;
+  margin-top: 8px; transition: color 0.2s;
+  line-height: 2; word-break: break-word; width: 100%;
+}
+
+/* ============ دکمه‌های شناور ============ */
+.floating-btns {
+  position: fixed; bottom: 16px; left: 16px; right: 16px;
+  display: flex; justify-content: space-between;
+  align-items: center; gap: 10px;
+  pointer-events: none; z-index: 200;
+  max-width: 1100px; margin: 0 auto;
+}
+.float-nav-btn {
+  pointer-events: auto;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  padding: 12px 20px; border-radius: 30px;
+  font-weight: 800; color: var(--text-title);
+  text-decoration: none; cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  transition: all 0.2s; font-size: 0.9rem;
+  font-family: 'Vazirmatn', sans-serif;
+  position: relative;
+}
+.float-nav-btn:hover:not(.disabled) {
+  background: var(--rg-main); color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px var(--rg-glow);
+}
+.float-nav-btn.disabled { opacity: 0.45; cursor: not-allowed; }
+.float-nav-btn.disabled:hover { background: var(--glass-bg); color: var(--text-title); transform: none; }
+.float-nav-btn.home-btn {
+  background: linear-gradient(135deg, var(--rg-main), var(--rg-dark));
+  color: white; border-color: transparent; padding: 12px 16px;
+}
+.float-nav-btn.home-btn:hover {
+  background: linear-gradient(135deg, var(--rg-dark), var(--rg-main));
+  transform: translateY(-3px) scale(1.05);
+}
+.float-nav-btn .btn-tooltip {
+  position: absolute; bottom: calc(100% + 8px);
+  background: rgba(46, 16, 101, 0.95); color: white;
+  font-size: 0.72rem; font-weight: 700;
+  padding: 5px 10px; border-radius: 8px;
+  white-space: nowrap; opacity: 0;
+  pointer-events: none; transition: opacity 0.2s;
+}
+.float-nav-btn:hover .btn-tooltip { opacity: 1; }
+#prev-lesson-btn .btn-tooltip { right: 0; }
+#next-lesson-btn .btn-tooltip { left: 0; }
+
+/* ============ Toast ============ */
+.toast-notification {
+  position: fixed; bottom: 100px; left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  background: rgba(46, 16, 101, 0.96); color: white;
+  padding: 14px 24px; border-radius: 14px;
+  font-weight: 700; font-size: 0.92rem;
+  z-index: 1000; opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  max-width: 90%; text-align: center;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+  line-height: 1.7;
+}
+.toast-notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+.shake-anim { animation: shake 0.4s ease-in-out; }
+
+/* ============ ریسپانسیو ============ */
+@media (max-width: 768px) {
+  body { padding: 12px; }
+  .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; padding: 14px 16px; gap: 10px; }
+  .header-lesson-info { align-items: center; }
+  .go-back-link { justify-content: center; }
+  .lesson-title-text { text-align: center; }
+  .step-teaching-card { padding: 20px 16px; border-radius: 20px; }
+  .step-teaching-card h2 { font-size: 1.15rem; }
+  .step-teaching-card p { font-size: 0.95rem; }
+  .step-teaching-card ul, .step-teaching-card ol { margin-right: 18px; font-size: 0.95rem; }
+  .precision-lab, .approx-calc-lab, .error-lab, .practice-lab { padding: 14px 10px; }
+  .approx-calc-row input { width: 80px; font-size: 1rem; padding: 8px; }
+  .approx-calc-row select { font-size: 0.82rem; padding: 8px 10px; }
+  .approx-calc-result { grid-template-columns: 1fr; }
+  .error-display { grid-template-columns: 1fr; }
+  .float-nav-btn { padding: 11px 14px; font-size: 0.82rem; gap: 5px; }
+  .float-nav-btn .btn-label { display: none; }
+  .float-nav-btn.home-btn { padding: 11px 14px; }
+  .teacher-speech-bubble { padding: 12px 14px; font-size: 0.88rem; }
+  .key-tip-box { padding: 12px 12px; font-size: 0.88rem; }
+  .formula-line { font-size: 0.95rem; gap: 4px; }
+  .precision-cards { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+}
+@media (max-width: 480px) {
+  .approx-calc-row { flex-direction: column; gap: 8px; }
+  .approx-calc-row input { width: 100%; max-width: 180px; }
+  .approx-calc-row select { width: 100%; max-width: 220px; }
+  .practice-answer-row input { width: 130px; font-size: 1rem; }
+  .formula-line { font-size: 0.88rem; }
+}
+</style>
 </head>
 <body>
 
-    <!-- ========================================================================
-         نوار ناوبری بالای درسنامه
-         ======================================================================== -->
-    <header class="lesson-top-nav">
-        <a href="../index.html" class="go-back-link">
-            <span>← برگشت به کتاب اصلی</span>
-        </a>
-        <div class="header-lesson-info">
-            <span class="chapter-label-badge">فصل هفتم: تقریب</span>
-            <span class="lesson-title-text">بخش ۲: اندازه‌گیری و محاسبات تقریبی</span>
-        </div>
-    </header>
+<header class="lesson-top-nav">
+  <a href="../index.html" class="go-back-link">
+    <span>← برگشت به کتاب اصلی</span>
+  </a>
+  <div class="header-lesson-info">
+    <span class="chapter-label-badge">فصل هفتم: تقریب</span>
+    <span class="lesson-title-text">بخش ۲: اندازه‌گیری و محاسبات تقریبی</span>
+  </div>
+</header>
 
-    <main class="main-lesson-wrapper">
+<div class="book-location-bar" id="book-location-bar"></div>
 
-        <!-- ========================================================================
-           قدم ۱: دقت اندازه‌گیری
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۱</span>
-            <h2>دقت اندازه‌گیری: ابزار مناسب برای کار مناسب!</h2>
-            <p>
-                هر ابزار اندازه‌گیری، دقت خاصی دارد. دقت یعنی کوچک‌ترین مقداری که 
-                آن ابزار می‌تواند اندازه بگیرد. برای هر اندازه‌گیری، باید از ابزار مناسب استفاده کنیم.
-            </p>
+<main class="main-lesson-wrapper">
 
-            <div class="key-tip-box">
-                <strong>📌 مثال‌هایی از دقت ابزارها:</strong>
-                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.4;">
-                    <li><strong>ترازوی خواربارفروشی:</strong> دقت تا ۱۰ گرم</li>
-                    <li><strong>ترازوی آزمایشگاهی:</strong> دقت تا ۰/۱ گرم</li>
-                    <li><strong>خط‌کش مدرج با میلی‌متر:</strong> دقت تا ۱ میلی‌متر</li>
-                    <li><strong>متر خیاطی:</strong> دقت تا ۱ سانتی‌متر</li>
-                    <li><strong>کرنومتر:</strong> دقت تا ۰/۰۱ ثانیه</li>
-                </ul>
-            </div>
+  <!-- ============ قدم ۱ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۱</span>
+    <h2>دقت اندازه‌گیری: ابزار مناسب برای کار مناسب!</h2>
+    <p>
+      هر ابزار اندازه‌گیری، دقت خاصی دارد. <strong>دقت</strong> یعنی کوچک‌ترین مقداری که
+      آن ابزار می‌تواند اندازه بگیرد. برای هر اندازه‌گیری، باید از ابزار مناسب استفاده کنیم.
+    </p>
 
-            <div class="solved-example-box">
-                <div class="example-header">💡 مثال: اندازه‌گیری جرم</div>
-                <p>اگر جرم یک بسته زعفران را با ترازوی خواربارفروشی (دقت ۱۰ گرم) اندازه بگیریم، 
-                ممکن است ۲۰ گرم نشان دهد. اما اگر با ترازوی آزمایشگاهی (دقت ۰/۱ گرم) اندازه بگیریم، 
-                ممکن است ۱۹/۵ گرم باشد. پس دقت ابزار در نتیجه تأثیر دارد.</p>
-            </div>
-
-            <div class="teacher-speech-bubble">
-                «دقت اندازه‌گیری مثل دقت یک تیرانداز است! هرچی ابزار دقیق‌تر باشه، اندازه‌گیری نزدیک‌تر به واقعیت است. 
-                پس برای هر کاری، ابزار مناسب انتخاب کن.»
-            </div>
-        </section>
-
-        <!-- ========================================================================
-           قدم ۲: دقت اندازه‌گیری (ابزار مناسب)
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۲</span>
-            <h2>ابزار مناسب برای اندازه‌گیری</h2>
-            <p>
-                در این بخش، برای هر موقعیت، ابزار مناسب را انتخاب کن.
-            </p>
-
-            <!-- ابزار تعاملی ۱: دقت اندازه‌گیری -->
-            <div class="precision-lab">
-                <div class="sim-title">🔬 آزمایشگاه دقت اندازه‌گیری</div>
-
-                <div class="precision-cards" id="precision-cards">
-                    <!-- کارت‌ها با JS ساخته می‌شوند -->
-                </div>
-
-                <div class="precision-output" id="precision-output">
-                    یک موقعیت را انتخاب کن تا ابزار مناسب را ببینی.
-                </div>
-                <p id="precision-feedback" class="feedback-display"></p>
-            </div>
-        </section>
-
-        <!-- ========================================================================
-           قدم ۳: محاسبات تقریبی
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۳</span>
-            <h2>محاسبات تقریبی: اول تقریب، بعد محاسبه!</h2>
-            <p>
-                در محاسبات تقریبی، ابتدا اعداد را تقریب می‌زنیم و سپس محاسبه را انجام می‌دهیم. 
-                این کار محاسبات را ساده‌تر می‌کند و برای تخمین سریع بسیار مفید است.
-            </p>
-
-            <div class="key-tip-box">
-                <strong>📌 دو روش محاسبه تقریبی:</strong>
-                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.4;">
-                    <li><strong>روش اول:</strong> ابتدا اعداد را تقریب بزن، سپس محاسبه کن.</li>
-                    <li><strong>روش دوم:</strong> ابتدا محاسبه دقیق را انجام بده، سپس نتیجه را تقریب بزن.</li>
-                </ul>
-            </div>
-
-            <!-- ابزار تعاملی ۲: محاسبات تقریبی -->
-            <div class="approx-calc-lab">
-                <div class="sim-title">🧮 ماشین محاسبات تقریبی</div>
-
-                <div class="approx-calc-row">
-                    <input type="number" id="calc-num1" value="42.5" step="0.1">
-                    <select id="calc-op">
-                        <option value="+">+</option>
-                        <option value="-">−</option>
-                        <option value="×">×</option>
-                        <option value="÷">÷</option>
-                    </select>
-                    <input type="number" id="calc-num2" value="7.8" step="0.1">
-                    <select id="calc-approx">
-                        <option value="1">با تقریب کمتر از ۱</option>
-                        <option value="0.1">با تقریب کمتر از ۰/۱</option>
-                        <option value="10">با تقریب کمتر از ۱۰</option>
-                    </select>
-                    <button class="btn-ui green" id="btn-approx-calc">محاسبه تقریبی</button>
-                </div>
-
-                <div class="approx-calc-result" id="approx-calc-result">
-                    <div class="result-card">
-                        <span class="result-label">روش اول: تقریب → محاسبه</span>
-                        <span class="result-value" id="approx-method1">؟</span>
-                    </div>
-                    <div class="result-card">
-                        <span class="result-label">روش دوم: محاسبه → تقریب</span>
-                        <span class="result-value" id="approx-method2">؟</span>
-                    </div>
-                    <div class="result-card highlight">
-                        <span class="result-label">مقدار دقیق</span>
-                        <span class="result-value" id="approx-exact">؟</span>
-                    </div>
-                </div>
-                <p id="approx-calc-feedback" class="feedback-display"></p>
-            </div>
-        </section>
-
-        <!-- ========================================================================
-           قدم ۴: خطای تقریب
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۴</span>
-            <h2>خطای تقریب: چقدر نزدیک بودیم؟</h2>
-            <p>
-                <strong>خطای تقریب</strong> یعنی تفاوت بین مقدار واقعی و مقدار تقریبی. 
-                هرچه این خطا کمتر باشد، تقریب ما بهتر است.
-            </p>
-
-            <div class="key-tip-box">
-                <strong>📌 فرمول خطای تقریب:</strong>
-                <p style="margin-top: 6px; text-align: center; font-size: 1.1rem;">
-                    خطا = | مقدار واقعی − مقدار تقریبی |
-                </p>
-            </div>
-
-            <!-- ابزار تعاملی ۳: خطای تقریب -->
-            <div class="error-lab">
-                <div class="sim-title">📉 ماشین محاسبه خطای تقریب</div>
-
-                <div class="approx-calc-row">
-                    <input type="number" id="error-actual" value="42.5" step="0.1">
-                    <input type="number" id="error-approx" value="42" step="0.1">
-                    <button class="btn-ui green" id="btn-calc-error">محاسبه خطا</button>
-                </div>
-
-                <div class="error-display" id="error-display">
-                    <div class="error-box">
-                        <span class="error-label">مقدار واقعی</span>
-                        <span class="error-value" id="error-actual-val">۴۲/۵</span>
-                    </div>
-                    <div class="error-box">
-                        <span class="error-label">مقدار تقریبی</span>
-                        <span class="error-value" id="error-approx-val">۴۲</span>
-                    </div>
-                    <div class="error-box" style="background: var(--success-bg);">
-                        <span class="error-label">خطا</span>
-                        <span class="error-value" id="error-result">۰/۵</span>
-                    </div>
-                </div>
-
-                <div class="error-bar-container">
-                    <div class="error-bar" id="error-bar" style="width: 0%;">۰%</div>
-                </div>
-                <p id="error-feedback" class="feedback-display"></p>
-            </div>
-        </section>
-
-        <!-- ========================================================================
-           قدم ۵: تمرین محاسبات تقریبی
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۵</span>
-            <h2>تمرین محاسبات تقریبی</h2>
-            <p>
-                حالا نوبت تمرین است! به سوالات پاسخ بده.
-            </p>
-
-            <!-- ابزار تعاملی ۴: تمرین محاسبات تقریبی -->
-            <div class="practice-lab">
-                <div class="sim-title">📝 تمرین تعاملی</div>
-                
-                <div class="practice-question" id="practice-question">
-                    <!-- سوال با JS ساخته می‌شود -->
-                </div>
-
-                <div class="practice-answer-row">
-                    <input type="number" id="practice-answer" step="0.01" placeholder="پاسخ">
-                    <button class="btn-ui green" id="btn-check-practice">بررسی</button>
-                </div>
-
-                <p id="practice-feedback" class="feedback-display"></p>
-                <button class="btn-ui blue" id="btn-new-practice">سوال جدید</button>
-            </div>
-        </section>
-
-        <!-- ========================================================================
-           قدم ۶: جمع‌بندی
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۶</span>
-            <h2>جمع‌بندی و تمرین</h2>
-            <p>در این بخش یاد گرفتیم:</p>
-            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
-                <li>✅ دقت اندازه‌گیری: کوچک‌ترین مقداری که ابزار می‌تواند اندازه بگیرد.</li>
-                <li>✅ انتخاب ابزار مناسب برای هر اندازه‌گیری.</li>
-                <li>✅ محاسبات تقریبی: تقریب اعداد قبل یا بعد از محاسبه.</li>
-                <li>✅ خطای تقریب: تفاوت مقدار واقعی و مقدار تقریبی.</li>
-                <li>✅ کاربرد محاسبات تقریبی در زندگی روزمره: خرید، تخمین سریع، و... .</li>
-            </ul>
-
-            <div class="teacher-speech-bubble">
-                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی. 
-                یادت باشه که محاسبات تقریبی در زندگی روزمره خیلی به کارت میاد، مخصوصاً وقتی می‌خوای سریع تخمین بزنی.»
-            </div>
-
-            <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
-                <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
-                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
-                    <li>حاصل ۴۷/۸ + ۲۳/۵ را با تقریب کمتر از ۱ محاسبه کنید.</li>
-                    <li>حاصل ۱۲/۳ × ۴/۵ را با تقریب کمتر از ۰/۱ حساب کنید.</li>
-                    <li>اگر قد یک دانش‌آموز ۱۵۸/۵ سانتی‌متر باشد و با تقریب کمتر از ۱ سانتی‌متر اندازه بگیریم، خطا چقدر است؟</li>
-                    <li>برای اندازه‌گیری جرم یک انگشتر طلا، از چه ابزاری استفاده می‌کنید؟ چرا؟</li>
-                </ol>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- ========================================================================
-         دکمه‌های شناور
-         ======================================================================== -->
-    <div class="floating-btns">
-        <a href="chapter7_part1.html" class="float-nav-btn">→ بخش قبلی</a>
-        <a href="../index.html" class="float-nav-btn" id="next-lesson-btn">پایان کتاب 🎉</a>
+    <div class="key-tip-box">
+      <strong>📌 مثال‌هایی از دقت ابزارها:</strong>
+      <ul>
+        <li><strong>ترازوی خواربارفروشی:</strong> دقت تا <span class="unit-num"><span class="u-unit">گرم</span><span class="u-val">۱۰</span></span></li>
+        <li><strong>ترازوی آزمایشگاهی:</strong> دقت تا <span class="unit-num"><span class="u-unit">گرم</span><span class="u-val">۰٫۱</span></span></li>
+        <li><strong>خط‌کش مدرج با میلی‌متر:</strong> دقت تا <span class="unit-num"><span class="u-unit">میلی‌متر</span><span class="u-val">۱</span></span></li>
+        <li><strong>متر خیاطی:</strong> دقت تا <span class="unit-num"><span class="u-unit">سانتی‌متر</span><span class="u-val">۱</span></span></li>
+        <li><strong>کرنومتر:</strong> دقت تا <span class="unit-num"><span class="u-unit">ثانیه</span><span class="u-val">۰٫۰۱</span></span></li>
+      </ul>
     </div>
 
-    <script>
-        /* ========================================================================
-           لاجیک صوتی
-           ======================================================================== */
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function playTone(freq, duration) {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-            osc.start(); osc.stop(audioCtx.currentTime + duration);
-        }
+    <div class="solved-example-box">
+      <div class="example-header">💡 مثال: اندازه‌گیری جرم</div>
+      <p>
+        اگر جرم یک بسته زعفران را با ترازوی خواربارفروشی (دقت ۱۰ گرم) اندازه بگیریم،
+        ممکن است <span class="num-fa">۲۰</span> گرم نشان دهد. اما اگر با ترازوی آزمایشگاهی
+        (دقت ۰٫۱ گرم) اندازه بگیریم، ممکن است <span class="num-fa">۱۹٫۵</span> گرم باشد.
+      </p>
+      <p>پس <strong>دقت ابزار</strong> در نتیجه‌ی اندازه‌گیری تأثیر مستقیم دارد.</p>
+    </div>
 
-        function formatNumber(num) {
-            const rounded = Math.round(num * 1000) / 1000;
-            return rounded.toLocaleString('fa-IR');
-        }
+    <div class="teacher-speech-bubble">
+      «دقت اندازه‌گیری مثل دقت یک تیرانداز است! هرچی ابزار دقیق‌تر باشه، اندازه‌گیری نزدیک‌تر به واقعیت است.
+      پس برای هر کاری، ابزار مناسب انتخاب کن.»
+    </div>
+  </section>
 
-        /* ========================================================================
-           تعامل ۱: دقت اندازه‌گیری
-           ======================================================================== */
-        const precisionScenarios = [
-            {
-                icon: '⚖️',
-                name: 'جرم یک هندوانه',
-                desc: 'برای اندازه‌گیری جرم یک هندوانه از چه ابزاری استفاده کنیم؟',
-                answer: 'ترازوی خواربارفروشی (دقت ۱۰ گرم)',
-                tool: 'ترازوی خواربارفروشی'
-            },
-            {
-                icon: '💍',
-                name: 'جرم یک انگشتر طلا',
-                desc: 'برای اندازه‌گیری جرم یک انگشتر طلا از چه ابزاری استفاده کنیم؟',
-                answer: 'ترازوی آزمایشگاهی (دقت ۰/۱ گرم)',
-                tool: 'ترازوی آزمایشگاهی'
-            },
-            {
-                icon: '📏',
-                name: 'طول یک مداد',
-                desc: 'برای اندازه‌گیری طول یک مداد از چه ابزاری استفاده کنیم؟',
-                answer: 'خط‌کش مدرج با میلی‌متر (دقت ۱ میلی‌متر)',
-                tool: 'خط‌کش میلی‌متری'
-            },
-            {
-                icon: '👕',
-                name: 'دور کمر برای خیاطی',
-                desc: 'برای اندازه‌گیری دور کمر در خیاطی از چه ابزاری استفاده کنیم؟',
-                answer: 'متر خیاطی (دقت ۱ سانتی‌متر)',
-                tool: 'متر خیاطی'
-            },
-            {
-                icon: '🏃',
-                name: 'زمان دوی ۱۰۰ متر',
-                desc: 'برای اندازه‌گیری زمان دوی ۱۰۰ متر از چه ابزاری استفاده کنیم؟',
-                answer: 'کرنومتر (دقت ۰/۰۱ ثانیه)',
-                tool: 'کرنومتر'
-            }
-        ];
+  <!-- ============ قدم ۲ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۲</span>
+    <h2>ابزار مناسب برای اندازه‌گیری</h2>
+    <p>در این بخش، برای هر موقعیت، ابزار مناسب را انتخاب کن.</p>
 
-        function buildPrecisionCards() {
-            const container = document.getElementById('precision-cards');
-            container.innerHTML = '';
+    <div class="precision-lab">
+      <div class="sim-title">🔬 آزمایشگاه دقت اندازه‌گیری</div>
+      <div class="precision-cards" id="precision-cards"></div>
+      <div class="precision-output" id="precision-output">
+        یک موقعیت را انتخاب کن تا ابزار مناسب را ببینی.
+      </div>
+      <p id="precision-feedback" class="feedback-display"></p>
+    </div>
+  </section>
 
-            precisionScenarios.forEach((scenario, idx) => {
-                const card = document.createElement('div');
-                card.className = 'precision-card';
-                card.dataset.idx = idx;
-                card.innerHTML = `
-                    <div class="precision-icon">${scenario.icon}</div>
-                    <div class="precision-name">${scenario.name}</div>
-                    <div class="precision-desc">${scenario.desc}</div>
-                `;
-                card.addEventListener('click', function() {
-                    document.querySelectorAll('.precision-card').forEach(c => c.classList.remove('selected'));
-                    this.classList.add('selected');
-                    document.getElementById('precision-output').innerHTML = `
-                        ✅ ابزار مناسب برای <strong>${scenario.name}</strong>: <strong style="color: var(--sky-dark);">${scenario.tool}</strong>
-                    `;
-                    playTone(550, 0.1);
-                    confetti({ particleCount: 15, spread: 30, origin: { y: 0.7 } });
-                });
-                container.appendChild(card);
-            });
-        }
+  <!-- ============ قدم ۳ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۳</span>
+    <h2>محاسبات تقریبی: اول تقریب، بعد محاسبه!</h2>
+    <p>
+      در محاسبات تقریبی، ابتدا اعداد را تقریب می‌زنیم و سپس محاسبه را انجام می‌دهیم.
+      این کار محاسبات را ساده‌تر می‌کند و برای تخمین سریع بسیار مفید است.
+    </p>
 
-        buildPrecisionCards();
+    <div class="key-tip-box">
+      <strong>📌 دو روش محاسبه تقریبی:</strong>
+      <ul>
+        <li><strong>روش اول:</strong> ابتدا اعداد را تقریب بزن، سپس محاسبه کن.</li>
+        <li><strong>روش دوم:</strong> ابتدا محاسبه دقیق را انجام بده، سپس نتیجه را تقریب بزن.</li>
+      </ul>
+    </div>
 
-        /* ========================================================================
-           تعامل ۲: محاسبات تقریبی
-           ======================================================================== */
-        function truncateNumber(num, place) {
-            const factor = 1 / place;
-            return Math.floor(num * factor) / factor;
-        }
+    <div class="approx-calc-lab">
+      <div class="sim-title">🧮 ماشین محاسبات تقریبی</div>
 
-        function roundNumber(num, place) {
-            const factor = 1 / place;
-            return Math.round(num * factor) / factor;
-        }
+      <div class="approx-calc-row">
+        <label for="calc-num1">عدد اول:</label>
+        <input type="text" id="calc-num1" value="42.5" inputmode="decimal">
+        <select id="calc-op">
+          <option value="+">+</option>
+          <option value="-">−</option>
+          <option value="×">×</option>
+          <option value="÷">÷</option>
+        </select>
+        <label for="calc-num2">عدد دوم:</label>
+        <input type="text" id="calc-num2" value="7.8" inputmode="decimal">
+        <select id="calc-approx">
+          <option value="1">تقریب کمتر از ۱</option>
+          <option value="0.1">تقریب کمتر از ۰٫۱</option>
+          <option value="10">تقریب کمتر از ۱۰</option>
+        </select>
+        <button class="btn-ui green" id="btn-approx-calc">محاسبه تقریبی</button>
+      </div>
 
-        document.getElementById('btn-approx-calc').addEventListener('click', function() {
-            const num1 = parseFloat(document.getElementById('calc-num1').value);
-            const num2 = parseFloat(document.getElementById('calc-num2').value);
-            const op = document.getElementById('calc-op').value;
-            const place = parseFloat(document.getElementById('calc-approx').value);
-            const feedbackEl = document.getElementById('approx-calc-feedback');
+      <div class="approx-calc-result">
+        <div class="result-card">
+          <span class="result-label">روش اول: تقریب ⟶ محاسبه</span>
+          <span class="result-value" id="approx-method1">—</span>
+        </div>
+        <div class="result-card">
+          <span class="result-label">روش دوم: محاسبه ⟶ تقریب</span>
+          <span class="result-value" id="approx-method2">—</span>
+        </div>
+        <div class="result-card highlight">
+          <span class="result-label">مقدار دقیق</span>
+          <span class="result-value" id="approx-exact">—</span>
+        </div>
+      </div>
+      <p id="approx-calc-feedback" class="feedback-display"></p>
+    </div>
+  </section>
 
-            if (isNaN(num1) || isNaN(num2)) {
-                feedbackEl.innerText = '❌ لطفاً اعداد را درست وارد کن!';
-                feedbackEl.style.color = 'var(--danger)';
-                playTone(200, 0.2);
-                return;
-            }
+  <!-- ============ قدم ۴ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۴</span>
+    <h2>خطای تقریب: چقدر نزدیک بودیم؟</h2>
+    <p>
+      <strong>خطای تقریب</strong> یعنی تفاوت بین مقدار واقعی و مقدار تقریبی.
+      هرچه این خطا کمتر باشد، تقریب ما بهتر است.
+    </p>
 
-            // روش اول: تقریب → محاسبه
-            const approxNum1 = roundNumber(num1, place);
-            const approxNum2 = roundNumber(num2, place);
-            let method1Result;
+    <div class="key-tip-box">
+      <strong>📌 فرمول خطای تقریب:</strong>
 
-            if (op === '+') method1Result = approxNum1 + approxNum2;
-            else if (op === '-') method1Result = approxNum1 - approxNum2;
-            else if (op === '×') method1Result = approxNum1 * approxNum2;
-            else {
-                if (approxNum2 === 0) {
-                    feedbackEl.innerText = '❌ تقسیم بر صفر ممکن نیست!';
-                    feedbackEl.style.color = 'var(--danger)';
-                    return;
-                }
-                method1Result = approxNum1 / approxNum2;
-            }
+      <!-- ✅ فرمول LTR -->
+      <div class="formula-line" style="margin-top: 10px; font-size: 1.05rem;">
+        <span>خطا</span>
+        <span class="op">=</span>
+        <span>| مقدار واقعی − مقدار تقریبی |</span>
+      </div>
+    </div>
 
-            // روش دوم: محاسبه → تقریب
-            let exactResult;
-            if (op === '+') exactResult = num1 + num2;
-            else if (op === '-') exactResult = num1 - num2;
-            else if (op === '×') exactResult = num1 * num2;
-            else {
-                if (num2 === 0) {
-                    feedbackEl.innerText = '❌ تقسیم بر صفر ممکن نیست!';
-                    feedbackEl.style.color = 'var(--danger)';
-                    return;
-                }
-                exactResult = num1 / num2;
-            }
-            const method2Result = roundNumber(exactResult, place);
+    <div class="error-lab">
+      <div class="sim-title">📉 ماشین محاسبه خطای تقریب</div>
 
-            document.getElementById('approx-method1').innerText = formatNumber(method1Result);
-            document.getElementById('approx-method2').innerText = formatNumber(method2Result);
-            document.getElementById('approx-exact').innerText = formatNumber(exactResult);
+      <div class="approx-calc-row">
+        <label for="error-actual">مقدار واقعی:</label>
+        <input type="text" id="error-actual" value="42.5" inputmode="decimal">
+        <label for="error-approx">مقدار تقریبی:</label>
+        <input type="text" id="error-approx" value="42" inputmode="decimal">
+        <button class="btn-ui green" id="btn-calc-error">محاسبه خطا</button>
+      </div>
 
-            feedbackEl.innerText = `✅ محاسبه انجام شد. تفاوت دو روش: ${formatNumber(Math.abs(method1Result - method2Result))}`;
-            feedbackEl.style.color = 'var(--success)';
-            playTone(600, 0.3);
-            confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
-        });
+      <div class="error-display">
+        <div class="error-box">
+          <span class="error-label">مقدار واقعی</span>
+          <span class="error-value" id="error-actual-val">—</span>
+        </div>
+        <div class="error-box">
+          <span class="error-label">مقدار تقریبی</span>
+          <span class="error-value" id="error-approx-val">—</span>
+        </div>
+        <div class="error-box success">
+          <span class="error-label">خطا</span>
+          <span class="error-value" id="error-result">—</span>
+        </div>
+      </div>
 
-        /* ========================================================================
-           تعامل ۳: خطای تقریب
-           ======================================================================== */
-        document.getElementById('btn-calc-error').addEventListener('click', function() {
-            const actual = parseFloat(document.getElementById('error-actual').value);
-            const approx = parseFloat(document.getElementById('error-approx').value);
-            const feedbackEl = document.getElementById('error-feedback');
+      <div class="error-bar-container">
+        <div class="error-bar" id="error-bar" style="width: 0%;"></div>
+      </div>
+      <p id="error-feedback" class="feedback-display"></p>
+    </div>
+  </section>
 
-            if (isNaN(actual) || isNaN(approx)) {
-                feedbackEl.innerText = '❌ لطفاً مقادیر را درست وارد کن!';
-                feedbackEl.style.color = 'var(--danger)';
-                playTone(200, 0.2);
-                return;
-            }
+  <!-- ============ قدم ۵ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۵</span>
+    <h2>تمرین محاسبات تقریبی</h2>
+    <p>حالا نوبت تمرین است! به سوالات پاسخ بده.</p>
 
-            const error = Math.abs(actual - approx);
-            const errorPercent = actual !== 0 ? (error / Math.abs(actual)) * 100 : 0;
+    <div class="practice-lab">
+      <div class="sim-title">📝 تمرین تعاملی</div>
 
-            document.getElementById('error-actual-val').innerText = formatNumber(actual);
-            document.getElementById('error-approx-val').innerText = formatNumber(approx);
-            document.getElementById('error-result').innerText = formatNumber(error);
+      <div class="practice-question" id="practice-question"></div>
 
-            const barEl = document.getElementById('error-bar');
-            const barWidth = Math.min(errorPercent, 100);
-            barEl.style.width = barWidth + '%';
-            barEl.innerText = formatNumber(error) + ' (خطا)';
+      <div class="practice-answer-row">
+        <input type="text" id="practice-answer" inputmode="decimal" autocomplete="off" placeholder="پاسخ">
+        <button class="btn-ui green" id="btn-check-practice">✓ بررسی</button>
+      </div>
 
-            feedbackEl.innerText = `✅ خطای تقریب: ${formatNumber(error)} (${formatNumber(errorPercent)}% نسبت به مقدار واقعی)`;
-            feedbackEl.style.color = 'var(--success)';
-            playTone(600, 0.3);
-        });
+      <p id="practice-feedback" class="feedback-display"></p>
+      <button class="btn-ui blue" id="btn-new-practice">🎲 سوال جدید</button>
+    </div>
+  </section>
 
-        /* ========================================================================
-           تعامل ۴: تمرین محاسبات تقریبی
-           ======================================================================== */
-        let practiceAnswer, practiceType;
+  <!-- ============ قدم ۶ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۶</span>
+    <h2>جمع‌بندی و تمرین</h2>
+    <p>در این بخش یاد گرفتیم:</p>
+    <ul>
+      <li>✅ دقت اندازه‌گیری: کوچک‌ترین مقداری که ابزار می‌تواند اندازه بگیرد.</li>
+      <li>✅ انتخاب ابزار مناسب برای هر اندازه‌گیری.</li>
+      <li>✅ محاسبات تقریبی: تقریب اعداد قبل یا بعد از محاسبه.</li>
+      <li>
+        ✅ خطای تقریب:
+        <span class="formula-line is-inline" style="vertical-align: middle;">
+          <span>خطا</span>
+          <span class="op">=</span>
+          <span>| مقدار واقعی − مقدار تقریبی |</span>
+        </span>
+      </li>
+      <li>✅ کاربرد محاسبات تقریبی در زندگی روزمره: خرید، تخمین سریع، و... .</li>
+    </ul>
 
-        function generatePracticeQuestion() {
-            const types = ['approx-sum', 'approx-mul', 'error-calc', 'precision-choose'];
-            practiceType = types[Math.floor(Math.random() * types.length)];
+    <div class="teacher-speech-bubble">
+      «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی.
+      یادت باشه که محاسبات تقریبی در زندگی روزمره خیلی به کارت میاد، مخصوصاً وقتی می‌خوای سریع تخمین بزنی.»
+    </div>
 
-            const qEl = document.getElementById('practice-question');
+    <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
+      <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
+      <ol style="color: #92400e;">
+        <li>حاصل <span class="num-fa">۴۷٫۸ + ۲۳٫۵</span> را با تقریب کمتر از ۱ محاسبه کنید.</li>
+        <li>حاصل <span class="num-fa">۱۲٫۳ × ۴٫۵</span> را با تقریب کمتر از ۰٫۱ حساب کنید.</li>
+        <li>اگر قد یک دانش‌آموز <span class="num-fa">۱۵۸٫۵</span> سانتی‌متر باشد و با تقریب کمتر از ۱ سانتی‌متر اندازه بگیریم، خطا چقدر است؟</li>
+        <li>برای اندازه‌گیری جرم یک انگشتر طلا، از چه ابزاری استفاده می‌کنید؟ چرا؟</li>
+      </ol>
+    </div>
 
-            if (practiceType === 'approx-sum') {
-                const num1 = Math.round((Math.random() * 100 + 10) * 10) / 10;
-                const num2 = Math.round((Math.random() * 100 + 10) * 10) / 10;
-                const place = [1, 0.1][Math.floor(Math.random() * 2)];
-                const approxNum1 = roundNumber(num1, place);
-                const approxNum2 = roundNumber(num2, place);
-                practiceAnswer = approxNum1 + approxNum2;
-                const placeName = place === 1 ? 'کمتر از ۱' : 'کمتر از ۰/۱';
-                qEl.innerHTML = `حاصل <strong>${formatNumber(num1)} + ${formatNumber(num2)}</strong> را با تقریب ${placeName} (ابتدا تقریب، سپس محاسبه) حساب کنید.`;
-            } else if (practiceType === 'approx-mul') {
-                const num1 = Math.round((Math.random() * 20 + 1) * 10) / 10;
-                const num2 = Math.round((Math.random() * 10 + 1) * 10) / 10;
-                const place = [1, 0.1][Math.floor(Math.random() * 2)];
-                const approxNum1 = roundNumber(num1, place);
-                const approxNum2 = roundNumber(num2, place);
-                practiceAnswer = approxNum1 * approxNum2;
-                const placeName = place === 1 ? 'کمتر از ۱' : 'کمتر از ۰/۱';
-                qEl.innerHTML = `حاصل <strong>${formatNumber(num1)} × ${formatNumber(num2)}</strong> را با تقریب ${placeName} (ابتدا تقریب، سپس محاسبه) حساب کنید.`;
-            } else if (practiceType === 'error-calc') {
-                const actual = Math.round((Math.random() * 100 + 10) * 10) / 10;
-                const approx = roundNumber(actual, 1);
-                practiceAnswer = Math.abs(actual - approx);
-                qEl.innerHTML = `مقدار واقعی <strong>${formatNumber(actual)}</strong> است و مقدار تقریبی <strong>${formatNumber(approx)}</strong>. خطای تقریب چقدر است؟`;
-            } else {
-                const scenarios = [
-                    { desc: 'جرم یک هندوانه', answer: 'ترازوی خواربارفروشی' },
-                    { desc: 'جرم یک انگشتر طلا', answer: 'ترازوی آزمایشگاهی' },
-                    { desc: 'طول یک مداد', answer: 'خط‌کش میلی‌متری' },
-                    { desc: 'زمان دوی ۱۰۰ متر', answer: 'کرنومتر' }
-                ];
-                const scenario = scenarios[Math.floor(Math.random() * scenarios.length)];
-                qEl.innerHTML = `برای اندازه‌گیری <strong>${scenario.desc}</strong> از چه ابزاری استفاده می‌کنیم؟ (پاسخ را به صورت کلامی بنویسید)`;
-                document.getElementById('practice-answer').type = 'text';
-                document.getElementById('practice-answer').placeholder = 'نام ابزار';
-                document.getElementById('practice-answer').value = '';
-                document.getElementById('practice-feedback').innerText = '';
-                // برای این نوع سوال، بررسی جداگانه انجام می‌شود
-                window.practiceTextAnswer = scenario.answer;
-                return;
-            }
+    <div class="teacher-speech-bubble" style="border-color: var(--success); color: var(--success);">
+      «🎉 تبریک! تو تمام فصل‌های این کتاب را با موفقیت به پایان رساندی! حالا دیگه آماده‌ای برای پایه‌ی بالاتر و مفاهیم جذاب‌تر ریاضی.»
+    </div>
+  </section>
 
-            document.getElementById('practice-answer').type = 'number';
-            document.getElementById('practice-answer').placeholder = 'پاسخ';
-            document.getElementById('practice-answer').value = '';
-            document.getElementById('practice-feedback').innerText = '';
-        }
+</main>
 
-        document.getElementById('btn-check-practice').addEventListener('click', function() {
-            const feedbackEl = document.getElementById('practice-feedback');
-            const inputEl = document.getElementById('practice-answer');
+<div class="floating-btns">
+  <a class="float-nav-btn" id="prev-lesson-btn" href="#">
+    <span>→</span>
+    <span class="btn-label">بخش قبلی</span>
+    <span class="btn-tooltip" id="prev-tooltip">بخش قبلی</span>
+  </a>
+  <a href="../index.html" class="float-nav-btn home-btn">
+    🏠<span class="btn-label" style="margin-right:4px;">خانه</span>
+  </a>
+  <a class="float-nav-btn" id="next-lesson-btn" href="#">
+    <span class="btn-label">پایان کتاب</span>
+    <span>🎉</span>
+    <span class="btn-tooltip" id="next-tooltip">پایان کتاب</span>
+  </a>
+</div>
 
-            if (practiceType === 'precision-choose') {
-                const userText = inputEl.value.trim();
-                if (userText === '') {
-                    feedbackEl.innerText = '❌ لطفاً پاسخ را وارد کن!';
-                    feedbackEl.style.color = 'var(--danger)';
-                    return;
-                }
-                if (userText.includes(window.practiceTextAnswer) || window.practiceTextAnswer.includes(userText)) {
-                    feedbackEl.innerText = `✅ آفرین! پاسخ درست "${window.practiceTextAnswer}" است.`;
-                    feedbackEl.style.color = 'var(--success)';
-                    playTone(600, 0.3);
-                    confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
-                } else {
-                    feedbackEl.innerText = `❌ اشتباه! پاسخ درست "${window.practiceTextAnswer}" است.`;
-                    feedbackEl.style.color = 'var(--danger)';
-                    playTone(300, 0.3);
-                }
-                return;
-            }
+<div class="toast-notification" id="toast"></div>
 
-            const userAnswer = parseFloat(inputEl.value);
-            if (isNaN(userAnswer)) {
-                feedbackEl.innerText = '❌ لطفاً یک عدد وارد کن!';
-                feedbackEl.style.color = 'var(--danger)';
-                playTone(200, 0.2);
-                return;
-            }
+<script>
+const FILES_ORDER = [
+  'ch01_sec01.html', 'ch01_sec02.html', 'ch01_sec03.html', 'ch01_sec04.html',
+  'ch02_sec01.html', 'ch02_sec02.html', 'ch02_sec03.html', 'ch02_sec04.html',
+  'ch03_sec01.html', 'ch03_sec02.html', 'ch03_sec03.html', 'ch03_sec04.html',
+  'ch04_sec01.html', 'ch04_sec02.html', 'ch04_sec03.html', 'ch04_sec04.html',
+  'ch05_sec01.html', 'ch05_sec02.html', 'ch05_sec03.html', 'ch05_sec04.html',
+  'ch06_sec01.html', 'ch06_sec02.html', 'ch06_sec03.html', 'ch06_sec04.html',
+  'ch07_sec01.html', 'ch07_sec02.html'
+];
 
-            if (Math.abs(userAnswer - practiceAnswer) < 0.01) {
-                feedbackEl.innerText = `✅ آفرین! پاسخ درست ${formatNumber(practiceAnswer)} است.`;
-                feedbackEl.style.color = 'var(--success)';
-                playTone(600, 0.3);
-                confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
-            } else {
-                feedbackEl.innerText = `❌ اشتباه! پاسخ درست ${formatNumber(practiceAnswer)} است.`;
-                feedbackEl.style.color = 'var(--danger)';
-                playTone(300, 0.3);
-                document.getElementById('practice-question').classList.add('shake-anim');
-                setTimeout(() => document.getElementById('practice-question').classList.remove('shake-anim'), 500);
-            }
-        });
+const chapterTitles = {
+  '01': 'عدد و الگوهای عددی',
+  '02': 'کسرها',
+  '03': 'اعداد اعشاری',
+  '04': 'تقارن و مختصات',
+  '05': 'اندازه‌گیری',
+  '06': 'تناسب و درصد',
+  '07': 'تقریب'
+};
 
-        document.getElementById('btn-new-practice').addEventListener('click', () => {
-            playTone(440, 0.05);
-            generatePracticeQuestion();
-        });
+const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+function toFa(str) { return String(str).replace(/\d/g, d => faDigits[+d]); }
 
-        generatePracticeQuestion();
+function formatNumber(num) {
+  if (typeof num !== 'number' || isNaN(num)) return '—';
+  let rounded = Math.round(num * 1e6) / 1e6;
+  let str = String(rounded);
+  if (/e/i.test(str)) str = rounded.toFixed(10).replace(/0+$/, '').replace(/\.$/, '');
+  if (str.indexOf('.') !== -1) str = str.replace(/0+$/, '').replace(/\.$/, '');
+  const parts = str.split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '٬');
+  return parts.join('.').replace(/\d/g, d => faDigits[+d]).replace('.', '٫');
+}
+function normalizeDecimalInput(str) {
+  return String(str)
+    .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+    .replace(/٫/g, '.').replace(/،/g, '').replace(/٬/g, '')
+    .replace(/[^\d.\-]/g, '');
+}
 
-        /* ========================================================================
-           مدیریت دکمه‌های شناور
-           ======================================================================== */
-        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('🎉 تبریک! شما تمام فصل‌های کتاب ریاضی ششم را به پایان رساندید! (این یک دموی آموزشی است)');
-        });
+function getCurrentFileName() {
+  const path = window.location.pathname;
+  let name = path.substring(path.lastIndexOf('/') + 1);
+  if (!name || name === '') name = 'ch07_sec02.html';
+  return name.toLowerCase();
+}
+function parseFileName(name) {
+  const m = name.match(/ch(\d+)_sec(\d+)\.html?$/i);
+  if (!m) return null;
+  return { chapter: parseInt(m[1], 10), section: parseInt(m[2], 10) };
+}
+function fileLabel(fileName) {
+  const info = parseFileName(fileName);
+  if (!info) return fileName;
+  return `فصل ${toFa(info.chapter)} - بخش ${toFa(info.section)}`;
+}
 
-    </script>
+const currentFile = getCurrentFileName();
+const currentInfo = parseFileName(currentFile) || { chapter: 7, section: 2 };
+const currentIdx = FILES_ORDER.indexOf(currentFile);
+
+function renderLocationBar() {
+  const bar = document.getElementById('book-location-bar');
+  if (!bar) return;
+  const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+  let html = '';
+  html += `<span class="location-chip blue">📍 الان اینجایی: فصل ${toFa(currentInfo.chapter)} - بخش ${toFa(currentInfo.section)}</span>`;
+  const chKey = String(currentInfo.chapter).padStart(2, '0');
+  if (chapterTitles[chKey]) html += `<span class="location-chip">📖 ${chapterTitles[chKey]}</span>`;
+  if (nextFile) html += `<span class="location-chip yellow">⏭️ بعدی: ${fileLabel(nextFile)}</span>`;
+  else html += `<span class="location-chip green">🎉 آخرین بخش کتاب</span>`;
+  bar.innerHTML = html;
+}
+renderLocationBar();
+
+const prevBtn = document.getElementById('prev-lesson-btn');
+const nextBtn = document.getElementById('next-lesson-btn');
+const prevTooltip = document.getElementById('prev-tooltip');
+const nextTooltip = document.getElementById('next-tooltip');
+
+const prevFile = currentIdx > 0 ? FILES_ORDER[currentIdx - 1] : null;
+const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+if (prevFile) {
+  prevBtn.href = prevFile;
+  prevTooltip.textContent = `→ ${fileLabel(prevFile)}`;
+} else {
+  prevBtn.removeAttribute('href');
+  prevBtn.classList.add('disabled');
+  prevTooltip.textContent = 'این اولین بخش کتاب است';
+}
+
+// این آخرین بخش کتاب است
+if (nextFile) {
+  nextBtn.href = nextFile;
+  nextTooltip.textContent = `${fileLabel(nextFile)} ←`;
+} else {
+  nextBtn.removeAttribute('href');
+  nextBtn.classList.add('disabled');
+  nextTooltip.textContent = 'این آخرین بخش کتاب است 🎉';
+}
+
+let audioCtx;
+function ensureAudio() {
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { audioCtx = null; }
+  }
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+}
+function playTone(freq, duration) {
+  if (!audioCtx) return;
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain); gain.connect(audioCtx.destination);
+  osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+  gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+  gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+  osc.start(); osc.stop(audioCtx.currentTime + duration);
+}
+
+const toastEl = document.getElementById('toast');
+let toastTimer;
+function showToast(msg, duration = 3200) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
+}
+
+/* ✅ توابع کمکی تقریب */
+function truncateNumber(num, place) {
+  const factor = 1 / place;
+  return Math.floor(num * factor) / factor;
+}
+function roundNumber(num, place) {
+  const factor = 1 / place;
+  return Math.round(num * factor) / factor;
+}
+
+/* ============ تعامل ۱: دقت اندازه‌گیری ============ */
+const precisionScenarios = [
+  { icon: '⚖️', name: 'جرم یک هندوانه', desc: 'برای اندازه‌گیری جرم یک هندوانه از چه ابزاری استفاده کنیم؟', tool: 'ترازوی خواربارفروشی (دقت ۱۰ گرم)' },
+  { icon: '💍', name: 'جرم یک انگشتر طلا', desc: 'برای اندازه‌گیری جرم یک انگشتر طلا از چه ابزاری استفاده کنیم؟', tool: 'ترازوی آزمایشگاهی (دقت ۰٫۱ گرم)' },
+  { icon: '📏', name: 'طول یک مداد', desc: 'برای اندازه‌گیری طول یک مداد از چه ابزاری استفاده کنیم؟', tool: 'خط‌کش میلی‌متری (دقت ۱ میلی‌متر)' },
+  { icon: '👕', name: 'دور کمر برای خیاطی', desc: 'برای اندازه‌گیری دور کمر در خیاطی از چه ابزاری استفاده کنیم؟', tool: 'متر خیاطی (دقت ۱ سانتی‌متر)' },
+  { icon: '🏃', name: 'زمان دوی ۱۰۰ متر', desc: 'برای اندازه‌گیری زمان دوی ۱۰۰ متر از چه ابزاری استفاده کنیم؟', tool: 'کرنومتر (دقت ۰٫۰۱ ثانیه)' }
+];
+
+function buildPrecisionCards() {
+  const container = document.getElementById('precision-cards');
+  container.innerHTML = '';
+
+  precisionScenarios.forEach((scenario, idx) => {
+    const card = document.createElement('div');
+    card.className = 'precision-card';
+    card.dataset.idx = idx;
+    card.innerHTML = `
+      <div class="precision-icon">${scenario.icon}</div>
+      <div class="precision-name">${scenario.name}</div>
+      <div class="precision-desc">${scenario.desc}</div>
+    `;
+    card.addEventListener('click', function() {
+      ensureAudio();
+      document.querySelectorAll('.precision-card').forEach(c => c.classList.remove('selected'));
+      this.classList.add('selected');
+      document.getElementById('precision-output').innerHTML = `
+        ✅ ابزار مناسب برای <strong>${scenario.name}</strong>: <strong style="color: var(--rg-dark);">${scenario.tool}</strong>
+      `;
+      playTone(550, 0.1);
+      confetti({ particleCount: 15, spread: 30, origin: { y: 0.7 }, colors: ['#b76e79', '#d495a0', '#e8b4b8'] });
+    });
+    container.appendChild(card);
+  });
+}
+buildPrecisionCards();
+
+/* ============ تعامل ۲: محاسبات تقریبی ============ */
+document.getElementById('btn-approx-calc').addEventListener('click', function() {
+  ensureAudio();
+  const num1 = parseFloat(normalizeDecimalInput(document.getElementById('calc-num1').value));
+  const num2 = parseFloat(normalizeDecimalInput(document.getElementById('calc-num2').value));
+  const op = document.getElementById('calc-op').value;
+  const place = parseFloat(document.getElementById('calc-approx').value);
+  const feedbackEl = document.getElementById('approx-calc-feedback');
+
+  if (isNaN(num1) || isNaN(num2)) {
+    feedbackEl.textContent = '❌ لطفاً اعداد را درست وارد کن!';
+    feedbackEl.style.color = 'var(--danger)';
+    playTone(200, 0.2);
+    return;
+  }
+
+  // روش اول: تقریب → محاسبه
+  const approxNum1 = roundNumber(num1, place);
+  const approxNum2 = roundNumber(num2, place);
+  let method1Result;
+
+  if (op === '+') method1Result = approxNum1 + approxNum2;
+  else if (op === '-') method1Result = approxNum1 - approxNum2;
+  else if (op === '×') method1Result = approxNum1 * approxNum2;
+  else {
+    if (approxNum2 === 0) {
+      feedbackEl.textContent = '❌ تقسیم بر صفر ممکن نیست!';
+      feedbackEl.style.color = 'var(--danger)';
+      return;
+    }
+    method1Result = approxNum1 / approxNum2;
+  }
+
+  // روش دوم: محاسبه → تقریب
+  let exactResult;
+  if (op === '+') exactResult = num1 + num2;
+  else if (op === '-') exactResult = num1 - num2;
+  else if (op === '×') exactResult = num1 * num2;
+  else {
+    if (num2 === 0) {
+      feedbackEl.textContent = '❌ تقسیم بر صفر ممکن نیست!';
+      feedbackEl.style.color = 'var(--danger)';
+      return;
+    }
+    exactResult = num1 / num2;
+  }
+  const method2Result = roundNumber(exactResult, place);
+
+  document.getElementById('approx-method1').textContent = formatNumber(method1Result);
+  document.getElementById('approx-method2').textContent = formatNumber(method2Result);
+  document.getElementById('approx-exact').textContent = formatNumber(exactResult);
+
+  feedbackEl.textContent = `✅ محاسبه انجام شد. تفاوت دو روش = ${formatNumber(Math.abs(method1Result - method2Result))}`;
+  feedbackEl.style.color = 'var(--success)';
+  playTone(600, 0.3);
+  confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 }, colors: ['#b76e79', '#d495a0', '#e8b4b8'] });
+});
+
+/* ============ تعامل ۳: خطای تقریب ============ */
+document.getElementById('btn-calc-error').addEventListener('click', function() {
+  ensureAudio();
+  const actual = parseFloat(normalizeDecimalInput(document.getElementById('error-actual').value));
+  const approx = parseFloat(normalizeDecimalInput(document.getElementById('error-approx').value));
+  const feedbackEl = document.getElementById('error-feedback');
+
+  if (isNaN(actual) || isNaN(approx)) {
+    feedbackEl.textContent = '❌ لطفاً مقادیر را درست وارد کن!';
+    feedbackEl.style.color = 'var(--danger)';
+    playTone(200, 0.2);
+    return;
+  }
+
+  const error = Math.abs(actual - approx);
+  const errorPercent = actual !== 0 ? (error / Math.abs(actual)) * 100 : 0;
+
+  document.getElementById('error-actual-val').textContent = formatNumber(actual);
+  document.getElementById('error-approx-val').textContent = formatNumber(approx);
+  document.getElementById('error-result').textContent = formatNumber(error);
+
+  const barEl = document.getElementById('error-bar');
+  const barWidth = Math.min(errorPercent, 100);
+  barEl.style.width = Math.max(barWidth, 8) + '%';
+  barEl.textContent = formatNumber(errorPercent) + '٪';
+
+  // ✅ LTR: نمایش خطا به فرمول
+  feedbackEl.innerHTML = `
+    <div class="formula-line" style="color: var(--success); font-size: 1rem;">
+      <span>خطا</span>
+      <span class="op">=</span>
+      <span>| ${formatNumber(actual)} − ${formatNumber(approx)} |</span>
+      <span class="op">=</span>
+      <span class="unit-num"><span class="u-unit">واحد</span><span class="u-val">${formatNumber(error)}</span></span>
+      <span style="font-size: 0.85em; opacity: 0.85;">(${formatNumber(errorPercent)}٪ خطا)</span>
+    </div>
+  `;
+  feedbackEl.style.color = 'var(--success)';
+  playTone(600, 0.3);
+});
+
+/* ============ تعامل ۴: تمرین ============ */
+let practiceAnswer, practiceType;
+
+function generatePracticeQuestion() {
+  const types = ['approx-sum', 'approx-mul', 'error-calc', 'precision-choose'];
+  practiceType = types[Math.floor(Math.random() * types.length)];
+
+  const qEl = document.getElementById('practice-question');
+  const inputEl = document.getElementById('practice-answer');
+
+  if (practiceType === 'approx-sum') {
+    const num1 = Math.round((Math.random() * 100 + 10) * 10) / 10;
+    const num2 = Math.round((Math.random() * 100 + 10) * 10) / 10;
+    const place = [1, 0.1][Math.floor(Math.random() * 2)];
+    const approxNum1 = roundNumber(num1, place);
+    const approxNum2 = roundNumber(num2, place);
+    practiceAnswer = approxNum1 + approxNum2;
+    const placeName = place === 1 ? 'کمتر از ۱' : 'کمتر از ۰٫۱';
+    qEl.innerHTML = `حاصل <span class="num-fa">${formatNumber(num1)} + ${formatNumber(num2)}</span> را با تقریب ${placeName} (ابتدا تقریب، سپس محاسبه) حساب کن.`;
+    inputEl.type = 'text';
+    inputEl.inputMode = 'decimal';
+    inputEl.placeholder = 'پاسخ';
+  } else if (practiceType === 'approx-mul') {
+    const num1 = Math.round((Math.random() * 20 + 1) * 10) / 10;
+    const num2 = Math.round((Math.random() * 10 + 1) * 10) / 10;
+    const place = [1, 0.1][Math.floor(Math.random() * 2)];
+    const approxNum1 = roundNumber(num1, place);
+    const approxNum2 = roundNumber(num2, place);
+    practiceAnswer = approxNum1 * approxNum2;
+    const placeName = place === 1 ? 'کمتر از ۱' : 'کمتر از ۰٫۱';
+    qEl.innerHTML = `حاصل <span class="num-fa">${formatNumber(num1)} × ${formatNumber(num2)}</span> را با تقریب ${placeName} (ابتدا تقریب، سپس محاسبه) حساب کن.`;
+    inputEl.type = 'text';
+    inputEl.inputMode = 'decimal';
+    inputEl.placeholder = 'پاسخ';
+  } else if (practiceType === 'error-calc') {
+    const actual = Math.round((Math.random() * 100 + 10) * 10) / 10;
+    const approx = roundNumber(actual, 1);
+    practiceAnswer = Math.abs(actual - approx);
+    qEl.innerHTML = `مقدار واقعی <span class="num-fa">${formatNumber(actual)}</span> است و مقدار تقریبی <span class="num-fa">${formatNumber(approx)}</span>. خطای تقریب چقدر است؟`;
+    inputEl.type = 'text';
+    inputEl.inputMode = 'decimal';
+    inputEl.placeholder = 'پاسخ';
+  } else {
+    const scenarios = [
+      { desc: 'جرم یک هندوانه', answer: 'ترازوی خواربارفروشی' },
+      { desc: 'جرم یک انگشتر طلا', answer: 'ترازوی آزمایشگاهی' },
+      { desc: 'طول یک مداد', answer: 'خط‌کش میلی‌متری' },
+      { desc: 'زمان دوی ۱۰۰ متر', answer: 'کرنومتر' }
+    ];
+    const scenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+    qEl.innerHTML = `برای اندازه‌گیری <strong>${scenario.desc}</strong> از چه ابزاری استفاده می‌کنیم؟ (پاسخ را کلامی بنویسید)`;
+    inputEl.type = 'text';
+    inputEl.placeholder = 'نام ابزار';
+    inputEl.value = '';
+    document.getElementById('practice-feedback').textContent = '';
+    window.practiceTextAnswer = scenario.answer;
+    return;
+  }
+
+  inputEl.value = '';
+  document.getElementById('practice-feedback').textContent = '';
+}
+
+document.getElementById('btn-check-practice').addEventListener('click', function() {
+  ensureAudio();
+  const feedbackEl = document.getElementById('practice-feedback');
+  const inputEl = document.getElementById('practice-answer');
+
+  if (practiceType === 'precision-choose') {
+    const userText = inputEl.value.trim();
+    if (userText === '') {
+      feedbackEl.textContent = '❌ لطفاً پاسخ را وارد کن!';
+      feedbackEl.style.color = 'var(--danger)';
+      return;
+    }
+    const correct = window.practiceTextAnswer;
+    if (userText.includes(correct) || correct.includes(userText)) {
+      feedbackEl.textContent = `✅ آفرین! پاسخ درست: ${correct}`;
+      feedbackEl.style.color = 'var(--success)';
+      playTone(600, 0.3);
+      confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 }, colors: ['#b76e79', '#d495a0', '#e8b4b8'] });
+    } else {
+      feedbackEl.textContent = `❌ اشتباه! پاسخ درست: ${correct}`;
+      feedbackEl.style.color = 'var(--danger)';
+      playTone(300, 0.3);
+    }
+    return;
+  }
+
+  const userAnswer = parseFloat(normalizeDecimalInput(inputEl.value));
+  if (isNaN(userAnswer)) {
+    feedbackEl.textContent = '❌ لطفاً یک عدد وارد کن!';
+    feedbackEl.style.color = 'var(--danger)';
+    playTone(200, 0.2);
+    return;
+  }
+
+  if (Math.abs(userAnswer - practiceAnswer) < 0.01) {
+    feedbackEl.textContent = `✅ آفرین! پاسخ درست = ${formatNumber(practiceAnswer)}`;
+    feedbackEl.style.color = 'var(--success)';
+    playTone(600, 0.3);
+    confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 }, colors: ['#b76e79', '#d495a0', '#e8b4b8'] });
+  } else {
+    feedbackEl.textContent = `❌ اشتباه! پاسخ درست = ${formatNumber(practiceAnswer)}`;
+    feedbackEl.style.color = 'var(--danger)';
+    playTone(300, 0.3);
+    document.getElementById('practice-question').classList.add('shake-anim');
+    setTimeout(() => document.getElementById('practice-question').classList.remove('shake-anim'), 500);
+  }
+});
+
+document.getElementById('btn-new-practice').addEventListener('click', () => {
+  ensureAudio();
+  playTone(440, 0.05);
+  generatePracticeQuestion();
+});
+
+document.getElementById('practice-answer').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') document.getElementById('btn-check-practice').click();
+});
+
+generatePracticeQuestion();
+
+document.body.addEventListener('click', function initAudioOnce() {
+  ensureAudio();
+  document.body.removeEventListener('click', initAudioOnce);
+}, { once: true });
+
+prevBtn.addEventListener('click', (e) => {
+  if (prevBtn.classList.contains('disabled')) {
+    e.preventDefault();
+    showToast('این اولین بخش کتاب است. 😊');
+    playTone(300, 0.15);
+  }
+});
+
+// ✅ پایان کتاب
+nextBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  showToast('🎉 تبریک! تمام فصل‌های کتاب را کامل خواندی!');
+  playTone(700, 0.3);
+  // انفجار بزرگ کاغذرنگی
+  confetti({ particleCount: 180, spread: 120, origin: { y: 0.6 }, colors: ['#b76e79', '#d495a0', '#e8b4b8', '#fce7ea'] });
+  setTimeout(() => {
+    confetti({ particleCount: 120, spread: 100, origin: { x: 0.2, y: 0.5 }, colors: ['#b76e79', '#d495a0', '#e8b4b8'] });
+    confetti({ particleCount: 120, spread: 100, origin: { x: 0.8, y: 0.5 }, colors: ['#b76e79', '#d495a0', '#e8b4b8'] });
+  }, 250);
+});
+</script>
 </body>
 </html>

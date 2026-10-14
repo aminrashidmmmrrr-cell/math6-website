@@ -1,1259 +1,1081 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فصل ۶ - بخش ۱: کسر، نسبت و تناسب | درسنامه تعاملی</title>
-    
-    <!-- قلم زیبای وزیرمتن -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
-
-    <!-- انیمیشن کاغذ رنگی -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-    <style>
-        /* ========================================================================
-           ۱. متغیرها و تم رنگی
-           ======================================================================== */
-        :root {
-            --lilac-bg: #f7f1fc;
-            --lilac-soft: #f1e7fb;
-            --lilac-border: #d8b4fe;
-            --lilac-main: #9333ea;
-            --lilac-dark: #6b21a8;
-            --lilac-glow: rgba(147, 51, 234, 0.15);
-            
-            --blue-soft: #e0f2fe;
-            --blue-main: #0284c7;
-            --blue-dark: #0369a1;
-            
-            --success: #16a34a;
-            --success-bg: rgba(22, 163, 74, 0.1);
-            --danger: #dc2626;
-            --danger-bg: rgba(220, 38, 38, 0.1);
-            --warning: #ca8a04;
-            --highlight: #fef08a;
-            --indigo-soft: #e0e7ff;
-            --indigo-main: #6366f1;
-            --indigo-dark: #4338ca;
-
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.9);
-            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
-            --card-hover-bg: rgba(255, 255, 255, 0.95);
-            
-            --text-title: #2e1065;
-            --text-body: #475569;
-            --text-muted: #64748b;
-            
-            --radius-lg: 24px;
-            --radius-md: 16px;
-            --radius-sm: 8px;
-        }
-
-        /* ========================================================================
-           ۲. استایل‌های پایه
-           ======================================================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--lilac-bg);
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
-            background-attachment: fixed;
-            color: var(--text-body);
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            line-height: 1.8;
-        }
-
-        /* ========================================================================
-           ۳. نوار هدر
-           ======================================================================== */
-        .lesson-top-nav {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto 20px;
-            padding: 14px 28px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--glass-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            z-index: 100;
-        }
-
-        .go-back-link {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 800;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.2s, transform 0.2s;
-        }
-
-        .go-back-link:hover {
-            color: var(--indigo-main);
-            transform: translateX(3px);
-        }
-
-        .header-lesson-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-        }
-
-        .chapter-label-badge {
-            background: var(--indigo-soft);
-            color: var(--indigo-dark);
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 20px;
-        }
-
-        .lesson-title-text {
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: var(--text-title);
-        }
-
-        /* ========================================================================
-           ۴. کارت‌های آموزشی
-           ======================================================================== */
-        .main-lesson-wrapper {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding-bottom: 80px;
-        }
-
-        .step-teaching-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            padding: 28px;
-            box-shadow: var(--glass-shadow);
-            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .step-teaching-card:hover {
-            background-color: var(--card-hover-bg);
-            transform: translateY(-5px);
-        }
-
-        .step-number-badge {
-            display: inline-flex;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--indigo-main), var(--indigo-dark));
-            color: white;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 0.95rem;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.25);
-        }
-
-        .step-teaching-card h2 {
-            font-size: 1.4rem;
-            color: var(--text-title);
-            margin-bottom: 12px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .step-teaching-card p {
-            font-size: 1rem;
-            line-height: 1.9;
-            color: var(--text-body);
-            margin-bottom: 16px;
-        }
-
-        /* ========================================================================
-           ۵. المان‌های خاص
-           ======================================================================== */
-        .teacher-speech-bubble {
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: var(--radius-md);
-            padding: 18px 22px;
-            border: 1px dashed var(--indigo-main);
-            color: var(--indigo-dark);
-            margin: 16px 0;
-            position: relative;
-            font-style: italic;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-        }
-
-        .teacher-speech-bubble::before {
-            content: "🧑‍🏫";
-            font-size: 1.4rem;
-            font-style: normal;
-        }
-
-        .solved-example-box {
-            background: var(--blue-soft);
-            border: 1px solid rgba(2, 132, 199, 0.2);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            margin: 16px 0;
-        }
-
-        .example-header {
-            font-weight: 800;
-            color: var(--blue-dark);
-            font-size: 1rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .key-tip-box {
-            background: var(--success-bg);
-            border: 1px solid var(--success);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            margin: 16px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--success);
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-
-        /* کسرنویسی */
-        .fraction {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            vertical-align: middle;
-            margin: 0 4px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            line-height: 1.1;
-        }
-        .fraction .numerator { border-bottom: 2px solid currentColor; padding: 0 6px; }
-        .fraction .denominator { padding: 0 6px; }
-
-        /* ========================================================================
-           ۶. بخش تعاملی ۱: نسبت‌ساز تصویری
-           ======================================================================== */
-        .interactive-container {
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            margin-top: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            border: 1px solid var(--glass-border);
-        }
-
-        .sim-title {
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: var(--indigo-dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .ratio-visual-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .ratio-controls {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .ratio-control-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #fafafa;
-            padding: 12px 16px;
-            border-radius: var(--radius-sm);
-            border: 1px solid #e2e8f0;
-        }
-
-        .ratio-control-group label {
-            font-weight: 800;
-            color: var(--text-body);
-        }
-
-        .ratio-control-group input[type="color"] {
-            width: 40px;
-            height: 40px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            background: transparent;
-        }
-
-        .ratio-control-group input[type="number"] {
-            width: 70px;
-            padding: 8px;
-            font-size: 1.1rem;
-            font-weight: 900;
-            text-align: center;
-            border: 2px solid var(--indigo-main);
-            border-radius: 8px;
-            color: var(--indigo-dark);
-            background: white;
-        }
-        .ratio-control-group input[type="number"]:focus { outline: none; border-color: var(--indigo-dark); }
-
-        .ratio-visual-display {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            min-height: 120px;
-            background: #f8fafc;
-            padding: 20px;
-            border-radius: var(--radius-sm);
-            border: 2px dashed #cbd5e1;
-            width: 100%;
-        }
-
-        .ratio-circle-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .ratio-circle-row {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .ratio-circle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 3px solid #fff;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        }
-
-        .ratio-output {
-            background: var(--indigo-soft);
-            padding: 16px 32px;
-            border-radius: var(--radius-sm);
-            font-size: 1.4rem;
-            font-weight: 900;
-            color: var(--indigo-dark);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            text-align: center;
-            width: 100%;
-        }
-
-        /* ========================================================================
-           ۷. بخش تعاملی ۲: ساده کردن نسبت
-           ======================================================================== */
-        .simplify-ratio-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .ratio-input-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .ratio-input-row input {
-            width: 90px;
-            padding: 10px;
-            font-size: 1.2rem;
-            font-weight: 900;
-            text-align: center;
-            border: 2px solid var(--indigo-main);
-            border-radius: 8px;
-            color: var(--indigo-dark);
-            background: #fafafa;
-        }
-        .ratio-input-row input:focus { outline: none; border-color: var(--indigo-main); }
-
-        .ratio-output-display {
-            background: var(--blue-soft);
-            padding: 20px 32px;
-            border-radius: var(--radius-sm);
-            font-size: 1.4rem;
-            font-weight: 900;
-            color: var(--blue-dark);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            text-align: center;
-            min-height: 80px;
-            width: 100%;
-        }
-
-        .ratio-steps {
-            background: #fafafa;
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            border: 1px solid #e2e8f0;
-            font-weight: 700;
-            color: var(--text-body);
-            line-height: 2.2;
-            width: 100%;
-        }
-
-        /* ========================================================================
-           ۸. بخش تعاملی ۳: جدول تناسب
-           ======================================================================== */
-        .proportion-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .proportion-table {
-            width: 100%;
-            max-width: 600px;
-            border-collapse: collapse;
-            direction: ltr;
-        }
-
-        .proportion-table th {
-            background: var(--indigo-soft);
-            color: var(--indigo-dark);
-            padding: 12px;
-            font-weight: 800;
-            border: 1px solid var(--indigo-main);
-            text-align: center;
-        }
-
-        .proportion-table td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-            font-weight: 700;
-            background: white;
-            min-width: 80px;
-        }
-
-        .proportion-table td input {
-            width: 80px;
-            padding: 6px;
-            font-size: 1.1rem;
-            font-weight: 900;
-            text-align: center;
-            border: 2px solid var(--indigo-main);
-            border-radius: 6px;
-            color: var(--indigo-dark);
-            background: #fafafa;
-        }
-        .proportion-table td input:focus { outline: none; border-color: var(--indigo-dark); background: white; }
-
-        .proportion-table td.filled {
-            background: var(--success-bg);
-            color: var(--success);
-        }
-
-        /* ========================================================================
-           ۹. بخش تعاملی ۴: تمرین نسبت و تناسب
-           ======================================================================== */
-        .practice-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .practice-question {
-            background: var(--indigo-soft);
-            padding: 20px 32px;
-            border-radius: var(--radius-sm);
-            font-size: 1.2rem;
-            font-weight: 900;
-            color: var(--indigo-dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .practice-answer-row {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .practice-answer-row input {
-            width: 130px;
-            padding: 10px;
-            font-size: 1.2rem;
-            font-weight: 900;
-            text-align: center;
-            border: 2px solid var(--indigo-main);
-            border-radius: 8px;
-            color: var(--indigo-dark);
-            background: #fafafa;
-        }
-        .practice-answer-row input:focus { outline: none; border-color: var(--indigo-main); }
-
-        /* ========================================================================
-           ۱۰. دکمه‌ها
-           ======================================================================== */
-        .btn-ui {
-            background: linear-gradient(135deg, var(--indigo-main), var(--indigo-dark));
-            color: white;
-            border: 2px solid white;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: transform 0.15s, box-shadow 0.15s;
-            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.25);
-        }
-        .btn-ui:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
-        }
-        .btn-ui:active { transform: translateY(0); }
-        .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
-        .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
-
-        .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
-        .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
-
-        .btn-ui.lilac { background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark)); box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25); }
-        .btn-ui.lilac:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
-
-        .action-btns-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .feedback-display {
-            font-weight: 800;
-            text-align: center;
-            min-height: 28px;
-            font-size: 1rem;
-            margin-top: 10px;
-            transition: color 0.2s;
-        }
-
-        /* ========================================================================
-           ۱۱. دکمه‌های شناور
-           ======================================================================== */
-        .floating-btns {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none;
-            z-index: 200;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .float-nav-btn {
-            pointer-events: auto;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 800;
-            color: var(--text-title);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.2s;
-        }
-
-        .float-nav-btn:hover {
-            background: var(--indigo-main);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.25);
-        }
-
-        @media (max-width: 600px) {
-            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
-            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
-            .header-lesson-info { align-items: center; }
-        }
-
-        /* ========================================================================
-           ۱۲. انیمیشن
-           ======================================================================== */
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .pop-in { animation: popIn 0.3s ease-out forwards; }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-6px); }
-            40% { transform: translateX(6px); }
-            60% { transform: translateX(-4px); }
-            80% { transform: translateX(4px); }
-        }
-        .shake-anim { animation: shake 0.4s ease-in-out; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>فصل ۶ - بخش ۱: کسر، نسبت و تناسب | درسنامه تعاملی</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+:root {
+  /* ✅ پس‌زمینه‌ی اصلی بنفش (مثل بقیه فصل‌ها) */
+  --lilac-bg: #f7f1fc;
+  --lilac-soft: #f1e7fb;
+  --lilac-border: #d8b4fe;
+  --lilac-main: #9333ea;
+  --lilac-dark: #6b21a8;
+
+  /* رنگ اختصاصی فصل ۶: سبز زمردی */
+  --emerald-soft: #d1fae5;
+  --emerald-main: #10b981;
+  --emerald-dark: #059669;
+  --emerald-deep: #065f46;
+
+  --blue-soft: #e0f2fe;
+  --blue-main: #0284c7;
+  --blue-dark: #0369a1;
+
+  --success: #16a34a;
+  --success-bg: rgba(22, 163, 74, 0.1);
+  --danger: #dc2626;
+  --warning: #ca8a04;
+
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.9);
+  --glass-shadow: 0 12px 36px rgba(107, 33, 168, 0.1);
+  --text-title: #2e1065;
+  --text-body: #475569;
+  --text-muted: #64748b;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; -webkit-tap-highlight-color: transparent; }
+html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  /* ✅ پس‌زمینه بنفش اصلی */
+  background-color: var(--lilac-bg);
+  background-image:
+    radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: var(--text-body);
+  min-height: 100vh;
+  padding: 16px;
+  display: flex; flex-direction: column;
+  overflow-x: hidden; line-height: 1.8;
+}
+
+/* =========================================================
+   فرمول LTR: صورت/عبارت اصلی سمت چپ
+   ========================================================= */
+.formula-line {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  direction: ltr;
+  font-variant-numeric: tabular-nums;
+  line-height: 2;
+  font-weight: 800;
+  padding: 4px 0;
+  width: 100%;
+}
+.formula-line.is-inline { display: inline-flex; width: auto; vertical-align: middle; }
+.formula-line .op { color: var(--text-muted); font-weight: 900; padding: 0 3px; }
+
+/* ✅ کسر با خط افقی واقعی (بدون اسلش، بدون :) */
+.fraction {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  margin: 0 6px;
+  font-weight: 800;
+  font-size: 1.05em;
+  line-height: 1.15;
+}
+.fraction .numerator {
+  border-bottom: 2.5px solid currentColor;
+  padding: 0 10px 3px;
+  min-width: 22px;
+  text-align: center;
+}
+.fraction .denominator {
+  padding: 3px 10px 0;
+  min-width: 22px;
+  text-align: center;
+}
+
+/* ✅ ورودی کسری عمودی (دو ورودی با خط بین) */
+.fraction-input {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 6px;
+  vertical-align: middle;
+}
+.fraction-input input {
+  width: 90px;
+  padding: 8px;
+  font-size: 1.15rem;
+  font-weight: 900;
+  text-align: center;
+  border: 2px solid var(--emerald-main);
+  color: var(--emerald-deep);
+  background: white;
+  font-family: 'Vazirmatn', sans-serif;
+  direction: ltr;
+}
+.fraction-input input.top {
+  border-radius: 10px 10px 0 0;
+  border-bottom: none;
+}
+.fraction-input input.bottom {
+  border-radius: 0 0 10px 10px;
+  border-top: none;
+}
+.fraction-input .frac-bar {
+  width: 90px;
+  height: 3px;
+  background: var(--emerald-main);
+  display: block;
+}
+.fraction-input input:focus {
+  outline: none;
+  background: #ecfdf5;
+  border-color: var(--emerald-dark);
+}
+
+/* ============ هدر ============ */
+.lesson-top-nav {
+  max-width: 1100px; width: 100%;
+  margin: 0 auto 20px; padding: 14px 22px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; z-index: 100;
+}
+.go-back-link { text-decoration: none; color: var(--text-muted); font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; transition: color 0.2s, transform 0.2s; white-space: nowrap; }
+.go-back-link:hover { color: var(--emerald-dark); transform: translateX(3px); }
+.header-lesson-info { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 0; }
+.chapter-label-badge { background: var(--emerald-soft); color: var(--emerald-deep); font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.lesson-title-text { font-size: 1.05rem; font-weight: 900; color: var(--text-title); letter-spacing: -0.5px; }
+
+/* ============ نوار موقعیت ============ */
+.book-location-bar {
+  max-width: 1100px; width: 100%;
+  margin: 0 auto 20px; display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  background: var(--glass-bg); border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 12px rgba(107, 33, 168, 0.06);
+  flex-wrap: wrap; justify-content: center;
+}
+.location-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--emerald-soft); color: var(--emerald-deep); padding: 4px 12px; border-radius: 20px; font-weight: 800; font-size: 0.82rem; white-space: nowrap; }
+.location-chip.blue { background: var(--blue-soft); color: var(--blue-dark); }
+.location-chip.yellow { background: #fef9c3; color: #854d0e; }
+.location-chip.green { background: #dcfce7; color: #166534; }
+
+/* ============ کارت‌ها ============ */
+.main-lesson-wrapper { max-width: 1100px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; padding-bottom: 120px; }
+.step-teaching-card { background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 26px; box-shadow: var(--glass-shadow); position: relative; overflow: hidden; }
+.step-number-badge { display: inline-flex; width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--emerald-main), var(--emerald-dark)); color: white; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; margin-bottom: 14px; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); }
+.step-teaching-card h2 { font-size: 1.3rem; color: var(--text-title); margin-bottom: 12px; font-weight: 900; display: flex; align-items: center; gap: 10px; letter-spacing: -0.8px; line-height: 1.6; flex-wrap: wrap; }
+.step-teaching-card p { font-size: 1rem; line-height: 2; color: var(--text-body); margin-bottom: 14px; }
+.step-teaching-card ul, .step-teaching-card ol { margin-right: 22px; color: var(--text-body); font-weight: 600; line-height: 2.1; margin-bottom: 12px; }
+
+/* ============ المان‌های خاص ============ */
+.teacher-speech-bubble { background: rgba(255, 255, 255, 0.75); border-radius: var(--radius-md); padding: 16px 20px; border: 1px dashed var(--emerald-main); color: var(--emerald-deep); margin: 14px 0; font-style: italic; display: flex; gap: 12px; align-items: flex-start; font-size: 0.95rem; line-height: 1.9; }
+.teacher-speech-bubble::before { content: "🧑‍🏫"; font-size: 1.4rem; font-style: normal; flex-shrink: 0; }
+.solved-example-box { background: var(--blue-soft); border: 1px solid rgba(2, 132, 199, 0.2); border-radius: var(--radius-md); padding: 18px; margin: 14px 0; word-break: break-word; font-size: 1.05rem; }
+.example-header { font-weight: 800; color: var(--blue-dark); font-size: 1rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.solved-example-box p { font-size: 1.05rem; line-height: 2.2; color: var(--blue-dark); margin-bottom: 8px; }
+.key-tip-box { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--emerald-main); border-radius: var(--radius-md); padding: 14px 16px; margin: 14px 0; color: var(--emerald-deep); font-weight: 700; font-size: 0.95rem; line-height: 1.9; }
+.key-tip-box strong { color: var(--emerald-dark); }
+.key-tip-box ul { margin-top: 8px; line-height: 2.1; }
+.sim-title { font-weight: 800; font-size: 1.05rem; color: var(--emerald-deep); display: flex; align-items: center; gap: 8px; line-height: 1.6; flex-wrap: wrap; }
+
+/* ============ آزمایشگاه‌ها ============ */
+.lab-box, .ratio-visual-lab, .simplify-ratio-lab, .proportion-lab, .practice-lab {
+  background: white; border-radius: var(--radius-md); padding: 20px;
+  border: 1px solid var(--glass-border);
+  display: flex; flex-direction: column; gap: 16px; align-items: center;
+  width: 100%;
+}
+
+/* ============ نسبت‌ساز ============ */
+.ratio-controls { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; align-items: center; }
+.ratio-control-group { display: flex; align-items: center; gap: 8px; background: #fafafa; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid #e2e8f0; flex-wrap: wrap; justify-content: center; }
+.ratio-control-group label { font-weight: 800; color: var(--emerald-deep); font-size: 0.9rem; }
+.ratio-control-group input[type="color"] { width: 38px; height: 38px; border: none; border-radius: 8px; cursor: pointer; background: transparent; }
+.ratio-control-group input[type="number"] {
+  width: 70px; padding: 8px; font-size: 1.1rem; font-weight: 900; text-align: center;
+  border: 2px solid var(--emerald-main); border-radius: 8px;
+  color: var(--emerald-deep); background: white;
+  font-family: 'Vazirmatn', sans-serif; direction: ltr;
+}
+.ratio-control-group input[type="number"]:focus { outline: none; border-color: var(--emerald-dark); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); }
+.ratio-visual-display { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; align-items: center; min-height: 120px; background: #fafafa; padding: 20px; border-radius: var(--radius-sm); border: 2px dashed #cbd5e1; width: 100%; }
+.ratio-circle-group { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.ratio-circle-row { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; max-width: 200px; }
+.ratio-circle { width: 36px; height: 36px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+.ratio-output { background: var(--emerald-soft); padding: 14px 20px; border-radius: var(--radius-sm); font-size: 1.15rem; font-weight: 900; color: var(--emerald-deep); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; text-align: center; width: 100%; border: 1px solid var(--emerald-main); min-height: 56px; line-height: 2.2; }
+
+/* ============ ساده کردن نسبت ============ */
+.ratio-input-row { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; align-items: center; padding: 16px; background: #fafafa; border-radius: var(--radius-sm); border: 1px solid #e2e8f0; width: 100%; }
+.ratio-output-display { background: var(--blue-soft); padding: 16px 20px; border-radius: var(--radius-sm); font-size: 1.15rem; font-weight: 900; color: var(--blue-dark); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; text-align: center; min-height: 60px; width: 100%; border: 1px solid var(--blue-main); line-height: 2.2; }
+.ratio-steps { background: #fafafa; border-radius: var(--radius-sm); padding: 16px; border: 1px solid #e2e8f0; font-weight: 700; color: var(--text-body); line-height: 2.2; width: 100%; }
+
+/* ============ جدول تناسب ============ */
+.proportion-table-wrapper { width: 100%; overflow-x: auto; }
+.proportion-table { width: 100%; max-width: 600px; margin: 0 auto; border-collapse: collapse; direction: rtl; }
+.proportion-table th { background: var(--emerald-soft); color: var(--emerald-deep); padding: 10px 6px; font-weight: 800; border: 1px solid var(--emerald-main); text-align: center; font-size: 0.9rem; }
+.proportion-table td { padding: 8px 6px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700; background: white; }
+.proportion-table td input {
+  width: 100%; max-width: 100px; padding: 8px; font-size: 1.1rem; font-weight: 900; text-align: center;
+  border: 2px solid var(--emerald-main); border-radius: 8px;
+  color: var(--emerald-deep); background: white;
+  font-family: 'Vazirmatn', sans-serif; direction: ltr;
+}
+.proportion-table td input:focus { outline: none; border-color: var(--emerald-dark); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); }
+.proportion-table td.filled { background: var(--success-bg); }
+.proportion-table td.filled input { color: var(--success); border-color: var(--success); }
+
+/* ============ تمرین ============ */
+.practice-question { background: var(--emerald-soft); padding: 16px 20px; border-radius: var(--radius-sm); font-size: 1.05rem; font-weight: 900; color: var(--emerald-deep); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; text-align: center; width: 100%; line-height: 2.2; }
+.practice-answer-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: center; width: 100%; }
+.practice-answer-row input[type="text"], .practice-answer-row input[type="number"] {
+  width: 150px; padding: 10px; font-size: 1.15rem; font-weight: 900; text-align: center;
+  border: 2px solid var(--emerald-main); border-radius: 10px;
+  color: var(--emerald-deep); background: white;
+  font-family: 'Vazirmatn', sans-serif; direction: ltr;
+}
+.practice-answer-row input:focus { outline: none; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); }
+
+/* ============ دکمه‌ها ============ */
+.btn-ui {
+  background: linear-gradient(135deg, var(--emerald-main), var(--emerald-dark));
+  color: white; border: none;
+  padding: 12px 22px; border-radius: 30px;
+  font-weight: 800; font-size: 0.92rem;
+  cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+  font-family: 'Vazirmatn', sans-serif; min-height: 46px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+}
+.btn-ui:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4); }
+.btn-ui:active { transform: translateY(0); }
+.btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
+.btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
+.btn-ui.green { background: linear-gradient(135deg, var(--emerald-main), var(--emerald-dark)); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.25); }
+.btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35); }
+.action-btns-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.feedback-display { font-weight: 800; text-align: center; min-height: 28px; font-size: 0.98rem; margin-top: 8px; transition: color 0.2s; line-height: 2; word-break: break-word; width: 100%; }
+
+/* ============ دکمه‌های شناور ============ */
+.floating-btns { position: fixed; bottom: 16px; left: 16px; right: 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px; pointer-events: none; z-index: 200; max-width: 1100px; margin: 0 auto; }
+.float-nav-btn { pointer-events: auto; background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--glass-border); padding: 12px 20px; border-radius: 30px; font-weight: 800; color: var(--text-title); text-decoration: none; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); transition: all 0.2s; font-size: 0.9rem; font-family: 'Vazirmatn', sans-serif; position: relative; }
+.float-nav-btn:hover:not(.disabled) { background: var(--emerald-main); color: white; transform: translateY(-3px); box-shadow: 0 15px 35px rgba(16, 185, 129, 0.25); }
+.float-nav-btn.disabled { opacity: 0.45; cursor: not-allowed; }
+.float-nav-btn.disabled:hover { background: var(--glass-bg); color: var(--text-title); transform: none; }
+.float-nav-btn.home-btn { background: linear-gradient(135deg, var(--emerald-main), var(--emerald-dark)); color: white; border-color: transparent; padding: 12px 16px; }
+.float-nav-btn.home-btn:hover { background: linear-gradient(135deg, var(--emerald-dark), var(--emerald-main)); transform: translateY(-3px) scale(1.05); }
+.float-nav-btn .btn-tooltip { position: absolute; bottom: calc(100% + 8px); background: rgba(46, 16, 101, 0.95); color: white; font-size: 0.72rem; font-weight: 700; padding: 5px 10px; border-radius: 8px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+.float-nav-btn:hover .btn-tooltip { opacity: 1; }
+#prev-lesson-btn .btn-tooltip { right: 0; }
+#next-lesson-btn .btn-tooltip { left: 0; }
+
+/* ============ Toast ============ */
+.toast-notification { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(30px); background: rgba(46, 16, 101, 0.96); color: white; padding: 14px 24px; border-radius: 14px; font-weight: 700; font-size: 0.92rem; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease; max-width: 90%; text-align: center; box-shadow: 0 12px 36px rgba(0,0,0,0.3); line-height: 1.7; }
+.toast-notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
+.shake-anim { animation: shake 0.4s ease-in-out; }
+
+/* ============ ریسپانسیو ============ */
+@media (max-width: 768px) {
+  body { padding: 12px; }
+  .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; padding: 14px 16px; gap: 10px; }
+  .header-lesson-info { align-items: center; }
+  .go-back-link { justify-content: center; }
+  .lesson-title-text { text-align: center; }
+  .step-teaching-card { padding: 20px 16px; border-radius: 20px; }
+  .step-teaching-card h2 { font-size: 1.15rem; }
+  .step-teaching-card p { font-size: 0.95rem; }
+  .step-teaching-card ul, .step-teaching-card ol { margin-right: 18px; font-size: 0.95rem; }
+  .lab-box, .ratio-visual-lab, .simplify-ratio-lab, .proportion-lab, .practice-lab { padding: 14px 10px; }
+  .ratio-control-group { padding: 8px 10px; gap: 6px; }
+  .ratio-control-group input[type="number"] { width: 60px; padding: 6px; font-size: 1rem; }
+  .ratio-control-group label { font-size: 0.82rem; }
+  .fraction-input input { width: 70px; font-size: 1rem; padding: 6px; }
+  .fraction-input .frac-bar { width: 70px; }
+  .float-nav-btn { padding: 11px 14px; font-size: 0.82rem; gap: 5px; }
+  .float-nav-btn .btn-label { display: none; }
+  .float-nav-btn.home-btn { padding: 11px 14px; }
+  .teacher-speech-bubble { padding: 12px 14px; font-size: 0.88rem; }
+  .key-tip-box { padding: 12px 12px; font-size: 0.88rem; }
+  .formula-line { font-size: 0.95rem; gap: 4px; }
+}
+@media (max-width: 480px) {
+  .ratio-controls { flex-direction: column; }
+  .ratio-control-group { width: 100%; justify-content: space-between; }
+  .ratio-input-row { flex-direction: column; gap: 12px; }
+  .practice-answer-row input { width: 120px; font-size: 1rem; }
+  .formula-line { font-size: 0.88rem; }
+}
+</style>
 </head>
 <body>
 
-    <!-- ========================================================================
-         نوار ناوبری بالای درسنامه
-         ======================================================================== -->
-    <header class="lesson-top-nav">
-        <a href="../index.html" class="go-back-link">
-            <span>← برگشت به کتاب اصلی</span>
-        </a>
-        <div class="header-lesson-info">
-            <span class="chapter-label-badge">فصل ششم: تناسب و درصد</span>
-            <span class="lesson-title-text">بخش ۱: کسر، نسبت و تناسب</span>
-        </div>
-    </header>
+<header class="lesson-top-nav">
+  <a href="../index.html" class="go-back-link">
+    <span>← برگشت به کتاب اصلی</span>
+  </a>
+  <div class="header-lesson-info">
+    <span class="chapter-label-badge">فصل ششم: تناسب و درصد</span>
+    <span class="lesson-title-text">بخش ۱: کسر، نسبت و تناسب</span>
+  </div>
+</header>
 
-    <main class="main-lesson-wrapper">
+<div class="book-location-bar" id="book-location-bar"></div>
 
-        <!-- ========================================================================
-           قدم ۱: آشنایی با نسبت
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۱</span>
-            <h2>نسبت: مقایسه‌ی دو مقدار!</h2>
-            <p>
-                <strong>نسبت</strong> یعنی مقایسه‌ی دو مقدار با هم. مثلاً اگر در یک کلاس 
-                ۳ پسر و ۵ دختر باشد، می‌گوییم نسبت پسرها به دخترها ۳ به ۵ است.
-            </p>
+<main class="main-lesson-wrapper">
 
-            <div class="key-tip-box">
-                <strong>📌 روش‌های نوشتن نسبت:</strong>
-                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.4;">
-                    <li>به صورت کسری: <span class="fraction"><span class="numerator">۳</span><span class="denominator">۵</span></span></li>
-                    <li>با دو نقطه: ۳ : ۵</li>
-                    <li>به صورت کلامی: ۳ به ۵</li>
-                </ul>
-            </div>
+  <!-- ============ قدم ۱ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۱</span>
+    <h2>نسبت: مقایسه‌ی دو مقدار!</h2>
+    <p>
+      <strong>نسبت</strong> یعنی مقایسه‌ی دو مقدار با هم. مثلاً اگر در یک کلاس
+      ۳ پسر و ۵ دختر باشد، می‌گوییم نسبت پسرها به دخترها، برابر است با:
+    </p>
 
-            <div class="solved-example-box">
-                <div class="example-header">💡 مثال: نسبت پسرها به کل دانش‌آموزان</div>
-                <p>اگر ۳ پسر و ۵ دختر داشته باشیم، کل دانش‌آموزان ۸ نفر هستند.</p>
-                <p>نسبت پسرها به کل: <span class="fraction"><span class="numerator">۳</span><span class="denominator">۸</span></span></p>
-                <p>نسبت دخترها به کل: <span class="fraction"><span class="numerator">۵</span><span class="denominator">۸</span></span></p>
-            </div>
-
-            <div class="teacher-speech-bubble">
-                «نسبت مثل یک مسابقه‌ی مقایسه است! می‌گیم فلان چیز چند برابر یا چند کسری از چیز دیگه است. 
-                نسبت رو می‌شه به شکل کسر، با دو نقطه یا با کلمه‌ی "به" نوشت.»
-            </div>
-        </section>
-
-        <!-- ========================================================================
-           قدم ۲: نسبت‌ساز تصویری
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۲</span>
-            <h2>نسبت‌ساز تصویری: نسبت را ببین!</h2>
-            <p>
-                تعداد و رنگ دایره‌ها را تغییر بده و نسبت آن‌ها را به شکل‌های مختلف ببین.
-            </p>
-
-            <!-- ابزار تعاملی ۱: نسبت‌ساز تصویری -->
-            <div class="ratio-visual-lab">
-                <div class="sim-title">🎨 نسبت‌ساز تصویری</div>
-
-                <div class="ratio-controls">
-                    <div class="ratio-control-group">
-                        <label>تعداد:</label>
-                        <input type="number" id="ratio-a-count" value="3" min="1" max="12">
-                        <input type="color" id="ratio-a-color" value="#6366f1">
-                    </div>
-                    <div class="ratio-control-group">
-                        <label>تعداد:</label>
-                        <input type="number" id="ratio-b-count" value="5" min="1" max="12">
-                        <input type="color" id="ratio-b-color" value="#f43f5e">
-                    </div>
-                    <button class="btn-ui green" id="btn-update-ratio">به‌روزرسانی</button>
-                </div>
-
-                <div class="ratio-visual-display" id="ratio-visual-display">
-                    <!-- دایره‌ها با JS ساخته می‌شوند -->
-                </div>
-
-                <div class="ratio-output" id="ratio-output">
-                    نسبت: ؟
-                </div>
-                <p id="ratio-feedback" class="feedback-display"></p>
-            </div>
-        </section>
-
-        <!-- ========================================================================
-           قدم ۳: ساده کردن نسبت
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۳</span>
-            <h2>ساده کردن نسبت: کوچک‌ترین شکل!</h2>
-            <p>
-                نسبت‌ها را می‌توان مثل کسرها ساده کرد. برای این کار، هر دو عدد نسبت را 
-                بر بزرگ‌ترین مقسوم‌علیه مشترک (ب.م.م) آن‌ها تقسیم می‌کنیم.
-            </p>
-
-            <div class="solved-example-box">
-                <div class="example-header">💡 مثال: ساده کردن نسبت ۱۲ به ۱۸</div>
-                <p>ب.م.م ۱۲ و ۱۸ برابر ۶ است.</p>
-                <p>۱۲ ÷ ۶ = ۲ و ۱۸ ÷ ۶ = ۳</p>
-                <p>پس نسبت ۱۲ به ۱۸ ساده می‌شود به ۲ به ۳.</p>
-            </div>
-
-            <!-- ابزار تعاملی ۲: ساده کردن نسبت -->
-            <div class="simplify-ratio-lab">
-                <div class="sim-title">✂️ ماشین ساده کردن نسبت</div>
-
-                <div class="ratio-input-row">
-                    <input type="number" id="simp-ratio-a" value="12" min="1" max="1000">
-                    <span style="font-size:1.5rem; font-weight:900; color:var(--indigo-main);">:</span>
-                    <input type="number" id="simp-ratio-b" value="18" min="1" max="1000">
-                    <button class="btn-ui green" id="btn-simplify-ratio">ساده کن</button>
-                </div>
-
-                <div class="ratio-output-display" id="simp-ratio-output">
-                    نتیجه: ؟
-                </div>
-
-                <div class="ratio-steps" id="simp-ratio-steps">
-                    <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «ساده کن» را بزنید.</p>
-                </div>
-                <p id="simp-ratio-feedback" class="feedback-display"></p>
-            </div>
-        </section>
-
-        <!-- ========================================================================
-           قدم ۴: جدول تناسب
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۴</span>
-            <h2>جدول تناسب: پیدا کردن مقدار مجهول!</h2>
-            <p>
-                <strong>تناسب</strong> یعنی برابری دو نسبت. اگر دو نسبت با هم مساوی باشند، 
-                می‌توانیم با استفاده از جدول تناسب، مقدار مجهول را پیدا کنیم.
-            </p>
-
-            <div class="key-tip-box">
-                <strong>📌 روش حل تناسب:</strong>
-                <p style="margin-top: 6px;">اگر a/b = c/d، آنگاه a × d = b × c (ضرب طرفین در وسطین).</p>
-            </div>
-
-            <!-- ابزار تعاملی ۳: جدول تناسب -->
-            <div class="proportion-lab">
-                <div class="sim-title">📊 جدول تناسب تعاملی</div>
-
-                <table class="proportion-table" id="proportion-table">
-                    <thead>
-                        <tr>
-                            <th>مقدار اول</th>
-                            <th>مقدار دوم</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><input type="number" id="prop-a1" value="2" min="0" step="0.1"></td>
-                            <td><input type="number" id="prop-b1" value="5" min="0" step="0.1"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="number" id="prop-a2" value="6" min="0" step="0.1"></td>
-                            <td><input type="number" id="prop-b2" value="" placeholder="؟" min="0" step="0.1"></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="action-btns-row">
-                    <button class="btn-ui green" id="btn-solve-proportion">حل کن</button>
-                    <button class="btn-ui blue" id="btn-new-proportion">مثال جدید</button>
-                </div>
-                <p id="proportion-feedback" class="feedback-display"></p>
-            </div>
-        </section>
-
-        <!-- ========================================================================
-           قدم ۵: تمرین نسبت و تناسب
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۵</span>
-            <h2>تمرین نسبت و تناسب</h2>
-            <p>
-                حالا نوبت تمرین است! به سوالات پاسخ بده.
-            </p>
-
-            <!-- ابزار تعاملی ۴: تمرین نسبت و تناسب -->
-            <div class="practice-lab">
-                <div class="sim-title">📝 تمرین تعاملی</div>
-                
-                <div class="practice-question" id="practice-question">
-                    <!-- سوال با JS ساخته می‌شود -->
-                </div>
-
-                <div class="practice-answer-row">
-                    <input type="number" id="practice-answer" step="0.01" placeholder="پاسخ">
-                    <button class="btn-ui green" id="btn-check-practice">بررسی</button>
-                </div>
-
-                <p id="practice-feedback" class="feedback-display"></p>
-                <button class="btn-ui blue" id="btn-new-practice">سوال جدید</button>
-            </div>
-        </section>
-
-        <!-- ========================================================================
-           قدم ۶: جمع‌بندی
-           ======================================================================== -->
-        <section class="step-teaching-card">
-            <span class="step-number-badge">۶</span>
-            <h2>جمع‌بندی و تمرین</h2>
-            <p>در این بخش یاد گرفتیم:</p>
-            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
-                <li>✅ نسبت: مقایسه‌ی دو مقدار با هم. نوشتن آن به سه شکل: کسری، با دو نقطه، کلامی.</li>
-                <li>✅ نسبت‌های مساوی: با ضرب یا تقسیم هر دو جمله‌ی نسبت در یک عدد به دست می‌آیند.</li>
-                <li>✅ ساده کردن نسبت: تقسیم هر دو جمله بر ب.م.م آن‌ها.</li>
-                <li>✅ تناسب: برابری دو نسبت.</li>
-                <li>✅ حل تناسب با ضرب طرفین در وسطین: a × d = b × c.</li>
-                <li>✅ کاربرد نسبت و تناسب در زندگی روزمره: نقشه‌خوانی، دستور پخت غذا، مقیاس‌ها و... .</li>
-            </ul>
-
-            <div class="teacher-speech-bubble">
-                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی. 
-                یادت باشه که نسبت و تناسب، پایه‌ی خیلی از مفاهیم ریاضی در سال‌های بعدی مثل درصد و احتمال هستند.»
-            </div>
-
-            <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
-                <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
-                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
-                    <li>نسبت ۱۵ به ۲۵ را ساده کنید.</li>
-                    <li>اگر ۳ کتاب ۱۲۰۰۰۰ تومان باشد، ۵ کتاب چند تومان است؟ (با تناسب حل کنید)</li>
-                    <li>در یک کلاس ۱۲ پسر و ۱۸ دختر داریم. نسبت پسرها به دخترها و پسرها به کل را بنویسید.</li>
-                    <li>اگر ۲ کارگر در ۵ روز دیواری را بسازند، ۴ کارگر در چند روز همان دیوار را می‌سازند؟</li>
-                </ol>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- ========================================================================
-         دکمه‌های شناور
-         ======================================================================== -->
-    <div class="floating-btns">
-        <a href="chapter5_part4.html" class="float-nav-btn">→ فصل قبلی</a>
-        <a href="chapter6_part2.html" class="float-nav-btn" id="next-lesson-btn">بخش بعدی ←</a>
+    <div class="formula-line" style="font-size: 1.2rem; margin: 8px 0;">
+      <span class="fraction"><span class="numerator">۳</span><span class="denominator">۵</span></span>
     </div>
 
-    <script>
-        /* ========================================================================
-           لاجیک صوتی
-           ======================================================================== */
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function playTone(freq, duration) {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-            osc.start(); osc.stop(audioCtx.currentTime + duration);
-        }
+    <div class="key-tip-box">
+      <strong>📌 روش‌های نوشتن نسبت:</strong>
+      <ul>
+        <li>
+          به صورت کسر:
+          <span class="fraction"><span class="numerator">۳</span><span class="denominator">۵</span></span>
+        </li>
+        <li>به صورت کلامی: ۳ به ۵</li>
+      </ul>
+    </div>
 
-        /* ========================================================================
-           تعامل ۱: نسبت‌ساز تصویری
-           ======================================================================== */
-        function updateRatioVisual() {
-            const countA = parseInt(document.getElementById('ratio-a-count').value) || 1;
-            const countB = parseInt(document.getElementById('ratio-b-count').value) || 1;
-            const colorA = document.getElementById('ratio-a-color').value;
-            const colorB = document.getElementById('ratio-b-color').value;
+    <div class="solved-example-box">
+      <div class="example-header">💡 مثال: نسبت پسرها به کل دانش‌آموزان</div>
+      <p>اگر ۳ پسر و ۵ دختر داشته باشیم، کل دانش‌آموزان ۸ نفر هستند.</p>
+      <div class="formula-line" style="color: var(--blue-dark);">
+        <span>نسبت پسرها به کل</span>
+        <span class="op">=</span>
+        <span class="fraction"><span class="numerator">۳</span><span class="denominator">۸</span></span>
+      </div>
+      <div class="formula-line" style="color: var(--blue-dark);">
+        <span>نسبت دخترها به کل</span>
+        <span class="op">=</span>
+        <span class="fraction"><span class="numerator">۵</span><span class="denominator">۸</span></span>
+      </div>
+    </div>
 
-            const displayEl = document.getElementById('ratio-visual-display');
-            displayEl.innerHTML = '';
+    <div class="teacher-speech-bubble">
+      «نسبت مثل یک مسابقه‌ی مقایسه است! می‌گیم فلان چیز چند برابر یا چند کسری از چیز دیگه است.
+      نسبت را به شکل کسر یا با کلمه‌ی "به" می‌نویسیم.»
+    </div>
+  </section>
 
-            // گروه اول
-            const groupA = document.createElement('div');
-            groupA.className = 'ratio-circle-group';
-            const rowA = document.createElement('div');
-            rowA.className = 'ratio-circle-row';
-            for (let i = 0; i < countA; i++) {
-                const circle = document.createElement('div');
-                circle.className = 'ratio-circle';
-                circle.style.background = colorA;
-                rowA.appendChild(circle);
-            }
-            groupA.appendChild(rowA);
-            const labelA = document.createElement('div');
-            labelA.style.fontWeight = '800';
-            labelA.style.color = 'var(--indigo-dark)';
-            labelA.innerText = countA.toLocaleString('fa-IR');
-            groupA.appendChild(labelA);
+  <!-- ============ قدم ۲ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۲</span>
+    <h2>نسبت‌ساز تصویری: نسبت را ببین!</h2>
+    <p>تعداد و رنگ دایره‌ها را تغییر بده و نسبت آن‌ها را به شکل کسری ببین.</p>
 
-            // جداکننده
-            const divider = document.createElement('div');
-            divider.style.fontSize = '2rem';
-            divider.style.fontWeight = '900';
-            divider.style.color = 'var(--indigo-main)';
-            divider.innerText = ':';
+    <div class="ratio-visual-lab">
+      <div class="sim-title">🎨 نسبت‌ساز تصویری</div>
 
-            // گروه دوم
-            const groupB = document.createElement('div');
-            groupB.className = 'ratio-circle-group';
-            const rowB = document.createElement('div');
-            rowB.className = 'ratio-circle-row';
-            for (let i = 0; i < countB; i++) {
-                const circle = document.createElement('div');
-                circle.className = 'ratio-circle';
-                circle.style.background = colorB;
-                rowB.appendChild(circle);
-            }
-            groupB.appendChild(rowB);
-            const labelB = document.createElement('div');
-            labelB.style.fontWeight = '800';
-            labelB.style.color = 'var(--indigo-dark)';
-            labelB.innerText = countB.toLocaleString('fa-IR');
-            groupB.appendChild(labelB);
+      <div class="ratio-controls">
+        <div class="ratio-control-group">
+          <label>تعداد:</label>
+          <input type="number" id="ratio-a-count" value="3" min="1" max="12">
+          <input type="color" id="ratio-a-color" value="#10b981">
+        </div>
+        <div class="ratio-control-group">
+          <label>تعداد:</label>
+          <input type="number" id="ratio-b-count" value="5" min="1" max="12">
+          <input type="color" id="ratio-b-color" value="#0284c7">
+        </div>
+      </div>
 
-            displayEl.appendChild(groupA);
-            displayEl.appendChild(divider);
-            displayEl.appendChild(groupB);
+      <div class="ratio-visual-display" id="ratio-visual-display"></div>
 
-            // محاسبه و نمایش نسبت ساده‌شده
-            const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
-            const g = gcd(countA, countB) || 1;
-            const simpleA = countA / g;
-            const simpleB = countB / g;
+      <div class="ratio-output" id="ratio-output">نسبت = ؟</div>
+      <p id="ratio-feedback" class="feedback-display"></p>
+    </div>
+  </section>
 
-            let outputHTML = `نسبت: <strong>${countA.toLocaleString('fa-IR')} : ${countB.toLocaleString('fa-IR')}</strong>`;
-            if (g > 1) {
-                outputHTML += ` = <strong style="color: var(--indigo-dark);">${simpleA.toLocaleString('fa-IR')} : ${simpleB.toLocaleString('fa-IR')}</strong> (ساده‌شده)`;
-            }
-            document.getElementById('ratio-output').innerHTML = outputHTML;
-        }
+  <!-- ============ قدم ۳ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۳</span>
+    <h2>ساده کردن نسبت: کوچک‌ترین شکل!</h2>
+    <p>
+      نسبت‌ها را می‌توان مثل کسرها ساده کرد. برای این کار، صورت و مخرج کسر را
+      بر بزرگ‌ترین مقسوم‌علیه مشترک (ب.م.م) آن‌ها تقسیم می‌کنیم.
+    </p>
 
-        document.getElementById('btn-update-ratio').addEventListener('click', () => {
-            playTone(500, 0.1);
-            updateRatioVisual();
-            confetti({ particleCount: 20, spread: 40, origin: { y: 0.7 } });
-        });
+    <div class="solved-example-box">
+      <div class="example-header">💡 مثال: ساده کردن نسبت ۱۲ به ۱۸</div>
 
-        // به‌روزرسانی خودکار با تغییر
-        ['ratio-a-count', 'ratio-b-count', 'ratio-a-color', 'ratio-b-color'].forEach(id => {
-            document.getElementById(id).addEventListener('input', updateRatioVisual);
-        });
+      <p>ب.م.م ۱۲ و ۱۸ برابر ۶ است.</p>
 
-        updateRatioVisual();
+      <div class="formula-line" style="color: var(--blue-dark);">
+        <span>۱۲ ÷ ۶</span>
+        <span class="op">=</span>
+        <span>۲</span>
+      </div>
+      <div class="formula-line" style="color: var(--blue-dark);">
+        <span>۱۸ ÷ ۶</span>
+        <span class="op">=</span>
+        <span>۳</span>
+      </div>
 
-        /* ========================================================================
-           تعامل ۲: ساده کردن نسبت
-           ======================================================================== */
-        document.getElementById('btn-simplify-ratio').addEventListener('click', function() {
-            const a = parseInt(document.getElementById('simp-ratio-a').value);
-            const b = parseInt(document.getElementById('simp-ratio-b').value);
-            const outputEl = document.getElementById('simp-ratio-output');
-            const stepsEl = document.getElementById('simp-ratio-steps');
-            const feedbackEl = document.getElementById('simp-ratio-feedback');
+      <p style="margin-top: 12px;">پس کسر ساده‌شده می‌شود:</p>
 
-            if (isNaN(a) || isNaN(b) || a <= 0 || b <= 0) {
-                feedbackEl.innerText = '❌ لطفاً دو عدد صحیح مثبت وارد کن!';
-                feedbackEl.style.color = 'var(--danger)';
-                playTone(200, 0.2);
-                return;
-            }
+      <div class="formula-line" style="color: var(--blue-dark); font-size: 1.15rem;">
+        <span class="fraction"><span class="numerator">۱۲</span><span class="denominator">۱۸</span></span>
+        <span class="op">=</span>
+        <span class="fraction"><span class="numerator">۲</span><span class="denominator">۳</span></span>
+      </div>
+    </div>
 
-            const gcd = (x, y) => y === 0 ? x : gcd(y, x % y);
-            const g = gcd(a, b) || 1;
-            const simpleA = a / g;
-            const simpleB = b / g;
+    <div class="simplify-ratio-lab">
+      <div class="sim-title">✂️ ماشین ساده کردن نسبت</div>
 
-            outputEl.innerHTML = `${a.toLocaleString('fa-IR')} : ${b.toLocaleString('fa-IR')} = <strong>${simpleA.toLocaleString('fa-IR')} : ${simpleB.toLocaleString('fa-IR')}</strong>`;
+      <div class="ratio-input-row">
+        <div class="fraction-input">
+          <input type="number" id="simp-ratio-a" class="top" value="12" min="1" max="1000">
+          <span class="frac-bar"></span>
+          <input type="number" id="simp-ratio-b" class="bottom" value="18" min="1" max="1000">
+        </div>
+        <button class="btn-ui green" id="btn-simplify-ratio">ساده کن</button>
+      </div>
 
-            stepsEl.innerHTML = `
-                <div style="padding: 6px 0;"><strong style="color: var(--indigo-dark);">مرحله ۱:</strong> پیدا کردن ب.م.م ${a.toLocaleString('fa-IR')} و ${b.toLocaleString('fa-IR')} = ${g.toLocaleString('fa-IR')}</div>
-                <div style="padding: 6px 0;"><strong style="color: var(--indigo-dark);">مرحله ۲:</strong> تقسیم هر دو عدد بر ${g.toLocaleString('fa-IR')}</div>
-                <div style="padding: 6px 0;"><strong style="color: var(--indigo-dark);">مرحله ۳:</strong> ${a.toLocaleString('fa-IR')} ÷ ${g.toLocaleString('fa-IR')} = ${simpleA.toLocaleString('fa-IR')} و ${b.toLocaleString('fa-IR')} ÷ ${g.toLocaleString('fa-IR')} = ${simpleB.toLocaleString('fa-IR')}</div>
-                <div style="padding: 6px 0;"><strong style="color: var(--indigo-dark);">نتیجه:</strong> نسبت ساده‌شده = ${simpleA.toLocaleString('fa-IR')} : ${simpleB.toLocaleString('fa-IR')}</div>
-            `;
+      <div class="ratio-output-display" id="simp-ratio-output">
+        نتیجه = ؟
+      </div>
 
-            feedbackEl.innerText = `✅ نسبت ساده شد.`;
-            feedbackEl.style.color = 'var(--success)';
-            playTone(600, 0.3);
-            confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
-        });
+      <div class="ratio-steps" id="simp-ratio-steps">
+        <p style="color: var(--text-muted);">برای دیدن مراحل، دکمه‌ی «ساده کن» را بزنید.</p>
+      </div>
+      <p id="simp-ratio-feedback" class="feedback-display"></p>
+    </div>
+  </section>
 
-        /* ========================================================================
-           تعامل ۳: جدول تناسب
-           ======================================================================== */
-        document.getElementById('btn-solve-proportion').addEventListener('click', function() {
-            const a1 = parseFloat(document.getElementById('prop-a1').value);
-            const b1 = parseFloat(document.getElementById('prop-b1').value);
-            const a2 = parseFloat(document.getElementById('prop-a2').value);
-            let b2 = parseFloat(document.getElementById('prop-b2').value);
-            const feedbackEl = document.getElementById('proportion-feedback');
+  <!-- ============ قدم ۴ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۴</span>
+    <h2>جدول تناسب: پیدا کردن مقدار مجهول!</h2>
+    <p>
+      <strong>تناسب</strong> یعنی برابری دو نسبت. اگر دو نسبت با هم مساوی باشند،
+      می‌توانیم مقدار مجهول را با ضرب طرفین در وسطین پیدا کنیم.
+    </p>
 
-            if (isNaN(a1) || isNaN(b1) || isNaN(a2) || a1 === 0) {
-                feedbackEl.innerText = '❌ لطفاً مقادیر را درست وارد کن! (مقدار اول نباید صفر باشد)';
-                feedbackEl.style.color = 'var(--danger)';
-                playTone(200, 0.2);
-                return;
-            }
+    <div class="key-tip-box">
+      <strong>📌 روش حل تناسب (ضرب طرفین در وسطین):</strong>
+      <div class="formula-line" style="margin-top: 10px; font-size: 1.05rem;">
+        <span class="fraction"><span class="numerator">a</span><span class="denominator">b</span></span>
+        <span class="op">=</span>
+        <span class="fraction"><span class="numerator">c</span><span class="denominator">d</span></span>
+        <span class="op" style="padding: 0 8px;">⟹</span>
+        <span>a × d</span>
+        <span class="op">=</span>
+        <span>b × c</span>
+      </div>
+    </div>
 
-            // اگر b2 خالی باشد، حل می‌کنیم
-            if (isNaN(b2) || document.getElementById('prop-b2').value === '') {
-                b2 = (a2 * b1) / a1;
-                document.getElementById('prop-b2').value = Math.round(b2 * 100) / 100;
-                document.getElementById('prop-b2').classList.add('filled');
-                feedbackEl.innerText = `✅ مقدار مجهول پیدا شد: ${b2.toLocaleString('fa-IR')}`;
-            } else {
-                // بررسی درستی تناسب
-                const left = a1 * b2;
-                const right = b1 * a2;
-                if (Math.abs(left - right) < 0.001) {
-                    feedbackEl.innerText = `✅ بله! این یک تناسب درست است. (${a1.toLocaleString('fa-IR')} × ${b2.toLocaleString('fa-IR')} = ${b1.toLocaleString('fa-IR')} × ${a2.toLocaleString('fa-IR')})`;
-                    document.getElementById('prop-b2').classList.add('filled');
-                } else {
-                    feedbackEl.innerText = `❌ این یک تناسب درست نیست. ${a1.toLocaleString('fa-IR')} × ${b2.toLocaleString('fa-IR')} = ${(a1*b2).toLocaleString('fa-IR')} ولی ${b1.toLocaleString('fa-IR')} × ${a2.toLocaleString('fa-IR')} = ${(b1*a2).toLocaleString('fa-IR')}`;
-                    feedbackEl.style.color = 'var(--danger)';
-                    playTone(300, 0.3);
-                    return;
-                }
-            }
+    <div class="proportion-lab">
+      <div class="sim-title">📊 جدول تناسب تعاملی</div>
 
-            feedbackEl.style.color = 'var(--success)';
-            playTone(600, 0.3);
-            confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
-        });
+      <div class="proportion-table-wrapper">
+        <table class="proportion-table" id="proportion-table">
+          <thead>
+            <tr><th>مقدار اول</th><th>مقدار دوم</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="number" id="prop-a1" value="2" min="0" step="0.1"></td>
+              <td><input type="number" id="prop-b1" value="5" min="0" step="0.1"></td>
+            </tr>
+            <tr>
+              <td><input type="number" id="prop-a2" value="6" min="0" step="0.1"></td>
+              <td><input type="number" id="prop-b2" placeholder="؟" min="0" step="0.1"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-        document.getElementById('btn-new-proportion').addEventListener('click', function() {
-            playTone(440, 0.05);
-            // تولید مقادیر تصادفی
-            const a1 = Math.floor(Math.random() * 8) + 2;
-            const b1 = Math.floor(Math.random() * 8) + 2;
-            const multiplier = Math.floor(Math.random() * 4) + 2;
-            const a2 = a1 * multiplier;
-            const b2 = b1 * multiplier;
+      <div class="action-btns-row">
+        <button class="btn-ui green" id="btn-solve-proportion">حل کن</button>
+        <button class="btn-ui blue" id="btn-new-proportion">مثال جدید</button>
+      </div>
+      <p id="proportion-feedback" class="feedback-display"></p>
+    </div>
+  </section>
 
-            document.getElementById('prop-a1').value = a1;
-            document.getElementById('prop-b1').value = b1;
-            document.getElementById('prop-a2').value = a2;
-            document.getElementById('prop-b2').value = '';
-            document.getElementById('prop-b2').placeholder = '؟';
-            document.getElementById('prop-b2').classList.remove('filled');
-            document.getElementById('proportion-feedback').innerText = '';
-        });
+  <!-- ============ قدم ۵ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۵</span>
+    <h2>تمرین نسبت و تناسب</h2>
+    <p>حالا نوبت تمرین است! به سوالات پاسخ بده.</p>
 
-        /* ========================================================================
-           تعامل ۴: تمرین نسبت و تناسب
-           ======================================================================== */
-        let practiceAnswer, practiceUnit, practiceType;
+    <div class="practice-lab">
+      <div class="sim-title">📝 تمرین تعاملی</div>
 
-        function generatePracticeQuestion() {
-            const types = ['simplify-ratio', 'find-ratio', 'proportion'];
-            practiceType = types[Math.floor(Math.random() * types.length)];
+      <div class="practice-question" id="practice-question"></div>
 
-            const qEl = document.getElementById('practice-question');
+      <div class="practice-answer-row" id="practice-answer-row">
+        <!-- حالت ۱: تک ورودی (برای تناسب) -->
+        <div id="practice-single-wrap">
+          <input type="text" id="practice-answer" inputmode="decimal" autocomplete="off" placeholder="پاسخ">
+        </div>
+        <!-- حالت ۲: ورودی کسری (برای نسبت) -->
+        <div id="practice-fraction-wrap" style="display: none;">
+          <div class="fraction-input">
+            <input type="text" id="practice-num" class="top" placeholder="صورت" inputmode="decimal">
+            <span class="frac-bar"></span>
+            <input type="text" id="practice-den" class="bottom" placeholder="مخرج" inputmode="decimal">
+          </div>
+        </div>
+        <button class="btn-ui green" id="btn-check-practice">✓ بررسی</button>
+      </div>
 
-            if (practiceType === 'simplify-ratio') {
-                const gcd = Math.floor(Math.random() * 10) + 2;
-                const a = (Math.floor(Math.random() * 10) + 1) * gcd;
-                const b = (Math.floor(Math.random() * 10) + 1) * gcd;
+      <p id="practice-feedback" class="feedback-display"></p>
+      <button class="btn-ui blue" id="btn-new-practice">🎲 سوال جدید</button>
+    </div>
+  </section>
 
-                const realGcd = (x, y) => y === 0 ? x : realGcd(y, x % y);
-                const g = realGcd(a, b);
-                practiceAnswer = (a / g) * 1000 + (b / g); // ذخیره دو عدد در یک متغیر برای سادگی
-                // بهتر است دو مقدار جدا ذخیره کنیم
-                window.practiceA = a / g;
-                window.practiceB = b / g;
+  <!-- ============ قدم ۶ ============ -->
+  <section class="step-teaching-card">
+    <span class="step-number-badge">۶</span>
+    <h2>جمع‌بندی و تمرین</h2>
+    <p>در این بخش یاد گرفتیم:</p>
+    <ul>
+      <li>✅ نسبت: مقایسه‌ی دو مقدار با هم. نوشتن آن به شکل کسر یا با کلمه‌ی "به".</li>
+      <li>✅ نسبت‌های مساوی: با ضرب یا تقسیم صورت و مخرج در یک عدد به دست می‌آیند.</li>
+      <li>✅ ساده کردن نسبت: تقسیم صورت و مخرج بر ب.م.م آن‌ها.</li>
+      <li>✅ تناسب: برابری دو نسبت.</li>
+      <li>
+        ✅ حل تناسب با ضرب طرفین در وسطین:
+        <span class="formula-line is-inline" style="vertical-align: middle;">
+          <span>a × d</span><span class="op">=</span><span>b × c</span>
+        </span>
+      </li>
+      <li>✅ کاربرد نسبت و تناسب در زندگی روزمره: نقشه‌خوانی، دستور پخت غذا، مقیاس‌ها و... .</li>
+    </ul>
 
-                qEl.innerHTML = `نسبت <strong>${a.toLocaleString('fa-IR')} : ${b.toLocaleString('fa-IR')}</strong> را ساده کنید. پاسخ را به صورت "a:b" وارد کنید.`;
-                document.getElementById('practice-answer').placeholder = 'مثلاً 2:3';
-                document.getElementById('practice-answer').type = 'text';
-                document.getElementById('practice-answer').value = '';
-            } else if (practiceType === 'find-ratio') {
-                const boys = Math.floor(Math.random() * 15) + 5;
-                const girls = Math.floor(Math.random() * 15) + 5;
-                practiceAnswer = boys / girls;
-                qEl.innerHTML = `در کلاسی <strong>${boys.toLocaleString('fa-IR')}</strong> پسر و <strong>${girls.toLocaleString('fa-IR')}</strong> دختر داریم. نسبت پسرها به دخترها را ساده کنید و به صورت "a:b" بنویسید.`;
-                document.getElementById('practice-answer').placeholder = 'مثلاً 2:3';
-                document.getElementById('practice-answer').type = 'text';
-                document.getElementById('practice-answer').value = '';
-                // ذخیره پاسخ
-                const g = (function rgcd(x, y) { return y === 0 ? x : rgcd(y, x % y); })(boys, girls);
-                window.practiceA = boys / g;
-                window.practiceB = girls / g;
-            } else {
-                const a1 = Math.floor(Math.random() * 8) + 2;
-                const b1 = Math.floor(Math.random() * 8) + 2;
-                const multiplier = Math.floor(Math.random() * 4) + 2;
-                const a2 = a1 * multiplier;
-                practiceAnswer = b1 * multiplier;
-                qEl.innerHTML = `اگر ${a1.toLocaleString('fa-IR')} کتاب ${b1.toLocaleString('fa-IR')} تومان باشد، ${a2.toLocaleString('fa-IR')} کتاب چند تومان است؟`;
-                document.getElementById('practice-answer').placeholder = 'پاسخ';
-                document.getElementById('practice-answer').type = 'number';
-                document.getElementById('practice-answer').value = '';
-            }
+    <div class="teacher-speech-bubble">
+      «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی.
+      یادت باشه که نسبت و تناسب، پایه‌ی خیلی از مفاهیم ریاضی در سال‌های بعدی مثل درصد و احتمال هستند.»
+    </div>
 
-            document.getElementById('practice-feedback').innerText = '';
-        }
+    <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
+      <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
+      <ol style="color: #92400e;">
+        <li>نسبت ۱۵ به ۲۵ را ساده کنید.</li>
+        <li>اگر ۳ کتاب ۱۲۰۰۰۰ تومان باشد، ۵ کتاب چند تومان است؟ (با تناسب حل کنید)</li>
+        <li>در یک کلاس ۱۲ پسر و ۱۸ دختر داریم. نسبت پسرها به دخترها و پسرها به کل را بنویسید.</li>
+        <li>اگر ۲ کارگر در ۵ روز دیواری را بسازند، ۴ کارگر در چند روز همان دیوار را می‌سازند؟</li>
+      </ol>
+    </div>
+  </section>
 
-        document.getElementById('btn-check-practice').addEventListener('click', function() {
-            const userAnswer = document.getElementById('practice-answer').value.trim();
-            const feedbackEl = document.getElementById('practice-feedback');
+</main>
 
-            if (userAnswer === '') {
-                feedbackEl.innerText = '❌ لطفاً پاسخ را وارد کن!';
-                feedbackEl.style.color = 'var(--danger)';
-                playTone(200, 0.2);
-                return;
-            }
+<div class="floating-btns">
+  <a class="float-nav-btn" id="prev-lesson-btn" href="#">
+    <span>→</span>
+    <span class="btn-label">بخش قبلی</span>
+    <span class="btn-tooltip" id="prev-tooltip">بخش قبلی</span>
+  </a>
+  <a href="../index.html" class="float-nav-btn home-btn">
+    🏠<span class="btn-label" style="margin-right:4px;">خانه</span>
+  </a>
+  <a class="float-nav-btn" id="next-lesson-btn" href="#">
+    <span class="btn-label">بخش بعدی</span>
+    <span>←</span>
+    <span class="btn-tooltip" id="next-tooltip">بخش بعدی</span>
+  </a>
+</div>
 
-            if (practiceType === 'proportion') {
-                const numAnswer = parseFloat(userAnswer);
-                if (isNaN(numAnswer)) {
-                    feedbackEl.innerText = '❌ لطفاً یک عدد وارد کن!';
-                    feedbackEl.style.color = 'var(--danger)';
-                    return;
-                }
-                if (Math.abs(numAnswer - practiceAnswer) < 0.01) {
-                    feedbackEl.innerText = `✅ آفرین! پاسخ درست ${practiceAnswer.toLocaleString('fa-IR')} است.`;
-                    feedbackEl.style.color = 'var(--success)';
-                    playTone(600, 0.3);
-                    confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
-                } else {
-                    feedbackEl.innerText = `❌ اشتباه! پاسخ درست ${practiceAnswer.toLocaleString('fa-IR')} است.`;
-                    feedbackEl.style.color = 'var(--danger)';
-                    playTone(300, 0.3);
-                }
-            } else {
-                // نسبت
-                const match = userAnswer.match(/^(\d+)\s*[:،,]\s*(\d+)$/);
-                if (!match) {
-                    feedbackEl.innerText = '❌ لطفاً پاسخ را به صورت "a:b" وارد کن!';
-                    feedbackEl.style.color = 'var(--danger)';
-                    playTone(200, 0.2);
-                    return;
-                }
-                const userA = parseInt(match[1]);
-                const userB = parseInt(match[2]);
+<div class="toast-notification" id="toast"></div>
 
-                if (userA === window.practiceA && userB === window.practiceB) {
-                    feedbackEl.innerText = `✅ آفرین! پاسخ درست ${window.practiceA.toLocaleString('fa-IR')} : ${window.practiceB.toLocaleString('fa-IR')} است.`;
-                    feedbackEl.style.color = 'var(--success)';
-                    playTone(600, 0.3);
-                    confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
-                } else {
-                    feedbackEl.innerText = `❌ اشتباه! پاسخ درست ${window.practiceA.toLocaleString('fa-IR')} : ${window.practiceB.toLocaleString('fa-IR')} است.`;
-                    feedbackEl.style.color = 'var(--danger)';
-                    playTone(300, 0.3);
-                }
-            }
-        });
+<script>
+const FILES_ORDER = [
+  'ch01_sec01.html', 'ch01_sec02.html', 'ch01_sec03.html', 'ch01_sec04.html',
+  'ch02_sec01.html', 'ch02_sec02.html', 'ch02_sec03.html', 'ch02_sec04.html',
+  'ch03_sec01.html', 'ch03_sec02.html', 'ch03_sec03.html', 'ch03_sec04.html',
+  'ch04_sec01.html', 'ch04_sec02.html', 'ch04_sec03.html', 'ch04_sec04.html',
+  'ch05_sec01.html', 'ch05_sec02.html', 'ch05_sec03.html', 'ch05_sec04.html',
+  'ch06_sec01.html', 'ch06_sec02.html', 'ch06_sec03.html', 'ch06_sec04.html',
+  'ch07_sec01.html', 'ch07_sec02.html'
+];
 
-        document.getElementById('btn-new-practice').addEventListener('click', () => {
-            playTone(440, 0.05);
-            generatePracticeQuestion();
-        });
+const chapterTitles = {
+  '01': 'عدد و الگوهای عددی',
+  '02': 'کسرها',
+  '03': 'اعداد اعشاری',
+  '04': 'تقارن و مختصات',
+  '05': 'اندازه‌گیری',
+  '06': 'تناسب و درصد',
+  '07': 'مرور و جمع‌بندی'
+};
 
-        generatePracticeQuestion();
+const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+function toFa(str) { return String(str).replace(/\d/g, d => faDigits[+d]); }
 
-        /* ========================================================================
-           مدیریت دکمه‌های شناور
-           ======================================================================== */
-        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('به بخش بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
-        });
+function formatNumber(num) {
+  if (typeof num !== 'number' || isNaN(num)) return '—';
+  let rounded = Math.round(num * 1e6) / 1e6;
+  let str = String(rounded);
+  if (/e/i.test(str)) str = rounded.toFixed(10).replace(/0+$/, '').replace(/\.$/, '');
+  if (str.indexOf('.') !== -1) str = str.replace(/0+$/, '').replace(/\.$/, '');
+  const parts = str.split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '٬');
+  return parts.join('.').replace(/\d/g, d => faDigits[+d]).replace('.', '٫');
+}
+function normalizeDecimalInput(str) {
+  return String(str)
+    .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+    .replace(/٫/g, '.').replace(/،/g, '').replace(/٬/g, '')
+    .replace(/[^\d.\-]/g, '');
+}
 
-    </script>
+function getCurrentFileName() {
+  const path = window.location.pathname;
+  let name = path.substring(path.lastIndexOf('/') + 1);
+  if (!name || name === '') name = 'ch06_sec01.html';
+  return name.toLowerCase();
+}
+function parseFileName(name) {
+  const m = name.match(/ch(\d+)_sec(\d+)\.html?$/i);
+  if (!m) return null;
+  return { chapter: parseInt(m[1], 10), section: parseInt(m[2], 10) };
+}
+function fileLabel(fileName) {
+  const info = parseFileName(fileName);
+  if (!info) return fileName;
+  return `فصل ${toFa(info.chapter)} - بخش ${toFa(info.section)}`;
+}
+
+const currentFile = getCurrentFileName();
+const currentInfo = parseFileName(currentFile) || { chapter: 6, section: 1 };
+const currentIdx = FILES_ORDER.indexOf(currentFile);
+
+function renderLocationBar() {
+  const bar = document.getElementById('book-location-bar');
+  if (!bar) return;
+  const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+  let html = '';
+  html += `<span class="location-chip blue">📍 الان اینجایی: فصل ${toFa(currentInfo.chapter)} - بخش ${toFa(currentInfo.section)}</span>`;
+  const chKey = String(currentInfo.chapter).padStart(2, '0');
+  if (chapterTitles[chKey]) html += `<span class="location-chip">📖 ${chapterTitles[chKey]}</span>`;
+  if (nextFile) html += `<span class="location-chip yellow">⏭️ بعدی: ${fileLabel(nextFile)}</span>`;
+  else html += `<span class="location-chip green">🎉 آخرین بخش کتاب</span>`;
+  bar.innerHTML = html;
+}
+renderLocationBar();
+
+const prevBtn = document.getElementById('prev-lesson-btn');
+const nextBtn = document.getElementById('next-lesson-btn');
+const prevTooltip = document.getElementById('prev-tooltip');
+const nextTooltip = document.getElementById('next-tooltip');
+
+const prevFile = currentIdx > 0 ? FILES_ORDER[currentIdx - 1] : null;
+const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+if (prevFile) {
+  prevBtn.href = prevFile;
+  prevTooltip.textContent = `→ ${fileLabel(prevFile)}`;
+} else {
+  prevBtn.removeAttribute('href');
+  prevBtn.classList.add('disabled');
+  prevTooltip.textContent = 'این اولین بخش کتاب است';
+}
+if (nextFile) {
+  nextBtn.href = nextFile;
+  nextTooltip.textContent = `${fileLabel(nextFile)} ←`;
+} else {
+  nextBtn.removeAttribute('href');
+  nextBtn.classList.add('disabled');
+  nextTooltip.textContent = 'این آخرین بخش کتاب است';
+}
+
+let audioCtx;
+function ensureAudio() {
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { audioCtx = null; }
+  }
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+}
+function playTone(freq, duration) {
+  if (!audioCtx) return;
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain); gain.connect(audioCtx.destination);
+  osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+  gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+  gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+  osc.start(); osc.stop(audioCtx.currentTime + duration);
+}
+
+const toastEl = document.getElementById('toast');
+let toastTimer;
+function showToast(msg, duration = 3200) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
+}
+
+/* ✅ تابع ساخت کسر: همیشه صورت بالا، مخرج پایین */
+function fractionHTML(num, den) {
+  const numStr = (typeof num === 'number') ? formatNumber(num) : num;
+  const denStr = (typeof den === 'number') ? formatNumber(den) : den;
+  return `<span class="fraction"><span class="numerator">${numStr}</span><span class="denominator">${denStr}</span></span>`;
+}
+
+/* ============ تعامل ۱: نسبت‌ساز ============ */
+function gcdCalc(a, b) { return b === 0 ? a : gcdCalc(b, a % b); }
+
+function updateRatioVisual() {
+  const countA = parseInt(document.getElementById('ratio-a-count').value) || 1;
+  const countB = parseInt(document.getElementById('ratio-b-count').value) || 1;
+  const colorA = document.getElementById('ratio-a-color').value;
+  const colorB = document.getElementById('ratio-b-color').value;
+
+  const displayEl = document.getElementById('ratio-visual-display');
+  displayEl.innerHTML = '';
+
+  const groupA = document.createElement('div');
+  groupA.className = 'ratio-circle-group';
+  const rowA = document.createElement('div');
+  rowA.className = 'ratio-circle-row';
+  for (let i = 0; i < countA; i++) {
+    const c = document.createElement('div');
+    c.className = 'ratio-circle';
+    c.style.background = colorA;
+    rowA.appendChild(c);
+  }
+  groupA.appendChild(rowA);
+  const labelA = document.createElement('div');
+  labelA.style.fontWeight = '800';
+  labelA.style.color = 'var(--emerald-deep)';
+  labelA.textContent = formatNumber(countA);
+  groupA.appendChild(labelA);
+
+  const divider = document.createElement('div');
+  divider.style.fontSize = '2rem';
+  divider.style.fontWeight = '900';
+  divider.style.color = 'var(--emerald-main)';
+  divider.textContent = '÷';
+
+  const groupB = document.createElement('div');
+  groupB.className = 'ratio-circle-group';
+  const rowB = document.createElement('div');
+  rowB.className = 'ratio-circle-row';
+  for (let i = 0; i < countB; i++) {
+    const c = document.createElement('div');
+    c.className = 'ratio-circle';
+    c.style.background = colorB;
+    rowB.appendChild(c);
+  }
+  groupB.appendChild(rowB);
+  const labelB = document.createElement('div');
+  labelB.style.fontWeight = '800';
+  labelB.style.color = 'var(--emerald-deep)';
+  labelB.textContent = formatNumber(countB);
+  groupB.appendChild(labelB);
+
+  displayEl.appendChild(groupA);
+  displayEl.appendChild(divider);
+  displayEl.appendChild(groupB);
+
+  const g = gcdCalc(countA, countB) || 1;
+  const simpleA = countA / g;
+  const simpleB = countB / g;
+
+  // ✅ کسر اصلی در چپ، = ، کسر ساده در راست
+  let outputHTML = `<span>نسبت</span> <span class="op">=</span> ${fractionHTML(countA, countB)}`;
+  if (g > 1) {
+    outputHTML += ` <span class="op">=</span> ${fractionHTML(simpleA, simpleB)} <span style="font-size: 0.85em; opacity: 0.85;">(ساده‌شده)</span>`;
+  }
+  document.getElementById('ratio-output').innerHTML = outputHTML;
+}
+
+['ratio-a-count', 'ratio-b-count', 'ratio-a-color', 'ratio-b-color'].forEach(id => {
+  document.getElementById(id).addEventListener('input', updateRatioVisual);
+});
+updateRatioVisual();
+
+/* ============ تعامل ۲: ساده کردن نسبت ============ */
+document.getElementById('btn-simplify-ratio').addEventListener('click', function() {
+  ensureAudio();
+  const a = parseInt(document.getElementById('simp-ratio-a').value);
+  const b = parseInt(document.getElementById('simp-ratio-b').value);
+  const outputEl = document.getElementById('simp-ratio-output');
+  const stepsEl = document.getElementById('simp-ratio-steps');
+  const feedbackEl = document.getElementById('simp-ratio-feedback');
+
+  if (isNaN(a) || isNaN(b) || a <= 0 || b <= 0) {
+    feedbackEl.textContent = '❌ لطفاً دو عدد صحیح مثبت وارد کن!';
+    feedbackEl.style.color = 'var(--danger)';
+    playTone(200, 0.2);
+    return;
+  }
+
+  const g = gcdCalc(a, b) || 1;
+  const simpleA = a / g;
+  const simpleB = b / g;
+
+  // ✅ کسر اصلی سمت چپ = کسر ساده‌شده سمت راست
+  outputEl.innerHTML = `${fractionHTML(a, b)} <span class="op" style="color:var(--text-muted);font-weight:900;">=</span> ${fractionHTML(simpleA, simpleB)}`;
+
+  stepsEl.innerHTML = `
+    <div style="padding: 6px 0;"><strong style="color: var(--emerald-deep);">مرحله ۱:</strong>
+      <span class="formula-line is-inline" style="vertical-align: middle;">
+        <span>ب.م.م ${formatNumber(a)} و ${formatNumber(b)}</span>
+        <span class="op">=</span>
+        <span>${formatNumber(g)}</span>
+      </span>
+    </div>
+    <div style="padding: 6px 0;"><strong style="color: var(--emerald-deep);">مرحله ۲:</strong> تقسیم صورت و مخرج بر ${formatNumber(g)}</div>
+    <div style="padding: 6px 0;">
+      <span class="formula-line is-inline" style="vertical-align: middle;">
+        <span>${formatNumber(a)} ÷ ${formatNumber(g)}</span>
+        <span class="op">=</span>
+        <span>${formatNumber(simpleA)}</span>
+      </span>
+    </div>
+    <div style="padding: 6px 0;">
+      <span class="formula-line is-inline" style="vertical-align: middle;">
+        <span>${formatNumber(b)} ÷ ${formatNumber(g)}</span>
+        <span class="op">=</span>
+        <span>${formatNumber(simpleB)}</span>
+      </span>
+    </div>
+    <div style="padding: 6px 0;"><strong style="color: var(--emerald-deep);">نتیجه:</strong> کسر ساده‌شده = ${fractionHTML(simpleA, simpleB)}</div>
+  `;
+
+  feedbackEl.textContent = '✅ نسبت ساده شد.';
+  feedbackEl.style.color = 'var(--success)';
+  playTone(600, 0.3);
+  confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 }, colors: ['#10b981', '#34d399', '#6ee7b7'] });
+});
+
+/* ============ تعامل ۳: جدول تناسب ============ */
+document.getElementById('btn-solve-proportion').addEventListener('click', function() {
+  ensureAudio();
+  const a1 = parseFloat(normalizeDecimalInput(document.getElementById('prop-a1').value));
+  const b1 = parseFloat(normalizeDecimalInput(document.getElementById('prop-b1').value));
+  const a2 = parseFloat(normalizeDecimalInput(document.getElementById('prop-a2').value));
+  let b2 = parseFloat(normalizeDecimalInput(document.getElementById('prop-b2').value));
+  const feedbackEl = document.getElementById('proportion-feedback');
+
+  if (isNaN(a1) || isNaN(b1) || isNaN(a2) || a1 === 0) {
+    feedbackEl.textContent = '❌ لطفاً مقادیر را درست وارد کن! (مقدار اول نباید صفر باشد)';
+    feedbackEl.style.color = 'var(--danger)';
+    playTone(200, 0.2);
+    return;
+  }
+
+  if (isNaN(b2) || document.getElementById('prop-b2').value === '') {
+    b2 = (a2 * b1) / a1;
+    b2 = Math.round(b2 * 1000) / 1000;
+    document.getElementById('prop-b2').value = b2;
+    document.getElementById('prop-b2').closest('td').classList.add('filled');
+    feedbackEl.innerHTML = `✅ مقدار مجهول = ${formatNumber(b2)}`;
+  } else {
+    const left = a1 * b2;
+    const right = b1 * a2;
+    if (Math.abs(left - right) < 0.001) {
+      feedbackEl.innerHTML = `✅ بله! این یک تناسب درست است.`;
+      document.getElementById('prop-b2').closest('td').classList.add('filled');
+    } else {
+      feedbackEl.innerHTML = `❌ این یک تناسب درست نیست.
+        <div class="formula-line" style="color:var(--danger);font-size:0.95rem;margin-top:6px;">
+          <span>${formatNumber(a1)} × ${formatNumber(b2)}</span>
+          <span class="op">=</span>
+          <span>${formatNumber(left)}</span>
+          <span class="op">≠</span>
+          <span>${formatNumber(b1)} × ${formatNumber(a2)}</span>
+          <span class="op">=</span>
+          <span>${formatNumber(right)}</span>
+        </div>`;
+      feedbackEl.style.color = 'var(--danger)';
+      playTone(300, 0.3);
+      return;
+    }
+  }
+
+  feedbackEl.style.color = 'var(--success)';
+  playTone(600, 0.3);
+  confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 }, colors: ['#10b981', '#34d399', '#6ee7b7'] });
+});
+
+document.getElementById('btn-new-proportion').addEventListener('click', function() {
+  ensureAudio();
+  playTone(440, 0.05);
+  const a1 = Math.floor(Math.random() * 8) + 2;
+  const b1 = Math.floor(Math.random() * 8) + 2;
+  const mult = Math.floor(Math.random() * 4) + 2;
+  const a2 = a1 * mult;
+
+  document.getElementById('prop-a1').value = a1;
+  document.getElementById('prop-b1').value = b1;
+  document.getElementById('prop-a2').value = a2;
+  document.getElementById('prop-b2').value = '';
+  document.getElementById('prop-b2').placeholder = '؟';
+  document.getElementById('prop-b2').closest('td').classList.remove('filled');
+  document.getElementById('proportion-feedback').textContent = '';
+});
+
+/* ============ تعامل ۴: تمرین ============ */
+let practiceAnswer, practiceType, practiceA, practiceB;
+
+function generatePracticeQuestion() {
+  const types = ['simplify-ratio', 'find-ratio', 'proportion'];
+  practiceType = types[Math.floor(Math.random() * types.length)];
+  const qEl = document.getElementById('practice-question');
+
+  const singleWrap = document.getElementById('practice-single-wrap');
+  const fracWrap = document.getElementById('practice-fraction-wrap');
+
+  if (practiceType === 'simplify-ratio') {
+    const g0 = Math.floor(Math.random() * 8) + 2;
+    const a = (Math.floor(Math.random() * 10) + 1) * g0;
+    const b = (Math.floor(Math.random() * 10) + 1) * g0;
+    const g = gcdCalc(a, b);
+    practiceA = a / g;
+    practiceB = b / g;
+    qEl.innerHTML = `کسر زیر را ساده کنید: ${fractionHTML(a, b)}`;
+    // حالت کسری
+    singleWrap.style.display = 'none';
+    fracWrap.style.display = 'inline-flex';
+    document.getElementById('practice-num').value = '';
+    document.getElementById('practice-den').value = '';
+  } else if (practiceType === 'find-ratio') {
+    const boys = Math.floor(Math.random() * 15) + 5;
+    const girls = Math.floor(Math.random() * 15) + 5;
+    const g = gcdCalc(boys, girls);
+    practiceA = boys / g;
+    practiceB = girls / g;
+    qEl.innerHTML = `در کلاسی ${formatNumber(boys)} پسر و ${formatNumber(girls)} دختر داریم. کسر نسبت پسرها به دخترها را ساده کنید.`;
+    singleWrap.style.display = 'none';
+    fracWrap.style.display = 'inline-flex';
+    document.getElementById('practice-num').value = '';
+    document.getElementById('practice-den').value = '';
+  } else {
+    const a1 = Math.floor(Math.random() * 8) + 2;
+    const b1 = Math.floor(Math.random() * 8) + 2;
+    const mult = Math.floor(Math.random() * 4) + 2;
+    const a2 = a1 * mult;
+    practiceAnswer = b1 * mult;
+    qEl.innerHTML = `اگر ${formatNumber(a1)} کتاب ${formatNumber(b1)} تومان باشد، ${formatNumber(a2)} کتاب چند تومان است؟`;
+    singleWrap.style.display = 'inline-flex';
+    fracWrap.style.display = 'none';
+    document.getElementById('practice-answer').value = '';
+  }
+  document.getElementById('practice-feedback').textContent = '';
+}
+
+document.getElementById('btn-check-practice').addEventListener('click', function() {
+  ensureAudio();
+  const feedbackEl = document.getElementById('practice-feedback');
+
+  if (practiceType === 'proportion') {
+    const raw = normalizeDecimalInput(document.getElementById('practice-answer').value);
+    const numAnswer = parseFloat(raw);
+    if (isNaN(numAnswer)) {
+      feedbackEl.textContent = '❌ لطفاً یک عدد وارد کن!';
+      feedbackEl.style.color = 'var(--danger)';
+      playTone(200, 0.2);
+      return;
+    }
+    if (Math.abs(numAnswer - practiceAnswer) < 0.01) {
+      feedbackEl.textContent = `✅ آفرین! پاسخ درست = ${formatNumber(practiceAnswer)}`;
+      feedbackEl.style.color = 'var(--success)';
+      playTone(600, 0.3);
+      confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 }, colors: ['#10b981', '#34d399', '#6ee7b7'] });
+    } else {
+      feedbackEl.textContent = `❌ اشتباه! پاسخ درست = ${formatNumber(practiceAnswer)}`;
+      feedbackEl.style.color = 'var(--danger)';
+      playTone(300, 0.3);
+      document.getElementById('practice-question').classList.add('shake-anim');
+      setTimeout(() => document.getElementById('practice-question').classList.remove('shake-anim'), 500);
+    }
+  } else {
+    // حالت کسری: صورت و مخرج
+    const numRaw = normalizeDecimalInput(document.getElementById('practice-num').value);
+    const denRaw = normalizeDecimalInput(document.getElementById('practice-den').value);
+    const userNum = parseInt(numRaw);
+    const userDen = parseInt(denRaw);
+
+    if (isNaN(userNum) || isNaN(userDen)) {
+      feedbackEl.textContent = '❌ لطفاً صورت و مخرج کسر را وارد کن!';
+      feedbackEl.style.color = 'var(--danger)';
+      playTone(200, 0.2);
+      return;
+    }
+    if (userNum === practiceA && userDen === practiceB) {
+      feedbackEl.innerHTML = `✅ آفرین! پاسخ درست = ${fractionHTML(practiceA, practiceB)}`;
+      feedbackEl.style.color = 'var(--success)';
+      playTone(600, 0.3);
+      confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 }, colors: ['#10b981', '#34d399', '#6ee7b7'] });
+    } else {
+      feedbackEl.innerHTML = `❌ اشتباه! پاسخ درست = ${fractionHTML(practiceA, practiceB)}`;
+      feedbackEl.style.color = 'var(--danger)';
+      playTone(300, 0.3);
+      document.getElementById('practice-question').classList.add('shake-anim');
+      setTimeout(() => document.getElementById('practice-question').classList.remove('shake-anim'), 500);
+    }
+  }
+});
+
+document.getElementById('btn-new-practice').addEventListener('click', () => {
+  ensureAudio();
+  playTone(440, 0.05);
+  generatePracticeQuestion();
+});
+
+// Enter در هر سه ورودی
+['practice-answer', 'practice-num', 'practice-den'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') document.getElementById('btn-check-practice').click();
+  });
+});
+
+generatePracticeQuestion();
+
+document.body.addEventListener('click', function initAudioOnce() {
+  ensureAudio();
+  document.body.removeEventListener('click', initAudioOnce);
+}, { once: true });
+
+prevBtn.addEventListener('click', (e) => {
+  if (prevBtn.classList.contains('disabled')) {
+    e.preventDefault();
+    showToast('این اولین بخش کتاب است. 😊');
+    playTone(300, 0.15);
+  }
+});
+nextBtn.addEventListener('click', (e) => {
+  if (nextBtn.classList.contains('disabled')) {
+    e.preventDefault();
+    showToast('🎉 تبریک! تمام فصل‌ها را کامل خواندی!');
+    playTone(700, 0.25);
+    confetti({ particleCount: 120, spread: 100, origin: { y: 0.6 }, colors: ['#10b981', '#34d399', '#6ee7b7'] });
+  }
+});
+</script>
 </body>
 </html>

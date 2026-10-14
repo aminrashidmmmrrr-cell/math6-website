@@ -2,598 +2,553 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>فصل ۵ - بخش ۴: خط و زاویه | درسنامه تعاملی</title>
-    
-    <!-- قلم زیبای وزیرمتن -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 
-    <!-- انیمیشن کاغذ رنگی -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* ========================================================================
-           ۱. متغیرها و تم رنگی
-           ======================================================================== */
         :root {
             --lilac-bg: #f7f1fc;
             --lilac-soft: #f1e7fb;
             --lilac-border: #d8b4fe;
             --lilac-main: #9333ea;
             --lilac-dark: #6b21a8;
-            --lilac-glow: rgba(147, 51, 234, 0.15);
-            
+
             --blue-soft: #e0f2fe;
             --blue-main: #0284c7;
             --blue-dark: #0369a1;
-            
+
             --success: #16a34a;
             --success-bg: rgba(22, 163, 74, 0.1);
             --danger: #dc2626;
             --danger-bg: rgba(220, 38, 38, 0.1);
             --warning: #ca8a04;
             --highlight: #fef08a;
-            --cyan-soft: #cffafe;
-            --cyan-main: #06b6d4;
-            --cyan-dark: #0e7490;
 
-            --glass-bg: rgba(255, 255, 255, 0.85);
+            --orange-soft: #ffedd5;
+            --orange-main: #f97316;
+            --orange-dark: #c2410c;
+
+            --glass-bg: rgba(255, 255, 255, 0.9);
             --glass-border: rgba(255, 255, 255, 0.9);
-            --glass-shadow: 0 16px 48px rgba(107, 33, 168, 0.1);
-            --card-hover-bg: rgba(255, 255, 255, 0.95);
-            
+            --glass-shadow: 0 12px 36px rgba(107, 33, 168, 0.1);
             --text-title: #2e1065;
             --text-body: #475569;
             --text-muted: #64748b;
-            
+
             --radius-lg: 24px;
             --radius-md: 16px;
-            --radius-sm: 8px;
+            --radius-sm: 10px;
         }
 
-        /* ========================================================================
-           ۲. استایل‌های پایه
-           ======================================================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; -webkit-tap-highlight-color: transparent; }
+        html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
         body {
             background-color: var(--lilac-bg);
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.5) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(241, 231, 251, 0.5) 0px, transparent 50%);
             background-attachment: fixed;
             color: var(--text-body);
             min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            line-height: 1.8;
+            padding: 16px;
+            display: flex; flex-direction: column;
+            overflow-x: hidden; line-height: 1.8;
         }
 
-        /* ========================================================================
-           ۳. نوار هدر
-           ======================================================================== */
-        .lesson-top-nav {
-            max-width: 1100px;
+        /* ✅ کلاس فرمول: Flexbox + LTR — «چیز اصلی» سمت چپ */
+        .formula-line {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            direction: ltr;
+            font-variant-numeric: tabular-nums;
+            line-height: 2;
+            font-weight: 800;
+            padding: 4px 0;
             width: 100%;
-            margin: 0 auto 20px;
-            padding: 14px 28px;
+        }
+        .formula-line.is-inline { display: inline-flex; width: auto; vertical-align: middle; }
+        .formula-line .op {
+            color: var(--text-muted);
+            font-weight: 900;
+            padding: 0 2px;
+        }
+        /* ✅ واحد سمت چپ عدد */
+        .unit-num {
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+            direction: ltr;
+        }
+        .unit-num .u-unit { font-weight: 800; }
+        .unit-num .u-val { font-weight: 900; font-variant-numeric: tabular-nums; }
+
+        /* ============ هدر ============ */
+        .lesson-top-nav {
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px; padding: 14px 22px;
             background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
             box-shadow: var(--glass-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px; z-index: 100;
         }
-
         .go-back-link {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 800;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.2s, transform 0.2s;
+            text-decoration: none; color: var(--text-muted);
+            font-weight: 800; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 8px;
+            transition: color 0.2s, transform 0.2s; white-space: nowrap;
         }
-
-        .go-back-link:hover {
-            color: var(--cyan-main);
-            transform: translateX(3px);
-        }
-
-        .header-lesson-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-        }
-
+        .go-back-link:hover { color: var(--orange-dark); transform: translateX(3px); }
+        .header-lesson-info { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 0; }
         .chapter-label-badge {
-            background: var(--cyan-soft);
-            color: var(--cyan-dark);
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 3px 10px;
+            background: var(--orange-soft); color: var(--orange-dark);
+            font-size: 0.72rem; font-weight: 800;
+            padding: 3px 10px; border-radius: 20px; white-space: nowrap;
+        }
+        .lesson-title-text { font-size: 1.05rem; font-weight: 900; color: var(--text-title); letter-spacing: -0.5px; }
+
+        /* ============ نوار موقعیت ============ */
+        .book-location-bar {
+            max-width: 1100px; width: 100%;
+            margin: 0 auto 20px;
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 14px;
+            background: var(--glass-bg);
             border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(107, 33, 168, 0.06);
+            flex-wrap: wrap; justify-content: center;
         }
-
-        .lesson-title-text {
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: var(--text-title);
+        .location-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--orange-soft); color: var(--orange-dark);
+            padding: 4px 12px; border-radius: 20px;
+            font-weight: 800; font-size: 0.82rem;
+            white-space: nowrap;
         }
+        .location-chip.blue { background: var(--blue-soft); color: var(--blue-dark); }
+        .location-chip.yellow { background: #fef9c3; color: #854d0e; }
+        .location-chip.green { background: #dcfce7; color: #166534; }
 
-        /* ========================================================================
-           ۴. کارت‌های آموزشی
-           ======================================================================== */
+        /* ============ کارت‌ها ============ */
         .main-lesson-wrapper {
-            max-width: 1100px;
-            width: 100%;
+            max-width: 1100px; width: 100%;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding-bottom: 80px;
+            display: flex; flex-direction: column;
+            gap: 20px; padding-bottom: 120px;
         }
-
         .step-teaching-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
-            padding: 28px;
+            padding: 26px;
             box-shadow: var(--glass-shadow);
-            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
-
-        .step-teaching-card:hover {
-            background-color: var(--card-hover-bg);
-            transform: translateY(-5px);
-        }
-
         .step-number-badge {
-            display: inline-flex;
-            width: 32px;
-            height: 32px;
+            display: inline-flex; width: 34px; height: 34px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--cyan-main), var(--cyan-dark));
-            color: white;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 0.95rem;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 10px rgba(6, 182, 212, 0.25);
+            background: linear-gradient(135deg, var(--orange-main), var(--orange-dark));
+            color: white; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1rem;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 10px rgba(249, 115, 22, 0.25);
         }
-
         .step-teaching-card h2 {
-            font-size: 1.4rem;
-            color: var(--text-title);
-            margin-bottom: 12px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-size: 1.3rem; color: var(--text-title);
+            margin-bottom: 12px; font-weight: 900;
+            display: flex; align-items: center; gap: 10px;
+            letter-spacing: -0.8px; line-height: 1.6; flex-wrap: wrap;
+        }
+        .step-teaching-card p { font-size: 1rem; line-height: 2; color: var(--text-body); margin-bottom: 14px; }
+        .step-teaching-card ul, .step-teaching-card ol {
+            margin-right: 22px; color: var(--text-body);
+            font-weight: 600; line-height: 2.1; margin-bottom: 12px;
         }
 
-        .step-teaching-card p {
-            font-size: 1rem;
-            line-height: 1.9;
-            color: var(--text-body);
-            margin-bottom: 16px;
-        }
-
-        /* ========================================================================
-           ۵. المان‌های خاص
-           ======================================================================== */
+        /* ============ المان‌های خاص ============ */
         .teacher-speech-bubble {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.75);
             border-radius: var(--radius-md);
-            padding: 18px 22px;
-            border: 1px dashed var(--cyan-main);
-            color: var(--cyan-dark);
-            margin: 16px 0;
-            position: relative;
-            font-style: italic;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
+            padding: 16px 20px;
+            border: 1px dashed var(--orange-main);
+            color: var(--orange-dark);
+            margin: 14px 0; font-style: italic;
+            display: flex; gap: 12px; align-items: flex-start;
+            font-size: 0.95rem; line-height: 1.9;
         }
-
-        .teacher-speech-bubble::before {
-            content: "🧑‍🏫";
-            font-size: 1.4rem;
-            font-style: normal;
-        }
+        .teacher-speech-bubble::before { content: "🧑‍🏫"; font-size: 1.4rem; font-style: normal; flex-shrink: 0; }
 
         .solved-example-box {
             background: var(--blue-soft);
             border: 1px solid rgba(2, 132, 199, 0.2);
             border-radius: var(--radius-md);
-            padding: 20px;
-            margin: 16px 0;
+            padding: 18px; margin: 14px 0;
+            word-break: break-word;
+            font-size: 1.05rem;
         }
-
         .example-header {
-            font-weight: 800;
-            color: var(--blue-dark);
-            font-size: 1rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-weight: 800; color: var(--blue-dark);
+            font-size: 1rem; margin-bottom: 8px;
+            display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
         }
+        .solved-example-box p { font-size: 1.05rem; line-height: 2.2; color: var(--blue-dark); margin-bottom: 8px; }
 
         .key-tip-box {
             background: var(--success-bg);
             border: 1px solid var(--success);
             border-radius: var(--radius-md);
-            padding: 16px;
-            margin: 16px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--success);
-            font-weight: 700;
-            font-size: 0.9rem;
+            padding: 14px 16px; margin: 14px 0;
+            color: var(--success); font-weight: 700;
+            font-size: 0.95rem; line-height: 1.9;
         }
-
-        /* ========================================================================
-           ۶. بخش تعاملی ۱: آزمایشگاه زاویه
-           ======================================================================== */
-        .interactive-container {
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            margin-top: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            border: 1px solid var(--glass-border);
-        }
+        .key-tip-box strong { color: var(--success); }
+        .key-tip-box ul { margin-top: 8px; line-height: 2.1; }
 
         .sim-title {
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: var(--cyan-dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
+            font-weight: 800; font-size: 1.05rem;
+            color: var(--orange-dark);
+            display: flex; align-items: center; gap: 8px; line-height: 1.6;
+            flex-wrap: wrap;
         }
 
-        .angle-lab {
+        /* ============ آزمایشگاه‌ها ============ */
+        .lab-box, .angle-lab, .angle-types-lab, .complement-supplement-lab, .practice-lab {
             background: white;
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 20px;
             border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
+            display: flex; flex-direction: column;
+            gap: 16px; align-items: center;
+            width: 100%;
         }
 
+        .canvas-container { display: flex; justify-content: center; width: 100%; }
         #angle-canvas {
             border-radius: var(--radius-sm);
             border: 2px solid #e2e8f0;
-            background: #fafafa;
+            background: linear-gradient(135deg, #fff7ed, #fef3c7);
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            aspect-ratio: 1 / 1;
         }
 
-        .angle-controls {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
+        /* ============ کنترل‌ها ============ */
+        .angle-controls, .input-row {
+            display: flex; gap: 10px;
+            flex-wrap: wrap; justify-content: center;
             align-items: center;
+            padding: 12px;
+            background: #fafafa;
+            border-radius: var(--radius-sm);
+            border: 1px solid #e2e8f0;
+            width: 100%;
         }
-
+        .angle-controls label, .angle-controls span {
+            font-weight: 800;
+            color: var(--orange-dark);
+            font-size: 0.92rem;
+            white-space: nowrap;
+        }
         .angle-controls input[type="range"] {
-            width: 250px;
-            accent-color: var(--cyan-main);
+            width: 200px;
+            accent-color: var(--orange-main);
         }
-
-        .angle-controls input[type="number"] {
+        .angle-controls input[type="number"], .angle-controls input[type="text"] {
             width: 90px;
             padding: 10px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 900;
             text-align: center;
-            border: 2px solid var(--cyan-main);
-            border-radius: 8px;
-            color: var(--cyan-dark);
-            background: #fafafa;
+            border: 2px solid var(--orange-main);
+            border-radius: 10px;
+            color: var(--orange-dark);
+            background: white;
+            font-family: 'Vazirmatn', sans-serif;
+            direction: ltr;
         }
-        .angle-controls input[type="number"]:focus { outline: none; border-color: var(--cyan-main); }
+        .angle-controls input:focus { outline: none; border-color: var(--orange-dark); box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15); }
 
+        /* ============ نمایش اطلاعات زاویه ============ */
         .angle-info-display {
-            background: var(--cyan-soft);
-            padding: 16px 24px;
+            background: var(--orange-soft);
+            padding: 14px 18px;
             border-radius: var(--radius-sm);
-            font-weight: 700;
-            color: var(--cyan-dark);
+            font-weight: 800;
+            color: var(--orange-dark);
             text-align: center;
-            font-size: 1.1rem;
-            min-height: 60px;
+            font-size: 1.05rem;
+            min-height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
             gap: 8px;
             width: 100%;
+            line-height: 2;
         }
 
-        /* ========================================================================
-           ۷. بخش تعاملی ۲: انواع زاویه
-           ======================================================================== */
-        .angle-types-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
+        /* ============ انواع زاویه ============ */
         .angle-cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
             width: 100%;
         }
-
         .angle-type-card {
             background: #fafafa;
             border: 2px solid #e2e8f0;
             border-radius: var(--radius-sm);
-            padding: 12px;
+            padding: 10px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
         }
-
         .angle-type-card:hover {
-            border-color: var(--cyan-main);
-            background: var(--cyan-soft);
+            border-color: var(--orange-main);
+            background: var(--orange-soft);
             transform: translateY(-3px);
         }
-
         .angle-type-card.selected {
-            border-color: var(--cyan-main);
-            background: var(--cyan-soft);
-            box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.2);
+            border-color: var(--orange-main);
+            background: var(--orange-soft);
+            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.2);
         }
-
-        .angle-type-card canvas {
-            background: white;
-            border-radius: 4px;
-        }
-
+        .angle-type-card canvas { background: white; border-radius: 4px; max-width: 100%; height: auto; }
         .angle-type-card .angle-name {
             font-weight: 800;
-            font-size: 0.85rem;
-            color: var(--cyan-dark);
+            font-size: 0.82rem;
+            color: var(--orange-dark);
             margin-top: 6px;
         }
 
-        /* ========================================================================
-           ۸. بخش تعاملی ۳: متمم و مکمل
-           ======================================================================== */
-        .complement-supplement-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-
+        /* ============ متمم و مکمل ============ */
         .cs-display {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
             width: 100%;
         }
-
         .cs-box {
-            background: var(--cyan-soft);
-            padding: 20px 28px;
+            background: var(--orange-soft);
+            padding: 18px 14px;
             border-radius: var(--radius-sm);
-            font-size: 1.2rem;
+            font-size: 1.05rem;
             font-weight: 900;
-            color: var(--cyan-dark);
+            color: var(--orange-dark);
             text-align: center;
-            flex: 1;
-            min-width: 200px;
+            display: flex; flex-direction: column;
+            align-items: center; gap: 8px;
+            border: 2px solid var(--orange-main);
         }
-
+        .cs-box.blue {
+            background: var(--blue-soft);
+            color: var(--blue-dark);
+            border-color: var(--blue-main);
+        }
         .cs-box .cs-label {
-            font-size: 0.9rem;
+            font-size: 0.82rem;
             display: block;
-            margin-bottom: 8px;
-            opacity: 0.8;
+            opacity: 0.85;
+            font-weight: 800;
         }
-
         .cs-box .cs-value {
-            font-size: 1.6rem;
-        }
-
-        /* ========================================================================
-           ۹. بخش تعاملی ۴: تمرین زاویه
-           ======================================================================== */
-        .practice-lab {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
+            display: inline-flex;
+            flex-direction: row;
             align-items: center;
+            gap: 6px;
+            direction: ltr;
+            font-variant-numeric: tabular-nums;
         }
 
-        .practice-question {
-            background: var(--cyan-soft);
-            padding: 20px 32px;
+        /* ============ نمایش نتیجه ============ */
+        .one-line-result {
+            background: var(--orange-soft);
+            padding: 14px 16px;
             border-radius: var(--radius-sm);
-            font-size: 1.2rem;
+            font-size: clamp(0.95rem, 3.2vw, 1.1rem);
+            font-weight: 800;
+            color: var(--orange-dark);
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            direction: ltr;
+            border: 1px solid var(--orange-main);
+            min-height: 56px;
+            width: 100%;
+            line-height: 2.2;
+            word-break: break-word;
+        }
+        .one-line-result.blue-theme {
+            background: var(--blue-soft);
+            border-color: var(--blue-main);
+            color: var(--blue-dark);
+        }
+
+        /* ============ تمرین ============ */
+        .practice-question {
+            background: var(--orange-soft);
+            padding: 16px 20px;
+            border-radius: var(--radius-sm);
+            font-size: 1.05rem;
             font-weight: 900;
-            color: var(--cyan-dark);
+            color: var(--orange-dark);
             display: flex;
             align-items: center;
             gap: 10px;
             flex-wrap: wrap;
             justify-content: center;
             text-align: center;
+            width: 100%;
+            line-height: 2.2;
         }
-
         .practice-answer-row {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
+            display: flex; gap: 10px;
+            align-items: center; flex-wrap: wrap;
             justify-content: center;
+            width: 100%;
         }
-
         .practice-answer-row input {
             width: 130px;
             padding: 10px;
             font-size: 1.2rem;
             font-weight: 900;
             text-align: center;
-            border: 2px solid var(--cyan-main);
-            border-radius: 8px;
-            color: var(--cyan-dark);
-            background: #fafafa;
+            border: 2px solid var(--orange-main);
+            border-radius: 10px;
+            color: var(--orange-dark);
+            background: white;
+            font-family: 'Vazirmatn', sans-serif;
+            direction: ltr;
         }
-        .practice-answer-row input:focus { outline: none; border-color: var(--cyan-main); }
-
-        /* ========================================================================
-           ۱۰. دکمه‌ها
-           ======================================================================== */
-        .btn-ui {
-            background: linear-gradient(135deg, var(--cyan-main), var(--cyan-dark));
-            color: white;
-            border: 2px solid white;
-            padding: 12px 28px;
-            border-radius: 30px;
+        .practice-answer-row input:focus { outline: none; box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15); }
+        .practice-answer-row .answer-unit {
             font-weight: 800;
-            font-size: 1rem;
+            color: var(--orange-dark);
+            font-size: 0.95rem;
+            padding: 8px 14px;
+            background: var(--orange-soft);
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+
+        /* ============ دکمه‌ها ============ */
+        .btn-ui {
+            background: linear-gradient(135deg, var(--orange-main), var(--orange-dark));
+            color: white; border: none;
+            padding: 12px 22px; border-radius: 30px;
+            font-weight: 800; font-size: 0.92rem;
             cursor: pointer;
             transition: transform 0.15s, box-shadow 0.15s;
-            box-shadow: 0 6px 16px rgba(6, 182, 212, 0.25);
+            box-shadow: 0 6px 16px rgba(249, 115, 22, 0.25);
+            font-family: 'Vazirmatn', sans-serif;
+            min-height: 46px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .btn-ui:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(6, 182, 212, 0.35);
-        }
+        .btn-ui:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(249, 115, 22, 0.35); }
         .btn-ui:active { transform: translateY(0); }
         .btn-ui:disabled { opacity: 0.5; cursor: not-allowed; }
-
         .btn-ui.blue { background: linear-gradient(135deg, var(--blue-main), var(--blue-dark)); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25); }
         .btn-ui.blue:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); }
-
         .btn-ui.green { background: linear-gradient(135deg, var(--success), #15803d); box-shadow: 0 6px 16px rgba(22, 163, 74, 0.25); }
         .btn-ui.green:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35); }
 
-        .btn-ui.lilac { background: linear-gradient(135deg, var(--lilac-main), var(--lilac-dark)); box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25); }
-        .btn-ui.lilac:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(147, 51, 234, 0.35); }
-
-        .action-btns-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
         .feedback-display {
-            font-weight: 800;
-            text-align: center;
-            min-height: 28px;
-            font-size: 1rem;
-            margin-top: 10px;
-            transition: color 0.2s;
+            font-weight: 800; text-align: center;
+            min-height: 28px; font-size: 0.98rem;
+            margin-top: 8px; transition: color 0.2s; line-height: 2;
+            word-break: break-word;
+            width: 100%;
         }
 
-        /* ========================================================================
-           ۱۱. دکمه‌های شناور
-           ======================================================================== */
+        /* ============ دکمه‌های شناور ============ */
         .floating-btns {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none;
-            z-index: 200;
-            max-width: 1100px;
-            margin: 0 auto;
+            position: fixed; bottom: 16px;
+            left: 16px; right: 16px;
+            display: flex; justify-content: space-between;
+            align-items: center; gap: 10px;
+            pointer-events: none; z-index: 200;
+            max-width: 1100px; margin: 0 auto;
         }
-
         .float-nav-btn {
             pointer-events: auto;
             background: var(--glass-bg);
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 800;
-            color: var(--text-title);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 12px 20px; border-radius: 30px;
+            font-weight: 800; color: var(--text-title);
+            text-decoration: none; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
             transition: all 0.2s;
+            font-size: 0.9rem;
+            font-family: 'Vazirmatn', sans-serif;
+            position: relative;
         }
-
-        .float-nav-btn:hover {
-            background: var(--cyan-main);
-            color: white;
+        .float-nav-btn:hover:not(.disabled) {
+            background: var(--orange-main); color: white;
             transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.25);
+            box-shadow: 0 15px 35px rgba(249, 115, 22, 0.25);
         }
+        .float-nav-btn.disabled { opacity: 0.45; cursor: not-allowed; }
+        .float-nav-btn.disabled:hover { background: var(--glass-bg); color: var(--text-title); transform: none; }
+        .float-nav-btn.home-btn {
+            background: linear-gradient(135deg, var(--orange-main), var(--orange-dark));
+            color: white; border-color: transparent;
+            padding: 12px 16px;
+        }
+        .float-nav-btn.home-btn:hover {
+            background: linear-gradient(135deg, var(--orange-dark), var(--orange-main));
+            transform: translateY(-3px) scale(1.05);
+        }
+        .float-nav-btn .btn-tooltip {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            background: rgba(46, 16, 101, 0.95);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 8px;
+            white-space: nowrap;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .float-nav-btn:hover .btn-tooltip { opacity: 1; }
 
-        @media (max-width: 600px) {
-            .float-nav-btn { padding: 10px 16px; font-size: 0.8rem; }
-            .lesson-top-nav { flex-direction: column; align-items: stretch; text-align: center; }
-            .header-lesson-info { align-items: center; }
+        /* ============ Toast ============ */
+        .toast-notification {
+            position: fixed; bottom: 100px; left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: rgba(46, 16, 101, 0.96);
+            color: white; padding: 14px 24px;
+            border-radius: 14px; font-weight: 700;
+            font-size: 0.92rem; z-index: 1000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            max-width: 90%; text-align: center;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+            line-height: 1.7;
         }
-
-        /* ========================================================================
-           ۱۲. انیمیشن
-           ======================================================================== */
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .pop-in { animation: popIn 0.3s ease-out forwards; }
+        .toast-notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
@@ -603,13 +558,49 @@
             80% { transform: translateX(4px); }
         }
         .shake-anim { animation: shake 0.4s ease-in-out; }
+
+        /* ============ ریسپانسیو ============ */
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .lesson-top-nav {
+                flex-direction: column; align-items: stretch;
+                text-align: center; padding: 14px 16px; gap: 10px;
+            }
+            .header-lesson-info { align-items: center; }
+            .go-back-link { justify-content: center; }
+            .lesson-title-text { text-align: center; }
+
+            .step-teaching-card { padding: 20px 16px; border-radius: 20px; }
+            .step-teaching-card h2 { font-size: 1.15rem; }
+            .step-teaching-card p { font-size: 0.95rem; }
+            .step-teaching-card ul, .step-teaching-card ol { margin-right: 18px; font-size: 0.95rem; }
+
+            .lab-box, .angle-lab, .angle-types-lab, .complement-supplement-lab, .practice-lab { padding: 14px 10px; }
+            .angle-controls input[type="range"] { width: 160px; }
+            .angle-controls input[type="number"] { width: 80px; font-size: 1rem; padding: 8px; }
+
+            .cs-display { grid-template-columns: 1fr; }
+
+            .float-nav-btn { padding: 11px 14px; font-size: 0.82rem; gap: 5px; }
+            .float-nav-btn .btn-label { display: none; }
+            .float-nav-btn.home-btn { padding: 11px 14px; }
+
+            .teacher-speech-bubble { padding: 12px 14px; font-size: 0.88rem; }
+            .key-tip-box { padding: 12px 12px; font-size: 0.88rem; }
+            .formula-line { font-size: 0.95rem; gap: 4px; }
+        }
+
+        @media (max-width: 480px) {
+            .angle-controls { flex-direction: column; gap: 8px; }
+            .angle-controls input[type="number"] { width: 100%; max-width: 160px; }
+            .angle-controls input[type="range"] { width: 100%; max-width: 220px; }
+            .practice-answer-row input { width: 110px; font-size: 1rem; }
+            .formula-line { font-size: 0.88rem; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ========================================================================
-         نوار ناوبری بالای درسنامه
-         ======================================================================== -->
     <header class="lesson-top-nav">
         <a href="../index.html" class="go-back-link">
             <span>← برگشت به کتاب اصلی</span>
@@ -620,21 +611,19 @@
         </div>
     </header>
 
+    <div class="book-location-bar" id="book-location-bar"></div>
+
     <main class="main-lesson-wrapper">
 
-        <!-- ========================================================================
-           قدم ۱: یادآوری خط و انواع آن
-           ======================================================================== -->
+        <!-- ============ قدم ۱ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۱</span>
             <h2>خط و انواع آن: از کوتاه تا بی‌نهایت!</h2>
-            <p>
-                در هندسه با سه نوع خط اصلی سر و کار داریم:
-            </p>
+            <p>در هندسه با سه نوع خط اصلی سر و کار داریم:</p>
 
             <div class="key-tip-box">
                 <strong>📌 انواع خط:</strong>
-                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.4;">
+                <ul>
                     <li><strong>پاره‌خط:</strong> خطی که دو سر آن مشخص است (مثل ضلع یک مثلث).</li>
                     <li><strong>نیم‌خط:</strong> خطی که یک سر آن مشخص و سر دیگر تا بی‌نهایت ادامه دارد.</li>
                     <li><strong>خط راست:</strong> خطی که از دو طرف تا بی‌نهایت ادامه دارد.</li>
@@ -643,81 +632,66 @@
 
             <div class="solved-example-box">
                 <div class="example-header">💡 زاویه چیست؟</div>
-                <p>زاویه از تلاقی دو نیم‌خط در یک نقطه (رأس) به وجود می‌آید. 
+                <p>زاویه از تلاقی دو نیم‌خط در یک نقطه (رأس) به وجود می‌آید.
                 اندازه‌ی زاویه را با <strong>درجه</strong> اندازه‌گیری می‌کنیم.</p>
             </div>
 
             <div class="teacher-speech-bubble">
-                «زاویه مثل دهانه‌ی یک قیچی است! هرچقدر قیچی را بیشتر باز کنی، زاویه بزرگ‌تر می‌شود. 
+                «زاویه مثل دهانه‌ی یک قیچی است! هرچقدر قیچی را بیشتر باز کنی، زاویه بزرگ‌تر می‌شود.
                 برای اندازه‌گیری زاویه از نقاله استفاده می‌کنیم.»
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۲: آزمایشگاه زاویه
-           ======================================================================== -->
+        <!-- ============ قدم ۲ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۲</span>
             <h2>آزمایشگاه زاویه: زاویه را تغییر بده!</h2>
-            <p>
-                با تغییر اسلایدر، اندازه‌ی زاویه را تغییر بده و ببین نوع آن چه تغییری می‌کند.
-            </p>
+            <p>با تغییر اسلایدر، اندازه‌ی زاویه را تغییر بده و ببین نوع آن چه تغییری می‌کند.</p>
 
-            <!-- ابزار تعاملی ۱: آزمایشگاه زاویه -->
             <div class="angle-lab">
                 <div class="sim-title">📐 آزمایشگاه زاویه</div>
 
-                <canvas id="angle-canvas" width="400" height="400"></canvas>
+                <div class="canvas-container">
+                    <canvas id="angle-canvas" width="400" height="400"></canvas>
+                </div>
 
                 <div class="angle-controls">
-                    <span style="font-weight:800;">زاویه:</span>
+                    <label for="angle-slider">زاویه:</label>
                     <input type="range" id="angle-slider" min="0" max="360" value="45">
                     <input type="number" id="angle-number" value="45" min="0" max="360">
-                    <span style="font-weight:800;">درجه</span>
+                    <span>درجه</span>
                 </div>
 
-                <div class="angle-info-display" id="angle-info">
-                    زاویه ۴۵ درجه: حاده
-                </div>
+                <div class="angle-info-display" id="angle-info">—</div>
                 <p id="angle-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۳: انواع زاویه
-           ======================================================================== -->
+        <!-- ============ قدم ۳ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۳</span>
             <h2>انواع زاویه: از حاده تا تمام‌صفحه!</h2>
-            <p>
-                زاویه‌ها بر اساس اندازه‌شان به انواع مختلفی تقسیم می‌شوند:
-            </p>
+            <p>زاویه‌ها بر اساس اندازه‌شان به انواع مختلفی تقسیم می‌شوند:</p>
 
             <div class="key-tip-box">
                 <strong>📌 انواع زاویه:</strong>
-                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.4;">
+                <ul>
                     <li><strong>حاده:</strong> بین ۰ تا ۹۰ درجه</li>
                     <li><strong>قائمه:</strong> دقیقاً ۹۰ درجه</li>
                     <li><strong>منفرجه:</strong> بین ۹۰ تا ۱۸۰ درجه</li>
                     <li><strong>نیم‌صفحه (مستقیم):</strong> دقیقاً ۱۸۰ درجه</li>
-                    <li><strong>تمام‌صفحه:</strong> دقیقاً ۳۶۰ درجه</li>
                     <li><strong>بازتاب:</strong> بین ۱۸۰ تا ۳۶۰ درجه</li>
+                    <li><strong>تمام‌صفحه:</strong> دقیقاً ۳۶۰ درجه</li>
                 </ul>
             </div>
 
-            <!-- ابزار تعاملی ۲: انواع زاویه -->
             <div class="angle-types-lab">
                 <div class="sim-title">🔍 انواع زاویه‌ها را بشناس</div>
-
-                <div class="angle-cards-grid" id="angle-types-grid">
-                    <!-- کارت‌ها با JS ساخته می‌شوند -->
-                </div>
+                <div class="angle-cards-grid" id="angle-types-grid"></div>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۴: متمم و مکمل
-           ======================================================================== -->
+        <!-- ============ قدم ۴ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۴</span>
             <h2>متمم و مکمل: جفت‌های مکمل!</h2>
@@ -728,95 +702,116 @@
 
             <div class="key-tip-box">
                 <strong>📌 فرمول‌های متمم و مکمل:</strong>
-                <ul style="margin-right: 20px; margin-top: 8px; line-height: 2.4;">
-                    <li>متمم زاویه x = ۹۰ - x</li>
-                    <li>مکمل زاویه x = ۱۸۰ - x</li>
-                </ul>
+
+                <!-- ✅ متمم سمت چپ -->
+                <div class="formula-line" style="margin-top: 8px; font-size: 1.05rem;">
+                    <span>متمم</span>
+                    <span class="op">=</span>
+                    <span>۹۰ − زاویه</span>
+                </div>
+                <!-- ✅ مکمل سمت چپ -->
+                <div class="formula-line" style="font-size: 1.05rem;">
+                    <span>مکمل</span>
+                    <span class="op">=</span>
+                    <span>۱۸۰ − زاویه</span>
+                </div>
             </div>
 
             <div class="solved-example-box">
-                <div class="example-header">💡 مثال: زاویه ۳۰ درجه</div>
-                <p>متمم: ۹۰ - ۳۰ = ۶۰ درجه</p>
-                <p>مکمل: ۱۸۰ - ۳۰ = ۱۵۰ درجه</p>
+                <div class="example-header">💡 مثال: زاویه‌ی ۳۰ درجه</div>
+                <!-- ✅ متمم سمت چپ + واحد سمت چپ عدد -->
+                <div class="formula-line" style="color: var(--blue-dark);">
+                    <span>متمم</span>
+                    <span class="op">=</span>
+                    <span>۹۰ − ۳۰</span>
+                    <span class="op">=</span>
+                    <span class="unit-num"><span class="u-unit">درجه</span><span class="u-val">۶۰</span></span>
+                </div>
+                <div class="formula-line" style="color: var(--blue-dark);">
+                    <span>مکمل</span>
+                    <span class="op">=</span>
+                    <span>۱۸۰ − ۳۰</span>
+                    <span class="op">=</span>
+                    <span class="unit-num"><span class="u-unit">درجه</span><span class="u-val">۱۵۰</span></span>
+                </div>
             </div>
 
-            <!-- ابزار تعاملی ۳: متمم و مکمل -->
             <div class="complement-supplement-lab">
                 <div class="sim-title">🧮 ماشین متمم و مکمل</div>
 
                 <div class="angle-controls">
-                    <span style="font-weight:800;">زاویه:</span>
+                    <label for="cs-angle">زاویه:</label>
                     <input type="number" id="cs-angle" value="30" min="1" max="179">
-                    <span style="font-weight:800;">درجه</span>
+                    <span>درجه</span>
                     <button class="btn-ui green" id="btn-calc-cs">محاسبه</button>
                 </div>
 
                 <div class="cs-display">
                     <div class="cs-box">
-                        <span class="cs-label">متمم (مجموع = ۹۰°)</span>
-                        <span class="cs-value" id="cs-complement">؟</span>
+                        <span class="cs-label">متمم (مجموع = ۹۰ درجه)</span>
+                        <span class="cs-value" id="cs-complement">—</span>
                     </div>
-                    <div class="cs-box" style="background: var(--blue-soft); color: var(--blue-dark);">
-                        <span class="cs-label">مکمل (مجموع = ۱۸۰°)</span>
-                        <span class="cs-value" id="cs-supplement">؟</span>
+                    <div class="cs-box blue">
+                        <span class="cs-label">مکمل (مجموع = ۱۸۰ درجه)</span>
+                        <span class="cs-value" id="cs-supplement">—</span>
                     </div>
                 </div>
                 <p id="cs-feedback" class="feedback-display"></p>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۵: تمرین زاویه
-           ======================================================================== -->
+        <!-- ============ قدم ۵ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۵</span>
             <h2>تمرین زاویه</h2>
-            <p>
-                حالا نوبت تمرین است! به سوالات پاسخ بده.
-            </p>
+            <p>حالا نوبت تمرین است! به سوالات پاسخ بده.</p>
 
-            <!-- ابزار تعاملی ۴: تمرین زاویه -->
             <div class="practice-lab">
                 <div class="sim-title">📝 تمرین تعاملی</div>
-                
-                <div class="practice-question" id="practice-question">
-                    <!-- سوال با JS ساخته می‌شود -->
-                </div>
+
+                <div class="practice-question" id="practice-question"></div>
 
                 <div class="practice-answer-row">
-                    <input type="number" id="practice-answer" placeholder="پاسخ">
-                    <span id="practice-unit" style="font-weight:800; color:var(--cyan-dark);">درجه</span>
-                    <button class="btn-ui green" id="btn-check-practice">بررسی</button>
+                    <input type="text" id="practice-answer" inputmode="decimal" autocomplete="off" placeholder="پاسخ">
+                    <span class="answer-unit" id="practice-unit">درجه</span>
+                    <button class="btn-ui green" id="btn-check-practice">✓ بررسی</button>
                 </div>
 
                 <p id="practice-feedback" class="feedback-display"></p>
-                <button class="btn-ui blue" id="btn-new-practice">سوال جدید</button>
+                <button class="btn-ui blue" id="btn-new-practice">🎲 سوال جدید</button>
             </div>
         </section>
 
-        <!-- ========================================================================
-           قدم ۶: جمع‌بندی
-           ======================================================================== -->
+        <!-- ============ قدم ۶ ============ -->
         <section class="step-teaching-card">
             <span class="step-number-badge">۶</span>
             <h2>جمع‌بندی و تمرین</h2>
             <p>در این بخش یاد گرفتیم:</p>
-            <ul style="margin-right: 24px; color: var(--text-body); font-weight: 600; line-height: 2.2;">
+            <ul>
                 <li>✅ خط، پاره‌خط، نیم‌خط و تفاوت آن‌ها.</li>
-                <li>✅ زاویه: از تلاقی دو نیم‌خط در یک نقطه (رأس) به وجود می‌آید.</li>
-                <li>✅ انواع زاویه: حاده، قائمه، منفرجه، نیم‌صفحه، تمام‌صفحه.</li>
-                <li>✅ متمم: مجموع دو زاویه ۹۰ درجه. مکمل: مجموع دو زاویه ۱۸۰ درجه.</li>
+                <li>✅ زاویه از تلاقی دو نیم‌خط در یک نقطه (رأس) به وجود می‌آید.</li>
+                <li>✅ انواع زاویه: حاده، قائمه، منفرجه، نیم‌صفحه، بازتاب، تمام‌صفحه.</li>
+                <li>
+                    ✅
+                    <span class="formula-line is-inline" style="vertical-align: middle;">
+                        <span>متمم</span><span class="op">=</span><span>۹۰ − زاویه</span>
+                    </span>
+                    &
+                    <span class="formula-line is-inline" style="vertical-align: middle;">
+                        <span>مکمل</span><span class="op">=</span><span>۱۸۰ − زاویه</span>
+                    </span>
+                </li>
                 <li>✅ کاربرد زاویه در زندگی روزمره: ساعت، ساختمان‌سازی، نجاری و... .</li>
             </ul>
 
             <div class="teacher-speech-bubble">
-                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی. 
+                «آفرین! حالا با تمرین‌های زیر می‌تونی مهارت‌هات رو محک بزنی.
                 یادت باشه که زاویه، یکی از مفاهیم پایه‌ای در هندسه و معماری است.»
             </div>
 
             <div class="solved-example-box" style="background: #fef3c7; border-color: #f59e0b;">
                 <div class="example-header" style="color: #b45309;">📝 تمرین‌های پیشنهادی</div>
-                <ol style="margin-right: 20px; color: #92400e; font-weight: 600; line-height: 2.2;">
+                <ol style="color: #92400e;">
                     <li>متمم زاویه ۴۵ درجه چقدر است؟</li>
                     <li>مکمل زاویه ۱۲۰ درجه چقدر است؟</li>
                     <li>زاویه‌ای که مجموع آن با ۸۵ درجه ۱۸۰ درجه شود، چند درجه است؟</li>
@@ -827,33 +822,164 @@
 
     </main>
 
-    <!-- ========================================================================
-         دکمه‌های شناور
-         ======================================================================== -->
     <div class="floating-btns">
-        <a href="chapter5_part3.html" class="float-nav-btn">→ بخش قبلی</a>
-        <a href="chapter6_part1.html" class="float-nav-btn" id="next-lesson-btn">فصل بعدی ←</a>
+        <a class="float-nav-btn" id="prev-lesson-btn" href="#">
+            <span>→</span>
+            <span class="btn-label">بخش قبلی</span>
+            <span class="btn-tooltip" id="prev-tooltip">بخش قبلی</span>
+        </a>
+        <a href="../index.html" class="float-nav-btn home-btn">
+            🏠<span class="btn-label" style="margin-right:4px;">خانه</span>
+        </a>
+        <a class="float-nav-btn" id="next-lesson-btn" href="#">
+            <span class="btn-label">بخش بعدی</span>
+            <span>←</span>
+            <span class="btn-tooltip" id="next-tooltip">بخش بعدی</span>
+        </a>
     </div>
 
+    <div class="toast-notification" id="toast"></div>
+
     <script>
-        /* ========================================================================
-           لاجیک صوتی
-           ======================================================================== */
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        /* ============ ترتیب فایل‌ها ============ */
+        const FILES_ORDER = [
+            'ch01_sec01.html', 'ch01_sec02.html', 'ch01_sec03.html', 'ch01_sec04.html',
+            'ch02_sec01.html', 'ch02_sec02.html', 'ch02_sec03.html', 'ch02_sec04.html',
+            'ch03_sec01.html', 'ch03_sec02.html', 'ch03_sec03.html', 'ch03_sec04.html',
+            'ch04_sec01.html', 'ch04_sec02.html', 'ch04_sec03.html', 'ch04_sec04.html',
+            'ch05_sec01.html', 'ch05_sec02.html', 'ch05_sec03.html', 'ch05_sec04.html',
+            'ch06_sec01.html', 'ch06_sec02.html', 'ch06_sec03.html', 'ch06_sec04.html',
+            'ch07_sec01.html', 'ch07_sec02.html'
+        ];
+
+        const chapterTitles = {
+            '01': 'عدد و الگوهای عددی',
+            '02': 'کسرها',
+            '03': 'اعداد اعشاری',
+            '04': 'تقارن و مختصات',
+            '05': 'اندازه‌گیری',
+            '06': 'آمار و احتمال',
+            '07': 'مرور و جمع‌بندی'
+        };
+
+        const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+        function toFa(str) { return String(str).replace(/\d/g, d => faDigits[+d]); }
+        function formatNumber(num) {
+            if (typeof num !== 'number' || isNaN(num)) return '—';
+            let rounded = Math.round(num * 1e6) / 1e6;
+            let str = String(rounded);
+            if (/e/i.test(str)) str = rounded.toFixed(10).replace(/0+$/, '').replace(/\.$/, '');
+            if (str.indexOf('.') !== -1) str = str.replace(/0+$/, '').replace(/\.$/, '');
+            const parts = str.split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '٬');
+            return parts.join('.').replace(/\d/g, d => faDigits[+d]).replace('.', '٫');
+        }
+        function normalizeDecimalInput(str) {
+            return String(str)
+                .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+                .replace(/٫/g, '.').replace(/،/g, '').replace(/٬/g, '')
+                .replace(/[^\d.\-]/g, '');
+        }
+
+        function getCurrentFileName() {
+            const path = window.location.pathname;
+            let name = path.substring(path.lastIndexOf('/') + 1);
+            if (!name || name === '') name = 'ch05_sec04.html';
+            return name.toLowerCase();
+        }
+        function parseFileName(name) {
+            const match = name.match(/ch(\d+)_sec(\d+)\.html?$/i);
+            if (!match) return null;
+            return { chapter: parseInt(match[1], 10), section: parseInt(match[2], 10) };
+        }
+        function fileLabel(fileName) {
+            const info = parseFileName(fileName);
+            if (!info) return fileName;
+            return `فصل ${toFa(info.chapter)} - بخش ${toFa(info.section)}`;
+        }
+
+        const currentFile = getCurrentFileName();
+        const currentInfo = parseFileName(currentFile) || { chapter: 5, section: 4 };
+        const currentIdx = FILES_ORDER.indexOf(currentFile);
+
+        /* ============ نوار موقعیت ============ */
+        function renderLocationBar() {
+            const bar = document.getElementById('book-location-bar');
+            if (!bar) return;
+            const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+            let html = '';
+            html += `<span class="location-chip blue">📍 الان اینجایی: فصل ${toFa(currentInfo.chapter)} - بخش ${toFa(currentInfo.section)}</span>`;
+            const chKey = String(currentInfo.chapter).padStart(2, '0');
+            if (chapterTitles[chKey]) html += `<span class="location-chip">📖 ${chapterTitles[chKey]}</span>`;
+            if (nextFile) html += `<span class="location-chip yellow">⏭️ بعدی: ${fileLabel(nextFile)}</span>`;
+            else html += `<span class="location-chip green">🎉 آخرین بخش کتاب</span>`;
+            bar.innerHTML = html;
+        }
+        renderLocationBar();
+
+        /* ============ دکمه‌های ناوبری ============ */
+        const prevBtn = document.getElementById('prev-lesson-btn');
+        const nextBtn = document.getElementById('next-lesson-btn');
+        const prevTooltip = document.getElementById('prev-tooltip');
+        const nextTooltip = document.getElementById('next-tooltip');
+
+        const prevFile = currentIdx > 0 ? FILES_ORDER[currentIdx - 1] : null;
+        const nextFile = (currentIdx >= 0 && currentIdx < FILES_ORDER.length - 1) ? FILES_ORDER[currentIdx + 1] : null;
+
+        if (prevFile) {
+            prevBtn.href = prevFile;
+            prevTooltip.textContent = `→ ${fileLabel(prevFile)}`;
+        } else {
+            prevBtn.removeAttribute('href');
+            prevBtn.classList.add('disabled');
+            prevTooltip.textContent = 'این اولین بخش کتاب است';
+        }
+
+        if (nextFile) {
+            nextBtn.href = nextFile;
+            nextTooltip.textContent = `${fileLabel(nextFile)} ←`;
+        } else {
+            nextBtn.removeAttribute('href');
+            nextBtn.classList.add('disabled');
+            nextTooltip.textContent = 'این آخرین بخش کتاب است';
+        }
+
+        /* ============ صوت ============ */
+        let audioCtx;
+        function ensureAudio() {
+            if (!audioCtx) {
+                try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+                catch (e) { audioCtx = null; }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        }
         function playTone(freq, duration) {
+            if (!audioCtx) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
             gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + duration);
             osc.start(); osc.stop(audioCtx.currentTime + duration);
         }
 
-        /* ========================================================================
-           تعامل ۱: آزمایشگاه زاویه
-           ======================================================================== */
+        /* ============ Toast ============ */
+        const toastEl = document.getElementById('toast');
+        let toastTimer;
+        function showToast(msg, duration = 3200) {
+            toastEl.textContent = msg;
+            toastEl.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
+        }
+
+        /* ============================================================
+           آزمایشگاه زاویه — نقاله با اعداد اصلاح‌شده
+           اعداد از راست (۰) به چپ (۱۸۰) چیده می‌شوند
+           ============================================================ */
         const angleCanvas = document.getElementById('angle-canvas');
         const angleCtx = angleCanvas.getContext('2d');
         let currentAngle = 45;
@@ -869,118 +995,155 @@
         }
 
         function drawAngle(angle) {
-            const w = angleCanvas.width;
-            const h = angleCanvas.height;
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            const logicalW = 400, logicalH = 400;
+            if (angleCanvas.width !== logicalW * dpr) {
+                angleCanvas.width = logicalW * dpr;
+                angleCanvas.height = logicalH * dpr;
+                angleCanvas.style.aspectRatio = '1 / 1';
+                angleCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+
+            const w = logicalW;
+            const h = logicalH;
             const cx = w / 2;
-            const cy = h / 2 + 80;
-            const radius = 130;
+            const cy = h / 2 + 60;
+            const radius = 150;
 
             angleCtx.clearRect(0, 0, w, h);
 
-            // رسم نقاله (نیم‌دایره)
+            // پس‌زمینه‌ی ملایم
+            const bg = angleCtx.createRadialGradient(cx, cy - 40, 0, cx, cy, Math.max(w, h));
+            bg.addColorStop(0, '#fff7ed');
+            bg.addColorStop(1, '#fef3c7');
+            angleCtx.fillStyle = bg;
+            angleCtx.fillRect(0, 0, w, h);
+
+            // نقاله (نیم‌دایره)
             angleCtx.beginPath();
             angleCtx.arc(cx, cy, radius, Math.PI, 0);
             angleCtx.strokeStyle = '#cbd5e1';
             angleCtx.lineWidth = 2;
             angleCtx.stroke();
 
-            // درجه‌بندی نقاله
-            for (let deg = 0; deg <= 180; deg += 10) {
+            // ✅ تیک‌های نقاله — اعداد از راست (۰) به چپ (۱۸۰)
+            for (let deg = 0; deg <= 180; deg += 5) {
                 const rad = (deg * Math.PI) / 180;
-                const x1 = cx + Math.cos(Math.PI - rad) * radius;
-                const y1 = cy - Math.sin(Math.PI - rad) * radius;
-                const x2 = cx + Math.cos(Math.PI - rad) * (radius - 8);
-                const y2 = cy - Math.sin(Math.PI - rad) * (radius - 8);
+                // موقعیت روی کمان: درجه ۰ در راست، ۱۸۰ در چپ
+                const x1 = cx + Math.cos(rad) * radius;
+                const y1 = cy - Math.sin(rad) * radius;
+                const tickLen = (deg % 30 === 0) ? 14 : ((deg % 10 === 0) ? 10 : 6);
+                const x2 = cx + Math.cos(rad) * (radius - tickLen);
+                const y2 = cy - Math.sin(rad) * (radius - tickLen);
+
                 angleCtx.beginPath();
                 angleCtx.moveTo(x1, y1);
                 angleCtx.lineTo(x2, y2);
-                angleCtx.strokeStyle = '#94a3b8';
-                angleCtx.lineWidth = 1;
+                angleCtx.strokeStyle = (deg % 30 === 0) ? '#94a3b8' : '#cbd5e1';
+                angleCtx.lineWidth = (deg % 30 === 0) ? 1.5 : 1;
                 angleCtx.stroke();
 
+                // ✅ برچسب اعداد درست چیده شده
                 if (deg % 30 === 0) {
-                    const x3 = cx + Math.cos(Math.PI - rad) * (radius - 20);
-                    const y3 = cy - Math.sin(Math.PI - rad) * (radius - 20);
+                    const x3 = cx + Math.cos(rad) * (radius - 26);
+                    const y3 = cy - Math.sin(rad) * (radius - 26);
                     angleCtx.fillStyle = '#64748b';
-                    angleCtx.font = '10px Vazirmatn';
+                    angleCtx.font = 'bold 11px Vazirmatn';
                     angleCtx.textAlign = 'center';
                     angleCtx.textBaseline = 'middle';
-                    angleCtx.fillText(deg.toString(), x3, y3);
+                    angleCtx.fillText(toFa(deg), x3, y3);
                 }
             }
 
-            // رسم ضلع ثابت (افقی)
+            // ضلع ثابت افقی (به راست)
             angleCtx.beginPath();
             angleCtx.moveTo(cx, cy);
             angleCtx.lineTo(cx + radius, cy);
-            angleCtx.strokeStyle = '#0e7490';
+            angleCtx.strokeStyle = '#c2410c';
             angleCtx.lineWidth = 4;
+            angleCtx.lineCap = 'round';
             angleCtx.stroke();
 
-            // رسم ضلع متحرک
+            // ضلع متحرک
             const rad = (angle * Math.PI) / 180;
             angleCtx.beginPath();
             angleCtx.moveTo(cx, cy);
             angleCtx.lineTo(cx + Math.cos(-rad) * radius, cy + Math.sin(-rad) * radius);
-            angleCtx.strokeStyle = '#06b6d4';
+            angleCtx.strokeStyle = '#f97316';
             angleCtx.lineWidth = 4;
+            angleCtx.lineCap = 'round';
             angleCtx.stroke();
 
-            // رسم کمان زاویه
-            angleCtx.beginPath();
-            angleCtx.arc(cx, cy, 45, -rad, 0, false);
-            angleCtx.strokeStyle = '#f43f5e';
-            angleCtx.lineWidth = 3;
-            angleCtx.stroke();
+            // کمان زاویه
+            if (angle > 0) {
+                angleCtx.beginPath();
+                angleCtx.arc(cx, cy, 55, -rad, 0, false);
+                angleCtx.strokeStyle = '#be123c';
+                angleCtx.lineWidth = 3;
+                angleCtx.stroke();
+            }
 
-            // نمایش عدد زاویه
+            // نمایش عدد زاویه روی شکل
             angleCtx.fillStyle = '#be123c';
             angleCtx.font = 'bold 18px Vazirmatn';
             angleCtx.textAlign = 'center';
-            angleCtx.fillText(`${angle}°`, cx + 70, cy - 30);
+            angleCtx.textBaseline = 'middle';
+            const midRad = -(rad / 2);
+            const labelX = cx + Math.cos(midRad) * 85;
+            const labelY = cy + Math.sin(midRad) * 85;
+            // پس‌زمینه سفید برای خوانایی
+            const txt = `${toFa(angle)}°`;
+            const tw = angleCtx.measureText(txt).width + 12;
+            angleCtx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            angleCtx.fillRect(labelX - tw/2, labelY - 14, tw, 24);
+            angleCtx.fillStyle = '#be123c';
+            angleCtx.fillText(txt, labelX, labelY);
 
             // رأس
             angleCtx.beginPath();
             angleCtx.arc(cx, cy, 6, 0, Math.PI * 2);
-            angleCtx.fillStyle = '#0e7490';
+            angleCtx.fillStyle = '#c2410c';
             angleCtx.fill();
+            angleCtx.strokeStyle = '#ffffff';
+            angleCtx.lineWidth = 2;
+            angleCtx.stroke();
         }
 
         function updateAngle(angle) {
             currentAngle = angle;
             drawAngle(angle);
             const type = getAngleType(angle);
-            document.getElementById('angle-info').innerHTML = 
-                `زاویه <strong>${angle.toLocaleString('fa-IR')}</strong> درجه: <span style="color: var(--rose-dark);">${type}</span>`;
+            document.getElementById('angle-info').innerHTML =
+                `زاویه‌ی <strong>${toFa(angle)} درجه</strong> یک زاویه‌ی <strong>${type}</strong> است.`;
         }
 
         document.getElementById('angle-slider').addEventListener('input', function() {
-            const val = parseInt(this.value);
+            ensureAudio();
+            const val = parseInt(this.value) || 0;
             document.getElementById('angle-number').value = val;
             updateAngle(val);
             playTone(300 + val, 0.03);
         });
-
         document.getElementById('angle-number').addEventListener('input', function() {
-            let val = parseInt(this.value) || 0;
+            let val = parseInt(normalizeDecimalInput(this.value)) || 0;
             if (val < 0) val = 0;
             if (val > 360) val = 360;
             document.getElementById('angle-slider').value = val;
             updateAngle(val);
         });
 
-        drawAngle(45);
+        updateAngle(45);
 
-        /* ========================================================================
-           تعامل ۲: انواع زاویه
-           ======================================================================== */
+        /* ============================================================
+           انواع زاویه — کارت‌ها
+           ============================================================ */
         const angleTypes = [
-            { name: 'حاده', angle: 45, color: '#06b6d4' },
-            { name: 'قائمه', angle: 90, color: '#0ea5e9' },
-            { name: 'منفرجه', angle: 135, color: '#8b5cf6' },
-            { name: 'نیم‌صفحه', angle: 180, color: '#ec4899' },
-            { name: 'بازتاب', angle: 270, color: '#f97316' },
-            { name: 'تمام‌صفحه', angle: 360, color: '#10b981' }
+            { name: 'حاده', angle: 45 },
+            { name: 'قائمه', angle: 90 },
+            { name: 'منفرجه', angle: 135 },
+            { name: 'نیم‌صفحه', angle: 180 },
+            { name: 'بازتاب', angle: 270 },
+            { name: 'تمام‌صفحه', angle: 360 }
         ];
 
         function buildAngleTypeCards() {
@@ -992,10 +1155,15 @@
                 card.className = 'angle-type-card';
 
                 const canvas = document.createElement('canvas');
-                canvas.width = 120;
-                canvas.height = 100;
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                canvas.width = 120 * dpr;
+                canvas.height = 100 * dpr;
+                canvas.style.width = '120px';
+                canvas.style.height = '100px';
 
                 const ctx = canvas.getContext('2d');
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
                 const cx = 30;
                 const cy = 80;
                 const r = 70;
@@ -1004,8 +1172,9 @@
                 ctx.beginPath();
                 ctx.moveTo(cx, cy);
                 ctx.lineTo(cx + r, cy);
-                ctx.strokeStyle = '#0e7490';
+                ctx.strokeStyle = '#c2410c';
                 ctx.lineWidth = 3;
+                ctx.lineCap = 'round';
                 ctx.stroke();
 
                 // ضلع متحرک
@@ -1013,28 +1182,31 @@
                 ctx.beginPath();
                 ctx.moveTo(cx, cy);
                 ctx.lineTo(cx + Math.cos(-rad) * r, cy + Math.sin(-rad) * r);
-                ctx.strokeStyle = type.color;
+                ctx.strokeStyle = '#f97316';
                 ctx.lineWidth = 3;
+                ctx.lineCap = 'round';
                 ctx.stroke();
 
                 // کمان
-                ctx.beginPath();
-                ctx.arc(cx, cy, 25, -rad, 0, false);
-                ctx.strokeStyle = type.color;
-                ctx.lineWidth = 2;
-                ctx.stroke();
+                if (type.angle > 0 && type.angle <= 180) {
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, 25, -rad, 0, false);
+                    ctx.strokeStyle = '#be123c';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
 
                 // رأس
                 ctx.beginPath();
                 ctx.arc(cx, cy, 4, 0, Math.PI * 2);
-                ctx.fillStyle = '#0e7490';
+                ctx.fillStyle = '#c2410c';
                 ctx.fill();
 
                 card.appendChild(canvas);
 
                 const nameEl = document.createElement('div');
                 nameEl.className = 'angle-name';
-                nameEl.innerText = `${type.name} (${type.angle}°)`;
+                nameEl.textContent = `${type.name} (${toFa(type.angle)} درجه)`;
                 card.appendChild(nameEl);
 
                 card.addEventListener('click', function() {
@@ -1043,6 +1215,7 @@
                     document.getElementById('angle-slider').value = type.angle;
                     document.getElementById('angle-number').value = type.angle;
                     updateAngle(type.angle);
+                    ensureAudio();
                     playTone(500, 0.1);
                     confetti({ particleCount: 15, spread: 30, origin: { y: 0.7 } });
                 });
@@ -1050,18 +1223,20 @@
                 grid.appendChild(card);
             });
         }
-
         buildAngleTypeCards();
 
-        /* ========================================================================
-           تعامل ۳: متمم و مکمل
-           ======================================================================== */
+        /* ============================================================
+           متمم و مکمل
+           ============================================================ */
         document.getElementById('btn-calc-cs').addEventListener('click', function() {
-            const angle = parseFloat(document.getElementById('cs-angle').value);
+            ensureAudio();
+            const angle = parseFloat(normalizeDecimalInput(document.getElementById('cs-angle').value));
             const feedbackEl = document.getElementById('cs-feedback');
+            const compEl = document.getElementById('cs-complement');
+            const suppEl = document.getElementById('cs-supplement');
 
             if (isNaN(angle) || angle <= 0 || angle >= 180) {
-                feedbackEl.innerText = '❌ لطفاً زاویه‌ای بین ۱ تا ۱۷۹ درجه وارد کن!';
+                feedbackEl.textContent = '❌ لطفاً زاویه‌ای بین ۱ تا ۱۷۹ درجه وارد کن!';
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
@@ -1070,107 +1245,120 @@
             const complement = angle < 90 ? 90 - angle : null;
             const supplement = 180 - angle;
 
-            document.getElementById('cs-complement').innerText = complement !== null ? `${complement.toLocaleString('fa-IR')}°` : 'ندارد';
-            document.getElementById('cs-supplement').innerText = `${supplement.toLocaleString('fa-IR')}°`;
+            // ✅ واحد سمت چپ عدد
+            compEl.innerHTML = complement !== null
+                ? `<span class="u-unit">درجه</span><span class="u-val">${formatNumber(complement)}</span>`
+                : 'ندارد';
+            suppEl.innerHTML = `<span class="u-unit">درجه</span><span class="u-val">${formatNumber(supplement)}</span>`;
 
-            feedbackEl.innerText = `✅ محاسبه انجام شد. متمم ${angle.toLocaleString('fa-IR')}° = ${complement !== null ? complement.toLocaleString('fa-IR') + '°' : 'ندارد'} و مکمل آن = ${supplement.toLocaleString('fa-IR')}°`;
+            feedbackEl.textContent = complement !== null
+                ? `✅ متمم زاویه ${formatNumber(angle)} درجه = درجه ${formatNumber(complement)} و مکمل آن = درجه ${formatNumber(supplement)}.`
+                : `✅ این زاویه متمم ندارد (بزرگ‌تر از ۹۰ درجه). مکمل آن = درجه ${formatNumber(supplement)}.`;
             feedbackEl.style.color = 'var(--success)';
-
             playTone(600, 0.3);
             confetti({ particleCount: 25, spread: 45, origin: { y: 0.7 } });
         });
 
-        /* ========================================================================
-           تعامل ۴: تمرین زاویه
-           ======================================================================== */
-        let practiceAnswer, practiceUnit, practiceType;
+        /* ============================================================
+           تمرین
+           ============================================================ */
+        let practiceAnswer;
 
         function generatePracticeQuestion() {
-            const types = ['complement', 'supplement', 'angle-type', 'between-hands'];
-            practiceType = types[Math.floor(Math.random() * types.length)];
+            const types = ['complement', 'supplement', 'find-from-complement', 'clock'];
+            const practiceType = types[Math.floor(Math.random() * types.length)];
 
             const qEl = document.getElementById('practice-question');
             const unitEl = document.getElementById('practice-unit');
+            unitEl.textContent = 'درجه';
 
             if (practiceType === 'complement') {
                 const angle = Math.floor(Math.random() * 80 + 5);
                 practiceAnswer = 90 - angle;
-                practiceUnit = 'درجه';
-                qEl.innerHTML = `متمم زاویه <strong>${angle.toLocaleString('fa-IR')}</strong> درجه چقدر است؟`;
+                qEl.innerHTML = `متمم زاویه‌ی <strong>${formatNumber(angle)} درجه</strong> چقدر است؟`;
             } else if (practiceType === 'supplement') {
                 const angle = Math.floor(Math.random() * 150 + 20);
                 practiceAnswer = 180 - angle;
-                practiceUnit = 'درجه';
-                qEl.innerHTML = `مکمل زاویه <strong>${angle.toLocaleString('fa-IR')}</strong> درجه چقدر است؟`;
-            } else if (practiceType === 'angle-type') {
-                const angles = [30, 45, 60, 90, 120, 135, 150, 180];
-                const angle = angles[Math.floor(Math.random() * angles.length)];
-                let typeName;
-                if (angle < 90) typeName = 'حاده';
-                else if (angle === 90) typeName = 'قائمه';
-                else if (angle < 180) typeName = 'منفرجه';
-                else typeName = 'نیم‌صفحه';
-
-                // برای این نوع سوال، پاسخ عددی نیست. به جای آن عدد را می‌پرسیم
-                practiceAnswer = angle;
-                practiceUnit = 'درجه';
-                qEl.innerHTML = `زاویه‌ای که نوع آن "<strong>${typeName}</strong>" است، اگر یکی از نمونه‌های معروف باشد، چند درجه است؟ (نزدیک‌ترین نمونه)`;
+                qEl.innerHTML = `مکمل زاویه‌ی <strong>${formatNumber(angle)} درجه</strong> چقدر است؟`;
+            } else if (practiceType === 'find-from-complement') {
+                const comp = Math.floor(Math.random() * 80 + 5);
+                practiceAnswer = 90 - comp;
+                qEl.innerHTML = `زاویه‌ای که متممش <strong>${formatNumber(comp)} درجه</strong> باشد، چند درجه است؟`;
             } else {
-                // زاویه بین عقربه‌های ساعت
                 const hours = [1, 2, 3, 4, 5, 6];
                 const hour = hours[Math.floor(Math.random() * hours.length)];
-                // زاویه = |30 * hour - 0| (در ساعت کامل)
-                practiceAnswer = 30 * hour;
-                if (practiceAnswer > 180) practiceAnswer = 360 - practiceAnswer;
-                practiceUnit = 'درجه';
-                qEl.innerHTML = `زاویه‌ی بین عقربه‌ی ساعت‌شمار و دقیقه‌شمار در ساعت <strong>${hour.toLocaleString('fa-IR')}:۰۰</strong> چقدر است؟`;
+                let ang = 30 * hour;
+                if (ang > 180) ang = 360 - ang;
+                practiceAnswer = ang;
+                qEl.innerHTML = `زاویه‌ی بین عقربه‌ی ساعت‌شمار و دقیقه‌شمار در ساعت <strong>${formatNumber(hour)}:۰۰</strong> چقدر است؟`;
             }
 
-            unitEl.innerText = practiceUnit;
             document.getElementById('practice-answer').value = '';
-            document.getElementById('practice-feedback').innerText = '';
+            document.getElementById('practice-feedback').textContent = '';
         }
 
         document.getElementById('btn-check-practice').addEventListener('click', function() {
-            const userAnswer = parseFloat(document.getElementById('practice-answer').value);
+            ensureAudio();
+            const raw = normalizeDecimalInput(document.getElementById('practice-answer').value);
+            const userAnswer = parseFloat(raw);
             const feedbackEl = document.getElementById('practice-feedback');
 
             if (isNaN(userAnswer)) {
-                feedbackEl.innerText = '❌ لطفاً یک عدد وارد کن!';
+                feedbackEl.textContent = '❌ لطفاً یک عدد وارد کن!';
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(200, 0.2);
                 return;
             }
 
             if (Math.abs(userAnswer - practiceAnswer) < 0.1) {
-                feedbackEl.innerText = `✅ آفرین! پاسخ درست ${practiceAnswer.toLocaleString('fa-IR')} ${practiceUnit} است.`;
+                feedbackEl.textContent = `✅ آفرین! پاسخ درست = درجه ${formatNumber(practiceAnswer)}.`;
                 feedbackEl.style.color = 'var(--success)';
                 playTone(600, 0.3);
                 confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
             } else {
-                feedbackEl.innerText = `❌ اشتباه! پاسخ درست ${practiceAnswer.toLocaleString('fa-IR')} ${practiceUnit} است.`;
+                feedbackEl.textContent = `❌ اشتباه! پاسخ درست = درجه ${formatNumber(practiceAnswer)}.`;
                 feedbackEl.style.color = 'var(--danger)';
                 playTone(300, 0.3);
-                document.getElementById('practice-question').classList.add('shake-anim');
-                setTimeout(() => document.getElementById('practice-question').classList.remove('shake-anim'), 500);
+                const q = document.getElementById('practice-question');
+                q.classList.add('shake-anim');
+                setTimeout(() => q.classList.remove('shake-anim'), 500);
             }
         });
 
         document.getElementById('btn-new-practice').addEventListener('click', () => {
+            ensureAudio();
             playTone(440, 0.05);
             generatePracticeQuestion();
         });
 
-        generatePracticeQuestion();
-
-        /* ========================================================================
-           مدیریت دکمه‌های شناور
-           ======================================================================== */
-        document.getElementById('next-lesson-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('به فصل بعدی درسنامه خوش آمدید! (این یک دموی آموزشی است)');
+        document.getElementById('practice-answer').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') document.getElementById('btn-check-practice').click();
         });
 
+        generatePracticeQuestion();
+
+        /* ============ راه‌اندازی AudioCtx ============ */
+        document.body.addEventListener('click', function initAudioOnce() {
+            ensureAudio();
+            document.body.removeEventListener('click', initAudioOnce);
+        }, { once: true });
+
+        /* ============ هشدار دکمه‌های غیرفعال ============ */
+        prevBtn.addEventListener('click', (e) => {
+            if (prevBtn.classList.contains('disabled')) {
+                e.preventDefault();
+                showToast('این اولین بخش کتاب است. 😊');
+                playTone(300, 0.15);
+            }
+        });
+        nextBtn.addEventListener('click', (e) => {
+            if (nextBtn.classList.contains('disabled')) {
+                e.preventDefault();
+                showToast('🎉 تبریک! تمام فصل‌ها را کامل خواندی!');
+                playTone(700, 0.25);
+                confetti({ particleCount: 120, spread: 100, origin: { y: 0.6 } });
+            }
+        });
     </script>
 </body>
 </html>
